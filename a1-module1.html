@@ -848,7 +848,7 @@ function speakWithVoice(text, rate, voice, triggerEl){
   fetch('https://api.elevenlabs.io/v1/text-to-speech/' + voice, {
     method:'POST',
     headers:{'xi-api-key': EL_KEY, 'Content-Type':'application/json'},
-    body: JSON.stringify({text: `<speak><s xml:lang="fr-FR">${text}</s></speak>`, model_id:'eleven_turbo_v2_5', language_code:'fr',
+    body: JSON.stringify({text: `<speak><s xml:lang="fr-FR">${text}</s></speak>`, model_id:'eleven_multilingual_v2', language_code:'fr',
       voice_settings:{stability:0.5, similarity_boost:0.75}})
   }).then(r=>r.blob()).then(blob=>{
     const url = URL.createObjectURL(blob);
@@ -875,7 +875,7 @@ async function speak(text, rate, triggerEl){
     const res = await fetch('https://api.elevenlabs.io/v1/text-to-speech/' + EL_VOICE, {
       method:'POST',
       headers:{'xi-api-key': EL_KEY, 'Content-Type':'application/json'},
-      body: JSON.stringify({text: `<speak><s xml:lang="fr-FR">${text}</s></speak>`, model_id:'eleven_turbo_v2_5', language_code:'fr', voice_settings:{stability:0.50,similarity_boost:0.75,style:0.25,use_speaker_boost:true}})
+      body: JSON.stringify({text: `<speak><s xml:lang="fr-FR">${text}</s></speak>`, model_id:'eleven_multilingual_v2', language_code:'fr', voice_settings:{stability:0.50,similarity_boost:0.75,style:0.25,use_speaker_boost:true}})
     });
     if(!res.ok){const e=await res.json();throw new Error(e.detail?.message||res.status);}
     const blob = await res.blob();
@@ -943,7 +943,7 @@ async function testEL(){
   const st=document.getElementById('el-status');
   st.style.color='#7a7a8c';st.textContent='⏳ Probando...';
   try{
-    const res=await fetch('https://api.elevenlabs.io/v1/text-to-speech/'+voice,{method:'POST',headers:{'xi-api-key':key,'Content-Type':'application/json'},body:JSON.stringify({text:"Bonjour ! Bienvenue dans votre cours de français.",model_id:'eleven_turbo_v2_5',language_code:'fr',voice_settings:{stability:0.5,similarity_boost:0.75}})});
+    const res=await fetch('https://api.elevenlabs.io/v1/text-to-speech/'+voice,{method:'POST',headers:{'xi-api-key':key,'Content-Type':'application/json'},body:JSON.stringify({text:"Bonjour ! Bienvenue dans votre cours de français.",model_id:'eleven_multilingual_v2',language_code:'fr',voice_settings:{stability:0.5,similarity_boost:0.75}})});
     if(!res.ok){const e=await res.json();throw new Error(e.detail?.message||res.status);}
     const blob=await res.blob();new Audio(URL.createObjectURL(blob)).play();
     EL_KEY=key;EL_VOICE=voice;
