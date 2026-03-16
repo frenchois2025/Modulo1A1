@@ -1038,7 +1038,7 @@ function buildWordCards(containerId, words, accentColor, bgColor){
       <div style="font-size:11px;font-style:italic;color:#8a8a9a;margin-bottom:2px">${w.ipa||''}</div>
       <div style="font-size:11px;color:#8a8a9a;margin-bottom:12px">${w.es}</div>
       <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:8px">
-        <button onclick="speak('${w.fr.replace(/'/g,"\\'")}');this.style.opacity='.6';setTimeout(()=>this.style.opacity='1',800)"
+        <button onclick="speak('${(w.speak_fr||w.fr).replace(/'/g,"\\'")}');this.style.opacity='.6';setTimeout(()=>this.style.opacity='1',800)"
           style="background:${accentColor};color:white;border:none;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif">
           🔊 Escuchar
         </button>
@@ -1049,7 +1049,7 @@ function buildWordCards(containerId, words, accentColor, bgColor){
       </div>
       <div id="rs_${rid}" style="font-size:11px;min-height:16px;margin-bottom:6px"></div>
       <div id="rc_${rid}" style="display:none;gap:6px;justify-content:center;flex-wrap:wrap">
-        <button onclick="speak('${w.fr.replace(/'/g,"\\'")}');this.style.opacity='.6';setTimeout(()=>this.style.opacity='1',800)"
+        <button onclick="speak('${(w.speak_fr||w.fr).replace(/'/g,"\\'")}');this.style.opacity='.6';setTimeout(()=>this.style.opacity='1',800)"
           style="background:white;border:1px solid #e8e2d9;border-radius:7px;padding:5px 10px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif">
           🇫🇷 Modelo
         </button>
@@ -1490,8 +1490,8 @@ const wordsL4=[
   {fr:'Prénom',es:'Nombre',ipa:'[pʁe.nɔ̃]'},
   {fr:'Date de naissance',es:'Fecha de nacimiento',ipa:'[dat də nɛ.sɑ̃s]'},
   {fr:'Adresse',es:'Dirección',ipa:'[a.dʁɛs]'},
-  {fr:'Code postal',es:'Código postal',ipa:'[kɔd pɔs.tal]'},
-  {fr:'Signature',es:'Firma',ipa:'[si.ɲa.tyʁ]'},
+  {fr:'Code postal',es:'Código postal',ipa:'[kɔd pɔs.tal]',speak_fr:'code postale'},
+  {fr:'Signature',es:'Firma',ipa:'[si.ɲa.tyʁ]',speak_fr:'siniatüre'},
 ];
 const raL4=[
   {phrase:"Mon nom est DUPONT, prénom Marie.",            translation:"Mi apellido es DUPONT, nombre Marie.",  voice:"f"},
