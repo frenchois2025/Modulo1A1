@@ -739,10 +739,43 @@ body {
 
   <!-- Ex 4B: Fill formulaire -->
   <div class="ex-card">
-    <div class="ex-title" style="color:var(--l4)">Ejercicio 2 — Completa el formulario</div>
-    <div class="ex-instr">Lee la descripción y escribe el término francés correcto del formulario.</div>
-    <div id="ex4b"></div>
-    <button class="check-btn" style="background:var(--l4);color:white" onclick="checkFill('ex4b','sc4b')">Verificar</button>
+    <div class="ex-title" style="color:var(--l4)">Ejercicio 2 — Escucha y rellena el formulario</div>
+    <div class="ex-instr">Escucha el diálogo y completa el formulario con la información que escuchas.</div>
+    
+    <!-- Dialogue player -->
+    <div id="dialogue4b" style="margin-bottom:20px;"></div>
+    
+    <!-- Form to fill -->
+    <div id="form4b" style="background:var(--l4l);border-radius:12px;padding:20px;margin-bottom:16px;">
+      <div style="font-size:13px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--l4d);margin-bottom:14px;">📋 Formulaire</div>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;border-bottom:1px solid var(--border);padding-bottom:10px;">
+        <div style="font-size:13px;font-weight:700;color:var(--text);min-width:120px;">Prénom</div>
+        <input type="text" data-answer="Paul" placeholder="..." 
+          style="border:2px solid var(--border);border-radius:8px;padding:6px 12px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:600;outline:none;flex:1;">
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;border-bottom:1px solid var(--border);padding-bottom:10px;">
+        <div style="font-size:13px;font-weight:700;color:var(--text);min-width:120px;">Nom</div>
+        <input type="text" data-answer="Martin" placeholder="..." 
+          style="border:2px solid var(--border);border-radius:8px;padding:6px 12px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:600;outline:none;flex:1;">
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;border-bottom:1px solid var(--border);padding-bottom:10px;">
+        <div style="font-size:13px;font-weight:700;color:var(--text);min-width:120px;">Nationalité</div>
+        <input type="text" data-answer="Argentine|argentin|Argentin" placeholder="..." 
+          style="border:2px solid var(--border);border-radius:8px;padding:6px 12px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:600;outline:none;flex:1;">
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;border-bottom:1px solid var(--border);padding-bottom:10px;">
+        <div style="font-size:13px;font-weight:700;color:var(--text);min-width:120px;">Âge</div>
+        <input type="text" data-answer="32|trente-deux" placeholder="..." 
+          style="border:2px solid var(--border);border-radius:8px;padding:6px 12px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:600;outline:none;flex:1;">
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;border-bottom:1px solid var(--border);padding-bottom:10px;">
+        <div style="font-size:13px;font-weight:700;color:var(--text);min-width:120px;">Email</div>
+        <input type="text" data-answer="paul.martin@gmail.com" placeholder="..." 
+          style="border:2px solid var(--border);border-radius:8px;padding:6px 12px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:600;outline:none;flex:1;">
+      </div>
+    </div>
+    
+    <button class="check-btn" style="background:var(--l4);color:white" onclick="checkDialogueForm('form4b','sc4b')">Verificar</button>
     <div class="score-box" id="sc4b" style="background:var(--l4l)">
       <div class="score-emoji" id="sc4b-em"></div>
       <div class="score-num" id="sc4b-n" style="color:var(--l4d)"></div>
@@ -1521,6 +1554,113 @@ const wordsJ=[
 // ══════════════════════════════════════
 // INIT
 // ══════════════════════════════════════
+
+// ── DIALOGUE L4 ──
+const dialogueL4=[
+  {speaker:'f',text:'Bonjour ! Je vais vous poser quelques questions pour remplir votre formulaire.'},
+  {speaker:'m',text:'Bien sûr, je vous écoute.'},
+  {speaker:'f',text:'Quel est votre prénom ?'},
+  {speaker:'m',text:'Je m\'appelle Paul.'},
+  {speaker:'f',text:'Et votre nom de famille ?'},
+  {speaker:'m',text:'Martin. Paul Martin.'},
+  {speaker:'f',text:'Quelle est votre nationalité ?'},
+  {speaker:'m',text:'Je suis argentin.'},
+  {speaker:'f',text:'Quel est votre âge ?'},
+  {speaker:'m',text:'J\'ai trente-deux ans.'},
+  {speaker:'f',text:'Et votre adresse email ?'},
+  {speaker:'m',text:'paul point martin arobase gmail point com.'},
+];
+
+function buildDialogue4b(){
+  const c = document.getElementById('dialogue4b');
+  if(!c) return;
+  c.innerHTML = '';
+  
+  // Play all button
+  const playBtn = document.createElement('button');
+  playBtn.style.cssText = 'background:var(--l4);color:white;border:none;border-radius:10px;padding:10px 20px;font-size:14px;font-weight:700;cursor:pointer;font-family:"Nunito",sans-serif;margin-bottom:14px;';
+  playBtn.innerHTML = '▶ Escuchar el diálogo completo';
+  playBtn.onclick = () => playDialogueL4(0, playBtn);
+  c.appendChild(playBtn);
+  
+  // Dialogue lines
+  dialogueL4.forEach((line, i) => {
+    const div = document.createElement('div');
+    const isF = line.speaker === 'f';
+    div.style.cssText = `display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;${isF ? '' : 'flex-direction:row-reverse;'}`;
+    div.innerHTML = `
+      <div style="width:32px;height:32px;border-radius:50%;background:${isF ? 'var(--l4)' : '#555'};color:white;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">${isF ? '👩' : '👨'}</div>
+      <div style="background:${isF ? 'var(--l4l)' : '#f0f0f0'};border-radius:12px;padding:10px 14px;max-width:75%;font-size:14px;font-family:'Nunito',sans-serif;font-weight:600;color:var(--text);cursor:pointer;" onclick="playLineL4(${i})" title="Haz clic para escuchar">
+        ${line.text}
+      </div>`;
+    c.appendChild(div);
+  });
+}
+
+let dialoguePlaying = false;
+let dialogueIdx = 0;
+
+async function playLineL4(i){
+  const line = dialogueL4[i];
+  const voice = line.speaker === 'f' ? VOICE_F : VOICE_M;
+  speakWithVoice(line.text, 1.0, voice);
+}
+
+function playDialogueL4(i, btn){
+  if(i >= dialogueL4.length){ 
+    if(btn) btn.innerHTML = '▶ Escuchar el diálogo completo';
+    return; 
+  }
+  if(btn) btn.innerHTML = '⏸ Reproduciendo...';
+  const line = dialogueL4[i];
+  const voice = line.speaker === 'f' ? VOICE_F : VOICE_M;
+  const cacheKey = line.text + '||' + voice;
+  
+  if(AUDIO_CACHE.has(cacheKey)){
+    const audio = new Audio(AUDIO_CACHE.get(cacheKey));
+    audio.onended = () => setTimeout(() => playDialogueL4(i+1, btn), 400);
+    audio.play();
+  } else if(EL_KEY) {
+    fetch('https://api.elevenlabs.io/v1/text-to-speech/' + voice, {
+      method:'POST',
+      headers:{'xi-api-key': EL_KEY, 'Content-Type':'application/json'},
+      body: JSON.stringify({text: line.text, model_id:'eleven_multilingual_v2', language_code:'fr',
+        voice_settings:{stability:0.5, similarity_boost:0.75}})
+    }).then(r=>r.blob()).then(blob=>{
+      const url = URL.createObjectURL(blob);
+      AUDIO_CACHE.set(cacheKey, url);
+      const audio = new Audio(url);
+      audio.onended = () => setTimeout(() => playDialogueL4(i+1, btn), 400);
+      audio.play();
+    });
+  } else {
+    browserSpeak(line.text);
+    setTimeout(() => playDialogueL4(i+1, btn), 2000);
+  }
+}
+
+function checkDialogueForm(formId, scoreId){
+  const form = document.getElementById(formId);
+  const inputs = form.querySelectorAll('input');
+  let correct = 0;
+  inputs.forEach(inp => {
+    const answers = inp.getAttribute('data-answer').split('|');
+    const val = inp.value.trim().toLowerCase();
+    const isCorrect = answers.some(a => a.toLowerCase() === val);
+    inp.style.borderColor = isCorrect ? '#2eaa6b' : '#e63946';
+    if(isCorrect) correct++;
+  });
+  const total = inputs.length;
+  const sc = document.getElementById(scoreId);
+  const em = document.getElementById(scoreId+'-em');
+  const num = document.getElementById(scoreId+'-n');
+  const msg = document.getElementById(scoreId+'-m');
+  if(sc){ sc.style.display='block'; }
+  if(em){ em.textContent = correct===total ? '🎉' : correct >= total/2 ? '👍' : '💪'; }
+  if(num){ num.textContent = correct+'/'+total; }
+  if(msg){ msg.textContent = correct===total ? '¡Perfecto!' : '¡Sigue intentando!'; }
+}
+
 document.addEventListener('DOMContentLoaded', ()=>{
   // Pre-load voices
   window.speechSynthesis.getVoices();
@@ -1554,7 +1694,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
   // L4
   buildMatch('ex4a', matchFormulaire, 'sc4a');
-  buildFill('ex4b', fillFormulaire);
+  buildDialogue4b();
   buildQCM('ex4c', qcmFormulaire, 'sc4c', 'var(--l4)');
   buildWordCards('phon4', wordsL4, 'var(--l4)', 'var(--l4l)');
   buildReadAloud('readaloud4', raL4, 'var(--l4)');
