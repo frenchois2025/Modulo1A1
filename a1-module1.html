@@ -1,0 +1,1572 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Français A1 · Module 1</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #faf7f2;
+  --white: #ffffff;
+  --text: #1a1a2e;
+  --muted: #8a8a9a;
+  --border: #e8e2d9;
+  --l0: #7c3aed; --l0l: #ede9fe; --l0d: #5b21b6;
+  --l1: #e63946; --l1l: #fdecea; --l1d: #b02030;
+  --l2: #2a7dd1; --l2l: #deeeff; --l2d: #1a5fa0;
+  --l3: #e88c1a; --l3l: #fff3dc; --l3d: #b86a00;
+  --l4: #2eaa6b; --l4l: #dcf5ea; --l4d: #1d7a4c;
+  --l5: #8b5cf6; --l5l: #ede9fe; --l5d: #6d28d9;
+  --shadow: 0 4px 24px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.12);
+}
+* { box-sizing: border-box; margin:0; padding:0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── SIDEBAR NAV ── */
+.app { display: flex; min-height: 100vh; }
+.sidebar {
+  width: 260px; flex-shrink: 0;
+  background: var(--white);
+  border-right: 1px solid var(--border);
+  padding: 28px 16px;
+  position: sticky; top: 0; height: 100vh;
+  overflow-y: auto;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.sidebar-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px; font-weight: 700;
+  color: var(--text);
+  padding: 0 8px 20px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+.sidebar-logo span { color: var(--l1); }
+.nav-btn {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-family: 'Nunito', sans-serif;
+  font-size: 13.5px; font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  transition: all .18s;
+  position: relative;
+}
+.nav-btn:hover { background: var(--bg); color: var(--text); }
+.nav-btn.active { color: var(--white); }
+.nav-btn .nav-icon { font-size: 18px; width: 24px; text-align: center; }
+.nav-btn .nav-badge {
+  margin-left: auto;
+  font-size: 10px; font-weight: 800;
+  padding: 2px 7px; border-radius: 20px;
+  background: rgba(255,255,255,0.25);
+  color: inherit;
+}
+.nav-btn[data-lesson="0"].active { background: var(--l0); }
+.nav-btn[data-lesson="1"].active { background: var(--l1); }
+.nav-btn[data-lesson="2"].active { background: var(--l2); }
+.nav-btn[data-lesson="3"].active { background: var(--l3); }
+.nav-btn[data-lesson="4"].active { background: var(--l4); }
+.nav-btn[data-lesson="5"].active { background: var(--l5); }
+.nav-btn[data-lesson="0"]:not(.active):hover { background: var(--l0l); color: var(--l0d); }
+.nav-btn[data-lesson="1"]:not(.active):hover { background: var(--l1l); color: var(--l1d); }
+.nav-btn[data-lesson="2"]:not(.active):hover { background: var(--l2l); color: var(--l2d); }
+.nav-btn[data-lesson="3"]:not(.active):hover { background: var(--l3l); color: var(--l3d); }
+.nav-btn[data-lesson="4"]:not(.active):hover { background: var(--l4l); color: var(--l4d); }
+.nav-btn[data-lesson="5"]:not(.active):hover { background: var(--l5l); color: var(--l5d); }
+
+/* ── MAIN ── */
+.main { flex: 1; padding: 20px 36px; max-width: 860px; }
+
+.lesson-panel { display: none; }
+.lesson-panel.active { display: block; animation: fadeIn .3s ease; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+/* ── LESSON HEADER ── */
+.lesson-header {
+  display: flex; align-items: flex-start; gap: 20px;
+  margin-bottom: 36px;
+}
+.lesson-icon-big {
+  width: 64px; height: 64px; border-radius: 18px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 30px; flex-shrink: 0;
+}
+.lesson-meta { flex: 1; }
+.lesson-tag {
+  font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase;
+  padding: 3px 10px; border-radius: 20px; display: inline-block; margin-bottom: 8px;
+}
+.lesson-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px; font-weight: 700; line-height: 1.2;
+  color: var(--text); margin-bottom: 6px;
+}
+.lesson-desc { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+/* ── EXERCISE CARDS ── */
+.ex-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 28px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+.ex-title {
+  font-size: 13px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.ex-instr { font-size: 13px; color: var(--muted); margin-bottom: 20px; line-height: 1.5; }
+.ex-subtitle { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 16px; }
+
+/* ── PRONONCIATION ── */
+.phone-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(130px,1fr)); gap: 10px;
+}
+.phone-card {
+  border-radius: 14px; border: 2px solid transparent;
+  padding: 14px 10px; text-align: center; cursor: pointer;
+  transition: all .18s; background: var(--bg);
+}
+.phone-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+.phone-card.playing { border-color: currentColor; }
+.phone-fr { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; margin-bottom: 2px; }
+.phone-ipa { font-size: 10px; opacity: .6; margin-bottom: 4px; font-style: italic; }
+.phone-es { font-size: 11px; color: var(--muted); }
+.phone-play-icon { font-size: 14px; margin-bottom: 4px; }
+
+/* ── RECORDER ── */
+.recorder-zone {
+  border-radius: 14px; padding: 22px; text-align: center;
+  margin-top: 16px;
+}
+.rec-word { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700; margin-bottom: 4px; }
+.rec-ipa { font-size: 13px; margin-bottom: 6px; font-style: italic; opacity: .7; }
+.rec-es { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+.btn-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 12px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 22px; border-radius: 10px; border: none;
+  font-family: 'Nunito', sans-serif; font-size: 13px; font-weight: 700;
+  cursor: pointer; transition: all .18s;
+}
+.btn:disabled { opacity: .4; cursor: not-allowed; }
+.btn:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,.15); }
+.rec-dot { width: 8px; height: 8px; border-radius: 50%; background: #fff; animation: blink 1s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
+.rec-status { font-size: 13px; color: var(--muted); margin-top: 8px; min-height: 20px; }
+.compare-row {
+  display: flex; gap: 12px; justify-content: center; margin-top: 14px; flex-wrap: wrap;
+}
+.compare-item {
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+  padding: 12px 18px; text-align: center; min-width: 120px;
+}
+.compare-label { font-size: 10px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.mini-btn {
+  background: var(--white); border: 1px solid var(--border); border-radius: 8px;
+  padding: 5px 14px; font-size: 12px; font-weight: 600; cursor: pointer;
+  font-family: 'Nunito', sans-serif; transition: all .15s;
+}
+.mini-btn:hover { border-color: var(--text); }
+.word-selector { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.word-pill {
+  padding: 6px 14px; border-radius: 20px; border: 1.5px solid var(--border);
+  background: var(--bg); font-size: 13px; font-weight: 600; cursor: pointer;
+  transition: all .15s; font-family: 'Nunito', sans-serif;
+}
+
+/* ── QCM / OPTIONS ── */
+.qcm-item { margin-bottom: 22px; }
+.q-label { font-size: 11px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; opacity: .6; }
+.q-text { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 12px; line-height: 1.5; }
+.opts { display: flex; flex-direction: column; gap: 8px; }
+.opt {
+  padding: 11px 16px; border-radius: 10px; border: 1.5px solid var(--border);
+  background: var(--bg); color: var(--text); font-size: 14px; font-weight: 600;
+  cursor: pointer; text-align: left; font-family: 'Nunito', sans-serif;
+  transition: all .15s; display: flex; align-items: center; gap: 10px;
+}
+.opt:hover:not(:disabled) { border-color: var(--text); background: var(--white); }
+.opt:disabled { cursor: default; }
+.opt.correct { border-color: var(--l4); background: var(--l4l); color: var(--l4d); }
+.opt.wrong   { border-color: var(--l1); background: var(--l1l); color: var(--l1d); }
+.fb {
+  margin-top: 8px; padding: 8px 14px; border-radius: 8px;
+  font-size: 13px; font-weight: 600; display: none;
+}
+.fb.show { display: block; }
+.fb.ok   { background: var(--l4l); color: var(--l4d); }
+.fb.nope { background: var(--l1l); color: var(--l1d); }
+
+/* ── MATCH EXERCISE ── */
+.match-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.match-col-title { font-size: 11px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; text-align: center; }
+.match-col { display: flex; flex-direction: column; gap: 8px; }
+.match-item {
+  padding: 11px 16px; border-radius: 10px; border: 1.5px solid var(--border);
+  background: var(--bg); font-size: 14px; font-weight: 600; cursor: pointer;
+  text-align: center; transition: all .18s; font-family: 'Nunito', sans-serif;
+  min-height: 44px; display: flex; align-items: center; justify-content: center;
+}
+.match-item.selected { border-color: var(--l2); background: var(--l2l); color: var(--l2d); }
+.match-item.matched-ok { border-color: var(--l4); background: var(--l4l); color: var(--l4d); pointer-events: none; }
+.match-item.matched-err { border-color: var(--l1); background: var(--l1l); color: var(--l1d); animation: shake .3s; }
+.match-item:disabled, .match-item.matched-ok { pointer-events: none; }
+@keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)} }
+.match-score { margin-top: 14px; text-align: center; font-size: 14px; font-weight: 700; color: var(--muted); }
+
+/* ── FILL IN ── */
+.fill-item { margin-bottom: 16px; }
+.fill-sentence {
+  font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 8px; line-height: 1.7;
+}
+.fill-input {
+  border: 2px solid var(--border); border-radius: 8px; padding: 8px 14px;
+  font-family: 'Nunito', sans-serif; font-size: 14px; font-weight: 600;
+  width: 100%; background: var(--bg); color: var(--text); outline: none;
+  transition: border-color .15s;
+}
+.fill-input:focus { border-color: var(--l2); }
+.fill-input.ok { border-color: var(--l4); background: var(--l4l); color: var(--l4d); }
+.fill-input.nope { border-color: var(--l1); background: var(--l1l); color: var(--l1d); }
+.fill-hint { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+/* ── COLOR EXERCISE ── */
+.color-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(100px,1fr)); gap: 12px;
+}
+.color-card {
+  border-radius: 14px; border: 2px solid var(--border); padding: 14px 8px;
+  text-align: center; cursor: pointer; transition: all .18s; background: var(--bg);
+}
+.color-swatch { width: 48px; height: 48px; border-radius: 50%; margin: 0 auto 8px; border: 2px solid rgba(0,0,0,.06); }
+.color-fr { font-size: 14px; font-weight: 700; }
+.color-es { font-size: 11px; color: var(--muted); }
+.color-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+.color-card.playing { border-color: var(--l3); }
+
+/* ── NUMBER QUIZ ── */
+.num-quiz .q-text .num-display {
+  font-family: 'Playfair Display', serif;
+  font-size: 48px; font-weight: 700; display: block;
+  margin-bottom: 4px; line-height: 1;
+}
+
+/* ── FORM EXERCISE ── */
+.form-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.form-table th {
+  background: var(--l4l); color: var(--l4d); font-weight: 800;
+  padding: 10px 14px; text-align: left; font-size: 12px; letter-spacing: .5px;
+}
+.form-table td { padding: 9px 14px; border-bottom: 1px solid var(--border); }
+.form-table tr:last-child td { border-bottom: none; }
+.form-table tr:nth-child(even) td { background: var(--bg); }
+.form-fr { font-weight: 700; }
+.form-es { color: var(--muted); font-size: 13px; }
+
+/* ── PROGRESS BAR ── */
+.progress-wrap { margin-bottom: 28px; }
+.progress-info { display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; color: var(--muted); margin-bottom: 6px; }
+.progress-track { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 3px; transition: width .4s ease; }
+
+/* ── SCORE BOX ── */
+.score-box {
+  border-radius: 16px; padding: 24px; text-align: center; margin-top: 20px; display: none;
+}
+.score-box.show { display: block; }
+.score-emoji { font-size: 40px; margin-bottom: 8px; }
+.score-num { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; margin-bottom: 4px; }
+.score-msg { font-size: 14px; color: var(--muted); }
+
+/* ── CHECK BTN ── */
+.check-btn {
+  margin-top: 16px; padding: 12px 28px; border-radius: 10px; border: none;
+  font-family: 'Nunito', sans-serif; font-size: 14px; font-weight: 800;
+  cursor: pointer; transition: all .18s;
+}
+.check-btn:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
+
+/* ── DIVIDER ── */
+.divider { height: 1px; background: var(--border); margin: 28px 0; }
+
+/* ── LIAISON CARD ── */
+.liaison-card {
+  border-radius: 12px; padding: 16px 20px; margin-bottom: 10px;
+  display: flex; align-items: center; gap: 16px;
+}
+.liaison-text { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; }
+.liaison-phonetic { font-size: 13px; font-style: italic; margin-left: 8px; opacity: .7; }
+.liaison-es { font-size: 13px; color: var(--muted); }
+.speak-btn {
+  margin-left: auto; background: none; border: 1.5px solid var(--border); border-radius: 8px;
+  padding: 6px 12px; cursor: pointer; font-size: 16px; transition: all .15s; flex-shrink: 0;
+}
+.speak-btn:hover { border-color: var(--text); }
+
+/* ── NASAL TABLE ── */
+.nasal-table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin-bottom: 4px; }
+.nasal-table th { padding: 8px 14px; font-size: 11px; font-weight: 800; letter-spacing: .5px; text-transform: uppercase; text-align: left; }
+.nasal-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+.nasal-table tr:last-child td { border-bottom: none; }
+.hl { font-weight: 700; padding: 1px 5px; border-radius: 4px; }
+
+
+/* ── READ ALOUD ── */
+.ra-list { display: flex; flex-direction: column; gap: 14px; }
+.ra-item {
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 20px;
+  transition: border-color .2s;
+}
+.ra-item.recording-active { border-color: #e63946; }
+.ra-phrase {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px; font-weight: 700;
+  color: var(--text); margin-bottom: 4px; line-height: 1.4;
+}
+.ra-translation { font-size: 12px; color: var(--muted); margin-bottom: 14px; }
+.ra-controls { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.ra-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 16px; border-radius: 8px; border: none;
+  font-family: 'Nunito', sans-serif; font-size: 12px; font-weight: 700;
+  cursor: pointer; transition: all .18s;
+}
+.ra-btn:hover { transform: translateY(-1px); }
+.ra-btn:disabled { opacity:.4; cursor:not-allowed; transform:none; }
+.ra-status { font-size: 11px; color: var(--muted); margin-left: 4px; min-width: 120px; }
+.ra-compare {
+  margin-top: 10px; display: none;
+  gap: 8px; flex-wrap: wrap;
+}
+.ra-compare.show { display: flex; }
+.ra-cmp-btn {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 6px 12px; border-radius: 7px; border: 1px solid var(--border);
+  background: var(--white); font-family: 'Nunito', sans-serif;
+  font-size: 11px; font-weight: 700; cursor: pointer; transition: all .15s;
+}
+.ra-cmp-btn:hover { border-color: var(--text); }
+
+/* ── MOBILE ── */
+@media(max-width:700px){
+  .sidebar { display: none; }
+  .main { padding: 20px 16px; }
+  .mob-nav {
+    display: flex; overflow-x: auto; gap: 6px; padding: 12px 16px;
+    background: var(--white); border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 10;
+  }
+  .mob-nav-btn {
+    flex-shrink: 0; padding: 8px 14px; border-radius: 20px; border: none;
+    font-family: 'Nunito', sans-serif; font-size: 12px; font-weight: 700;
+    cursor: pointer; background: var(--bg); color: var(--muted);
+  }
+  .mob-nav-btn.active { color: white; }
+  .match-wrap { grid-template-columns: 1fr; }
+}
+@media(min-width:701px){ .mob-nav { display: none; } }
+
+/* ── ElevenLabs Settings Panel ── */
+#el-fab{position:fixed;bottom:22px;right:22px;width:46px;height:46px;border-radius:50%;background:#7c3aed;color:white;border:none;font-size:20px;cursor:pointer;z-index:9999;box-shadow:0 4px 18px rgba(124,58,237,.45);transition:all .2s;display:flex;align-items:center;justify-content:center}
+#el-fab:hover{transform:scale(1.1);background:#6d28d9}
+#el-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:10000;align-items:center;justify-content:center}
+#el-modal.open{display:flex}
+#el-box{background:#fff;border-radius:20px;padding:28px;width:min(480px,94vw);box-shadow:0 20px 60px rgba(0,0,0,.2);font-family:'Nunito',sans-serif}
+#el-box h2{font-family:'Playfair Display',serif;font-size:20px;margin-bottom:4px;color:#1c1c2e}
+#el-box p{font-size:12px;color:#7a7a8c;margin-bottom:20px;line-height:1.5}
+.el-label{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#7a7a8c;margin-bottom:6px;display:block}
+.el-input{width:100%;border:2px solid #e4ddd4;border-radius:10px;padding:10px 14px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:600;outline:none;margin-bottom:14px;transition:border-color .15s}
+.el-input:focus{border-color:#7c3aed}
+.el-select{width:100%;border:2px solid #e4ddd4;border-radius:10px;padding:10px 14px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:600;outline:none;margin-bottom:18px;background:#f7f4ef;cursor:pointer}
+.el-btns{display:flex;gap:8px;flex-wrap:wrap}
+.el-btn{padding:10px 18px;border-radius:10px;border:none;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;transition:all .18s}
+.el-btn:hover{transform:translateY(-1px)}
+.el-status{margin-top:12px;font-size:13px;font-weight:700;min-height:20px;text-align:center}
+.el-chars{font-size:11px;color:#7a7a8c;text-align:center;margin-top:8px}
+/* Loading spinner on speak buttons */
+.speaking{opacity:.65;pointer-events:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+</style>
+</head>
+<body>
+
+<div class="mob-nav" id="mobNav"></div>
+
+<div class="app">
+<!-- ═══ SIDEBAR ═══ -->
+<nav class="sidebar">
+  <div class="sidebar-logo">Français A1<br><span>Module 1</span></div>
+  <button class="nav-btn" data-lesson="0" onclick="showLesson(0,this)">
+    <span class="nav-icon">🔊</span> Intro — Prononciation
+    <span class="nav-badge">À venir</span>
+  </button>
+  <button class="nav-btn active" data-lesson="1" onclick="showLesson(1,this)">
+    <span class="nav-icon">🤝</span> Leçon 1 — Se présenter
+    <span class="nav-badge">6 ex.</span>
+  </button>
+  <button class="nav-btn" data-lesson="2" onclick="showLesson(2,this)">
+    <span class="nav-icon">👤</span> Leçon 2 — Pronoms
+    <span class="nav-badge">4 ex.</span>
+  </button>
+  <button class="nav-btn" data-lesson="3" onclick="showLesson(3,this)">
+    <span class="nav-icon">🔢</span> Leçon 3 — Nombres & couleurs
+    <span class="nav-badge">5 ex.</span>
+  </button>
+  <button class="nav-btn" data-lesson="4" onclick="showLesson(4,this)">
+    <span class="nav-icon">📋</span> Leçon 4 — Formulaire
+    <span class="nav-badge">3 ex.</span>
+  </button>
+
+</nav>
+
+<!-- ═══ MAIN ═══ -->
+<main class="main">
+
+<!-- ══════════════════════════════════════════
+     LEÇON 1 — SE PRÉSENTER
+══════════════════════════════════════════ -->
+<div class="lesson-panel" id="panel-0">
+  <div class="lesson-header">
+    <div class="lesson-icon-big" style="background:var(--l0l)">🔤</div>
+    <div class="lesson-meta">
+      <div class="lesson-tag" style="background:var(--l0l);color:var(--l0d)">Introducción</div>
+      <div class="lesson-title">Cours de prononciation</div>
+      <div class="lesson-desc">Abecedario · Vocales nasales · Combinaciones de vocales y consonantes</div>
+    </div>
+  </div>
+
+  <!-- Ex 5A: Alphabet + écoute -->
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l0)">Ejercicio 1 — El abecedario</div>
+    <div class="ex-instr">Haz clic en cada letra para escuchar su pronunciación en francés. Luego graba tu pronunciación.</div>
+    <div id="ex5a"></div>
+    <div id="rec5"></div>
+  </div>
+
+  <!-- Ex 5B: Vocales nasales match -->
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l0)">Ejercicio 2 — Vocales nasales</div>
+    <div class="ex-instr">Une la combinación con un ejemplo y escúchalo.</div>
+    <div id="ex5b"></div>
+  </div>
+
+  <!-- Ex 5C: QCM sons -->
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l0)">Ejercicio 3 — ¿Cómo se pronuncia?</div>
+    <div class="ex-instr">Escucha el audio y elige la respuesta correcta.</div>
+    <div id="ex5c"></div>
+    <div class="score-box" id="sc5c" style="background:var(--l0l)">
+      <div class="score-emoji" id="sc5c-em"></div>
+      <div class="score-num" id="sc5c-n" style="color:var(--l0d)"></div>
+      <div class="score-msg" id="sc5c-m"></div>
+    </div>
+  </div>
+
+  <!-- Ex 5D: Prononciation du U -->
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l0)">Ejercicio 4 — El sonido [y] : la "u" francesa</div>
+    <div class="ex-instr">⚠️ La "u" francesa NO es como la "u" española. Labios redondeados como para decir "o", pero lengua adelantada como para decir "i". Escucha cada palabra y practica grabando tu voz.</div>
+    <div style="background:var(--l0l);border-radius:12px;padding:14px 18px;margin-bottom:16px;font-size:13px;color:var(--l0d);line-height:1.7;">
+      <b>💡 Truco:</b> Pronuncia "i" (como en español), luego sin mover la lengua, redondea los labios. Ese es el sonido [y] de "lune", "tu", "rue"…
+    </div>
+    <div class="phone-grid" id="phon5u"></div>
+    <div id="rec5u"></div>
+  </div>
+
+  <!-- Ex 5E: Prononciation du J -->
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l0)">Ejercicio 5 — El sonido [ʒ] : la "j" francesa</div>
+    <div class="ex-instr">⚠️ La "j" francesa NO es como la jota española (que es fuerte y gutural). Es un sonido suave, continuo, como si susurraras "zh". También es el sonido de "g" antes de "e" o "i".</div>
+    <div style="background:var(--l0l);border-radius:12px;padding:14px 18px;margin-bottom:16px;font-size:13px;color:var(--l0d);line-height:1.7;">
+      <b>💡 Truco:</b> Pronuncia una "y" española muy suave y continua, sin cortar el aire. Ej: "jour" suena casi como "zhur", no como "jour" con jota española.
+    </div>
+    <div class="phone-grid" id="phon5j"></div>
+    <div id="rec5j"></div>
+  </div>
+</div>
+
+<div class="lesson-panel active" id="panel-1">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:28px;">
+    <div style="width:44px;height:44px;border-radius:12px;background:var(--l1);opacity:.15;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">🤝</div>
+    <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--text)">Leçon 1 — Se présenter</div>
+  </div>
+
+  <!-- Ex 1A: QCM Saludos -->
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l0)">Ejercicio 1 — Saludos y cortesía</div>
+    <div class="ex-instr">Elige la respuesta correcta. (1 punto por pregunta)</div>
+    <div id="ex1a"></div>
+    <div class="score-box" id="sc1a" style="background:var(--l0l)">
+      <div class="score-emoji" id="sc1a-em"></div>
+      <div class="score-num" id="sc1a-n" style="color:var(--l0d)"></div>
+      <div class="score-msg" id="sc1a-m"></div>
+    </div>
+  </div>
+
+  <!-- Ex 1B: Fill-in présentation -->
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l0)">Ejercicio 2 — Completa la presentación</div>
+    <div class="ex-instr">Escribe la palabra correcta en cada espacio. Pista entre paréntesis.</div>
+    <div id="ex1b"></div>
+    <button class="check-btn" style="background:var(--l0);color:white" onclick="checkFill('ex1b','sc1b')">Verificar respuestas</button>
+    <div class="score-box" id="sc1b" style="background:var(--l0l)">
+      <div class="score-emoji" id="sc1b-em"></div>
+      <div class="score-num" id="sc1b-n" style="color:var(--l0d)"></div>
+      <div class="score-msg" id="sc1b-m"></div>
+    </div>
+  </div>
+
+  <!-- Ex 1C: Match interrogatifs -->
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l0)">Ejercicio 3 — Une la pregunta con su significado</div>
+    <div class="ex-instr">Haz clic en una palabra interrogativa, luego en su traducción.</div>
+    <div id="ex1c"></div>
+    <div class="match-score" id="sc1c"></div>
+  </div>
+
+  <!-- Ex 1D: QCM famille -->
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l0)">Ejercicio 4 — La famille</div>
+    <div class="ex-instr">Elige la traducción correcta.</div>
+    <div id="ex1d"></div>
+    <div class="score-box" id="sc1d" style="background:var(--l0l)">
+      <div class="score-emoji" id="sc1d-em"></div>
+      <div class="score-num" id="sc1d-n" style="color:var(--l0d)"></div>
+      <div class="score-msg" id="sc1d-m"></div>
+    </div>
+  </div>
+
+  <!-- Ex 1E: Écoute + répétition mots -->
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l0)">Ejercicio 5 — 🔊 Escucha y repite : los saludos</div>
+    <div class="ex-instr">Haz clic en una tarjeta para escuchar. Luego selecciona una palabra, escúchala y graba tu voz para comparar.</div>
+    <div class="phone-grid" id="phon1"></div>
+    <div id="rec1"></div>
+  </div>
+
+  <!-- Ex 1F: Lire à voix haute -->
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l0)">Ejercicio 6 — 🎙️ Lee en voz alta : frases de presentación</div>
+    <div class="ex-instr">Escucha el modelo (🔊), luego lee la frase en voz alta y graba tu pronunciación para comparar.</div>
+    <div id="readaloud1"></div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     LEÇON 2 — PRONOMS PERSONNELS
+══════════════════════════════════════════ -->
+<div class="lesson-panel" id="panel-2">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:28px;">
+    <div style="width:44px;height:44px;border-radius:12px;background:var(--l2);opacity:.15;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">👤</div>
+    <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--text)">Leçon 2 — Pronoms & verbes</div>
+  </div>
+
+  <!-- Ex 2A: Match pronoms -->
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l2)">Ejercicio 1 — Une el pronombre con su equivalente en español</div>
+    <div class="ex-instr">Haz clic en el pronombre francés y luego en su equivalente.</div>
+    <div id="ex2a"></div>
+    <div class="match-score" id="sc2a"></div>
+  </div>
+
+  <!-- Ex 2B: Fill pronoms -->
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l2)">Ejercicio 2 — Completa con el pronombre correcto</div>
+    <div class="ex-instr">Escribe el pronombre que corresponde a cada frase.</div>
+    <div id="ex2b"></div>
+    <button class="check-btn" style="background:var(--l2);color:white" onclick="checkFill('ex2b','sc2b')">Verificar</button>
+    <div class="score-box" id="sc2b" style="background:var(--l2l)">
+      <div class="score-emoji" id="sc2b-em"></div>
+      <div class="score-num" id="sc2b-n" style="color:var(--l2d)"></div>
+      <div class="score-msg" id="sc2b-m"></div>
+    </div>
+  </div>
+
+  <!-- Ex 2C: QCM pronoms -->
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l2)">Ejercicio 3 — QCM pronombres</div>
+    <div class="ex-instr">Elige la respuesta correcta.</div>
+    <div id="ex2c"></div>
+    <div class="score-box" id="sc2c" style="background:var(--l2l)">
+      <div class="score-emoji" id="sc2c-em"></div>
+      <div class="score-num" id="sc2c-n" style="color:var(--l2d)"></div>
+      <div class="score-msg" id="sc2c-m"></div>
+    </div>
+  </div>
+
+  <!-- Ex 2D: Liaison QCM -->
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l2)">Ejercicio 4 — La liaison : ¿singular o plural?</div>
+    <div class="ex-instr">Escucha la frase (clic en 🔊) e indica si el sujeto es singular o plural.</div>
+    <div id="ex2d"></div>
+    <div class="score-box" id="sc2d" style="background:var(--l2l)">
+      <div class="score-emoji" id="sc2d-em"></div>
+      <div class="score-num" id="sc2d-n" style="color:var(--l2d)"></div>
+      <div class="score-msg" id="sc2d-m"></div>
+    </div>
+  </div>
+  <!-- Ex 2E: Lire pronoms à voix haute -->
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l2)">Ejercicio 5 — 🎙️ Pronuncia los pronombres</div>
+    <div class="ex-instr">Escucha el pronombre con su ejemplo (🔊), luego selecciónalo y graba tu pronunciación.</div>
+    <div class="phone-grid" id="phon2"></div>
+    <div id="rec2"></div>
+  </div>
+
+  <!-- Ex 2F: Lire phrases pronoms à voix haute -->
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l2)">Ejercicio 6 — 🎙️ Lee en voz alta : frases con pronombres</div>
+    <div class="ex-instr">Escucha el modelo (🔊), luego lee la frase completa en voz alta y graba tu voz.</div>
+    <div id="readaloud2"></div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     LEÇON 3 — NOMBRES & COULEURS
+══════════════════════════════════════════ -->
+<div class="lesson-panel" id="panel-3">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:28px;">
+    <div style="width:44px;height:44px;border-radius:12px;background:var(--l3);opacity:.15;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">🔢</div>
+    <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--text)">Leçon 3 — Nombres & couleurs</div>
+  </div>
+
+  <!-- Ex 3A: Números QCM -->
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l3)">Ejercicio 1 — ¿Cómo se dice este número en francés?</div>
+    <div class="ex-instr">Mira el número y elige la forma correcta en francés.</div>
+    <div id="ex3a"></div>
+    <div class="score-box" id="sc3a" style="background:var(--l3l)">
+      <div class="score-emoji" id="sc3a-em"></div>
+      <div class="score-num" id="sc3a-n" style="color:var(--l3d)"></div>
+      <div class="score-msg" id="sc3a-m"></div>
+    </div>
+  </div>
+
+  <!-- Ex 3B: Colores con escucha -->
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l3)">Ejercicio 2 — Los colores</div>
+    <div class="ex-instr">Haz clic en el color para escuchar su pronunciación en francés.</div>
+    <div class="color-grid" id="ex3b"></div>
+  </div>
+
+  <!-- Ex 3C: Match colores -->
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l3)">Ejercicio 3 — Une el color francés con su traducción</div>
+    <div class="ex-instr">Haz clic en un color francés y luego en su traducción española.</div>
+    <div id="ex3c"></div>
+    <div class="match-score" id="sc3c"></div>
+  </div>
+
+  <!-- Ex 3D: Ordinaux QCM -->
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l3)">Ejercicio 4 — Números ordinales</div>
+    <div class="ex-instr">Elige el ordinal correcto en francés.</div>
+    <div id="ex3d"></div>
+    <div class="score-box" id="sc3d" style="background:var(--l3l)">
+      <div class="score-emoji" id="sc3d-em"></div>
+      <div class="score-num" id="sc3d-n" style="color:var(--l3d)"></div>
+      <div class="score-msg" id="sc3d-m"></div>
+    </div>
+  </div>
+
+  <!-- Ex 3E: Fill nombres -->
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l3)">Ejercicio 5 — Escribe el número en francés</div>
+    <div class="ex-instr">Escribe el número indicado entre paréntesis en letras.</div>
+    <div id="ex3e"></div>
+    <button class="check-btn" style="background:var(--l3);color:white" onclick="checkFill('ex3e','sc3e')">Verificar</button>
+    <div class="score-box" id="sc3e" style="background:var(--l3l)">
+      <div class="score-emoji" id="sc3e-em"></div>
+      <div class="score-num" id="sc3e-n" style="color:var(--l3d)"></div>
+      <div class="score-msg" id="sc3e-m"></div>
+    </div>
+  </div>
+  <!-- Ex 3F: Écouter + répéter nombres -->
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l3)">Ejercicio 6 — 🔊 Escucha y repite : los números</div>
+    <div class="ex-instr">Haz clic en un número para escucharlo. Luego selecciónalo y graba tu pronunciación.</div>
+    <div class="phone-grid" id="phon3"></div>
+    <div id="rec3"></div>
+  </div>
+
+  <!-- Ex 3G: Lire une série de nombres à voix haute -->
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l3)">Ejercicio 7 — 🎙️ Lee los números en voz alta</div>
+    <div class="ex-instr">Escucha cómo se dice el número (🔊), luego grábate diciéndolo tú mismo.</div>
+    <div id="readaloud3"></div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     LEÇON 4 — FORMULAIRE
+══════════════════════════════════════════ -->
+<div class="lesson-panel" id="panel-4">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:28px;">
+    <div style="width:44px;height:44px;border-radius:12px;background:var(--l4);opacity:.15;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">📋</div>
+    <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--text)">Leçon 4 — Formulaire</div>
+  </div>
+
+  <!-- Ex 4A: Match vocabulaire formulaire -->
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l4)">Ejercicio 1 — Vocabulario del formulario</div>
+    <div class="ex-instr">Une cada término francés con su significado en español.</div>
+    <div id="ex4a"></div>
+    <div class="match-score" id="sc4a"></div>
+  </div>
+
+  <!-- Ex 4B: Fill formulaire -->
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l4)">Ejercicio 2 — Completa el formulario</div>
+    <div class="ex-instr">Lee la descripción y escribe el término francés correcto del formulario.</div>
+    <div id="ex4b"></div>
+    <button class="check-btn" style="background:var(--l4);color:white" onclick="checkFill('ex4b','sc4b')">Verificar</button>
+    <div class="score-box" id="sc4b" style="background:var(--l4l)">
+      <div class="score-emoji" id="sc4b-em"></div>
+      <div class="score-num" id="sc4b-n" style="color:var(--l4d)"></div>
+      <div class="score-msg" id="sc4b-m"></div>
+    </div>
+  </div>
+
+  <!-- Ex 4C: QCM formulaire -->
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l4)">Ejercicio 3 — ¿Qué significa este campo?</div>
+    <div class="ex-instr">Elige la traducción correcta.</div>
+    <div id="ex4c"></div>
+    <div class="score-box" id="sc4c" style="background:var(--l4l)">
+      <div class="score-emoji" id="sc4c-em"></div>
+      <div class="score-num" id="sc4c-n" style="color:var(--l4d)"></div>
+      <div class="score-msg" id="sc4c-m"></div>
+    </div>
+  </div>
+  <!-- Ex 4D: Épeler un formulaire à voix haute -->
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l4)">Ejercicio 4 — 🎙️ Pronuncia los términos del formulario</div>
+    <div class="ex-instr">Escucha cómo se pronuncia cada campo del formulario (🔊) y luego graba tu pronunciación para comparar.</div>
+    <div class="phone-grid" id="phon4"></div>
+    <div id="rec4"></div>
+  </div>
+
+  <!-- Ex 4E: Lire un formulaire à voix haute -->
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l4)">Ejercicio 5 — 🎙️ Lee el formulario en voz alta</div>
+    <div class="ex-instr">Imagina que estás llenando un formulario en voz alta. Escucha el modelo y luego graba tu versión.</div>
+    <div id="readaloud4"></div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     INTRO — PRONONCIATION
+══════════════════════════════════════════ -->
+
+</main>
+</div><!-- /app -->
+
+
+<script>
+// ══════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════
+function showLesson(n){
+  document.querySelectorAll('.lesson-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('[data-lesson]').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+n).classList.add('active');
+  document.querySelectorAll('[data-lesson="'+n+'"]').forEach(b=>b.classList.add('active'));
+  window.scrollTo({top:0,behavior:'instant'});
+}
+
+// ══════════════════════════════════════
+// SPEECH — robuste avec retry
+// ══════════════════════════════════════
+// ══ ElevenLabs TTS Engine ══
+const AUDIO_CACHE = new Map();
+const EL_VOICES = [
+  {id:'XB0fDUnXU5powFXDhCwa', name:'Charlotte (féminin — recommandée 🇫🇷)'},
+  {id:'onwK4e9ZLuTAKqWW03F9', name:'Daniel (masculin — clair et naturel)'},
+  {id:'pqHfZKP75CvOlQylNhV4', name:'Bill (masculin — chaleureux)'},
+  {id:'jsCqWAovK2LkecY7zXl4', name:'Lily (féminin — doux)'},
+  {id:'oWAxZDx7w5VEj9dCyTzz', name:'Grace (féminin — expressif)'},
+];
+let EL_KEY = localStorage.getItem('el_api_key') || '';
+let EL_VOICE = localStorage.getItem('el_voice_id') || EL_VOICES[0].id;
+let EL_CHARS_USED = parseInt(localStorage.getItem('el_chars_used')||'0');
+
+function browserSpeak(t,r){r=r||.82;window.speechSynthesis.cancel();function g(){const u=new SpeechSynthesisUtterance(t);u.lang='fr-FR';u.rate=r;const v=window.speechSynthesis.getVoices().find(x=>x.lang&&x.lang.startsWith('fr'));if(v)u.voice=v;window.speechSynthesis.speak(u);}window.speechSynthesis.getVoices().length===0?(window.speechSynthesis.onvoiceschanged=g):g();}
+
+async // Charlotte ID and Daniel ID
+const VOICE_F = 'XB0fDUnXU5powFXDhCwa'; // Charlotte
+const VOICE_M = 'onwK4e9ZLuTAKqWW03F9'; // Daniel
+
+function getVoiceForText(text){
+  // If text contains feminine subject indicators → Charlotte
+  const femPatterns = /\b(elle|elles|madame|marie|sophie|femme|fille|mère|sœur|dame)\b/i;
+  const mascPatterns = /\b(il|ils|monsieur|paul|pierre|homme|garçon|père|frère)\b/i;
+  if(femPatterns.test(text)) return VOICE_F;
+  if(mascPatterns.test(text)) return VOICE_M;
+  return EL_VOICE; // default to user selection
+}
+
+function speakGendered(text, rate, triggerEl){
+  const voice = getVoiceForText(text);
+  speakWithVoice(text, rate, triggerEl, voice);
+}
+
+function speakWithVoice(text, rate, voice, triggerEl){
+  rate = rate || 1.0;
+  if(!EL_KEY){ browserSpeak(text, rate * 0.82); return; }
+  const cacheKey = text + '||' + voice;
+  if(AUDIO_CACHE.has(cacheKey)){
+    const audio = new Audio(AUDIO_CACHE.get(cacheKey));
+    audio.playbackRate = rate;
+    audio.play();
+    return;
+  }
+  if(triggerEl) triggerEl.classList.add('speaking');
+  fetch('https://api.elevenlabs.io/v1/text-to-speech/' + voice, {
+    method:'POST',
+    headers:{'xi-api-key': EL_KEY, 'Content-Type':'application/json'},
+    body: JSON.stringify({text: text, model_id:'eleven_multilingual_v2', language_code:'fr',
+      voice_settings:{stability:0.5, similarity_boost:0.75}})
+  }).then(r=>r.blob()).then(blob=>{
+    const url = URL.createObjectURL(blob);
+    AUDIO_CACHE.set(cacheKey, url);
+    const audio = new Audio(url);
+    audio.playbackRate = rate;
+    audio.play();
+    if(triggerEl) triggerEl.classList.remove('speaking');
+  }).catch(()=>{ browserSpeak(text, rate*0.82); if(triggerEl) triggerEl.classList.remove('speaking'); });
+}
+
+async function speak(text, rate, triggerEl){
+  rate = rate || 1.0;
+  if(!EL_KEY){ browserSpeak(text, rate * 0.82); return; }
+  const cacheKey = text + '||' + EL_VOICE;
+  if(AUDIO_CACHE.has(cacheKey)){
+    const audio = new Audio(AUDIO_CACHE.get(cacheKey));
+    audio.playbackRate = rate;
+    audio.play();
+    return;
+  }
+  if(triggerEl) triggerEl.classList.add('speaking');
+  try {
+    const res = await fetch('https://api.elevenlabs.io/v1/text-to-speech/' + EL_VOICE, {
+      method:'POST',
+      headers:{'xi-api-key': EL_KEY, 'Content-Type':'application/json'},
+      body: JSON.stringify({text: text, model_id:'eleven_multilingual_v2', language_code:'fr', voice_settings:{stability:0.50,similarity_boost:0.75,style:0.25,use_speaker_boost:true}})
+    });
+    if(!res.ok){const e=await res.json();throw new Error(e.detail?.message||res.status);}
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+    AUDIO_CACHE.set(cacheKey, url);
+    EL_CHARS_USED += text.length;
+    localStorage.setItem('el_chars_used', EL_CHARS_USED);
+    updateCharCount();
+    const audio = new Audio(url);
+    audio.playbackRate = rate;
+    audio.play();
+  } catch(err){
+    console.warn('ElevenLabs:', err);
+    browserSpeak(text, rate * 0.82);
+    const s=document.getElementById('el-status');
+    if(s){s.style.color='#e63946';s.textContent='⚠ '+err.message+' → Voz navegador';}
+  } finally {
+    if(triggerEl) setTimeout(()=>triggerEl.classList.remove('speaking'),400);
+  }
+}
+
+function buildELPanel(){
+  const fab=document.createElement("button");fab.id="el-fab";fab.title="Configurar voz ElevenLabs";fab.textContent="🎙";
+  fab.onclick=function(){document.getElementById("el-modal").classList.add("open");};
+  document.body.appendChild(fab);
+  const modal=document.createElement("div");modal.id="el-modal";
+  const box=document.createElement("div");box.id="el-box";
+  box.innerHTML="<h2>🎙️ Voz ElevenLabs</h2>"+
+    "<p>Conecta tu cuenta para obtener una voz francesa ultranatural.<br>"+
+    "<a href=\"https://elevenlabs.io\" target=\"_blank\" style=\"color:#7c3aed;font-weight:800\">→ Crear cuenta gratuita</a></p>"+
+    "<label class=\"el-label\">Clave API</label>"+
+    "<input class=\"el-input\" id=\"el-key-input\" type=\"password\" placeholder=\"sk-...\">"+
+    "<label class=\"el-label\">Voz</label>"+
+    "<select class=\"el-select\" id=\"el-voice-select\"></select>"+
+    "<div class=\"el-btns\">"+
+      "<button class=\"el-btn\" style=\"background:#7c3aed;color:white\" onclick=\"saveEL()\">💾 Guardar</button>"+
+      "<button class=\"el-btn\" style=\"background:#2eaa6b;color:white\" onclick=\"testEL()\">▶ Probar</button>"+
+      "<button class=\"el-btn\" style=\"background:#f7f4ef;border:2px solid #e4ddd4\" id=\"el-close-btn\">✕ Cerrar</button>"+
+    "</div>"+
+    "<div class=\"el-status\" id=\"el-status\"></div>";
+  modal.appendChild(box);
+  modal.onclick=function(e){if(e.target===modal)modal.classList.remove("open");};
+  document.body.appendChild(modal);
+  document.getElementById("el-close-btn").onclick=function(){modal.classList.remove("open");};
+  const sel=document.getElementById("el-voice-select");
+  EL_VOICES.forEach(function(v){const o=document.createElement("option");o.value=v.id;o.textContent=v.name;if(v.id===EL_VOICE)o.selected=true;sel.appendChild(o);});
+  document.getElementById("el-key-input").value=EL_KEY;
+  const st=document.getElementById("el-status");
+  st.style.color=EL_KEY?"#1d7a4c":"#e88c1a";
+  st.textContent=EL_KEY?"✓ Clave guardada — listo":"⚠ Sin clave → voz navegador activa";
+}
+function saveEL(){
+  const key=document.getElementById('el-key-input').value.trim();
+  const voice=document.getElementById('el-voice-select').value;
+  EL_KEY=key;EL_VOICE=voice;
+  localStorage.setItem('el_api_key',key);localStorage.setItem('el_voice_id',voice);
+  AUDIO_CACHE.clear();
+  const st=document.getElementById('el-status');
+  st.style.color=key?'#1d7a4c':'#e88c1a';
+  st.textContent=key?'✓ Guardado — caché limpiado':'⚠ Sin clave → voz navegador';
+}
+async function testEL(){
+  const key=document.getElementById('el-key-input').value.trim();
+  const voice=document.getElementById('el-voice-select').value;
+  const st=document.getElementById('el-status');
+  st.style.color='#7a7a8c';st.textContent='⏳ Probando...';
+  try{
+    const res=await fetch('https://api.elevenlabs.io/v1/text-to-speech/'+voice,{method:'POST',headers:{'xi-api-key':key,'Content-Type':'application/json'},body:JSON.stringify({text:"Bonjour ! Bienvenue dans votre cours de français.",model_id:'eleven_multilingual_v2',language_code:'fr',voice_settings:{stability:0.5,similarity_boost:0.75}})});
+    if(!res.ok){const e=await res.json();throw new Error(e.detail?.message||res.status);}
+    const blob=await res.blob();new Audio(URL.createObjectURL(blob)).play();
+    EL_KEY=key;EL_VOICE=voice;
+    localStorage.setItem('el_api_key',key);localStorage.setItem('el_voice_id',voice);
+    EL_CHARS_USED+=50;localStorage.setItem('el_chars_used',EL_CHARS_USED);updateCharCount();
+    st.style.color='#1d7a4c';st.textContent='✓ ¡Voz perfecta! Cierra y empieza.';
+  }catch(err){st.style.color='#e63946';st.textContent='✗ '+err.message;}
+}
+function updateCharCount(){
+  const el=document.getElementById('el-chars');if(!el)return;
+  const pct=Math.min(100,Math.round(EL_CHARS_USED/10000*100));
+  const color=pct>85?'#e63946':pct>60?'#e88c1a':'#2eaa6b';
+  el.innerHTML='<span style="color:'+color+';font-weight:800">'+EL_CHARS_USED.toLocaleString()+' / 10 000</span> caractères ce mois-ci ('+pct+'%)';
+}
+
+// ══════════════════════════════════════
+// RECORDER — centralisé, par id unique
+// ══════════════════════════════════════
+const REC = {}; // key → {recorder, chunks, blob, recording}
+
+async function recStart(id){
+  if(REC[id] && REC[id].recording) return;
+  const statusEl = document.getElementById('rs_'+id);
+  const btnEl    = document.getElementById('rb_'+id);
+  const cmpEl    = document.getElementById('rc_'+id);
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({audio:true});
+    REC[id] = {chunks:[], recording:true, blob:null};
+    // Choose best available mime
+    const mime = MediaRecorder.isTypeSupported('audio/webm') ? 'audio/webm'
+               : MediaRecorder.isTypeSupported('audio/ogg')  ? 'audio/ogg'
+               : '';
+    REC[id].recorder = mime ? new MediaRecorder(stream,{mimeType:mime}) : new MediaRecorder(stream);
+    REC[id].recorder.ondataavailable = e => { if(e.data && e.data.size>0) REC[id].chunks.push(e.data); };
+    REC[id].recorder.onstop = () => {
+      REC[id].blob = new Blob(REC[id].chunks, {type: REC[id].recorder.mimeType||'audio/webm'});
+      REC[id].recording = false;
+      stream.getTracks().forEach(t=>t.stop());
+      if(statusEl) { statusEl.textContent='✓ ¡Grabado!'; statusEl.style.color='#1d7a4c'; }
+      if(btnEl)    { btnEl.textContent='🎙️ Grabar de nuevo'; btnEl.style.background='#555'; }
+      if(cmpEl)    { cmpEl.style.display='flex'; }
+    };
+    REC[id].recorder.start(100); // collect every 100ms
+    if(statusEl) { statusEl.textContent='● Grabando…'; statusEl.style.color='#e63946'; }
+    if(btnEl)    { btnEl.textContent='⬛ Detener'; btnEl.style.background='#e63946'; }
+    if(cmpEl)    { cmpEl.style.display='none'; }
+  } catch(err) {
+    if(statusEl) {
+      statusEl.textContent = err.name==='NotAllowedError'
+        ? '⚠ Autoriza el micrófono en tu navegador'
+        : '⚠ Micrófono no disponible';
+      statusEl.style.color='#e63946';
+    }
+  }
+}
+
+function recStop(id){
+  if(REC[id] && REC[id].recording && REC[id].recorder){
+    REC[id].recorder.stop();
+  }
+}
+
+function recToggle(id){
+  if(REC[id] && REC[id].recording) recStop(id);
+  else recStart(id);
+}
+
+function recPlayback(id){
+  if(REC[id] && REC[id].blob){
+    const url = URL.createObjectURL(REC[id].blob);
+    const a = new Audio(url);
+    a.play().catch(()=>{ /* autoplay blocked — ignore */ });
+  }
+}
+
+// ══════════════════════════════════════
+// BUILD: WORD CARDS (écoute + répétition)
+// ══════════════════════════════════════
+// words: [{fr, es, ipa}], accentColor, bgColor
+function buildWordCards(containerId, words, accentColor, bgColor){
+  const c = document.getElementById(containerId);
+  if(!c) return;
+  c.innerHTML = '';
+
+  // Grid of cards — each card is self-contained: listen + record
+  words.forEach((w, i) => {
+    const rid = containerId + '_w' + i;
+    const card = document.createElement('div');
+    card.style.cssText = `background:${bgColor};border:2px solid #e8e2d9;border-radius:14px;padding:16px 12px;text-align:center;`;
+    card.innerHTML = `
+      <div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:#1a1a2e;margin-bottom:2px">${w.fr}</div>
+      <div style="font-size:11px;font-style:italic;color:#8a8a9a;margin-bottom:2px">${w.ipa||''}</div>
+      <div style="font-size:11px;color:#8a8a9a;margin-bottom:12px">${w.es}</div>
+      <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:8px">
+        <button onclick="speak('${w.fr.replace(/'/g,"\\'")}');this.style.opacity='.6';setTimeout(()=>this.style.opacity='1',800)"
+          style="background:${accentColor};color:white;border:none;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif">
+          🔊 Escuchar
+        </button>
+        <button id="rb_${rid}" onclick="recToggle('${rid}')"
+          style="background:#555;color:white;border:none;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif">
+          🎙️ Grabar
+        </button>
+      </div>
+      <div id="rs_${rid}" style="font-size:11px;min-height:16px;margin-bottom:6px"></div>
+      <div id="rc_${rid}" style="display:none;gap:6px;justify-content:center;flex-wrap:wrap">
+        <button onclick="speak('${w.fr.replace(/'/g,"\\'")}');this.style.opacity='.6';setTimeout(()=>this.style.opacity='1',800)"
+          style="background:white;border:1px solid #e8e2d9;border-radius:7px;padding:5px 10px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif">
+          🇫🇷 Modelo
+        </button>
+        <button onclick="recPlayback('${rid}')"
+          style="background:white;border:1px solid #e8e2d9;border-radius:7px;padding:5px 10px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif">
+          ▶ Mi voz
+        </button>
+      </div>`;
+    c.appendChild(card);
+  });
+}
+
+// ══════════════════════════════════════
+// BUILD: READ-ALOUD (phrases complètes)
+// ══════════════════════════════════════
+function speakRA(btn){
+  const text = btn.getAttribute('data-phrase') || '';
+  const v = btn.getAttribute('data-voice') || '';
+  const voice = v==='f' ? VOICE_F : v==='m' ? VOICE_M : EL_VOICE;
+  speakWithVoice(text, 1.0, voice);
+}
+function buildReadAloud(containerId, phrases, accentColor){
+  const c = document.getElementById(containerId);
+  if(!c) return;
+  c.innerHTML = '';
+  phrases.forEach((p, i) => {
+    const rid = containerId + '_p' + i;
+    const item = document.createElement('div');
+    item._phrase = p.phrase;
+    item._voice = p.voice || '';
+    item.style.cssText = 'background:#faf7f2;border:1.5px solid #e8e2d9;border-radius:14px;padding:18px 20px;margin-bottom:12px;';
+    item.innerHTML = `
+      <div style="font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:#1a1a2e;margin-bottom:4px;line-height:1.4">${p.phrase}</div>
+      <div style="font-size:12px;color:#8a8a9a;margin-bottom:14px">${p.translation}</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px">
+        <button id="sb_${rid}" data-phrase="${p.phrase.replace(/"/g,'&quot;')}" data-voice="${p.voice||''}" onclick="speakRA(this);this.style.opacity='.6';setTimeout(()=>this.style.opacity='1',900)"
+          style="background:${accentColor};color:white;border:none;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif">
+          🔊 Escuchar modelo
+        </button>
+        <button id="rb_${rid}" onclick="recToggle('${rid}')"
+          style="background:#555;color:white;border:none;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif">
+          🎙️ Grabar mi voz
+        </button>
+        <span id="rs_${rid}" style="font-size:12px;color:#8a8a9a"></span>
+      </div>
+      <div id="rc_${rid}" style="display:none;gap:8px;flex-wrap:wrap">
+        <button id="sb_${rid}" data-phrase="${p.phrase.replace(/"/g,'&quot;')}" data-voice="${p.voice||''}" onclick="speakRA(this);this.style.opacity='.6';setTimeout(()=>this.style.opacity='1',900)"
+          style="background:white;border:1.5px solid #e8e2d9;border-radius:8px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif">
+          🇫🇷 Escuchar modelo
+        </button>
+        <button onclick="recPlayback('${rid}')"
+          style="background:white;border:1.5px solid #e8e2d9;border-radius:8px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif">
+          ▶ Reproducir mi voz
+        </button>
+      </div>`;
+    c.appendChild(item);
+  });
+}
+
+// ══════════════════════════════════════
+// QCM ENGINE
+// ══════════════════════════════════════
+const qcmState={}, qcmTally={};
+function buildQCM(containerId, questions, scoreId, color){
+  const c=document.getElementById(containerId);
+  if(!c) return;
+  questions.forEach((q,qi)=>{
+    const id=containerId+'_'+qi;
+    qcmState[id]={done:false};
+    const div=document.createElement('div');
+    div.className='qcm-item';
+    const speakBtn=q.speak?`<button class="speak-btn" onclick="speak('${q.speak.replace(/'/g,"\\'")}')">🔊</button>`:'';
+    div.innerHTML=`
+      <div class="q-label">Pregunta ${qi+1}</div>
+      <div class="q-text">${q.q}${speakBtn}</div>
+      <div class="opts" id="opts_${id}">
+        ${q.opts.map((o,oi)=>`<button class="opt" onclick="answerQCM('${id}',${oi},${q.ans},'${scoreId}',${questions.length})">${o}</button>`).join('')}
+      </div>
+      <div class="fb" id="fb_${id}"></div>`;
+    c.appendChild(div);
+  });
+}
+function answerQCM(id,chosen,correct,scoreId,total){
+  if(qcmState[id] && qcmState[id].done) return;
+  if(!qcmState[id]) qcmState[id]={};
+  qcmState[id].done=true;
+  const opts=document.getElementById('opts_'+id);
+  const fb=document.getElementById('fb_'+id);
+  opts.querySelectorAll('.opt').forEach((b,i)=>{
+    b.disabled=true;
+    if(i===correct) b.classList.add('correct');
+    else if(i===chosen) b.classList.add('wrong');
+  });
+  const ok=chosen===correct;
+  const correctText=opts.querySelectorAll('.opt')[correct].textContent;
+  fb.textContent=(ok?'✓ ¡Correcto! ':'✗ Incorrecto → ')+correctText;
+  fb.className='fb show '+(ok?'ok':'nope');
+  if(!qcmTally[scoreId]) qcmTally[scoreId]={score:0,done:0};
+  if(ok) qcmTally[scoreId].score++;
+  qcmTally[scoreId].done++;
+  if(qcmTally[scoreId].done===total) showQCMScore(scoreId,qcmTally[scoreId].score,total);
+}
+function showQCMScore(id,score,total){
+  const pct=score/total;
+  const box=document.getElementById(id);
+  if(!box) return;
+  box.classList.add('show');
+  const em=pct>=.8?'🎉':pct>=.6?'👍':'💪';
+  const msg=pct>=.8?'¡Excelente! Dominas este tema.':pct>=.6?'¡Bien! Repasa los errores.':'Sigue practicando, ¡tú puedes!';
+  document.getElementById(id+'-em').textContent=em;
+  document.getElementById(id+'-n').textContent=score+' / '+total;
+  document.getElementById(id+'-m').textContent=msg;
+  box.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+// ══════════════════════════════════════
+// FILL ENGINE
+// ══════════════════════════════════════
+function buildFill(containerId, items){
+  const c=document.getElementById(containerId);
+  if(!c) return;
+  items.forEach((item,i)=>{
+    const div=document.createElement('div');
+    div.className='fill-item';
+    div.innerHTML=`
+      <div class="fill-sentence">${item.sentence}</div>
+      <input class="fill-input" id="${containerId}_${i}" placeholder="${item.hint||'Tu respuesta…'}" data-answer="${item.answer}" autocomplete="off" autocorrect="off" spellcheck="false">
+      <div class="fill-hint" id="${containerId}_hint_${i}"></div>`;
+    c.appendChild(div);
+  });
+}
+function checkFill(containerId, scoreId){
+  const inputs=document.querySelectorAll('#'+containerId+' .fill-input');
+  let ok=0;
+  inputs.forEach((inp,i)=>{
+    const val=inp.value.trim().toLowerCase();
+    const answers=inp.dataset.answer.split('|').map(a=>a.toLowerCase());
+    const correct=answers.some(a=>val===a||val===a.replace(/-/g,' '));
+    inp.className='fill-input '+(correct?'ok':'nope');
+    const hint=document.getElementById(containerId+'_hint_'+i);
+    if(!correct) hint.textContent='→ '+inp.dataset.answer.split('|')[0];
+    else { ok++; hint.textContent=''; }
+    inp.disabled=true;
+  });
+  const box=document.getElementById(scoreId);
+  if(!box) return;
+  box.classList.add('show');
+  const pct=ok/inputs.length;
+  document.getElementById(scoreId+'-em').textContent=pct>=.8?'🎉':pct>=.6?'👍':'💪';
+  document.getElementById(scoreId+'-n').textContent=ok+' / '+inputs.length;
+  document.getElementById(scoreId+'-m').textContent=pct>=.8?'¡Excelente!':pct>=.6?'¡Bien! Repasa los errores.':'Inténtalo de nuevo.';
+  box.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+// ══════════════════════════════════════
+// MATCH ENGINE
+// ══════════════════════════════════════
+const matchState={};
+function buildMatch(containerId, pairs, scoreId){
+  const shuffled=[...pairs].sort(()=>Math.random()-.5);
+  const wrap=document.createElement('div');
+  wrap.className='match-wrap';
+  wrap.innerHTML=`
+    <div>
+      <div class="match-col-title">Francés</div>
+      <div class="match-col" id="${containerId}_left">
+        ${pairs.map((p,i)=>`<button class="match-item" id="${containerId}_L${i}" onclick="pickMatch('${containerId}','L',${i},'${scoreId}',${pairs.length})">${p.left}</button>`).join('')}
+      </div>
+    </div>
+    <div>
+      <div class="match-col-title">Español</div>
+      <div class="match-col" id="${containerId}_right">
+        ${shuffled.map((p,i)=>`<button class="match-item" id="${containerId}_R${i}" onclick="pickMatch('${containerId}','R',${i},'${scoreId}',${pairs.length})" data-val="${p.left}">${p.right}</button>`).join('')}
+      </div>
+    </div>`;
+  document.getElementById(containerId).appendChild(wrap);
+  matchState[containerId]={selected:null, score:0, total:pairs.length};
+}
+function pickMatch(cid, side, idx, scoreId, total){
+  const st=matchState[cid];
+  const el=document.getElementById(cid+'_'+side+idx);
+  if(el.classList.contains('matched-ok')) return;
+  if(!st.selected){ st.selected={side,idx,el}; el.classList.add('selected'); return; }
+  const prev=st.selected;
+  if(prev.side===side){ prev.el.classList.remove('selected'); st.selected={side,idx,el}; el.classList.add('selected'); return; }
+  let lEl=side==='L'?el:prev.el, rEl=side==='R'?el:prev.el;
+  const matched=rEl.getAttribute('data-val')===lEl.textContent.trim();
+  lEl.classList.remove('selected'); rEl.classList.remove('selected');
+  if(matched){
+    lEl.classList.add('matched-ok'); rEl.classList.add('matched-ok');
+    st.score++;
+  } else {
+    lEl.classList.add('matched-err'); rEl.classList.add('matched-err');
+    setTimeout(()=>{ lEl.classList.remove('matched-err'); rEl.classList.remove('matched-err'); },700);
+  }
+  st.selected=null;
+  const sc=document.getElementById(scoreId);
+  if(sc) sc.textContent=st.score+' / '+st.total+' pares correctos';
+}
+
+// ══════════════════════════════════════
+// COLOR GRID
+// ══════════════════════════════════════
+function buildColorGrid(){
+  const c=document.getElementById('ex3b');
+  if(!c) return;
+  colors.forEach(col=>{
+    const d=document.createElement('div');
+    d.className='color-card';
+    d.innerHTML=`<div class="color-swatch" style="background:${col.hex}"></div><div class="color-fr">${col.fr}</div><div class="color-es">${col.es}</div>`;
+    d.onclick=()=>{ speak(col.fr); d.classList.add('playing'); setTimeout(()=>d.classList.remove('playing'),1200); };
+    c.appendChild(d);
+  });
+}
+
+// ══════════════════════════════════════
+// ALPHABET
+// ══════════════════════════════════════
+function buildAlphabet(){
+  const c=document.getElementById('ex5a');
+  if(!c) return;
+  const grid=document.createElement('div');
+  grid.style.cssText='display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;';
+  'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(l=>{
+    const b=document.createElement('button');
+    b.style.cssText='width:42px;height:42px;border-radius:8px;border:1.5px solid #e8e2d9;background:#faf7f2;font-family:"Playfair Display",serif;font-size:18px;font-weight:700;cursor:pointer;transition:all .15s;color:#6d28d9;';
+    b.textContent=l;
+    b.onclick=()=>{ speak(l,0.7); b.style.background='#ede9fe'; setTimeout(()=>b.style.background='#faf7f2',900); };
+    grid.appendChild(b);
+  });
+  c.appendChild(grid);
+  // Read-aloud for alphabet section
+  buildReadAloud('rec5', [
+    {phrase:'Bonjour, comment vous appelez-vous ?', translation:'Buenos días, ¿cómo se llama usted?'},
+    {phrase:'Au revoir, à bientôt !',              translation:'Adiós, ¡hasta pronto!'},
+    {phrase:'Merci beaucoup, enchanté !',           translation:'Muchas gracias, ¡encantado!'},
+  ], 'var(--l5)');
+}
+
+function buildNasales(){
+  const c=document.getElementById('ex5b');
+  if(!c) return;
+  [{comb:'an, en, am, em',ex:'sans, lent, lampe, temps',trad:'sin, lento, lámpara, tiempo',bg:'#fdecea'},
+   {comb:'in, ain, ein, un',ex:'pain, main, vingt, synthèse',trad:'pan, mano, veinte, resumen',bg:'#deeeff'},
+   {comb:'on, om',ex:'bon, nom',trad:'bueno, nombre',bg:'#dcf5ea'}
+  ].forEach(n=>{
+    const d=document.createElement('div');
+    d.className='liaison-card'; d.style.background=n.bg;
+    d.innerHTML=`
+      <div>
+        <div style="font-size:11px;font-weight:800;letter-spacing:1px;color:#8a8a9a;margin-bottom:4px">COMBINACIÓN</div>
+        <div style="font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:#1a1a2e">${n.comb}</div>
+        <div style="font-size:13px;color:#8a8a9a;margin-top:4px">Ej: <em>${n.ex}</em> → ${n.trad}</div>
+      </div>
+      <button class="speak-btn" onclick="speak('${n.ex.split(',')[0].trim()}')">🔊</button>`;
+    c.appendChild(d);
+  });
+}
+
+// ══════════════════════════════════════
+// MOBILE NAV
+// ══════════════════════════════════════
+function buildMobNav(){
+  const nav=document.getElementById('mobNav');
+  if(!nav) return;
+  [{n:1,icon:'🤝',label:'Se présenter'},{n:2,icon:'👤',label:'Pronoms'},
+   {n:3,icon:'🔢',label:'Nombres'},{n:4,icon:'📋',label:'Formulaire'},{n:5,icon:'🔤',label:'Prononciation',n:0}
+  ].forEach(l=>{
+    const b=document.createElement('button');
+    b.className='mob-nav-btn'+(l.n===1?' active':'');
+    b.setAttribute('data-lesson',l.n);
+    b.textContent=l.icon+' '+l.label;
+    if(l.n===1) b.style.cssText='background:var(--l1);color:white;';
+    b.onclick=()=>showLesson(l.n);
+    nav.appendChild(b);
+  });
+}
+
+// ══════════════════════════════════════
+// ALL DATA
+// ══════════════════════════════════════
+
+// ── LEÇON 1 ──
+const qcmSaludos=[
+  {q:'¿Cómo se dice "hola" de forma informal en francés?', opts:['Bonsoir','Bonjour','Salut','Au revoir'], ans:2, speak:'Salut'},
+  {q:'"Comment allez-vous ?" es una forma…', opts:['informal','formal','para niños','con amigos'], ans:1},
+  {q:'¿Cómo se responde de forma informal a "Ça va ?"', opts:['Je vais bien, merci. Et vous ?','Ça va bien, merci ! Et toi ?','Bonsoir !','Je m\'appelle Marie.'], ans:1},
+  {q:'"Bonsoir" se usa…', opts:['Por la mañana','Todo el día','A partir del final de la tarde/noche','Solo con amigos'], ans:2, speak:'Bonsoir'},
+  {q:'¿Cómo se pregunta la edad formalmente?', opts:['Tu as quel âge ?','Quel âge avez-vous ?','Comment tu t\'appelles ?','Tu habites où ?'], ans:1},
+  {q:'J\'habite à Lyon → ¿Qué significa?', opts:['Vengo de Lyon','Vivo en Lyon','Trabajo en Lyon','Estudio en Lyon'], ans:1},
+];
+const fillPresentation=[
+  {sentence:'___ m\'appelle Carlos. (yo)', answer:'Je', hint:'pronombre yo'},
+  {sentence:'J\'___ vingt-deux ans. (tener)', answer:'ai', hint:'avoir 1a persona'},
+  {sentence:'Je ___ de Mexico. (venir)', answer:'viens', hint:'venir 1a persona'},
+  {sentence:'Je ___ étudiant. (ser)', answer:'suis', hint:'être 1a persona'},
+  {sentence:'J\'habite ___ Madrid. (preposición ciudad)', answer:'à', hint:'à'},
+  {sentence:'Je suis ___. → Soy español (masculino)', answer:'espagnol', hint:'nacionalidad masc.'},
+];
+const matchInterrogatifs=[
+  {left:'Qui',right:'¿Quién?'},{left:'Où',right:'¿Dónde?'},{left:'Quand',right:'¿Cuándo?'},
+  {left:'Comment',right:'¿Cómo?'},{left:'Pourquoi',right:'¿Por qué?'},{left:'Combien',right:'¿Cuánto/s?'},
+];
+const qcmFamille=[
+  {q:'¿Cómo se dice "Tengo un hermano y dos hermanas"?', opts:['J\'ai une frère et deux sœurs.','J\'ai un frère et deux sœurs.','J\'ai un frère et deux frères.'], ans:1},
+  {q:'"Je suis célibataire" significa:', opts:['Estoy casado/a.','Estoy en pareja.','Estoy soltero/a.'], ans:2},
+  {q:'"Je n\'ai pas d\'enfants" →', opts:['Tengo hijos.','No tengo hijos.','Tengo un hijo.'], ans:1},
+  {q:'¿Cómo se pregunta si alguien tiene hermanos (formal)?', opts:['Tu as des frères et sœurs ?','Avez-vous des frères et sœurs ?','Il a des frères ?'], ans:1},
+];
+const wordsL1=[
+  {fr:'Bonjour',es:'Buenos días',ipa:'[bɔ̃.ʒuʁ]'},{fr:'Salut',es:'Hola (informal)',ipa:'[sa.ly]'},
+  {fr:'Bonsoir',es:'Buenas noches',ipa:'[bɔ̃.swaʁ]'},{fr:'Merci',es:'Gracias',ipa:'[mɛʁ.si]'},
+  {fr:'Enchanté',es:'Encantado',ipa:'[ɑ̃.ʃɑ̃.te]'},{fr:'Au revoir',es:'Hasta luego',ipa:'[o.ʁə.vwaʁ]'},
+];
+const raL1=[
+  {phrase:"Bonjour ! Je m'appelle Carlos.",         translation:"¡Hola! Me llamo Carlos.",         voice:"m"},
+  {phrase:"J'ai vingt-deux ans.",                   translation:"Tengo veintidós años.",            voice:"m"},
+  {phrase:"Je suis mexicain. J'habite à Mexico.",   translation:"Soy mexicano. Vivo en México.",    voice:"m"},
+  {phrase:"Comment vous appelez-vous ?",            translation:"¿Cómo se llama usted?",            voice:"f"},
+  {phrase:"Enchanté de faire votre connaissance !", translation:"¡Encantado de conocerle!",         voice:"m"},
+];
+
+// ── LEÇON 2 ──
+const matchPronoms=[
+  {left:'Je',right:'Yo'},{left:'Tu',right:'Tú'},{left:'Il / Elle',right:'Él / Ella'},
+  {left:'Nous',right:'Nosotros/as'},{left:'Vous',right:'Vosotros / Usted'},{left:'Ils / Elles',right:'Ellos / Ellas'},
+];
+const fillPronoms=[
+  {sentence:'___ parle français. (yo)', answer:'Je', hint:'yo'},
+  {sentence:'___ habites où ? (tú)', answer:'Tu', hint:'tú'},
+  {sentence:'___ allons à Paris. (nosotros formal)', answer:'Nous', hint:'nosotros'},
+  {sentence:'___ sont amies. (ellas)', answer:'Elles', hint:'ellas'},
+  {sentence:'___ travaillez ici ? (usted/es)', answer:'Vous', hint:'usted'},
+  {sentence:'___ mange une pomme. (él)', answer:'Il', hint:'él'},
+];
+const qcmPronoms=[
+  {q:'"J\'écoute de la musique." → ¿Por qué J\' y no Je?', opts:['Es más corto.','El verbo empieza por vocal → contracción obligatoria.','Es informal.','Es opcional.'], ans:1},
+  {q:'"On mange à 8h." → En lenguaje hablado, "on" equivale a:', opts:['Ils','Vous','Nous','Tu'], ans:2},
+  {q:'"Vous êtes professeur ?" → "vous" aquí es:', opts:['Plural (vosotros)','Formal singular (usted)','Puede ser los dos','Solo plural'], ans:2},
+  {q:'¿Cuál es el pronombre para "ellas"?', opts:['Ils','Elles','Nous','Elles o Ils (igual)'], ans:1},
+];
+const qcmLiaison=[
+  {q:'"Ils aiment" → ¿singular o plural?', speak:'Ils aiment', opts:['Singular — no hay liaison','Plural — hay liaison [z]'], ans:1},
+  {q:'"Il aime" → ¿singular o plural?', speak:'Il aime', opts:['Singular — no hay liaison','Plural — hay liaison [z]'], ans:0},
+  {q:'"Elles arrivent" → ¿singular o plural?', speak:'Elles arrivent', opts:['Singular','Plural — hay liaison [z]'], ans:1},
+  {q:'"Elle arrive" → ¿singular o plural?', speak:'Elle arrive', opts:['Singular — no hay liaison','Plural'], ans:0},
+];
+const wordsL2=[
+  {fr:'Je parle',es:'Yo hablo',ipa:'[ʒə paʁl]'},{fr:'Tu habites',es:'Tú vives',ipa:'[ty a.bit]'},
+  {fr:'Il mange',es:'Él come',ipa:'[il mɑ̃ʒ]'},{fr:'Nous allons',es:'Nosotros vamos',ipa:'[nu za.lɔ̃]'},
+  {fr:'Vous parlez',es:'Ustedes hablan',ipa:'[vu paʁ.le]'},{fr:'Ils aiment',es:'Ellos aman',ipa:'[il‿z‿ɛm]'},
+];
+const raL2=[
+  {phrase:"Je parle français.",       translation:"Yo hablo francés.",                              voice:"m"},
+  {phrase:"Tu habites où ?",          translation:"¿Dónde vives tú?",                               voice:"f"},
+  {phrase:"Il mange une pomme.",      translation:"Él come una manzana.",                           voice:"m"},
+  {phrase:"Nous allons à Paris.",     translation:"Nosotros vamos a París.",                        voice:"f"},
+  {phrase:"Ils aiment le français.",  translation:"Ellos aman el francés. (escucha la liaison [z])",voice:"m"},
+];
+
+// ── LEÇON 3 ──
+const qcmNombres=[
+  {q:'¿Cómo se dice <b style="font-size:22px;color:var(--l3d)">35</b> en francés?', opts:['Quarante-cinq','Trente-cinq','Vingt-cinq','Trente-quinze'], ans:1},
+  {q:'¿Cómo se dice <b style="font-size:22px;color:var(--l3d)">70</b> en francés estándar (Francia)?', opts:['Septante','Soixante-dix','Soixante-quinze','Quatre-vingts'], ans:1},
+  {q:'¿Cómo se dice <b style="font-size:22px;color:var(--l3d)">70</b> en Bélgica y Suiza?', opts:['Soixante-dix','Soixante-quinze','Septante','Quatre-vingts'], ans:2, speak:'Septante'},
+  {q:'¿Cómo se dice <b style="font-size:22px;color:var(--l3d)">80</b> en francés estándar (Francia)?', opts:['Octante','Quatre-vingt-dix','Quatre-vingts','Soixante-vingt'], ans:2},
+  {q:'¿Cómo se dice <b style="font-size:22px;color:var(--l3d)">99</b> en francés estándar (Francia)?', opts:['Quatre-vingt-dix-neuf','Nonante-neuf','Quatre-vingt-neuf','Cent moins un'], ans:0},
+  {q:'¿Cómo se dice <b style="font-size:22px;color:var(--l3d)">99</b> en Bélgica y Suiza?', opts:['Quatre-vingt-dix-neuf','Nonante-neuf','Quatre-vingt-neuf','Cent moins un'], ans:1, speak:'Nonante-neuf'},
+  {q:'¿Cómo se dice <b style="font-size:22px;color:var(--l3d)">71</b> en francés?', opts:['Soixante-onze','Soixante-et-onze','Septante-et-un','Soixante-dix-un'], ans:1},
+];
+const colors=[
+  {fr:'Bleu',es:'Azul',hex:'#2a6dd1'},{fr:'Rouge',es:'Rojo',hex:'#e63946'},
+  {fr:'Jaune',es:'Amarillo',hex:'#fbbf24'},{fr:'Vert',es:'Verde',hex:'#2eaa6b'},
+  {fr:'Orange',es:'Naranja',hex:'#f97316'},{fr:'Rose',es:'Rosa',hex:'#f472b6'},
+  {fr:'Gris',es:'Gris',hex:'#9ca3af'},{fr:'Noir',es:'Negro',hex:'#1f2937'},
+  {fr:'Blanc',es:'Blanco',hex:'#e5e7eb'},{fr:'Violet',es:'Morado',hex:'#8b5cf6'},
+  {fr:'Marron',es:'Marrón',hex:'#92400e'},
+];
+const matchColors=[
+  {left:'Bleu',right:'Azul'},{left:'Rouge',right:'Rojo'},{left:'Jaune',right:'Amarillo'},
+  {left:'Vert',right:'Verde'},{left:'Noir',right:'Negro'},{left:'Blanc',right:'Blanco'},
+  {left:'Orange',right:'Naranja'},{left:'Gris',right:'Gris'},{left:'Violet',right:'Morado'},
+  {left:'Rose',right:'Rosa'},{left:'Marron',right:'Marrón'},
+];
+const fillColors=[
+  {sentence:"Le ciel est ___ .",answer:"bleu|gris",hint:"azul o gris"},
+  {sentence:"Le bus est ___ .",answer:"rouge|jaune|orange|blanc",hint:"un color — rojo, amarillo, naranja..."},
+  {sentence:"Mon chat est ___ .",answer:"noir|blanc|gris|orange",hint:"un color — negro, blanco, gris..."},
+  {sentence:"Mon sac est ___ .",answer:"bleu|noir|vert|rouge|gris",hint:"un color — azul, negro, verde..."},
+  {sentence:"Le soleil est ___ .",answer:"jaune|orange",hint:"amarillo o naranja"},
+];
+const qcmOrdinaux=[
+  {q:'¿Cómo se dice "primero" (masculino)?', opts:['Un','Premièrement','Premier','Primo'], ans:2},
+  {q:'¿Cómo se forma "tercero"?', opts:['Troisième','Troisième-ième','Trois','Troième'], ans:0},
+  {q:'"Cinquième" → ¿por qué "qu" y no "c"?', opts:['Excepción: cinq → cinquième','Es igual que en español','Por la liaison','Error tipográfico'], ans:0},
+  {q:'¿Cómo se dice "noveno"?', opts:['Novième','Neufième','Neuvième','Neuviéme'], ans:2},
+];
+const fillNombres=[
+  {sentence:'J\'ai ___ ans. (25)', answer:'vingt-cinq', hint:'25'},
+  {sentence:'Il y a ___ élèves. (40)', answer:'quarante', hint:'40'},
+  {sentence:'Elle a ___ ans. (80)', answer:'quatre-vingts', hint:'80'},
+  {sentence:'Nous sommes ___ personnes. (3)', answer:'trois', hint:'3'},
+];
+const wordsL3=[
+  {fr:'Soixante-dix',es:'70',ipa:'[swa.sɑ̃t diz]'},{fr:'Quatre-vingts',es:'80',ipa:'[katʁ vɛ̃]'},
+  {fr:'Quatre-vingt-dix',es:'90',ipa:'[katʁ vɛ̃ dis]'},{fr:'Soixante-et-onze',es:'71',ipa:'[swa.sɑ̃t e ɔ̃z]'},
+  {fr:'Quatre-vingt-cinq',es:'85',ipa:'[katʁ vɛ̃ sɛ̃k]'},{fr:'Quatre-vingt-dix-neuf',es:'99',ipa:'[katʁ vɛ̃ di nœf]'},
+];
+const raL3=[
+  {phrase:"J'ai vingt-cinq ans.",                      translation:"Tengo 25 años.",                voice:"m"},
+  {phrase:"Il y a soixante-dix élèves.",               translation:"Hay 70 alumnos.",               voice:"m"},
+  {phrase:"Quatre-vingts euros, s'il vous plaît.",     translation:"Ochenta euros, por favor.",      voice:"f"},
+  {phrase:"Ma couleur préférée est le bleu.",          translation:"Mi color favorito es el azul.",  voice:"f"},
+];
+
+// ── LEÇON 4 ──
+const matchFormulaire=[
+  {left:'Nom',right:'Apellido'},{left:'Prénom',right:'Nombre'},
+  {left:'Date de naissance',right:'Fecha de nacimiento'},{left:'Adresse',right:'Dirección'},
+  {left:'Code postal',right:'Código postal'},{left:'Pays',right:'País'},
+];
+const fillFormulaire=[
+  {sentence:'El campo del apellido se llama :', answer:'Nom', hint:'Apellido'},
+  {sentence:'El campo de la fecha de nacimiento :', answer:'Date de naissance', hint:'Date de naissance'},
+  {sentence:'El campo del número de móvil :', answer:'Numéro de portable', hint:'Numéro de portable'},
+  {sentence:'El campo del correo electrónico :', answer:'Adresse Email|Courrier électronique', hint:'Adresse Email'},
+  {sentence:'El campo de la ciudad :', answer:'Ville', hint:'Ville'},
+];
+const qcmFormulaire=[
+  {q:'"Célibataire" en un formulario significa:', opts:['Casado/a','Soltero/a','Divorciado/a','Viudo/a'], ans:1, speak:'Célibataire'},
+  {q:'La fecha en un formulario francés se escribe:', opts:['Mes/Día/Año','Año/Mes/Día','Día/Mes/Año','No importa'], ans:2},
+  {q:'"Écrire en MAJUSCULES" significa:', opts:['Escribir en minúsculas','Escribir en mayúsculas','Escribir en cursiva','Escribir en negrita'], ans:1},
+  {q:'"Signature" es:', opts:['Tu nombre impreso','Tu dirección','Tu firma','Tu teléfono'], ans:2},
+];
+const wordsL4=[
+  {fr:'Nom',es:'Apellido',ipa:'[nɔ̃]'},{fr:'Prénom',es:'Nombre',ipa:'[pʁe.nɔ̃]'},
+  {fr:'Date de naissance',es:'Fecha de nacimiento',ipa:'[dat də nɛ.sɑ̃s]'},
+  {fr:'Adresse',es:'Dirección',ipa:'[a.dʁɛs]'},
+  {fr:'Code postal',es:'Código postal',ipa:'[kɔd pɔs.tal]'},
+  {fr:'Signature',es:'Firma',ipa:'[si.ɲa.tyʁ]'},
+];
+const raL4=[
+  {phrase:"Mon nom est DUPONT, prénom Marie.",            translation:"Mi apellido es DUPONT, nombre Marie.",  voice:"f"},
+  {phrase:"J'habite au douze rue des Fleurs, Paris.",     translation:"Vivo en el nº12 de la calle des Fleurs, París.", voice:"f"},
+  {phrase:"Mon adresse email est marie point dupont arobase email point com.",
+                                                          translation:"Mi email es marie.dupont@email.com",    voice:"f"},
+  {phrase:"Je signe ici.",                                translation:"Firmo aquí.",                           voice:"f"},
+];
+
+// ── INTRO PRONONCIATION ──
+const qcmSons=[
+  {q:'Escucha 🔊 — ¿qué sonido tiene "ch" en "chat" ?', speak:'chat', opts:['[k] como "kilo"','[ʃ] suave, como "sh" inglés','[tʃ] como en español'], ans:1},
+  {q:'Escucha 🔊 — ¿cómo suena la "j" en "jour" ?', speak:'jour', opts:['[x] jota española (fuerte)','[ʒ] suave, como "zh"','[dʒ] como "dj"'], ans:1},
+  {q:'Escucha 🔊 — ¿cómo suena "ou" en "vous" ?', speak:'vous', opts:['[u] como en español "luna"','[o] como en "solo"','[w] como "w"'], ans:0},
+  {q:'Escucha 🔊 — ¿cómo suena "gn" en "montagne" ?', speak:'montagne', opts:['[g]+[n] separados','[ɲ] como la "ñ" española','solo [n]'], ans:1},
+  {q:'Escucha 🔊 — ¿"lune" y "loup" suenan igual?', speak:'lune', opts:['Sí, los dos son [u]','No — "lune" es [y] (labios redondeados), "loup" es [u]','Sí, los dos son [ou]'], ans:1},
+];
+const wordsU=[
+  {fr:'lune',es:'luna',ipa:'[lyn]'},{fr:'rue',es:'calle',ipa:'[ʁy]'},{fr:'tu',es:'tú',ipa:'[ty]'},
+  {fr:'pur',es:'puro',ipa:'[pyʁ]'},{fr:'mur',es:'pared',ipa:'[myʁ]'},{fr:'sur',es:'sobre',ipa:'[syʁ]'},
+];
+const wordsJ=[
+  {fr:'jour',es:'día',ipa:'[ʒuʁ]'},{fr:'je',es:'yo',ipa:'[ʒə]'},{fr:'joli',es:'bonito',ipa:'[ʒɔ.li]'},
+  {fr:'jardin',es:'jardín',ipa:'[ʒaʁ.dɛ̃]'},{fr:'girafe',es:'jirafa',ipa:'[ʒi.ʁaf]'},{fr:'janvier',es:'enero',ipa:'[ʒɑ̃.vje]'},
+];
+
+// ══════════════════════════════════════
+// INIT
+// ══════════════════════════════════════
+document.addEventListener('DOMContentLoaded', ()=>{
+  // Pre-load voices
+  window.speechSynthesis.getVoices();
+  if(window.speechSynthesis.onvoiceschanged !== undefined)
+    window.speechSynthesis.onvoiceschanged = ()=>window.speechSynthesis.getVoices();
+
+  // L1
+  buildQCM('ex1a', qcmSaludos, 'sc1a', 'var(--l1)');
+  buildFill('ex1b', fillPresentation);
+  buildMatch('ex1c', matchInterrogatifs, 'sc1c');
+  buildQCM('ex1d', qcmFamille, 'sc1d', 'var(--l1)');
+  buildWordCards('phon1', wordsL1, 'var(--l1)', 'var(--l1l)');
+  buildReadAloud('readaloud1', raL1, 'var(--l1)');
+
+  // L2
+  buildMatch('ex2a', matchPronoms, 'sc2a');
+  buildFill('ex2b', fillPronoms);
+  buildQCM('ex2c', qcmPronoms, 'sc2c', 'var(--l2)');
+  buildQCM('ex2d', qcmLiaison, 'sc2d', 'var(--l2)');
+  buildWordCards('phon2', wordsL2, 'var(--l2)', 'var(--l2l)');
+  buildReadAloud('readaloud2', raL2, 'var(--l2)');
+
+  // L3
+  buildQCM('ex3a', qcmNombres, 'sc3a', 'var(--l3)');
+  buildMatch('ex3b', matchColors, 'sc3b');
+  buildFill('ex3c', fillColors);
+  buildQCM('ex3d', qcmOrdinaux, 'sc3d', 'var(--l3)');
+  buildFill('ex3e', fillNombres);
+  buildWordCards('phon3', wordsL3, 'var(--l3)', 'var(--l3l)');
+  buildReadAloud('readaloud3', raL3, 'var(--l3)');
+
+  // L4
+  buildMatch('ex4a', matchFormulaire, 'sc4a');
+  buildFill('ex4b', fillFormulaire);
+  buildQCM('ex4c', qcmFormulaire, 'sc4c', 'var(--l4)');
+  buildWordCards('phon4', wordsL4, 'var(--l4)', 'var(--l4l)');
+  buildReadAloud('readaloud4', raL4, 'var(--l4)');
+
+  // L5
+  buildAlphabet();
+  buildNasales();
+  buildQCM('ex5c', qcmSons, 'sc5c', 'var(--l5)');
+  buildWordCards('phon5u', wordsU, 'var(--l5)', 'var(--l5l)');
+  buildWordCards('phon5j', wordsJ, 'var(--l5)', 'var(--l5l)');
+
+  buildMobNav();
+  buildELPanel();
+});
+</script>
+</body>
+</html>
