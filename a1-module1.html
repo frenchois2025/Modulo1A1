@@ -1268,6 +1268,7 @@ function buildColorGrid(){
 // ══════════════════════════════════════
 // ALPHABET
 // ══════════════════════════════════════
+const ALPHA_FR = {'A':'a','B':'bé','C':'cé','D':'dé','E':'e','F':'effe','G':'gé','H':'ache','I':'i','J':'ji','K':'ka','L':'elle','M':'emme','N':'enne','O':'o','P':'pé','Q':'ku','R':'erre','S':'esse','T':'té','U':'u','V':'vé','W':'double vé','X':'iks','Y':'i grec','Z':'zède'};
 function buildAlphabet(){
   const c=document.getElementById('ex5a');
   if(!c) return;
@@ -1277,7 +1278,7 @@ function buildAlphabet(){
     const b=document.createElement('button');
     b.style.cssText='width:42px;height:42px;border-radius:8px;border:1.5px solid #e8e2d9;background:#faf7f2;font-family:"Playfair Display",serif;font-size:18px;font-weight:700;cursor:pointer;transition:all .15s;color:#6d28d9;';
     b.textContent=l;
-    b.onclick=()=>{ speak(l,0.7); b.style.background='#ede9fe'; setTimeout(()=>b.style.background='#faf7f2',900); };
+    b.onclick=()=>{ speak(ALPHA_FR[l]||l,0.7); b.style.background='#ede9fe'; setTimeout(()=>b.style.background='#faf7f2',900); };
     grid.appendChild(b);
   });
   c.appendChild(grid);
