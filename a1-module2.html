@@ -1353,55 +1353,6 @@ const ra6=[
 ];
 
 // ══ INIT ══
-function speakRA(btn){
-  const text = btn.getAttribute('data-phrase') || '';
-  const v = btn.getAttribute('data-voice') || '';
-  const voice = v==='f' ? VOICE_F : v==='m' ? VOICE_M : EL_VOICE;
-  speakWithVoice(text, 1.0, voice);
-}
-function buildReadAloud(containerId, phrases, accentColor){
-  const c = document.getElementById(containerId);
-  if(!c) return;
-  c.innerHTML = '';
-  phrases.forEach((p, i) => {
-    const rid = containerId + '_p' + i;
-    const item = document.createElement('div');
-    item._phrase = p.phrase;
-    item._voice = p.voice || '';
-    item.style.cssText = 'background:#faf7f2;border:1.5px solid #e8e2d9;border-radius:14px;padding:18px 20px;margin-bottom:12px;';
-    item.innerHTML = `
-      <div style="font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:#1a1a2e;margin-bottom:4px;line-height:1.4">${p.phrase}</div>
-      <div style="font-size:12px;color:#8a8a9a;margin-bottom:14px">${p.translation}</div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px">
-        <button id="sb_${rid}" data-phrase="${p.phrase.replace(/"/g,'&quot;')}" data-voice="${p.voice||''}" onclick="speakRA(this);this.style.opacity='.6';setTimeout(()=>this.style.opacity='1',900)"
-          style="background:${accentColor};color:white;border:none;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif">
-          🔊 Escuchar modelo
-        </button>
-        <button id="rb_${rid}" onclick="recToggle('${rid}')"
-          style="background:#555;color:white;border:none;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif">
-          🎙️ Grabar mi voz
-        </button>
-        <span id="rs_${rid}" style="font-size:12px;color:#8a8a9a"></span>
-      </div>
-      <div id="rc_${rid}" style="display:none;gap:8px;flex-wrap:wrap">
-        <button id="sb_${rid}" data-phrase="${p.phrase.replace(/"/g,'&quot;')}" data-voice="${p.voice||''}" onclick="speakRA(this);this.style.opacity='.6';setTimeout(()=>this.style.opacity='1',900)"
-          style="background:white;border:1.5px solid #e8e2d9;border-radius:8px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif">
-          🇫🇷 Escuchar modelo
-        </button>
-        <button onclick="recPlayback('${rid}')"
-          style="background:white;border:1.5px solid #e8e2d9;border-radius:8px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif">
-          ▶ Reproducir mi voz
-        </button>
-      </div>`;
-    c.appendChild(item);
-  });
-}
-
-// ══════════════════════════════════════
-// QCM ENGINE
-// ══════════════════════════════════════
-function buildRA(id,phrases,color){ buildReadAloud(id,phrases,color); }
-
 document.addEventListener('DOMContentLoaded',()=>{
   window.speechSynthesis.getVoices();
   if(window.speechSynthesis.onvoiceschanged!==undefined)
@@ -1432,14 +1383,14 @@ document.addEventListener('DOMContentLoaded',()=>{
   buildFill('ex4b',fill4b);
   buildFill('ex4c',fill4c);
   buildQCM('ex4d',qcm4d,'sc4d');
-  buildWords('words4',words4,'var(--l4)','var(--l4l)');
+  buildWordCards('words4',words4,'var(--l4)','var(--l4l)');
   buildRA('ra4',ra4,'var(--l4)');
 
   // L5
   buildMatch('ex5a',match5a,'sc5a');
   buildFill('ex5b',fill5b);
   buildQCM('ex5c',qcm5c,'sc5c');
-  buildWords('words5',words5,'var(--l5)','var(--l5l)');
+  buildWordCards('words5',words5,'var(--l5)','var(--l5l)');
   buildRA('ra5',ra5,'var(--l5)');
 
 
