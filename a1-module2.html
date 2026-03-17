@@ -376,7 +376,20 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
   </div>
 
   <!-- Ex 3E: Oral questions -->
+    <div class="ex-card">
+    <div class="ex-title" style="color:var(--l3)">Ejercicio 4 — Transforma la frase</div>
+    <div class="ex-instr">Transforma cada frase según la indicación. Sin ayuda.</div>
+    <div id="ex3e"></div>
+    <button class="check-btn" style="background:var(--l3);color:white" onclick="checkFill('ex3e','sc3e')">Verificar</button>
+    <div class="score-box" id="sc3e" style="background:var(--l3l)"><div class="score-emoji" id="sc3e-em"></div><div class="score-num" id="sc3e-n" style="color:var(--l3d)"></div><div class="score-msg" id="sc3e-m"></div></div>
+  </div>
   <div class="ex-card">
+    <div class="ex-title" style="color:var(--l3)">Ejercicio 5 — Comprensión oral</div>
+    <div class="ex-instr">Escucha el diálogo y responde las preguntas.</div>
+    <div id="dial3"></div>
+    <div class="score-box" id="sc3f" style="background:var(--l3l)"><div class="score-emoji" id="sc3f-em"></div><div class="score-num" id="sc3f-n" style="color:var(--l3d)"></div><div class="score-msg" id="sc3f-m"></div></div>
+  </div>
+<div class="ex-card">
     <div class="ex-title" style="color:var(--l3)">Ejercicio 5 — 🎙️ Formula preguntas en voz alta</div>
     <div class="ex-instr">Escucha la pregunta modelo y graba tu versión.</div>
     <div id="ra3"></div>
@@ -1210,7 +1223,7 @@ const qcm3a=[
   {q:'"Est-ce que vous habitez à Paris ?" → ¿Qué estructura usa?', opts:['Entonación ascendente','Partícula interrogativa fija','Inversión del sujeto'], ans:1},
   {q:'"Parles-tu espagnol ?" → ¿Qué estructura usa?', opts:['Entonación ascendente','Partícula interrogativa fija','Inversión del sujeto'], ans:2},
   {q:'"Il aime le fromage ?" → ¿Qué estructura usa?', opts:['Entonación ascendente','Partícula interrogativa fija','Inversión del sujeto'], ans:0},
-  {q:'¿Cuál de estas estructuras coloca el verbo ANTES del sujeto?', opts:['Entonación ascendente','Partícula interrogativa fija','Inversión del sujeto'], ans:2},
+  {q:'En español: "¿Hablas tú español?" — ¿cómo se construye esta misma idea en francés con la estructura más literaria?', opts:['Tu parles espagnol ?','Est-ce que tu parles espagnol ?','Parles-tu espagnol ?'], ans:2},
 ];
 const match3b=[
   {left:'Qui',  right:'¿Quién?'},
@@ -1372,6 +1385,79 @@ const fill6e=[
   {sentence:'Quiero ___ leche. (Je veux ___ lait)', answer:'du'},
   {sentence:'___ sol es muy caliente. (___ soleil est très chaud)', answer:'Le'},
 ];
+
+function buildDialogue(containerId, lines, qcmData, scoreId){
+  const c = document.getElementById(containerId);
+  if(!c) return;
+  const playBtn = document.createElement('button');
+  playBtn.style.cssText = 'background:var(--l3);color:white;border:none;border-radius:10px;padding:10px 20px;font-size:14px;font-weight:700;cursor:pointer;font-family:"Nunito",sans-serif;margin-bottom:16px;display:block;';
+  playBtn.innerHTML = '▶ Escuchar el diálogo';
+  playBtn.onclick = () => { playBtn.innerHTML='⏸ Reproduciendo...'; playDialogueLines(lines, 0, playBtn); };
+  c.appendChild(playBtn);
+  const hint = document.createElement('div');
+  hint.style.cssText = 'font-size:12px;color:var(--muted);margin-bottom:16px;font-style:italic;';
+  hint.textContent = 'Escucha el diálogo completo y luego responde las preguntas.';
+  c.appendChild(hint);
+  const qDiv = document.createElement('div');
+  qDiv.id = containerId + '_q';
+  c.appendChild(qDiv);
+  buildQCM(containerId + '_q', qcmData, scoreId);
+}
+
+function playDialogueLines(lines, i, btn){
+  if(i >= lines.length){ if(btn) btn.innerHTML='▶ Escuchar de nuevo'; return; }
+  const line = lines[i];
+  const voice = line.speaker === 'f' ? VOICE_F : VOICE_M;
+  const cacheKey = line.text + '||' + voice;
+  if(AUDIO_CACHE.has(cacheKey)){
+    const audio = new Audio(AUDIO_CACHE.get(cacheKey));
+    audio.onended = () => setTimeout(() => playDialogueLines(lines, i+1, btn), 350);
+    audio.play();
+  } else if(EL_KEY){
+    fetch('https://api.elevenlabs.io/v1/text-to-speech/' + voice, {
+      method:'POST', headers:{'xi-api-key': EL_KEY, 'Content-Type':'application/json'},
+      body: JSON.stringify({text: line.text, model_id:'eleven_multilingual_v2', language_code:'fr',
+        voice_settings:{stability:0.5, similarity_boost:0.75}})
+    }).then(r=>r.blob()).then(blob=>{
+      const url = URL.createObjectURL(blob);
+      AUDIO_CACHE.set(cacheKey, url);
+      const audio = new Audio(url);
+      audio.onended = () => setTimeout(() => playDialogueLines(lines, i+1, btn), 350);
+      audio.play();
+    }).catch(()=>{ if(btn) btn.innerHTML='▶ Escuchar de nuevo'; });
+  } else {
+    window.speechSynthesis.cancel();
+    const utt = new SpeechSynthesisUtterance(line.text);
+    utt.lang='fr-FR'; utt.rate=0.85;
+    utt.onend = () => setTimeout(() => playDialogueLines(lines, i+1, btn), 350);
+    window.speechSynthesis.speak(utt);
+  }
+}
+
+const fill3e=[
+  {sentence:'Tu habites à Paris ? → inversión: ___ à Paris ?', answer:'Habites-tu'},
+  {sentence:'Il mange souvent ici ? → inversión: ___ souvent ici ?', answer:'Mange-t-il'},
+  {sentence:'Vous parlez français ? → inversión: ___ français ?', answer:'Parlez-vous'},
+  {sentence:'Arrive-t-elle demain ? → frase simple: ___ demain ?', answer:'Elle arrive'},
+  {sentence:'Travaillent-ils le week-end ? → frase simple: ___ le week-end ?', answer:'Ils travaillent'},
+  {sentence:'Aime-t-on le chocolat ? → frase simple: ___ le chocolat ?', answer:'On aime'},
+];
+const dialogueL3q=[
+  {speaker:'f', text:"Excuse-moi, est-ce que tu parles anglais ?"},
+  {speaker:'m', text:"Oui, un peu. Pourquoi est-ce que tu demandes ?"},
+  {speaker:'f', text:"Je cherche la rue Victor Hugo. Tu sais où elle est ?"},
+  {speaker:'m', text:"Oui ! Est-ce que tu vois le café là-bas ?"},
+  {speaker:'f', text:"Oui, je le vois."},
+  {speaker:'m', text:"Tournes-tu à droite juste après. C'est la deuxième rue."},
+  {speaker:'f', text:"Merci beaucoup ! Est-ce que c'est loin ?"},
+  {speaker:'m', text:"Non, c'est à cinq minutes à pied."},
+];
+const qcmEcouteL3=[
+  {q:"¿Qué busca la persona?", opts:['Un café','La rue Victor Hugo','Un hôtel'], ans:1},
+  {q:"¿Dónde está el punto de referencia mencionado?", opts:['Muy lejos','A la derecha','Directamente frente'], ans:1},
+  {q:"¿Cuánto tiempo hay que caminar?", opts:['Dos minutos','Cinco minutos','Diez minutos'], ans:1},
+];
+
 document.addEventListener('DOMContentLoaded',()=>{
   window.speechSynthesis.getVoices();
   if(window.speechSynthesis.onvoiceschanged!==undefined)
@@ -1395,6 +1481,8 @@ document.addEventListener('DOMContentLoaded',()=>{
   buildMatch('ex3b',match3b,'sc3b');
   buildFill('ex3c',fill3c);
   buildQCM('ex3d',qcm3d,'sc3d');
+  buildFill('ex3e',fill3e);
+  buildDialogue('dial3',dialogueL3q,qcmEcouteL3,'sc3f');
   buildRA('ra3',ra3,'var(--l3)');
 
   // L4
