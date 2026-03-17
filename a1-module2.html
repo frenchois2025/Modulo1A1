@@ -1331,12 +1331,12 @@ const qcm6a=[
   {q:'"Elle a <b>des</b> amis français." → ¿Qué tipo?', opts:['Défini','Indéfini','Partitif'], ans:1, speak:'Elle a des amis français'},
 ];
 const fill6b=[
-  {sentence:'Je mange ___ pomme. (una manzana, nuevo)', answer:'une', hint:'¿Es una cosa precisa o nueva?'},
-  {sentence:'Il boit ___ lait. (leche, cantidad no precisa)', answer:'du', hint:'¿Es masculino o femenino?'},
-  {sentence:'___ soleil est chaud. (el sol, general)', answer:'Le', hint:'¿Hablamos del sol en general?'},
-  {sentence:"Tu veux ___ eau ? (un poco de agua)", answer:"de l'", hint:'¿Empieza por vocal?'},
-  {sentence:'Elle lit ___ livres. (unos libros, no precisados)', answer:'des', hint:'¿Es plural?'},
-  {sentence:'Nous aimons ___ musique. (la música, general)', answer:'la', hint:'¿Hablamos de la música en general?'},
+  {sentence:'Je mange ___ pomme. (una manzana, nuevo)', answer:'une'},
+  {sentence:'Il boit ___ lait. (leche, cantidad no precisa)', answer:'du'},
+  {sentence:'___ soleil est chaud. (el sol, general)', answer:'Le'},
+  {sentence:"Tu veux ___ eau ? (un poco de agua)", answer:"de l'"},
+  {sentence:'Elle lit ___ livres. (unos libros, no precisados)', answer:'des'},
+  {sentence:'Nous aimons ___ musique. (la música, general)', answer:'la'},
 ];
 const qcm6c=[
   {q:'Je parle ___ professeur. (à + le)', opts:['à le','au','du'], ans:1, speak:'Je parle au professeur'},
@@ -1363,14 +1363,14 @@ const ra6=[
 // ══ INIT ══
 
 const fill6e=[
-  {sentence:'Tiene ___ perros. (tiene → il a)', answer:'des'},
-  {sentence:'Bebo ___ agua. (bebo → je bois)', answer:"de l'"},
-  {sentence:'Me gusta ___ música clásica. (me gusta → j\'aime)', answer:'la'},
-  {sentence:'Hay ___ gato en la mesa. (hay → il y a, un chat)', answer:'un'},
-  {sentence:'No tengo ___ coche. (no tengo → je n\'ai pas)', answer:'de'},
-  {sentence:'Ella come ___ verduras. (ella come → elle mange, cantidad no precisa)', answer:'des'},
-  {sentence:'Quiero ___ leche. (quiero → je veux, cantidad no precisa)', answer:'du'},
-  {sentence:'___ sol es muy caliente hoy. (el sol → le soleil)', answer:'Le'},
+  {sentence:'Tiene ___ perros. (Il a ___ chiens)', answer:'des'},
+  {sentence:"Bebo ___ agua. (Je bois ___ eau)", answer:"de l'"},
+  {sentence:'Me gusta ___ música clásica. (J\'aime ___ musique classique)', answer:'la'},
+  {sentence:'Hay ___ gato en la mesa. (Il y a ___ chat sur la table)', answer:'un'},
+  {sentence:'No tengo ___ coche. (Je n\'ai pas ___ voiture)', answer:'de'},
+  {sentence:'Ella come ___ verduras. (Elle mange ___ légumes)', answer:'des'},
+  {sentence:'Quiero ___ leche. (Je veux ___ lait)', answer:'du'},
+  {sentence:'___ sol es muy caliente. (___ soleil est très chaud)', answer:'Le'},
 ];
 document.addEventListener('DOMContentLoaded',()=>{
   window.speechSynthesis.getVoices();
