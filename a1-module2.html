@@ -578,7 +578,14 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
   <div class="ex-card">
     <div class="ex-title" style="color:var(--l6)">Ejercicio 5 — 🎙️ Lee en voz alta</div>
     <div class="ex-instr">Presta atención a los artículos y las contracciones. Escucha y graba.</div>
-    <div id="ra6"></div>
+    <div class="ex-card">
+    <div class="ex-title" style="color:var(--l6)">Ejercicio 5 — Traduce el artículo</div>
+    <div class="ex-instr">Pon el artículo correcto en francés. Sin ayuda — solo tu lógica.</div>
+    <div id="ex6e"></div>
+    <button class="check-btn" style="background:var(--l6);color:white" onclick="checkFill('ex6e','sc6e')">Verificar</button>
+    <div class="score-box" id="sc6e" style="background:var(--l6l)"><div class="score-emoji" id="sc6e-em"></div><div class="score-num" id="sc6e-n" style="color:var(--l6d)"></div><div class="score-msg" id="sc6e-m"></div></div>
+  </div>
+  <div id="ra6"></div>
   </div>
 </div>
 
@@ -1354,6 +1361,17 @@ const ra6=[
 ];
 
 // ══ INIT ══
+
+const fill6e=[
+  {sentence:'Tiene ___ perros. (tiene → il a)', answer:'des'},
+  {sentence:'Bebo ___ agua. (bebo → je bois)', answer:"de l'"},
+  {sentence:'Me gusta ___ música clásica. (me gusta → j\'aime)', answer:'la'},
+  {sentence:'Hay ___ gato en la mesa. (hay → il y a, un chat)', answer:'un'},
+  {sentence:'No tengo ___ coche. (no tengo → je n\'ai pas)', answer:'de'},
+  {sentence:'Ella come ___ verduras. (ella come → elle mange, cantidad no precisa)', answer:'des'},
+  {sentence:'Quiero ___ leche. (quiero → je veux, cantidad no precisa)', answer:'du'},
+  {sentence:'___ sol es muy caliente hoy. (el sol → le soleil)', answer:'Le'},
+];
 document.addEventListener('DOMContentLoaded',()=>{
   window.speechSynthesis.getVoices();
   if(window.speechSynthesis.onvoiceschanged!==undefined)
@@ -1400,6 +1418,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   buildFill('ex6b',fill6b);
   buildQCM('ex6c',qcm6c,'sc6c');
   buildFill('ex6d',fill6d);
+  buildFill('ex6e',fill6e);
   buildRA('ra6',ra6,'var(--l6)');
 
   buildMobNav();
