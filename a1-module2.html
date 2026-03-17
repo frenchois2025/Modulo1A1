@@ -991,8 +991,9 @@ function buildFill(containerId, items){
   items.forEach((item,i)=>{
     const div=document.createElement('div');
     div.className='fill-item';
+    const speakBtn = item.speak ? `<button class="speak-btn" onclick="speak('${item.speak.replace(/'/g,"\\'")}')">🔊</button>` : '';
     div.innerHTML=`
-      <div class="fill-sentence">${item.sentence}</div>
+      <div class="fill-sentence">${item.sentence}${speakBtn}</div>
       <input class="fill-input" id="${containerId}_${i}" placeholder="${item.hint||'Tu respuesta…'}" data-answer="${item.answer}" autocomplete="off" autocorrect="off" spellcheck="false">
       <div class="fill-hint" id="${containerId}_hint_${i}"></div>`;
     c.appendChild(div);
@@ -1305,11 +1306,11 @@ const match5a=[
   {left:'Se reposer',  right:'Descansar'},
 ];
 const fill5b=[
-  {sentence:'Je ___ à 7h. (se lever, yo)', answer:'me lève', hint:'¿Cómo se conjuga se lever con je?'},
-  {sentence:'Elle ___ les dents. (se brosser, ella)', answer:"se brosse", hint:'¿Cómo se conjuga se brosser con elle?'},
-  {sentence:'Nous ___ à 23h. (se coucher, nosotros)', answer:'nous couchons', hint:'¿Cómo se conjuga se coucher con nous?'},
-  {sentence:'Ils ___ après le déjeuner. (se reposer, ellos)', answer:'se reposent', hint:'¿Cómo se conjuga se reposer con ils?'},
-  {sentence:'Tu ___ à quelle heure ? (se lever, tú)', answer:'te lèves', hint:'¿Cómo se conjuga se lever con tu?'},
+  {sentence:'Je ___ à 7h. (se lever, yo)', answer:'me lève', speak:'Je me lève à sept heures.'},
+  {sentence:'Elle ___ les dents. (se brosser, ella)', answer:'se brosse', speak:'Elle se brosse les dents.'},
+  {sentence:'Nous ___ à 23h. (se coucher, nosotros)', answer:'nous couchons', speak:'Nous nous couchons à vingt-trois heures.'},
+  {sentence:'Ils ___ après le déjeuner. (se reposer, ellos)', answer:'se reposent', speak:'Ils se reposent après le déjeuner.'},
+  {sentence:'Tu ___ à quelle heure ? (se lever, tú)', answer:'te lèves', speak:'Tu te lèves à quelle heure ?'},
 ];
 const qcm5c=[
   {q:'"Se lever" → ¿cuándo normalmente?', opts:['Por la mañana','Por la tarde','Por la noche'], ans:0, speak:'Je me lève le matin'},
