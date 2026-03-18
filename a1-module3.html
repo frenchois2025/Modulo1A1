@@ -135,8 +135,8 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
   <a class="sidebar-back" href="index.html">← Volver al inicio</a>
   <button class="nav-btn active" data-l="1" onclick="showL(1)"><span class="nav-icon">👪</span>Leçon 1 — Famille & possessifs<span class="nav-badge">5 ex.</span></button>
   <button class="nav-btn" data-l="2" onclick="showL(2)"><span class="nav-icon">🎨</span>Leçon 2 — Les adjectifs<span class="nav-badge">5 ex.</span></button>
-  <button class="nav-btn" data-l="3" onclick="showL(3)"><span class="nav-icon">🎮</span>Leçon 3 — Goûts & loisirs<span class="nav-badge">4 ex.</span></button>
-  <button class="nav-btn" data-l="4" onclick="showL(4)"><span class="nav-icon">🔜</span>Leçon 4 — Futur proche<span class="nav-badge">5 ex.</span></button>
+  <button class="nav-btn" data-l="3" onclick="showL(3)"><span class="nav-icon">🎮</span>Leçon 3 — Goûts & loisirs<span class="nav-badge">5 ex.</span></button>
+  <button class="nav-btn" data-l="4" onclick="showL(4)"><span class="nav-icon">🔜</span>Leçon 4 — Futur proche<span class="nav-badge">6 ex.</span></button>
 </nav>
 <main class="main">
 
@@ -252,7 +252,12 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
     <div class="score-box" id="sc3c" style="background:var(--l3l)"><div class="score-emoji" id="sc3c-em"></div><div class="score-num" id="sc3c-n" style="color:var(--l3d)"></div><div class="score-msg" id="sc3c-m"></div></div>
   </div>
   <div class="ex-card">
-    <div class="ex-title" style="color:var(--l3)">Ejercicio 4 — 🎙️ Habla de tus gustos</div>
+    <div class="ex-title" style="color:var(--l3)">Ejercicio 4 — 🎧 Comprensión oral</div>
+    <div class="ex-instr">Escucha el diálogo y responde las preguntas. El texto está oculto — ¡clic en cada línea para revelar!</div>
+    <div id="dl3"></div>
+  </div>
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l3)">Ejercicio 5 — 🎙️ Habla de tus gustos</div>
     <div class="ex-instr">Escucha el modelo del diálogo y graba tu respuesta.</div>
     <div id="ra3"></div>
   </div>
@@ -293,7 +298,12 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
     <div id="ex4d"></div><div class="match-score" id="sc4d"></div>
   </div>
   <div class="ex-card">
-    <div class="ex-title" style="color:var(--l4)">Ejercicio 5 — 🎙️ ¿Qué vas a hacer?</div>
+    <div class="ex-title" style="color:var(--l4)">Ejercicio 5 — 🎧 Comprensión oral</div>
+    <div class="ex-instr">Escucha el diálogo y responde las preguntas. El texto está oculto — ¡clic en cada línea para revelar!</div>
+    <div id="dl4"></div>
+  </div>
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l4)">Ejercicio 6 — 🎙️ ¿Qué vas a hacer?</div>
     <div class="ex-instr">Escucha y graba estas frases con el futur proche.</div>
     <div id="ra4"></div>
   </div>
@@ -598,6 +608,112 @@ function speakRA(btn){
   speakWithVoice(text, 1.0, voice);
 }
 function buildRA(id,phrases,color){ buildReadAloud(id,phrases,color); }
+
+// ══════════════════════════════════════
+// DIALOGUE LISTEN ENGINE
+// ══════════════════════════════════════
+function buildDialogueListen(containerId, data, accentColor){
+  const c = document.getElementById(containerId);
+  if(!c) return;
+  c.innerHTML = '';
+
+  // Header
+  const header = document.createElement('div');
+  header.style.cssText = 'font-size:13px;font-weight:800;color:'+accentColor+';text-transform:uppercase;letter-spacing:1px;margin-bottom:12px';
+  header.textContent = '🎧 ' + data.title;
+  c.appendChild(header);
+
+  // Instruction
+  const instr = document.createElement('div');
+  instr.style.cssText = 'font-size:13px;color:#7a7a8c;margin-bottom:14px;font-style:italic';
+  instr.textContent = 'Escucha el diálogo línea por línea, luego responde las preguntas.';
+  c.appendChild(instr);
+
+  // Dialogue lines
+  const dlWrap = document.createElement('div');
+  dlWrap.style.cssText = 'background:#faf7f2;border:1.5px solid #e8e2d9;border-radius:14px;padding:16px 18px;margin-bottom:18px';
+  data.lines.forEach((line, i) => {
+    const row = document.createElement('div');
+    const isF = line.voice === 'f';
+    row.style.cssText = `display:flex;align-items:flex-start;gap:10px;margin-bottom:${i<data.lines.length-1?'14':'0'}px`;
+    row.innerHTML = `
+      <button onclick="speakWithVoice('${line.phrase.replace(/'/g,"\\'")}',1.0,'${line.voice==='f'?'XB0fDUnXU5powFXDhCwa':'onwK4e9ZLuTAKqWW03F9'}',this);this.style.opacity='.6';setTimeout(()=>this.style.opacity='1',900)"
+        style="flex-shrink:0;width:34px;height:34px;border-radius:50%;border:1.5px solid ${isF?'#e63946':'#2a7dd1'};background:${isF?'#fdecea':'#deeeff'};cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center">
+        🔊
+      </button>
+      <div style="flex:1">
+        <div style="font-size:11px;font-weight:800;color:${isF?'#e63946':'#2a7dd1'};margin-bottom:2px">${line.speaker}</div>
+        <div class="dl-line-text" id="${containerId}_line_${i}" style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:#1a1a2e;filter:blur(5px);transition:filter .3s;cursor:pointer;user-select:none" title="Clic para revelar" onclick="this.style.filter='none'">${line.phrase}</div>
+        <div style="font-size:11px;color:#8a8a9a;margin-top:2px;font-style:italic">${line.translation}</div>
+      </div>`;
+    dlWrap.appendChild(row);
+  });
+  c.appendChild(dlWrap);
+
+  // QCM section
+  const qLabel = document.createElement('div');
+  qLabel.style.cssText = 'font-size:12px;font-weight:800;color:'+accentColor+';text-transform:uppercase;letter-spacing:1px;margin-bottom:10px';
+  qLabel.textContent = '🧠 Comprensión — responde sin mirar el texto';
+  c.appendChild(qLabel);
+
+  const qWrap = document.createElement('div');
+  qWrap.id = containerId + '_qwrap';
+  data.qcm.forEach((q, qi) => {
+    const qDiv = document.createElement('div');
+    qDiv.className = 'qcm-item';
+    qDiv.innerHTML = `
+      <div class="q-label">Pregunta ${qi+1}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="opts" id="${containerId}_opts_${qi}">
+        ${q.opts.map((o,oi)=>`<button class="opt" onclick="answerDLQ('${containerId}',${qi},${oi},${q.ans},${data.qcm.length})">${o}</button>`).join('')}
+      </div>
+      <div class="fb" id="${containerId}_fb_${qi}"></div>`;
+    qWrap.appendChild(qDiv);
+  });
+  c.appendChild(qWrap);
+
+  // Score box
+  const score = document.createElement('div');
+  score.className = 'score-box';
+  score.id = containerId + '_score';
+  score.style.background = accentColor + '22';
+  score.innerHTML = `<div class="score-emoji" id="${containerId}_sc_em"></div><div class="score-num" id="${containerId}_sc_n" style="color:${accentColor}"></div><div class="score-msg" id="${containerId}_sc_m"></div>`;
+  c.appendChild(score);
+}
+
+const dlTally = {};
+function answerDLQ(cid, qi, chosen, correct, total){
+  const key = cid + '_' + qi;
+  if(dlTally[key]) return;
+  dlTally[key] = { done: true, wasCorrect: chosen === correct };
+  const opts = document.querySelectorAll('#'+cid+'_opts_'+qi+' .opt');
+  opts.forEach((b,i)=>{
+    b.disabled = true;
+    if(i===correct) b.classList.add('correct');
+    else if(i===chosen && chosen!==correct) b.classList.add('wrong');
+  });
+  const fb = document.getElementById(cid+'_fb_'+qi);
+  fb.textContent = chosen===correct ? '✅ ¡Correcto!' : '❌ Respuesta correcta: ' + opts[correct].textContent;
+  fb.style.color = chosen===correct ? '#1d7a4c' : '#c0392b';
+  fb.style.fontSize = '12px'; fb.style.marginTop = '6px'; fb.style.fontWeight = '700';
+
+  // Check if all questions answered
+  let answered = 0;
+  for(let i=0;i<total;i++){ if(dlTally[cid+'_'+i]) answered++; }
+  if(answered===total){
+    let good = 0;
+    for(let i=0;i<total;i++){ if(dlTally[cid+'_'+i] && dlTally[cid+'_'+i].wasCorrect) good++; }
+    const sc = document.getElementById(cid+'_score');
+    if(sc){
+      sc.classList.add('show');
+      const pct = good/total;
+      document.getElementById(cid+'_sc_em').textContent = pct>=.75?'🎉':pct>=.5?'👍':'💪';
+      document.getElementById(cid+'_sc_n').textContent = good+' / '+total;
+      document.getElementById(cid+'_sc_m').textContent = pct>=.75?'¡Excelente comprensión!':pct>=.5?'¡Bien! Vuelve a escuchar.':'Escucha el diálogo otra vez.';
+      sc.scrollIntoView({behavior:'smooth',block:'nearest'});
+    }
+  }
+}
 function buildReadAloud(containerId, phrases, accentColor){
   const c = document.getElementById(containerId);
   if(!c) return;
@@ -973,6 +1089,23 @@ const fill3c=[
   {sentence:'Nous ___ les maths. (détester)', answer:'détestons', hint:'¿Conjugación de détester con "nous"?', translation:'Nous détestons les maths. → Odiamos las matemáticas.'},
   {sentence:'Ils ___ le cyclisme. (adorer)', answer:'adorent', hint:'¿Conjugación de adorer con "ils"?', translation:'Ils adorent le cyclisme. → Ellos adoran el ciclismo.'},
 ];
+const dl3={
+  title:'Diálogo — ¿Qué te gusta hacer?',
+  lines:[
+    {speaker:'Charlotte', voice:'f', phrase:"Salut Lucas ! Qu'est-ce que tu aimes faire le week-end ?", translation:'¡Hola Lucas! ¿Qué te gusta hacer el fin de semana?'},
+    {speaker:'Daniel',    voice:'m', phrase:"J'adore faire du sport, surtout le foot. Et toi ?",         translation:'Me encanta hacer deporte, sobre todo fútbol. ¿Y tú?'},
+    {speaker:'Charlotte', voice:'f', phrase:"Moi, je préfère lire ou regarder des films.",                translation:'Yo prefiero leer o ver películas.'},
+    {speaker:'Daniel',    voice:'m', phrase:"Tu détestes le sport ?",                                     translation:'¿Odias el deporte?'},
+    {speaker:'Charlotte', voice:'f', phrase:"Non, je n'aime pas trop, mais j'adore nager !",              translation:'No, no me gusta mucho, ¡pero me encanta nadar!'},
+  ],
+  qcm:[
+    {q:'¿Qué le encanta hacer a Daniel el fin de semana?', opts:['Leer libros','Hacer deporte','Ver películas'], ans:1},
+    {q:'¿Qué prefiere Charlotte?', opts:['Hacer deporte','Cocinar','Leer o ver películas'], ans:2},
+    {q:'¿Charlotte detesta el deporte?', opts:['Sí, completamente','No, pero no le gusta mucho','Sí, excepto el fútbol'], ans:1},
+    {q:'¿Qué deporte le encanta a Charlotte?', opts:['El fútbol','La natación','El ciclismo'], ans:1},
+  ]
+};
+
 const ra3=[
   {phrase:"Qu'est-ce que tu aimes faire pendant ton temps libre ?", voice:"f", translation:"¿Qué te gusta hacer en tu tiempo libre?"},
   {phrase:"J'adore regarder des séries et écouter de la musique.", voice:"f", translation:"Me encanta ver series y escuchar música."},
@@ -984,16 +1117,16 @@ const ra3=[
 const qcm4a=[
   {q:'¿Cuál está en futur proche?', opts:['Je mange une pizza.','Je vais manger une pizza.','Je mangerai une pizza.'], ans:1, speak:'Je vais manger une pizza'},
   {q:'"Elle va sortir" → ¿qué significa?', opts:['Ella salió.','Ella va a salir.','Ella sale.'], ans:1, speak:'Elle va sortir'},
-  {q:'"Nous allons cuisiner" → conjugación correcta de aller?', opts:['allons','allez','vont'], ans:0, speak:'Nous allons cuisiner'},
-  {q:'"Ils ___ regarder un film." → forma correcta', opts:['vont','vont','allez'], ans:0, speak:'Ils vont regarder un film'},
+  {q:'"Nous ___ cuisiner" → forma correcta de aller', opts:['allons','allez','vont'], ans:0, speak:'Nous allons cuisiner'},
+  {q:'"Ils ___ regarder un film." → forma correcta', opts:['vas','va','vont'], ans:2, speak:'Ils vont regarder un film'},
 ];
 const fill4b=[
-  {sentence:'Je ___ étudier ce soir. (yo, voy a estudiar)', answer:'vais', hint:'vais'},
-  {sentence:'Tu ___ lire un livre. (tú)', answer:'vas', hint:'vas'},
-  {sentence:'Elle ___ danser. (ella)', answer:'va', hint:'va'},
-  {sentence:'Nous ___ voyager demain. (nosotros)', answer:'allons', hint:'allons'},
-  {sentence:'Vous ___ manger au restaurant ? (ustedes)', answer:'allez', hint:'allez'},
-  {sentence:'Ils ___ jouer au foot. (ellos)', answer:'vont', hint:'vont'},
+  {sentence:'Je ___ étudier ce soir. (aller + infinitif, yo)', answer:'vais', hint:'¿Forma de aller con je?', translation:'Je vais étudier ce soir. → Voy a estudiar esta noche.'},
+  {sentence:'Tu ___ lire un livre. (aller + infinitif, tú)', answer:'vas', hint:'¿Forma de aller con tu?', translation:'Tu vas lire un livre. → Vas a leer un libro.'},
+  {sentence:'Elle ___ danser. (aller + infinitif, ella)', answer:'va', hint:'¿Forma de aller con il/elle?', translation:'Elle va danser. → Ella va a bailar.'},
+  {sentence:'Nous ___ voyager demain. (aller + infinitif, nosotros)', answer:'allons', hint:'¿Forma de aller con nous?', translation:'Nous allons voyager demain. → Vamos a viajar mañana.'},
+  {sentence:'Vous ___ manger au restaurant ? (aller + infinitif, vosotros)', answer:'allez', hint:'¿Forma de aller con vous?', translation:'Vous allez manger au restaurant ? → ¿Van a comer en el restaurante?'},
+  {sentence:'Ils ___ jouer au foot. (aller + infinitif, ellos)', answer:'vont', hint:'¿Forma de aller con ils?', translation:'Ils vont jouer au foot. → Ellos van a jugar al fútbol.'},
 ];
 const qcm4c=[
   {q:'Je ne vais pas sortir → ¿correcto?', opts:['Sí, ne…pas rodea "vais"','No, debería ser "je vais ne pas sortir"'], ans:0, speak:'Je ne vais pas sortir'},
@@ -1008,6 +1141,23 @@ const match4d=[
   {left:'La semaine prochaine', right:'La próxima semana'},
   {left:'Après-demain',    right:'Pasado mañana'},
 ];
+const dl4={
+  title:'Diálogo — Le week-end prochain',
+  lines:[
+    {speaker:'Charlotte', voice:'f', phrase:"Dis, qu'est-ce que tu vas faire ce week-end ?",                   translation:'Oye, ¿qué vas a hacer este fin de semana?'},
+    {speaker:'Daniel',    voice:'m', phrase:"Je vais aller au cinéma samedi soir.",                             translation:'Voy a ir al cine el sábado por la noche.'},
+    {speaker:'Charlotte', voice:'f', phrase:"Super ! Et dimanche ?",                                            translation:'¡Genial! ¿Y el domingo?'},
+    {speaker:'Daniel',    voice:'m', phrase:"Je ne vais pas sortir. Je vais rester à la maison et cuisiner.",   translation:'No voy a salir. Me voy a quedar en casa y cocinar.'},
+    {speaker:'Charlotte', voice:'f', phrase:"Moi, je vais voyager avec ma famille. On va visiter Lyon !",       translation:'Yo voy a viajar con mi familia. ¡Vamos a visitar Lyon!'},
+  ],
+  qcm:[
+    {q:'¿Qué va a hacer Daniel el sábado por la noche?', opts:['Cocinar en casa','Ir al cine','Viajar a Lyon'], ans:1},
+    {q:'¿Qué va a hacer Daniel el domingo?', opts:['Salir con amigos','Ir al restaurante','Quedarse en casa y cocinar'], ans:2},
+    {q:'¿Adónde va Charlotte con su familia?', opts:['París','Marsella','Lyon'], ans:2},
+    {q:'¿Cuál es la forma negativa del futur proche en el diálogo?', opts:['Je vais ne pas sortir','Je ne vais pas sortir','Je ne va pas sortir'], ans:1},
+  ]
+};
+
 const ra4=[
   {phrase:"Je vais aller au cinéma avec mes amis.", voice:"m",      translation:"Voy a ir al cine con mis amigos."},
   {phrase:"Tu vas faire quoi ce week-end ?", voice:"f",             translation:"¿Qué vas a hacer este fin de semana?"},
@@ -1033,11 +1183,13 @@ document.addEventListener('DOMContentLoaded',()=>{
   buildQCM('ex3a',qcm3a,'sc3a');
   buildMatch('ex3b',match3b,'sc3b');
   buildFill('ex3c',fill3c);
+  buildDialogueListen('dl3',dl3,'var(--l3)');
   buildRA('ra3',ra3,'var(--l3)');
   buildQCM('ex4a',qcm4a,'sc4a');
   buildFill('ex4b',fill4b);
   buildQCM('ex4c',qcm4c,'sc4c');
   buildMatch('ex4d',match4d,'sc4d');
+  buildDialogueListen('dl4',dl4,'var(--l4)');
   buildRA('ra4',ra4,'var(--l4)');
   buildMobNav();
 });
