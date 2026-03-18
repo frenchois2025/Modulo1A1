@@ -18,6 +18,92 @@ body::before {
   background: radial-gradient(ellipse 60% 40% at 5% 10%, rgba(230,57,70,.07) 0%, transparent 60%),
               radial-gradient(ellipse 50% 40% at 95% 90%, rgba(42,125,209,.06) 0%, transparent 60%);
 }
+
+/* ── VOCAB CARD ─────────────────────────── */
+.vocab-card {
+  grid-column: 1 / -1;
+  background: linear-gradient(135deg, #1c1c2e 0%, #2a1a3e 100%);
+  border: none;
+  border-radius: 18px;
+  padding: 24px 28px;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  transition: all .22s;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(28,28,46,.18);
+}
+.vocab-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(230,57,70,.15) 0%, rgba(230,57,70,.03) 100%);
+  transition: opacity .22s;
+  opacity: 0;
+}
+.vocab-card:hover::before { opacity: 1; }
+.vocab-card:hover { transform: translateY(-2px); box-shadow: 0 14px 40px rgba(28,28,46,.28); }
+.vocab-card-icon {
+  font-size: 2.8rem;
+  flex-shrink: 0;
+  width: 64px; height: 64px;
+  background: rgba(230,57,70,.18);
+  border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1.5px solid rgba(230,57,70,.25);
+}
+.vocab-card-body { flex: 1; min-width: 0; }
+.vocab-card-eyebrow {
+  font-size: 10px; font-weight: 800; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--a1);
+  margin-bottom: 4px;
+}
+.vocab-card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px; font-weight: 700;
+  color: #ffffff; margin-bottom: 8px;
+}
+.vocab-card-topics { display: flex; flex-wrap: wrap; gap: 6px; }
+.vocab-card-tag {
+  font-size: 10px; font-weight: 700;
+  padding: 3px 10px; border-radius: 20px;
+  background: rgba(255,255,255,.08);
+  color: rgba(255,255,255,.65);
+  border: 1px solid rgba(255,255,255,.12);
+}
+.vocab-card-right { flex-shrink: 0; text-align: right; }
+.vocab-card-count {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px; font-weight: 700; color: white;
+  line-height: 1;
+}
+.vocab-card-count-label { font-size: 10px; color: rgba(255,255,255,.45); font-weight: 700; margin-top: 2px; }
+.vocab-card-arrow {
+  margin-top: 12px;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--a1);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; color: white;
+  margin-left: auto;
+  transition: transform .2s;
+}
+.vocab-card:hover .vocab-card-arrow { transform: translateX(3px); }
+@media(max-width:500px) {
+  .vocab-card { flex-direction: column; align-items: flex-start; gap: 14px; padding: 20px; }
+  .vocab-card-right { display: flex; align-items: center; gap: 16px; width: 100%; justify-content: space-between; }
+  .vocab-card-arrow { margin-top: 0; margin-left: 0; }
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+body::before {
+  content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background: radial-gradient(ellipse 60% 40% at 5% 10%, rgba(230,57,70,.07) 0%, transparent 60%),
+              radial-gradient(ellipse 50% 40% at 95% 90%, rgba(42,125,209,.06) 0%, transparent 60%);
+}
 .hero { position: relative; z-index: 1; text-align: center; padding: 64px 24px 48px; max-width: 700px; margin: 0 auto; }
 .flag { font-size: 48px; margin-bottom: 16px; display: block; }
 .hero-eyebrow { font-size: 11px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--a1); margin-bottom: 14px; }
@@ -93,6 +179,25 @@ footer { position: relative; z-index: 1; text-align: center; padding: 32px 20px;
       </div>
     </div>
     <div class="module-grid">
+
+      <a class="vocab-card" href="vocabulaire.html">
+        <div class="vocab-card-icon">📚</div>
+        <div class="vocab-card-body">
+          <div class="vocab-card-eyebrow">Entraînement continu</div>
+          <div class="vocab-card-title">Vocabulaire A1</div>
+          <div class="vocab-card-topics">
+            <span class="vocab-card-tag">🇪🇸 → 🇫🇷 Traducir al francés</span>
+            <span class="vocab-card-tag">🇫🇷 → 🇪🇸 Traducir al español</span>
+            <span class="vocab-card-tag">🎧 Dictée avec Charlotte & Daniel</span>
+            <span class="vocab-card-tag">15 catégories</span>
+          </div>
+        </div>
+        <div class="vocab-card-right">
+          <div class="vocab-card-count">297</div>
+          <div class="vocab-card-count-label">mots & expressions</div>
+          <div class="vocab-card-arrow">→</div>
+        </div>
+      </a>
 
       <a class="module-card available" href="a1-module1.html" style="--accent:var(--a1)">
         <div class="module-top"><div class="module-num">Módulo 1</div><div class="module-status status-done">✓ Disponible</div></div>
