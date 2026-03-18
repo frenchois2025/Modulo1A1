@@ -627,7 +627,6 @@ function buildDialogueListen(containerId, data, accentColor){
 
   const listenBox = document.createElement('div');
   listenBox.style.cssText = 'text-align:center;padding:20px 0 24px';
-  const linesJSON = JSON.stringify(data.lines).replace(/\/g,'\\').replace(/'/g,"\'").replace(/`/g,'\`');
   listenBox.innerHTML = `
     <div style="font-size:13px;color:#7a7a8c;margin-bottom:14px;font-style:italic">
       Escucha el diálogo completo, luego responde las preguntas sin ver el texto.
