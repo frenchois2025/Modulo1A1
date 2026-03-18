@@ -701,10 +701,13 @@ function buildFill(containerId, items){
   items.forEach((item,i)=>{
     const div=document.createElement('div');
     div.className='fill-item';
+    const hintHtml = item.hint
+      ? `<div class="fill-hint" id="${containerId}_hint_${i}" style="color:var(--muted);font-style:italic">${item.hint}</div>`
+      : `<div class="fill-hint" id="${containerId}_hint_${i}"></div>`;
     div.innerHTML=`
       <div class="fill-sentence">${item.sentence}</div>
-      <input class="fill-input" id="${containerId}_${i}" placeholder="${item.hint||'Tu respuesta…'}" data-answer="${item.answer}" autocomplete="off" autocorrect="off" spellcheck="false">
-      <div class="fill-hint" id="${containerId}_hint_${i}"></div>`;
+      <input class="fill-input" id="${containerId}_${i}" placeholder="Tu respuesta…" data-answer="${item.answer}" data-translation="${item.translation||''}" autocomplete="off" autocorrect="off" spellcheck="false">
+      ${hintHtml}`;
     c.appendChild(div);
   });
 }
@@ -717,8 +720,21 @@ function checkFill(containerId, scoreId){
     const correct=answers.some(a=>val===a||val===a.replace(/-/g,' '));
     inp.className='fill-input '+(correct?'ok':'nope');
     const hint=document.getElementById(containerId+'_hint_'+i);
-    if(!correct) hint.textContent='→ '+inp.dataset.answer.split('|')[0];
-    else { ok++; hint.textContent=''; }
+    const translation=inp.dataset.translation||'';
+    if(!correct){
+      const corrAnswer=inp.dataset.answer.split('|')[0];
+      hint.style.color='var(--l1d)';
+      hint.style.fontStyle='normal';
+      hint.innerHTML=`→ <strong>${corrAnswer}</strong>`
+        +(translation ? `<br><span style="color:var(--muted);font-size:11px;font-style:italic">${translation}</span>` : '');
+    } else {
+      ok++;
+      hint.style.color='var(--l4d)';
+      hint.style.fontStyle='normal';
+      hint.innerHTML=translation
+        ? `<span style="font-size:11px;font-style:italic;color:var(--muted)">${translation}</span>`
+        : '';
+    }
     inp.disabled=true;
   });
   const box=document.getElementById(scoreId);
@@ -951,11 +967,11 @@ const match3b=[
   {left:'Se promener',     right:'Pasear'},
 ];
 const fill3c=[
-  {sentence:'J\'___ le cinéma. (me encanta)', answer:'adore', hint:'adore'},
-  {sentence:'Tu ___ faire du sport ou de la musique ? (prefieres)', answer:'préfères', hint:'préfères'},
-  {sentence:'Elle ___ cuisiner. (ama)', answer:'aime', hint:'aime'},
-  {sentence:'Nous ___ les maths. (odiamos)', answer:'détestons', hint:'détestons'},
-  {sentence:'Ils ___ le cyclisme. (adoran)', answer:'adorent', hint:'adorent'},
+  {sentence:"J'___ le cinéma. (adorer)", answer:'adore', hint:'¿Conjugación de adorer con "je"?', translation:"J'adore le cinéma. → Me encanta el cine."},
+  {sentence:'Tu ___ faire du sport ou de la musique ? (préférer)', answer:'préfères', hint:'¿Conjugación de préférer con "tu"?', translation:'Tu préfères faire du sport ou de la musique ? → ¿Prefieres hacer deporte o música?'},
+  {sentence:'Elle ___ cuisiner. (aimer)', answer:'aime', hint:'¿Conjugación de aimer con "elle"?', translation:'Elle aime cuisiner. → Ella ama cocinar.'},
+  {sentence:'Nous ___ les maths. (détester)', answer:'détestons', hint:'¿Conjugación de détester con "nous"?', translation:'Nous détestons les maths. → Odiamos las matemáticas.'},
+  {sentence:'Ils ___ le cyclisme. (adorer)', answer:'adorent', hint:'¿Conjugación de adorer con "ils"?', translation:'Ils adorent le cyclisme. → Ellos adoran el ciclismo.'},
 ];
 const ra3=[
   {phrase:"Qu'est-ce que tu aimes faire pendant ton temps libre ?", voice:"f", translation:"¿Qué te gusta hacer en tu tiempo libre?"},
