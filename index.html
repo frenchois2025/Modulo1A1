@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Français pour hispanophones</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f7f4ef; --white: #ffffff; --text: #1c1c2e; --muted: #7a7a8c; --border: #e4ddd4;
+  --a1: #e63946; --a1l: #fdecea; --a2: #2a7dd1; --a2l: #deeeff; --b1: #2eaa6b; --b1l: #dcf5ea;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+body::before {
+  content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background: radial-gradient(ellipse 60% 40% at 5% 10%, rgba(230,57,70,.07) 0%, transparent 60%),
+              radial-gradient(ellipse 50% 40% at 95% 90%, rgba(42,125,209,.06) 0%, transparent 60%);
+}
+.hero { position: relative; z-index: 1; text-align: center; padding: 64px 24px 48px; max-width: 700px; margin: 0 auto; }
+.flag { font-size: 48px; margin-bottom: 16px; display: block; }
+.hero-eyebrow { font-size: 11px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--a1); margin-bottom: 14px; }
+.hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(32px,6vw,52px); font-weight: 700; line-height: 1.15; color: var(--text); margin-bottom: 16px; }
+.hero h1 em { font-style: italic; color: var(--a1); }
+.hero p { font-size: 16px; color: var(--muted); line-height: 1.7; max-width: 480px; margin: 0 auto 32px; }
+.hero-stats { display: flex; gap: 32px; justify-content: center; flex-wrap: wrap; margin-top: 8px; }
+.stat { text-align: center; }
+.stat-num { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: var(--text); line-height: 1; }
+.stat-label { font-size: 11px; color: var(--muted); font-weight: 600; margin-top: 4px; }
+.content { position: relative; z-index: 1; max-width: 880px; margin: 0 auto; padding: 0 20px 80px; }
+.level-section { margin-bottom: 48px; }
+.level-header { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 2px solid var(--border); }
+.level-badge { font-size: 13px; font-weight: 800; letter-spacing: 1px; padding: 6px 14px; border-radius: 20px; text-transform: uppercase; white-space: nowrap; }
+.level-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--text); }
+.level-desc { font-size: 13px; color: var(--muted); margin-top: 2px; }
+.level-progress { margin-left: auto; text-align: right; flex-shrink: 0; }
+.progress-text { font-size: 11px; font-weight: 800; color: var(--muted); margin-bottom: 6px; }
+.progress-bar { width: 100px; height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 3px; transition: width .8s ease; }
+.module-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+.module-card { background: var(--white); border: 1.5px solid var(--border); border-radius: 18px; padding: 22px 22px 18px; text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: 10px; transition: all .2s; position: relative; overflow: hidden; }
+.module-card.available:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.1); border-color: var(--accent); }
+.module-card.available { cursor: pointer; }
+.module-card.coming-soon { cursor: default; opacity: .55; background: var(--bg); }
+.module-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent); opacity: 0; transition: opacity .2s; }
+.module-card.available:hover::before { opacity: 1; }
+.module-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+.module-num { font-size: 11px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: var(--accent); opacity: .8; }
+.module-status { font-size: 10px; font-weight: 800; letter-spacing: .5px; text-transform: uppercase; padding: 3px 9px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; }
+.status-done  { background: #dcf5ea; color: #1d7a4c; }
+.status-soon  { background: #f0ede8; color: #a0998f; }
+.status-new   { background: #fff3dc; color: #b86a00; }
+.module-title { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; color: var(--text); line-height: 1.3; }
+.module-topics { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 2px; }
+.topic-tag { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 6px; background: var(--bg); color: var(--muted); border: 1px solid var(--border); }
+.module-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 4px; padding-top: 12px; border-top: 1px solid var(--border); }
+.module-exercises { font-size: 11px; color: var(--muted); font-weight: 600; }
+.module-arrow { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; background: var(--bg); transition: all .2s; }
+.module-card.available:hover .module-arrow { background: var(--accent); color: white; }
+.coming-soon-label { position: absolute; top: 16px; right: -24px; background: var(--muted); color: white; font-size: 9px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; padding: 3px 32px; transform: rotate(35deg); opacity: .5; }
+footer { position: relative; z-index: 1; text-align: center; padding: 32px 20px; border-top: 1px solid var(--border); font-size: 12px; color: var(--muted); }
+@media(max-width:500px) { .hero { padding: 40px 20px 32px; } .hero-stats { gap: 20px; } .level-progress { display: none; } .module-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <span class="flag">🇫🇷</span>
+  <div class="hero-eyebrow">Cours de français</div>
+  <h1>Français pour<br><em>hispanophones</em></h1>
+  <p>Todos los ejercicios interactivos de tu curso de francés. Pronunciación, gramática, comprensión y producción oral.</p>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">3</div><div class="stat-label">Niveles</div></div>
+    <div class="stat"><div class="stat-num">25</div><div class="stat-label">Módulos</div></div>
+    <div class="stat"><div class="stat-num">🎙️</div><div class="stat-label">Práctica oral</div></div>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- A1 -->
+  <div class="level-section">
+    <div class="level-header">
+      <div>
+        <div class="level-badge" style="background:var(--a1l);color:var(--a1)">Niveau A1</div>
+        <div class="level-title">Français pour débutants</div>
+        <div class="level-desc">Fundamentos · Gramática básica · Vida cotidiana</div>
+      </div>
+      <div class="level-progress">
+        <div class="progress-text">6 / 6 módulos</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:100%;background:var(--a1)"></div></div>
+      </div>
+    </div>
+    <div class="module-grid">
+
+      <a class="module-card available" href="a1-module1.html" style="--accent:var(--a1)">
+        <div class="module-top"><div class="module-num">Módulo 1</div><div class="module-status status-done">✓ Disponible</div></div>
+        <div class="module-title">Fundamentos del francés</div>
+        <div class="module-topics"><span class="topic-tag">Se présenter</span><span class="topic-tag">Pronoms</span><span class="topic-tag">Nombres</span><span class="topic-tag">Couleurs</span><span class="topic-tag">Prononciation</span></div>
+        <div class="module-footer"><span class="module-exercises">5 leçons · 25+ ejercicios · 🎙️ oral</span><div class="module-arrow">→</div></div>
+      </a>
+
+      <a class="module-card available" href="a1-module2.html" style="--accent:var(--a1)">
+        <div class="module-top"><div class="module-num">Módulo 2</div><div class="module-status status-done">✓ Disponible</div></div>
+        <div class="module-title">Grammaire & vie quotidienne</div>
+        <div class="module-topics"><span class="topic-tag">Être & avoir</span><span class="topic-tag">Négation</span><span class="topic-tag">Questions</span><span class="topic-tag">Groupes verbaux</span><span class="topic-tag">Routine</span></div>
+        <div class="module-footer"><span class="module-exercises">5 leçons · 25+ ejercicios · 🎙️ oral</span><div class="module-arrow">→</div></div>
+      </a>
+
+      <a class="module-card available" href="a1-module3.html" style="--accent:var(--a1)">
+        <div class="module-top"><div class="module-num">Módulo 3</div><div class="module-status status-done">✓ Disponible</div></div>
+        <div class="module-title">Famille, goûts & futur proche</div>
+        <div class="module-topics"><span class="topic-tag">La famille</span><span class="topic-tag">Adjectifs</span><span class="topic-tag">Loisirs</span><span class="topic-tag">Futur proche</span></div>
+        <div class="module-footer"><span class="module-exercises">4 leçons · 20+ ejercicios · 🎙️ oral</span><div class="module-arrow">→</div></div>
+      </a>
+
+      <a class="module-card available" href="a1-module4.html" style="--accent:var(--a1)">
+        <div class="module-top"><div class="module-num">Módulo 4</div><div class="module-status status-done">✓ Disponible</div></div>
+        <div class="module-title">Espacios & orientación</div>
+        <div class="module-topics"><span class="topic-tag">Fecha & hora</span><span class="topic-tag">La ciudad</span><span class="topic-tag">Preposiciones</span><span class="topic-tag">Transporte</span></div>
+        <div class="module-footer"><span class="module-exercises">5 leçons · 25+ ejercicios · 🎙️ oral</span><div class="module-arrow">→</div></div>
+      </a>
+
+      <a class="module-card available" href="a1-module5.html" style="--accent:var(--a1)">
+        <div class="module-top"><div class="module-num">Módulo 5</div><div class="module-status status-done">✓ Disponible</div></div>
+        <div class="module-title">Clima & alimentación</div>
+        <div class="module-topics"><span class="topic-tag">La météo</span><span class="topic-tag">Les vêtements</span><span class="topic-tag">Les repas</span><span class="topic-tag">Restaurant</span></div>
+        <div class="module-footer"><span class="module-exercises">4 leçons · 20+ ejercicios · 🎙️ oral</span><div class="module-arrow">→</div></div>
+      </a>
+
+      <a class="module-card available" href="a1-module6.html" style="--accent:var(--a1)">
+        <div class="module-top"><div class="module-num">Módulo 6</div><div class="module-status status-done">✓ Disponible</div></div>
+        <div class="module-title">Entraînement à l'évaluation finale</div>
+        <div class="module-topics"><span class="topic-tag">Compréhension écrite</span><span class="topic-tag">Expression écrite</span><span class="topic-tag">Conjugaison</span><span class="topic-tag">Compréhension orale</span></div>
+        <div class="module-footer"><span class="module-exercises">7 parties · 🎧 2 voix</span><div class="module-arrow">→</div></div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- A2 -->
+  <div class="level-section">
+    <div class="level-header">
+      <div>
+        <div class="level-badge" style="background:var(--a2l);color:var(--a2)">Niveau A2</div>
+        <div class="level-title">Français pour débutants avancés</div>
+        <div class="level-desc">Pasado · Pronombres · Opiniones · Proyectos · Salud</div>
+      </div>
+      <div class="level-progress">
+        <div class="progress-text">6 / 6 módulos</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:100%;background:var(--a2)"></div></div>
+      </div>
+    </div>
+    <div class="module-grid">
+
+      <a class="module-card available" href="a2-module1.html" style="--accent:var(--a2)">
+        <div class="module-top"><div class="module-num">Módulo 1</div><div class="module-status status-active">Disponible</div></div>
+        <div class="module-title">Hablar más en detalle sobre su persona</div>
+        <div class="module-topics"><span class="topic-tag">Conectores</span><span class="topic-tag">Obligación</span><span class="topic-tag">Négation amplifiée</span><span class="topic-tag">Pronoms toniques</span><span class="topic-tag">Pronoms possessifs</span></div>
+        <div class="module-footer"><span class="module-exercises">5 leçons · 🎙️ oral</span><div class="module-arrow">→</div></div>
+      </a>
+
+      <a class="module-card available" href="a2-module2.html" style="--accent:var(--a2)">
+        <div class="module-top"><div class="module-num">Módulo 2</div><div class="module-status status-active">Disponible</div></div>
+        <div class="module-title">Pasado & recuerdos</div>
+        <div class="module-topics"><span class="topic-tag">Passé composé</span><span class="topic-tag">Imparfait</span><span class="topic-tag">Pronominaux</span><span class="topic-tag">COD</span><span class="topic-tag">COI · en · y</span></div>
+        <div class="module-footer"><span class="module-exercises">6 leçons · 🎙️ oral</span><div class="module-arrow">→</div></div>
+      </a>
+
+      <a class="module-card available" href="a2-module3.html" style="--accent:var(--a2)">
+        <div class="module-top"><div class="module-num">Módulo 3</div><div class="module-status status-active">Disponible</div></div>
+        <div class="module-title">Opiniones, gustos & comparación</div>
+        <div class="module-topics"><span class="topic-tag">Je pense que…</span><span class="topic-tag">Comparatif</span><span class="topic-tag">Superlatif</span></div>
+        <div class="module-footer"><span class="module-exercises">3 leçons · 🎙️ oral</span><div class="module-arrow">→</div></div>
+      </a>
+
+      <a class="module-card available" href="a2-module4.html" style="--accent:var(--a2)">
+        <div class="module-top"><div class="module-num">Módulo 4</div><div class="module-status status-active">Disponible</div></div>
+        <div class="module-title">Preparar un proyecto o desplazamiento</div>
+        <div class="module-topics"><span class="topic-tag">Futur simple</span><span class="topic-tag">Futur proche</span><span class="topic-tag">Vocabulaire voyage</span></div>
+        <div class="module-footer"><span class="module-exercises">2 leçons · 🎙️ oral</span><div class="module-arrow">→</div></div>
+      </a>
+
+      <a class="module-card available" href="a2-module5.html" style="--accent:var(--a2)">
+        <div class="module-top"><div class="module-num">Módulo 5</div><div class="module-status status-active">Disponible</div></div>
+        <div class="module-title">Salud, cuerpo & consejos</div>
+        <div class="module-topics"><span class="topic-tag">Corps & douleurs</span><span class="topic-tag">Chez le médecin</span><span class="topic-tag">Impératif</span><span class="topic-tag">À la pharmacie</span></div>
+        <div class="module-footer"><span class="module-exercises">4 leçons · 🎙️ oral</span><div class="module-arrow">→</div></div>
+      </a>
+
+      <a class="module-card available" href="a2-module6.html" style="--accent:var(--a2)">
+        <div class="module-top"><div class="module-num">Módulo 6</div><div class="module-status status-active">Disponible</div></div>
+        <div class="module-title">Escritura & évaluation finale A2</div>
+        <div class="module-topics"><span class="topic-tag">Correo electrónico</span><span class="topic-tag">Relato personal</span><span class="topic-tag">Évaluation finale</span></div>
+        <div class="module-footer"><span class="module-exercises">3 leçons · 🎙️ oral</span><div class="module-arrow">→</div></div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- B1 -->
+  <div class="level-section">
+    <div class="level-header">
+      <div>
+        <div class="level-badge" style="background:var(--b1l);color:var(--b1)">Niveau B1</div>
+        <div class="level-title">Utilisateur indépendant</div>
+        <div class="level-desc">Narración · Hipótesis · Subjonctif · Argumentación</div>
+      </div>
+      <div class="level-progress">
+        <div class="progress-text">7 / 7 módulos</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:100%;background:var(--b1)"></div></div>
+      </div>
+    </div>
+
+    <div class="module-grid">
+
+      <a href="b1-module1.html" class="module-card" style="--accent:var(--b1);text-decoration:none">
+        <div class="module-top"><div class="module-num">🔗 Módulo 1</div><div class="module-status" style="background:var(--b1l);color:var(--b1)">Disponible</div></div>
+        <div class="module-title">Frases complejas & pronombres relativos</div>
+        <div class="module-topics"><span class="topic-tag">qui · que · où</span><span class="topic-tag">dont</span><span class="topic-tag">lequel</span></div>
+        <div class="module-footer"><span class="module-exercises">4 leçons · 16 ex. · 🎙️ oral</span><div class="module-arrow" style="color:var(--b1)">→</div></div>
+      </a>
+
+      <a href="b1-module2.html" class="module-card" style="--accent:var(--b1);text-decoration:none">
+        <div class="module-top"><div class="module-num">🎬 Módulo 2</div><div class="module-status" style="background:var(--b1l);color:var(--b1)">Disponible</div></div>
+        <div class="module-title">Narración compleja</div>
+        <div class="module-topics"><span class="topic-tag">Plus-que-parfait</span><span class="topic-tag">3 tiempos combinados</span><span class="topic-tag">Marqueurs temporels</span></div>
+        <div class="module-footer"><span class="module-exercises">4 leçons · 16 ex. · 🎙️ oral</span><div class="module-arrow" style="color:var(--b1)">→</div></div>
+      </a>
+
+      <a href="b1-module3.html" class="module-card" style="--accent:var(--b1);text-decoration:none">
+        <div class="module-top"><div class="module-num">💭 Módulo 3</div><div class="module-status" style="background:var(--b1l);color:var(--b1)">Disponible</div></div>
+        <div class="module-title">El condicional presente</div>
+        <div class="module-topics"><span class="topic-tag">Conditionnel présent</span><span class="topic-tag">Cortesía & consejo</span><span class="topic-tag">Si + imparfait</span></div>
+        <div class="module-footer"><span class="module-exercises">4 leçons · 16 ex. · 🎙️ oral</span><div class="module-arrow" style="color:var(--b1)">→</div></div>
+      </a>
+
+      <a href="b1-module4.html" class="module-card" style="--accent:var(--b1);text-decoration:none">
+        <div class="module-top"><div class="module-num">⏪ Módulo 4</div><div class="module-status" style="background:var(--b1l);color:var(--b1)">Disponible</div></div>
+        <div class="module-title">La hipótesis en el pasado</div>
+        <div class="module-topics"><span class="topic-tag">Conditionnel passé</span><span class="topic-tag">Si + plus-que-parfait</span><span class="topic-tag">Arrepentimiento</span></div>
+        <div class="module-footer"><span class="module-exercises">4 leçons · 16 ex. · 🎙️ oral</span><div class="module-arrow" style="color:var(--b1)">→</div></div>
+      </a>
+
+      <a href="b1-module5.html" class="module-card" style="--accent:var(--b1);text-decoration:none">
+        <div class="module-top"><div class="module-num">🔤 Módulo 5</div><div class="module-status" style="background:var(--b1l);color:var(--b1)">Disponible</div></div>
+        <div class="module-title">El subjuntivo presente</div>
+        <div class="module-topics"><span class="topic-tag">Subjonctif présent</span><span class="topic-tag">il faut que…</span><span class="topic-tag">bien que · pour que</span></div>
+        <div class="module-footer"><span class="module-exercises">4 leçons · 16 ex. · 🎙️ oral</span><div class="module-arrow" style="color:var(--b1)">→</div></div>
+      </a>
+
+      <a href="b1-module6.html" class="module-card" style="--accent:var(--b1);text-decoration:none">
+        <div class="module-top"><div class="module-num">💡 Módulo 6</div><div class="module-status" style="background:var(--b1l);color:var(--b1)">Disponible</div></div>
+        <div class="module-title">Conectores & argumentación</div>
+        <div class="module-topics"><span class="topic-tag">Cause & conséquence</span><span class="topic-tag">Concession</span><span class="topic-tag">Tesis & argumento</span></div>
+        <div class="module-footer"><span class="module-exercises">4 leçons · 16 ex. · 🎙️ oral</span><div class="module-arrow" style="color:var(--b1)">→</div></div>
+      </a>
+
+      <a href="b1-module7.html" class="module-card" style="--accent:var(--b1);text-decoration:none">
+        <div class="module-top"><div class="module-num">🏆 Módulo 7</div><div class="module-status" style="background:var(--b1l);color:var(--b1)">Disponible</div></div>
+        <div class="module-title">Producción integrada & évaluation B1</div>
+        <div class="module-topics"><span class="topic-tag">Textos auténticos</span><span class="topic-tag">Expression écrite</span><span class="topic-tag">Oral spontané</span><span class="topic-tag">Évaluation CECRL</span></div>
+        <div class="module-footer"><span class="module-exercises">5 partes · 19 ex. · 🎙️ oral</span><div class="module-arrow" style="color:var(--b1)">→</div></div>
+      </a>
+
+    </div>
+  </div>
+
+</div>
+
+<footer>Français pour hispanophones · Todos los derechos reservados</footer>
+</body>
+</html>
