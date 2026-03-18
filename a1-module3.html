@@ -597,6 +597,7 @@ function speakRA(btn){
   const voice = v==='f' ? VOICE_F : v==='m' ? VOICE_M : EL_VOICE;
   speakWithVoice(text, 1.0, voice);
 }
+function buildRA(id,phrases,color){ buildReadAloud(id,phrases,color); }
 function buildReadAloud(containerId, phrases, accentColor){
   const c = document.getElementById(containerId);
   if(!c) return;
