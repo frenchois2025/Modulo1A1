@@ -610,54 +610,43 @@ function speakRA(btn){
 function buildRA(id,phrases,color){ buildReadAloud(id,phrases,color); }
 
 // ══════════════════════════════════════
-// DIALOGUE LISTEN ENGINE
+// DIALOGUE LISTEN ENGINE v2
+// Phase 1 : bouton écoute + QCM (aucun texte)
+// Phase 2 : après validation → dialogue + karaoké
 // ══════════════════════════════════════
+const dlTally = {};
+
 function buildDialogueListen(containerId, data, accentColor){
   const c = document.getElementById(containerId);
   if(!c) return;
   c.innerHTML = '';
 
-  // Header
-  const header = document.createElement('div');
-  header.style.cssText = 'font-size:13px;font-weight:800;color:'+accentColor+';text-transform:uppercase;letter-spacing:1px;margin-bottom:12px';
-  header.textContent = '🎧 ' + data.title;
-  c.appendChild(header);
+  // ── Phase 1 ──────────────────────────
+  const phase1 = document.createElement('div');
+  phase1.id = containerId + '_phase1';
 
-  // Instruction
-  const instr = document.createElement('div');
-  instr.style.cssText = 'font-size:13px;color:#7a7a8c;margin-bottom:14px;font-style:italic';
-  instr.textContent = 'Escucha el diálogo línea por línea, luego responde las preguntas.';
-  c.appendChild(instr);
+  const listenBox = document.createElement('div');
+  listenBox.style.cssText = 'text-align:center;padding:20px 0 24px';
+  const linesJSON = JSON.stringify(data.lines).replace(/\/g,'\\').replace(/'/g,"\'").replace(/`/g,'\`');
+  listenBox.innerHTML = `
+    <div style="font-size:13px;color:#7a7a8c;margin-bottom:14px;font-style:italic">
+      Escucha el diálogo completo, luego responde las preguntas sin ver el texto.
+    </div>
+    <button id="${containerId}_listenAll"
+      onclick="playDialogueFull('${containerId}', dlDataStore['${containerId}'])"
+      style="background:${accentColor};color:white;border:none;border-radius:12px;padding:14px 28px;font-size:15px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 16px rgba(0,0,0,.12)">
+      🔊 Écouter le dialogue
+    </button>
+    <div id="${containerId}_playing" style="margin-top:10px;font-size:12px;color:${accentColor};font-weight:700;display:none">
+      ▶ En cours…
+    </div>`;
+  phase1.appendChild(listenBox);
 
-  // Dialogue lines
-  const dlWrap = document.createElement('div');
-  dlWrap.style.cssText = 'background:#faf7f2;border:1.5px solid #e8e2d9;border-radius:14px;padding:16px 18px;margin-bottom:18px';
-  data.lines.forEach((line, i) => {
-    const row = document.createElement('div');
-    const isF = line.voice === 'f';
-    row.style.cssText = `display:flex;align-items:flex-start;gap:10px;margin-bottom:${i<data.lines.length-1?'14':'0'}px`;
-    row.innerHTML = `
-      <button onclick="speakWithVoice('${line.phrase.replace(/'/g,"\\'")}',1.0,'${line.voice==='f'?'XB0fDUnXU5powFXDhCwa':'onwK4e9ZLuTAKqWW03F9'}',this);this.style.opacity='.6';setTimeout(()=>this.style.opacity='1',900)"
-        style="flex-shrink:0;width:34px;height:34px;border-radius:50%;border:1.5px solid ${isF?'#e63946':'#2a7dd1'};background:${isF?'#fdecea':'#deeeff'};cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center">
-        🔊
-      </button>
-      <div style="flex:1">
-        <div style="font-size:11px;font-weight:800;color:${isF?'#e63946':'#2a7dd1'};margin-bottom:2px">${line.speaker}</div>
-        <div class="dl-line-text" id="${containerId}_line_${i}" style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:#1a1a2e;filter:blur(5px);transition:filter .3s;cursor:pointer;user-select:none" title="Clic para revelar" onclick="this.style.filter='none'">${line.phrase}</div>
-        <div style="font-size:11px;color:#8a8a9a;margin-top:2px;font-style:italic">${line.translation}</div>
-      </div>`;
-    dlWrap.appendChild(row);
-  });
-  c.appendChild(dlWrap);
-
-  // QCM section
   const qLabel = document.createElement('div');
-  qLabel.style.cssText = 'font-size:12px;font-weight:800;color:'+accentColor+';text-transform:uppercase;letter-spacing:1px;margin-bottom:10px';
-  qLabel.textContent = '🧠 Comprensión — responde sin mirar el texto';
-  c.appendChild(qLabel);
+  qLabel.style.cssText = `font-size:12px;font-weight:800;color:${accentColor};text-transform:uppercase;letter-spacing:1px;margin-bottom:10px`;
+  qLabel.textContent = '🧠 Comprensión — responde sin ver el texto';
+  phase1.appendChild(qLabel);
 
-  const qWrap = document.createElement('div');
-  qWrap.id = containerId + '_qwrap';
   data.qcm.forEach((q, qi) => {
     const qDiv = document.createElement('div');
     qDiv.className = 'qcm-item';
@@ -668,50 +657,168 @@ function buildDialogueListen(containerId, data, accentColor){
         ${q.opts.map((o,oi)=>`<button class="opt" onclick="answerDLQ('${containerId}',${qi},${oi},${q.ans},${data.qcm.length})">${o}</button>`).join('')}
       </div>
       <div class="fb" id="${containerId}_fb_${qi}"></div>`;
-    qWrap.appendChild(qDiv);
+    phase1.appendChild(qDiv);
   });
-  c.appendChild(qWrap);
 
-  // Score box
   const score = document.createElement('div');
   score.className = 'score-box';
   score.id = containerId + '_score';
   score.style.background = accentColor + '22';
   score.innerHTML = `<div class="score-emoji" id="${containerId}_sc_em"></div><div class="score-num" id="${containerId}_sc_n" style="color:${accentColor}"></div><div class="score-msg" id="${containerId}_sc_m"></div>`;
-  c.appendChild(score);
+  phase1.appendChild(score);
+  c.appendChild(phase1);
+
+  // ── Phase 2 : transcription karaoké ──
+  const phase2 = document.createElement('div');
+  phase2.id = containerId + '_phase2';
+  phase2.style.display = 'none';
+  phase2.innerHTML = `<div style="font-size:12px;font-weight:800;color:${accentColor};text-transform:uppercase;letter-spacing:1px;margin:18px 0 10px">📖 Transcripción del diálogo</div>`;
+
+  const dlWrap = document.createElement('div');
+  dlWrap.style.cssText = 'background:#1a1a2e;border:1.5px solid #2a2a4e;border-radius:14px;padding:16px 18px';
+
+  data.lines.forEach((line, li) => {
+    const isF = line.voice === 'f';
+    const accentLine = isF ? '#e63946' : '#2a7dd1';
+    const bgLine = isF ? '#fdecea' : '#deeeff';
+    const words = line.phrase.split(' ');
+    const wordSpans = words.map((w, wi) =>
+      `<span id="${containerId}_w${li}_${wi}" style="color:rgba(255,255,255,0.5);transition:color .12s">${w}</span>`
+    ).join(' ');
+
+    const row = document.createElement('div');
+    row.style.cssText = `display:flex;align-items:flex-start;gap:10px;margin-bottom:${li<data.lines.length-1?'16':'0'}px`;
+    row.innerHTML = `
+      <button onclick="playLineKaraoke('${containerId}',${li},dlDataStore['${containerId}'].lines[${li}],this)"
+        style="flex-shrink:0;width:34px;height:34px;border-radius:50%;border:1.5px solid ${accentLine};background:${bgLine};cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;transition:opacity .2s">
+        🔊
+      </button>
+      <div style="flex:1">
+        <div style="font-size:11px;font-weight:800;color:${accentLine};margin-bottom:4px;letter-spacing:.5px">${line.speaker}</div>
+        <div id="${containerId}_line${li}" style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700;line-height:1.6">${wordSpans}</div>
+        <div style="font-size:11px;color:rgba(255,255,255,.35);margin-top:4px;font-style:italic">${line.translation}</div>
+      </div>`;
+    dlWrap.appendChild(row);
+  });
+
+  phase2.appendChild(dlWrap);
+  c.appendChild(phase2);
 }
 
-const dlTally = {};
+// Store dialogue data accessible by containerId
+const dlDataStore = {};
+function registerDL(id, data){ dlDataStore[id] = data; }
+
+async function playDialogueFull(cid, data){
+  const btn = document.getElementById(cid+'_listenAll');
+  const ind = document.getElementById(cid+'_playing');
+  if(!data) return;
+  if(btn) btn.disabled = true;
+  if(ind) ind.style.display = 'block';
+  for(const line of data.lines){
+    const voiceId = line.voice==='f'?'XB0fDUnXU5powFXDhCwa':'onwK4e9ZLuTAKqWW03F9';
+    await speakPromise(line.phrase, voiceId);
+    await new Promise(r=>setTimeout(r,320));
+  }
+  if(btn){ btn.disabled=false; btn.innerHTML='🔊 Écouter à nouveau'; }
+  if(ind) ind.style.display='none';
+}
+
+function speakPromise(text, voiceId){
+  const key = localStorage.getItem('el_api_key')||'';
+  if(!key){
+    return new Promise(res=>{
+      const u=new SpeechSynthesisUtterance(text);
+      u.lang='fr-FR'; u.rate=0.88; u.onend=res;
+      window.speechSynthesis.cancel();
+      window.speechSynthesis.speak(u);
+    });
+  }
+  return fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`,{
+    method:'POST',
+    headers:{'xi-api-key':key,'Content-Type':'application/json'},
+    body:JSON.stringify({text,model_id:'eleven_multilingual_v2',language_code:'fr',voice_settings:{stability:0.5,similarity_boost:0.75}})
+  }).then(r=>r.blob()).then(blob=>new Promise(res=>{
+    const url=URL.createObjectURL(blob);
+    const a=new Audio(url);
+    a.play();
+    a.onended=()=>{URL.revokeObjectURL(url);res();};
+  })).catch(()=>speakPromise(text, null));
+}
+
+async function playLineKaraoke(cid, li, line, btn){
+  if(!line) return;
+  const words = line.phrase.split(' ');
+  const voiceId = line.voice==='f'?'XB0fDUnXU5powFXDhCwa':'onwK4e9ZLuTAKqWW03F9';
+  btn.disabled = true;
+  // Reset
+  words.forEach((_,wi)=>{
+    const s=document.getElementById(`${cid}_w${li}_${wi}`);
+    if(s) s.style.color='rgba(255,255,255,0.5)';
+  });
+  const startKaraoke = (duration) => {
+    const ms = (duration*1000) / words.length;
+    words.forEach((_,wi)=>setTimeout(()=>{
+      const s=document.getElementById(`${cid}_w${li}_${wi}`);
+      if(s) s.style.color='#ffd166';
+    }, wi*ms));
+    setTimeout(()=>{ btn.disabled=false; }, duration*1000+200);
+  };
+  const key = localStorage.getItem('el_api_key')||'';
+  if(!key){
+    const u=new SpeechSynthesisUtterance(line.phrase);
+    u.lang='fr-FR'; u.rate=0.88;
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(u);
+    startKaraoke(words.length*0.42);
+    return;
+  }
+  try{
+    const r=await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`,{
+      method:'POST',
+      headers:{'xi-api-key':key,'Content-Type':'application/json'},
+      body:JSON.stringify({text:line.phrase,model_id:'eleven_multilingual_v2',language_code:'fr',voice_settings:{stability:0.5,similarity_boost:0.75}})
+    });
+    const blob=await r.blob();
+    const url=URL.createObjectURL(blob);
+    const audio=new Audio(url);
+    audio.addEventListener('loadedmetadata',()=>startKaraoke(audio.duration));
+    audio.play();
+    audio.onended=()=>{URL.revokeObjectURL(url); btn.disabled=false;};
+  }catch{ btn.disabled=false; }
+}
+
 function answerDLQ(cid, qi, chosen, correct, total){
-  const key = cid + '_' + qi;
+  const key=cid+'_'+qi;
   if(dlTally[key]) return;
-  dlTally[key] = { done: true, wasCorrect: chosen === correct };
-  const opts = document.querySelectorAll('#'+cid+'_opts_'+qi+' .opt');
+  dlTally[key]={done:true, wasCorrect:chosen===correct};
+  const opts=document.querySelectorAll('#'+cid+'_opts_'+qi+' .opt');
   opts.forEach((b,i)=>{
-    b.disabled = true;
+    b.disabled=true;
     if(i===correct) b.classList.add('correct');
     else if(i===chosen && chosen!==correct) b.classList.add('wrong');
   });
-  const fb = document.getElementById(cid+'_fb_'+qi);
-  fb.textContent = chosen===correct ? '✅ ¡Correcto!' : '❌ Respuesta correcta: ' + opts[correct].textContent;
-  fb.style.color = chosen===correct ? '#1d7a4c' : '#c0392b';
-  fb.style.fontSize = '12px'; fb.style.marginTop = '6px'; fb.style.fontWeight = '700';
-
-  // Check if all questions answered
-  let answered = 0;
-  for(let i=0;i<total;i++){ if(dlTally[cid+'_'+i]) answered++; }
+  const fb=document.getElementById(cid+'_fb_'+qi);
+  fb.textContent=chosen===correct?'✅ ¡Correcto!':'❌ Respuesta correcta: '+opts[correct].textContent;
+  fb.style.cssText='color:'+(chosen===correct?'#1d7a4c':'#c0392b')+';font-size:12px;margin-top:6px;font-weight:700';
+  let answered=0, good=0;
+  for(let i=0;i<total;i++){
+    if(dlTally[cid+'_'+i]){ answered++; if(dlTally[cid+'_'+i].wasCorrect) good++; }
+  }
   if(answered===total){
-    let good = 0;
-    for(let i=0;i<total;i++){ if(dlTally[cid+'_'+i] && dlTally[cid+'_'+i].wasCorrect) good++; }
-    const sc = document.getElementById(cid+'_score');
+    const sc=document.getElementById(cid+'_score');
     if(sc){
       sc.classList.add('show');
-      const pct = good/total;
-      document.getElementById(cid+'_sc_em').textContent = pct>=.75?'🎉':pct>=.5?'👍':'💪';
-      document.getElementById(cid+'_sc_n').textContent = good+' / '+total;
-      document.getElementById(cid+'_sc_m').textContent = pct>=.75?'¡Excelente comprensión!':pct>=.5?'¡Bien! Vuelve a escuchar.':'Escucha el diálogo otra vez.';
+      const pct=good/total;
+      document.getElementById(cid+'_sc_em').textContent=pct>=.75?'🎉':pct>=.5?'👍':'💪';
+      document.getElementById(cid+'_sc_n').textContent=good+' / '+total;
+      document.getElementById(cid+'_sc_m').textContent=pct>=.75?'¡Excelente comprensión!':pct>=.5?'¡Bien! Vuelve a escuchar.':'Escucha el diálogo otra vez.';
       sc.scrollIntoView({behavior:'smooth',block:'nearest'});
     }
+    setTimeout(()=>{
+      const p2=document.getElementById(cid+'_phase2');
+      if(p2){ p2.style.display='block'; p2.style.animation='fadein .4s ease'; p2.scrollIntoView({behavior:'smooth',block:'nearest'}); }
+    },900);
   }
 }
 function buildReadAloud(containerId, phrases, accentColor){
@@ -1093,13 +1200,13 @@ const dl3={
   title:'Diálogo — ¿Qué te gusta hacer?',
   lines:[
     {speaker:'Charlotte', voice:'f', phrase:"Salut Lucas ! Qu'est-ce que tu aimes faire le week-end ?", translation:'¡Hola Lucas! ¿Qué te gusta hacer el fin de semana?'},
-    {speaker:'Daniel',    voice:'m', phrase:"J'adore faire du sport, surtout le foot. Et toi ?",         translation:'Me encanta hacer deporte, sobre todo fútbol. ¿Y tú?'},
+    {speaker:'Lucas',    voice:'m', phrase:"J'adore faire du sport, surtout le foot. Et toi ?",         translation:'Me encanta hacer deporte, sobre todo fútbol. ¿Y tú?'},
     {speaker:'Charlotte', voice:'f', phrase:"Moi, je préfère lire ou regarder des films.",                translation:'Yo prefiero leer o ver películas.'},
-    {speaker:'Daniel',    voice:'m', phrase:"Tu détestes le sport ?",                                     translation:'¿Odias el deporte?'},
+    {speaker:'Lucas',    voice:'m', phrase:"Tu détestes le sport ?",                                     translation:'¿Odias el deporte?'},
     {speaker:'Charlotte', voice:'f', phrase:"Non, je n'aime pas trop, mais j'adore nager !",              translation:'No, no me gusta mucho, ¡pero me encanta nadar!'},
   ],
   qcm:[
-    {q:'¿Qué le encanta hacer a Daniel el fin de semana?', opts:['Leer libros','Hacer deporte','Ver películas'], ans:1},
+    {q:'¿Qué le encanta hacer a Lucas el fin de semana?', opts:['Leer libros','Hacer deporte','Ver películas'], ans:1},
     {q:'¿Qué prefiere Charlotte?', opts:['Hacer deporte','Cocinar','Leer o ver películas'], ans:2},
     {q:'¿Charlotte detesta el deporte?', opts:['Sí, completamente','No, pero no le gusta mucho','Sí, excepto el fútbol'], ans:1},
     {q:'¿Qué deporte le encanta a Charlotte?', opts:['El fútbol','La natación','El ciclismo'], ans:1},
@@ -1145,14 +1252,14 @@ const dl4={
   title:'Diálogo — Le week-end prochain',
   lines:[
     {speaker:'Charlotte', voice:'f', phrase:"Dis, qu'est-ce que tu vas faire ce week-end ?",                   translation:'Oye, ¿qué vas a hacer este fin de semana?'},
-    {speaker:'Daniel',    voice:'m', phrase:"Je vais aller au cinéma samedi soir.",                             translation:'Voy a ir al cine el sábado por la noche.'},
+    {speaker:'Lucas',    voice:'m', phrase:"Je vais aller au cinéma samedi soir.",                             translation:'Voy a ir al cine el sábado por la noche.'},
     {speaker:'Charlotte', voice:'f', phrase:"Super ! Et dimanche ?",                                            translation:'¡Genial! ¿Y el domingo?'},
-    {speaker:'Daniel',    voice:'m', phrase:"Je ne vais pas sortir. Je vais rester à la maison et cuisiner.",   translation:'No voy a salir. Me voy a quedar en casa y cocinar.'},
+    {speaker:'Lucas',    voice:'m', phrase:"Je ne vais pas sortir. Je vais rester à la maison et cuisiner.",   translation:'No voy a salir. Me voy a quedar en casa y cocinar.'},
     {speaker:'Charlotte', voice:'f', phrase:"Moi, je vais voyager avec ma famille. On va visiter Lyon !",       translation:'Yo voy a viajar con mi familia. ¡Vamos a visitar Lyon!'},
   ],
   qcm:[
-    {q:'¿Qué va a hacer Daniel el sábado por la noche?', opts:['Cocinar en casa','Ir al cine','Viajar a Lyon'], ans:1},
-    {q:'¿Qué va a hacer Daniel el domingo?', opts:['Salir con amigos','Ir al restaurante','Quedarse en casa y cocinar'], ans:2},
+    {q:'¿Qué va a hacer Lucas el sábado por la noche?', opts:['Cocinar en casa','Ir al cine','Viajar a Lyon'], ans:1},
+    {q:'¿Qué va a hacer Lucas el domingo?', opts:['Salir con amigos','Ir al restaurante','Quedarse en casa y cocinar'], ans:2},
     {q:'¿Adónde va Charlotte con su familia?', opts:['París','Marsella','Lyon'], ans:2},
     {q:'¿Cuál es la forma negativa del futur proche en el diálogo?', opts:['Je vais ne pas sortir','Je ne vais pas sortir','Je ne va pas sortir'], ans:1},
   ]
@@ -1183,13 +1290,13 @@ document.addEventListener('DOMContentLoaded',()=>{
   buildQCM('ex3a',qcm3a,'sc3a');
   buildMatch('ex3b',match3b,'sc3b');
   buildFill('ex3c',fill3c);
-  buildDialogueListen('dl3',dl3,'var(--l3)');
+  buildDialogueListen('dl3',dl3,'var(--l3)'); registerDL('dl3',dl3);
   buildRA('ra3',ra3,'var(--l3)');
   buildQCM('ex4a',qcm4a,'sc4a');
   buildFill('ex4b',fill4b);
   buildQCM('ex4c',qcm4c,'sc4c');
   buildMatch('ex4d',match4d,'sc4d');
-  buildDialogueListen('dl4',dl4,'var(--l4)');
+  buildDialogueListen('dl4',dl4,'var(--l4)'); registerDL('dl4',dl4);
   buildRA('ra4',ra4,'var(--l4)');
   buildMobNav();
 });
