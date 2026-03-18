@@ -508,21 +508,39 @@ async function recStart(id){
   try {
     const stream = await navigator.mediaDevices.getUserMedia({audio:true});
     REC[id] = {chunks:[], recording:true, blob:null};
-    // Choose best available mime
-    const mime = MediaRecorder.isTypeSupported('audio/webm') ? 'audio/webm'
-               : MediaRecorder.isTypeSupported('audio/ogg')  ? 'audio/ogg'
+    // Detect best supported mime (webm → ogg → mp4 → default)
+    const mime = MediaRecorder.isTypeSupported('audio/webm;codecs=opus') ? 'audio/webm;codecs=opus'
+               : MediaRecorder.isTypeSupported('audio/webm')             ? 'audio/webm'
+               : MediaRecorder.isTypeSupported('audio/ogg;codecs=opus')  ? 'audio/ogg;codecs=opus'
+               : MediaRecorder.isTypeSupported('audio/ogg')              ? 'audio/ogg'
+               : MediaRecorder.isTypeSupported('audio/mp4')              ? 'audio/mp4'
                : '';
     REC[id].recorder = mime ? new MediaRecorder(stream,{mimeType:mime}) : new MediaRecorder(stream);
     REC[id].recorder.ondataavailable = e => { if(e.data && e.data.size>0) REC[id].chunks.push(e.data); };
     REC[id].recorder.onstop = () => {
-      REC[id].blob = new Blob(REC[id].chunks, {type: REC[id].recorder.mimeType||'audio/webm'});
+      const mimeType = REC[id].recorder.mimeType || mime || 'audio/webm';
+      REC[id].blob = new Blob(REC[id].chunks, {type: mimeType});
       REC[id].recording = false;
       stream.getTracks().forEach(t=>t.stop());
       if(statusEl) { statusEl.textContent='✓ ¡Grabado!'; statusEl.style.color='#1d7a4c'; }
       if(btnEl)    { btnEl.textContent='🎙️ Grabar de nuevo'; btnEl.style.background='#555'; }
-      if(cmpEl)    { cmpEl.style.display='flex'; }
+      if(cmpEl)    {
+        cmpEl.style.display='flex';
+        // Inject native audio player for reliable cross-browser playback
+        const playerId = 'player_'+id;
+        let player = document.getElementById(playerId);
+        if(!player){
+          player = document.createElement('audio');
+          player.id = playerId;
+          player.controls = true;
+          player.style.cssText = 'width:100%;margin-top:6px;border-radius:8px;';
+          cmpEl.parentElement.insertBefore(player, cmpEl.nextSibling);
+        }
+        const url = URL.createObjectURL(REC[id].blob);
+        player.src = url;
+      }
     };
-    REC[id].recorder.start(100); // collect every 100ms
+    REC[id].recorder.start(100);
     if(statusEl) { statusEl.textContent='● Grabando…'; statusEl.style.color='#e63946'; }
     if(btnEl)    { btnEl.textContent='⬛ Detener'; btnEl.style.background='#e63946'; }
     if(cmpEl)    { cmpEl.style.display='none'; }
@@ -548,11 +566,9 @@ function recToggle(id){
 }
 
 function recPlayback(id){
-  if(REC[id] && REC[id].blob){
-    const url = URL.createObjectURL(REC[id].blob);
-    const a = new Audio(url);
-    a.play().catch(()=>{ /* autoplay blocked — ignore */ });
-  }
+  // Kept for compatibility — playback now handled by <audio controls>
+  const player = document.getElementById('player_'+id);
+  if(player){ player.currentTime=0; player.play().catch(()=>{}); }
 }
 
 // ══════════════════════════════════════
