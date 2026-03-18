@@ -406,11 +406,24 @@ body {
 .speaking{opacity:.65;pointer-events:none}
 @keyframes spin{to{transform:rotate(360deg)}}
 
+
+.sidebar-back {
+  display: block;
+  font-size: 12px; font-weight: 700;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 6px 8px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  transition: all .15s;
+}
+.sidebar-back:hover { background: var(--bg); color: var(--text); }
 </style>
 </head>
 <body>
 
 <div class="mob-nav" id="mobNav"></div>
+  <a class="sidebar-back" href="index.html">← Volver al inicio</a>
 
 <div class="app">
 <!-- ═══ SIDEBAR ═══ -->
@@ -1326,9 +1339,9 @@ function buildAlphabet(){
 function buildNasales(){
   const c=document.getElementById('ex5b');
   if(!c) return;
-  [{comb:'an, en, am, em',ex:'sans, lent, lampe, temps',trad:'sin, lento, lámpara, tiempo',bg:'#fdecea'},
-   {comb:'in, ain, ein, un',ex:'pain, main, vingt, synthèse',trad:'pan, mano, veinte, resumen',bg:'#deeeff'},
-   {comb:'on, om',ex:'bon, nom',trad:'bueno, nombre',bg:'#dcf5ea'}
+  [{comb:'an, en, am, em',ex:'sans, lent, lampe, temps',trad:'sin, lento, lámpara, tiempo',bg:'#fdecea',speak_w:'sans'},
+   {comb:'in, ain, ein, un',ex:'pain, main, vingt, synthèse',trad:'pan, mano, veinte, resumen',bg:'#deeeff',speak_w:'le pain'},
+   {comb:'on, om',ex:'bon, nom',trad:'bueno, nombre',bg:'#dcf5ea',speak_w:'le bon'}
   ].forEach(n=>{
     const d=document.createElement('div');
     d.className='liaison-card'; d.style.background=n.bg;
@@ -1338,7 +1351,7 @@ function buildNasales(){
         <div style="font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:#1a1a2e">${n.comb}</div>
         <div style="font-size:13px;color:#8a8a9a;margin-top:4px">Ej: <em>${n.ex}</em> → ${n.trad}</div>
       </div>
-      <button class="speak-btn" onclick="speak('${n.ex.split(',')[0].trim()}')">🔊</button>`;
+      <button class="speak-btn" onclick="speak('${n.speak_w}')">🔊</button>`;
     c.appendChild(d);
   });
 }

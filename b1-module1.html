@@ -417,12 +417,25 @@ body {
 .nav-btn[data-lesson="2"]:not(.active):hover{background:var(--l2l);color:var(--l2d)}
 .nav-btn[data-lesson="3"]:not(.active):hover{background:var(--l3l);color:var(--l3d)}
 .nav-btn[data-lesson="4"]:not(.active):hover{background:var(--l4l);color:var(--l4d)}
+
+.sidebar-back {
+  display: block;
+  font-size: 12px; font-weight: 700;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 6px 8px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  transition: all .15s;
+}
+.sidebar-back:hover { background: var(--bg); color: var(--text); }
 </style>
 </head>
 <body>
 <div class="app">
 <nav class="sidebar">
   <div class="sidebar-logo">Français B1<br><span>Module 1</span></div>
+  <a class="sidebar-back" href="index.html">← Volver al inicio</a>
   <button class="nav-btn active" data-lesson="1" onclick="showLesson(1,this)"><span class="nav-icon">🔗</span>Leçon 1 — Qui, que, où<span class="nav-badge">5 ex.</span></button>
   <button class="nav-btn" data-lesson="2" onclick="showLesson(2,this)"><span class="nav-icon">🔄</span>Leçon 2 — Dont<span class="nav-badge">4 ex.</span></button>
   <button class="nav-btn" data-lesson="3" onclick="showLesson(3,this)"><span class="nav-icon">📐</span>Leçon 3 — Lequel<span class="nav-badge">4 ex.</span></button>
