@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Connexion · Frenchois</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:#f7f4ef;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.card{background:#fff;border-radius:24px;padding:48px 40px;width:min(440px,100%);box-shadow:0 8px 40px rgba(0,0,0,.1)}
+.logo{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;text-align:center;margin-bottom:6px;color:#1c1c2e}
+.logo span{color:#7c3aed}
+.subtitle{font-size:13px;color:#7a7a8c;text-align:center;margin-bottom:36px}
+.form-label{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#7a7a8c;margin-bottom:6px;display:block}
+.form-input{width:100%;border:2px solid #e4ddd4;border-radius:12px;padding:12px 16px;font-family:'Nunito',sans-serif;font-size:15px;font-weight:600;outline:none;transition:border-color .15s;color:#1c1c2e;background:#f7f4ef;margin-bottom:16px}
+.form-input:focus{border-color:#7c3aed;background:#fff}
+.submit-btn{width:100%;padding:14px;border-radius:12px;border:none;background:#7c3aed;color:white;font-family:'Nunito',sans-serif;font-size:15px;font-weight:800;cursor:pointer;transition:all .18s;margin-top:4px}
+.submit-btn:hover{background:#6d28d9;transform:translateY(-1px)}
+.submit-btn:disabled{opacity:.6;cursor:default;transform:none}
+.msg{margin-top:16px;padding:12px 16px;border-radius:10px;font-size:13px;font-weight:700;text-align:center;display:none}
+.msg.error{background:#fdecea;color:#b02030;display:block}
+.msg.success{background:#dcf5ea;color:#1d7a4c;display:block}
+.divider{border:none;border-top:1px solid #e4ddd4;margin:28px 0}
+.forgot{text-align:center;font-size:13px;color:#7a7a8c}
+.forgot a{color:#7c3aed;font-weight:700;text-decoration:none;cursor:pointer}
+.forgot a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">Frenchois<span>.</span></div>
+  <div class="subtitle">Connecte-toi pour accéder à ton cours</div>
+
+  <div id="login-form">
+    <label class="form-label">Adresse email</label>
+    <input class="form-input" type="email" id="email" placeholder="ton@email.com" autocomplete="email">
+    <label class="form-label">Mot de passe</label>
+    <input class="form-input" type="password" id="password" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')login()">
+    <button class="submit-btn" id="login-btn" onclick="login()">Se connecter</button>
+    <div class="msg" id="login-msg"></div>
+    <hr class="divider">
+    <div class="forgot"><a onclick="showReset()">Mot de passe oublié ?</a></div>
+  </div>
+
+  <div id="reset-form" style="display:none">
+    <div style="font-size:14px;color:#7a7a8c;margin-bottom:20px;line-height:1.6">Entrez votre email — vous recevrez un lien pour créer un nouveau mot de passe.</div>
+    <label class="form-label">Adresse email</label>
+    <input class="form-input" type="email" id="reset-email" placeholder="ton@email.com">
+    <button class="submit-btn" id="reset-btn" onclick="resetPassword()">Envoyer le lien</button>
+    <div class="msg" id="reset-msg"></div>
+    <hr class="divider">
+    <div class="forgot"><a onclick="showLogin()">← Retour à la connexion</a></div>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://mvfrirxbhbtenunogdpj.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_oT738uTwT-dtpbMpWGgFkg_LvODS1a-';
+const { createClient } = supabase;
+const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// If already logged in, redirect to index
+sb.auth.getSession().then(({ data }) => {
+  if (data.session) window.location.href = 'index.html';
+});
+
+async function login() {
+  const email    = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+  const btn      = document.getElementById('login-btn');
+  const msg      = document.getElementById('login-msg');
+
+  if (!email || !password) {
+    showMsg(msg, 'error', 'Remplis tous les champs.');
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Connexion…';
+  msg.className = 'msg';
+
+  const { data, error } = await sb.auth.signInWithPassword({ email, password });
+
+  if (error) {
+    btn.disabled = false;
+    btn.textContent = 'Se connecter';
+    if (error.message.includes('Invalid login')) {
+      showMsg(msg, 'error', 'Email ou mot de passe incorrect.');
+    } else if (error.message.includes('Email not confirmed')) {
+      showMsg(msg, 'error', 'Compte non activé. Contacte ton professeur.');
+    } else {
+      showMsg(msg, 'error', 'Erreur : ' + error.message);
+    }
+    return;
+  }
+
+  // Success
+  showMsg(msg, 'success', '✓ Connecté ! Redirection…');
+  setTimeout(() => window.location.href = 'index.html', 800);
+}
+
+async function resetPassword() {
+  const email = document.getElementById('reset-email').value.trim();
+  const btn   = document.getElementById('reset-btn');
+  const msg   = document.getElementById('reset-msg');
+
+  if (!email) { showMsg(msg, 'error', 'Entre ton adresse email.'); return; }
+
+  btn.disabled = true;
+  btn.textContent = 'Envoi…';
+
+  const { error } = await sb.auth.resetPasswordForEmail(email, {
+    redirectTo: window.location.origin + '/login.html'
+  });
+
+  btn.disabled = false;
+  btn.textContent = 'Envoyer le lien';
+
+  if (error) {
+    showMsg(msg, 'error', 'Erreur : ' + error.message);
+  } else {
+    showMsg(msg, 'success', '✓ Email envoyé ! Vérifie ta boîte mail.');
+  }
+}
+
+function showReset() {
+  document.getElementById('login-form').style.display = 'none';
+  document.getElementById('reset-form').style.display = 'block';
+}
+function showLogin() {
+  document.getElementById('reset-form').style.display = 'none';
+  document.getElementById('login-form').style.display = 'block';
+}
+function showMsg(el, type, text) {
+  el.className = 'msg ' + type;
+  el.textContent = text;
+}
+</script>
+</body>
+</html>
