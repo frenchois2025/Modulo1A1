@@ -10,48 +10,50 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Nunito',sans-serif;background:#f7f4ef;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
 .card{background:#fff;border-radius:24px;padding:48px 40px;width:min(440px,100%);box-shadow:0 8px 40px rgba(0,0,0,.1)}
-.logo{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;text-align:center;margin-bottom:6px;color:#1c1c2e}
+.logo{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;text-align:center;margin-bottom:6px;color:#1c1c2e}
 .logo span{color:#7c3aed}
-.subtitle{font-size:13px;color:#7a7a8c;text-align:center;margin-bottom:36px}
+.subtitle{font-size:13px;color:#7a7a8c;text-align:center;margin-bottom:36px;line-height:1.6}
 .form-label{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#7a7a8c;margin-bottom:6px;display:block}
-.form-input{width:100%;border:2px solid #e4ddd4;border-radius:12px;padding:12px 16px;font-family:'Nunito',sans-serif;font-size:15px;font-weight:600;outline:none;transition:border-color .15s;color:#1c1c2e;background:#f7f4ef;margin-bottom:16px}
+.form-input{width:100%;border:2px solid #e4ddd4;border-radius:12px;padding:14px 16px;font-family:'Nunito',sans-serif;font-size:15px;font-weight:600;outline:none;transition:border-color .15s;color:#1c1c2e;background:#f7f4ef}
 .form-input:focus{border-color:#7c3aed;background:#fff}
-.submit-btn{width:100%;padding:14px;border-radius:12px;border:none;background:#7c3aed;color:white;font-family:'Nunito',sans-serif;font-size:15px;font-weight:800;cursor:pointer;transition:all .18s;margin-top:4px}
+.submit-btn{width:100%;padding:15px;border-radius:12px;border:none;background:#7c3aed;color:white;font-family:'Nunito',sans-serif;font-size:15px;font-weight:800;cursor:pointer;transition:all .18s;margin-top:16px;display:flex;align-items:center;justify-content:center;gap:8px}
 .submit-btn:hover{background:#6d28d9;transform:translateY(-1px)}
 .submit-btn:disabled{opacity:.6;cursor:default;transform:none}
-.msg{margin-top:16px;padding:12px 16px;border-radius:10px;font-size:13px;font-weight:700;text-align:center;display:none}
+.msg{margin-top:16px;padding:14px 18px;border-radius:12px;font-size:13px;font-weight:700;text-align:center;display:none;line-height:1.6}
 .msg.error{background:#fdecea;color:#b02030;display:block}
-.msg.success{background:#dcf5ea;color:#1d7a4c;display:block}
-.divider{border:none;border-top:1px solid #e4ddd4;margin:28px 0}
-.forgot{text-align:center;font-size:13px;color:#7a7a8c}
-.forgot a{color:#7c3aed;font-weight:700;text-decoration:none;cursor:pointer}
-.forgot a:hover{text-decoration:underline}
+.sent-card{display:none;text-align:center;padding:10px 0}
+.sent-icon{font-size:48px;margin-bottom:16px}
+.sent-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#1c1c2e;margin-bottom:10px}
+.sent-text{font-size:13px;color:#7a7a8c;line-height:1.7;margin-bottom:24px}
+.sent-email{font-weight:800;color:#7c3aed}
+.resend-btn{background:none;border:1.5px solid #e4ddd4;border-radius:10px;padding:10px 20px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;color:#7a7a8c;cursor:pointer;transition:all .15s}
+.resend-btn:hover{border-color:#7c3aed;color:#7c3aed}
 </style>
 </head>
 <body>
 <div class="card">
   <div class="logo">Frenchois<span>.</span></div>
-  <div class="subtitle">Connecte-toi pour accéder à ton cours</div>
+  <div class="subtitle">Tu cours de français en ligne</div>
 
   <div id="login-form">
-    <label class="form-label">Adresse email</label>
-    <input class="form-input" type="email" id="email" placeholder="ton@email.com" autocomplete="email">
-    <label class="form-label">Mot de passe</label>
-    <input class="form-input" type="password" id="password" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')login()">
-    <button class="submit-btn" id="login-btn" onclick="login()">Se connecter</button>
-    <div class="msg" id="login-msg"></div>
-    <hr class="divider">
-    <div class="forgot"><a onclick="showReset()">Mot de passe oublié ?</a></div>
+    <label class="form-label">Tu adresse email</label>
+    <input class="form-input" type="email" id="email" placeholder="ton@email.com" autocomplete="email" onkeydown="if(event.key==='Enter')sendLink()">
+    <button class="submit-btn" id="submit-btn" onclick="sendLink()">
+      <span>&#9993;&#65039;</span> Recibir mi enlace de acceso
+    </button>
+    <div class="msg" id="msg"></div>
   </div>
 
-  <div id="reset-form" style="display:none">
-    <div style="font-size:14px;color:#7a7a8c;margin-bottom:20px;line-height:1.6">Entrez votre email — vous recevrez un lien pour créer un nouveau mot de passe.</div>
-    <label class="form-label">Adresse email</label>
-    <input class="form-input" type="email" id="reset-email" placeholder="ton@email.com">
-    <button class="submit-btn" id="reset-btn" onclick="resetPassword()">Envoyer le lien</button>
-    <div class="msg" id="reset-msg"></div>
-    <hr class="divider">
-    <div class="forgot"><a onclick="showLogin()">← Retour à la connexion</a></div>
+  <div id="sent-card" class="sent-card">
+    <div class="sent-icon">&#128236;</div>
+    <div class="sent-title">&#161;Revisa tu correo!</div>
+    <div class="sent-text">
+      Hemos enviado un enlace de acceso a<br>
+      <span class="sent-email" id="sent-email"></span><br><br>
+      Haz clic en el enlace para entrar al curso.<br>
+      <span style="color:#b86a00">El enlace expira en 1 hora.</span>
+    </div>
+    <button class="resend-btn" onclick="showForm()">&#8592; Usar otro email</button>
   </div>
 </div>
 
@@ -61,81 +63,56 @@ const SUPABASE_KEY = 'sb_publishable_oT738uTwT-dtpbMpWGgFkg_LvODS1a-';
 const { createClient } = supabase;
 const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// If already logged in, redirect to index
 sb.auth.getSession().then(({ data }) => {
   if (data.session) window.location.href = 'index.html';
 });
 
-async function login() {
-  const email    = document.getElementById('email').value.trim();
-  const password = document.getElementById('password').value;
-  const btn      = document.getElementById('login-btn');
-  const msg      = document.getElementById('login-msg');
+async function sendLink() {
+  const email = document.getElementById('email').value.trim().toLowerCase();
+  const btn   = document.getElementById('submit-btn');
+  const msg   = document.getElementById('msg');
 
-  if (!email || !password) {
-    showMsg(msg, 'error', 'Remplis tous les champs.');
+  if (!email || !email.includes('@')) {
+    msg.className = 'msg error';
+    msg.textContent = 'Introduce una direcci\u00F3n de email v\u00E1lida.';
     return;
   }
 
   btn.disabled = true;
-  btn.textContent = 'Connexion…';
+  btn.innerHTML = '<span>&#9203;</span> Enviando\u2026';
   msg.className = 'msg';
 
-  const { data, error } = await sb.auth.signInWithPassword({ email, password });
+  const { error } = await sb.auth.signInWithOtp({
+    email,
+    options: {
+      emailRedirectTo: 'https://exercies-francais.vercel.app/index.html',
+      shouldCreateUser: false
+    }
+  });
+
+  btn.disabled = false;
+  btn.innerHTML = '<span>&#9993;&#65039;</span> Recibir mi enlace de acceso';
 
   if (error) {
-    btn.disabled = false;
-    btn.textContent = 'Se connecter';
-    if (error.message.includes('Invalid login')) {
-      showMsg(msg, 'error', 'Email ou mot de passe incorrect.');
-    } else if (error.message.includes('Email not confirmed')) {
-      showMsg(msg, 'error', 'Compte non activé. Contacte ton professeur.');
+    msg.className = 'msg error';
+    if (error.message.toLowerCase().includes('not allowed') || error.message.toLowerCase().includes('not found') || error.message.toLowerCase().includes('signup')) {
+      msg.textContent = 'Este email no est\u00E1 autorizado. Contacta a tu profesor Dylan.';
     } else {
-      showMsg(msg, 'error', 'Erreur : ' + error.message);
+      msg.textContent = 'Error: ' + error.message;
     }
     return;
   }
 
-  // Success
-  showMsg(msg, 'success', '✓ Connecté ! Redirection…');
-  setTimeout(() => window.location.href = 'index.html', 800);
-}
-
-async function resetPassword() {
-  const email = document.getElementById('reset-email').value.trim();
-  const btn   = document.getElementById('reset-btn');
-  const msg   = document.getElementById('reset-msg');
-
-  if (!email) { showMsg(msg, 'error', 'Entre ton adresse email.'); return; }
-
-  btn.disabled = true;
-  btn.textContent = 'Envoi…';
-
-  const { error } = await sb.auth.resetPasswordForEmail(email, {
-    redirectTo: window.location.origin + '/login.html'
-  });
-
-  btn.disabled = false;
-  btn.textContent = 'Envoyer le lien';
-
-  if (error) {
-    showMsg(msg, 'error', 'Erreur : ' + error.message);
-  } else {
-    showMsg(msg, 'success', '✓ Email envoyé ! Vérifie ta boîte mail.');
-  }
-}
-
-function showReset() {
+  document.getElementById('sent-email').textContent = email;
   document.getElementById('login-form').style.display = 'none';
-  document.getElementById('reset-form').style.display = 'block';
+  document.getElementById('sent-card').style.display = 'block';
 }
-function showLogin() {
-  document.getElementById('reset-form').style.display = 'none';
+
+function showForm() {
+  document.getElementById('sent-card').style.display = 'none';
   document.getElementById('login-form').style.display = 'block';
-}
-function showMsg(el, type, text) {
-  el.className = 'msg ' + type;
-  el.textContent = text;
+  document.getElementById('email').value = '';
+  document.getElementById('msg').className = 'msg';
 }
 </script>
 </body>
