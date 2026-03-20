@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prononciation · Français</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f4ef;--white:#fff;--text:#1c1c2e;--muted:#7a7a8c;--border:#e4ddd4;
+  --s1:#7c3aed;--s1l:#f3e8ff;--s1d:#5b21b6;
+  --s2:#e63946;--s2l:#fdecea;--s2d:#b02030;
+  --s3:#2a7dd1;--s3l:#deeeff;--s3d:#1a5fa0;
+  --s4:#2eaa6b;--s4l:#dcf5ea;--s4d:#1d7a4c;
+  --s5:#e88c1a;--s5l:#fff3dc;--s5d:#b86a00;
+  --shadow:0 4px 24px rgba(0,0,0,.08)
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.app{display:flex;min-height:100vh}
+
+/* Sidebar */
+.sidebar{width:270px;flex-shrink:0;background:var(--white);border-right:1px solid var(--border);padding:24px 16px;position:sticky;top:0;height:100vh;overflow-y:auto;display:flex;flex-direction:column;gap:4px}
+.sidebar-logo{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;padding:0 8px 16px;border-bottom:1px solid var(--border);margin-bottom:10px;line-height:1.4}
+.sidebar-logo span{color:var(--s1)}
+.sidebar-back{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;border:1.5px solid var(--border);background:var(--bg);color:var(--muted);font-size:12px;font-weight:700;cursor:pointer;text-decoration:none;margin-bottom:10px;transition:all .15s}
+.sidebar-back:hover{border-color:var(--text);color:var(--text)}
+.nav-section{font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);padding:8px 12px 4px;margin-top:6px}
+.nav-btn{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;border:none;background:transparent;color:var(--muted);font-family:'Nunito',sans-serif;font-size:13px;font-weight:600;cursor:pointer;text-align:left;transition:all .18s;width:100%}
+.nav-btn .nav-icon{font-size:15px;width:20px;text-align:center;flex-shrink:0}
+.nav-btn.active{color:white}
+.nav-btn:not(.active):hover{background:var(--bg)}
+
+/* Main */
+.main{flex:1;padding:40px 36px;max-width:900px}
+.section-panel{display:none}.section-panel.active{display:block;animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.section-header{margin-bottom:32px}
+.section-tag{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;border-radius:20px;display:inline-block;margin-bottom:8px}
+.section-title{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;line-height:1.2;margin-bottom:6px}
+.section-desc{font-size:14px;color:var(--muted);line-height:1.6;max-width:600px}
+
+/* Cards */
+.ex-card{background:var(--white);border:1px solid var(--border);border-radius:18px;padding:26px;margin-bottom:20px;box-shadow:var(--shadow)}
+.ex-title{font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+.ex-instr{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.5}
+.tip-box{border-radius:12px;padding:14px 18px;margin-bottom:18px;font-size:13px;line-height:1.7}
+
+/* Phone grid */
+.phone-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:16px}
+.phone-card{border-radius:14px;border:2px solid var(--border);padding:14px 10px;text-align:center;background:var(--bg);cursor:pointer;transition:all .15s}
+.phone-card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.phone-card .pf{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;margin-bottom:2px}
+.phone-card .pip{font-size:11px;font-style:italic;color:var(--muted);margin-bottom:2px}
+.phone-card .pes{font-size:11px;color:var(--muted);margin-bottom:10px}
+.phone-card .pbtn{padding:5px 12px;border-radius:7px;border:none;font-family:'Nunito',sans-serif;font-size:11px;font-weight:700;cursor:pointer;transition:all .15s}
+
+/* QCM */
+.qcm-item{margin-bottom:20px}
+.q-label{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;opacity:.6}
+.q-text{font-size:15px;font-weight:700;margin-bottom:10px;line-height:1.5}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{padding:11px 16px;border-radius:10px;border:1.5px solid var(--border);background:var(--bg);color:var(--text);font-size:14px;font-weight:600;cursor:pointer;text-align:left;font-family:'Nunito',sans-serif;transition:all .15s}
+.opt:hover:not(:disabled){border-color:var(--text);background:var(--white)}
+.opt:disabled{cursor:default}
+.opt.correct{border-color:var(--s4);background:var(--s4l);color:var(--s4d)}
+.opt.wrong{border-color:var(--s2);background:var(--s2l);color:var(--s2d)}
+.fb{margin-top:6px;padding:8px 14px;border-radius:8px;font-size:13px;font-weight:600;display:none}
+.fb.show{display:block}.fb.ok{background:var(--s4l);color:var(--s4d)}.fb.nope{background:var(--s2l);color:var(--s2d)}
+
+/* Score */
+.score-box{border-radius:16px;padding:24px;text-align:center;margin-top:16px;display:none}
+.score-box.show{display:block}
+.score-emoji{font-size:40px;margin-bottom:8px}
+.score-num{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;margin-bottom:4px}
+.score-msg{font-size:14px;color:var(--muted)}
+.check-btn{margin-top:14px;padding:12px 28px;border-radius:10px;border:none;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;cursor:pointer;transition:all .18s}
+.check-btn:hover{transform:translateY(-1px)}
+
+/* RA */
+.ra-item{background:#faf7f2;border:1.5px solid #e8e2d9;border-radius:14px;padding:18px 20px;margin-bottom:12px}
+.ra-phrase{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;margin-bottom:4px;line-height:1.4}
+.ra-trad{font-size:12px;color:#8a8a9a;margin-bottom:14px}
+
+/* Fill */
+.fill-item{margin-bottom:14px}
+.fill-sentence{font-size:15px;font-weight:600;margin-bottom:6px;line-height:1.7}
+.fill-input{border:2px solid var(--border);border-radius:8px;padding:8px 14px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:600;width:100%;background:var(--bg);color:var(--text);outline:none;transition:border-color .15s}
+.fill-input:focus{border-color:var(--s1)}
+.fill-input.ok{border-color:var(--s4);background:var(--s4l);color:var(--s4d)}
+.fill-input.nope{border-color:var(--s2);background:var(--s2l);color:var(--s2d)}
+.fill-hint{font-size:12px;color:var(--muted);margin-top:4px;font-style:italic}
+
+/* EE Audio */
+.ee-card{background:#faf7f2;border:1.5px solid #e8e2d9;border-radius:14px;padding:14px 18px;margin-bottom:10px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+
+/* Mob nav */
+.mob-nav{display:none}
+@media(max-width:700px){
+  .sidebar{display:none}.main{padding:20px 16px}
+  .mob-nav{display:flex;overflow-x:auto;gap:6px;padding:10px 14px;background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10}
+  .mob-nav-btn{flex-shrink:0;padding:7px 13px;border-radius:20px;border:none;font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;cursor:pointer;background:var(--bg);color:var(--muted)}
+  .phone-grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr))}
+}
+
+/* EL fab */
+#el-fab{position:fixed;bottom:22px;right:22px;width:46px;height:46px;border-radius:50%;background:#7c3aed;color:white;border:none;font-size:20px;cursor:pointer;z-index:9999;box-shadow:0 4px 18px rgba(124,58,237,.45);transition:all .2s;display:flex;align-items:center;justify-content:center}
+#el-fab:hover{transform:scale(1.1)}
+#el-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:10000;align-items:center;justify-content:center}
+#el-modal.open{display:flex}
+#el-box{background:#fff;border-radius:20px;padding:28px;width:min(480px,94vw);box-shadow:0 20px 60px rgba(0,0,0,.2);font-family:'Nunito',sans-serif}
+#el-box h2{font-family:'Playfair Display',serif;font-size:20px;margin-bottom:4px}
+#el-box p{font-size:12px;color:#7a7a8c;margin-bottom:20px;line-height:1.5}
+.el-label{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#7a7a8c;margin-bottom:6px;display:block}
+.el-input{width:100%;border:2px solid #e4ddd4;border-radius:10px;padding:10px 14px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:600;outline:none;margin-bottom:14px}
+.el-select{width:100%;border:2px solid #e4ddd4;border-radius:10px;padding:10px 14px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:600;outline:none;margin-bottom:18px;background:#f7f4ef}
+.el-btns{display:flex;gap:8px;flex-wrap:wrap}
+.el-btn{padding:10px 18px;border-radius:10px;border:none;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer}
+.el-status{margin-top:12px;font-size:13px;font-weight:700;min-height:20px;text-align:center}
+.speaking{opacity:.65;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="mob-nav" id="mob-nav"></div>
+<div class="app">
+
+<nav class="sidebar">
+  <div class="sidebar-logo">Prononciation<br><span>Entraînement ciblé</span></div>
+  <a href="index.html" class="sidebar-back">← Volver al inicio</a>
+
+  <div class="nav-section">Sons difficiles</div>
+  <button class="nav-btn active" data-s="1" onclick="showS(1)"><span class="nav-icon">🔤</span>L'alphabet</button>
+  <button class="nav-btn" data-s="2" onclick="showS(2)"><span class="nav-icon">👄</span>Le son [y] — la "u"</button>
+  <button class="nav-btn" data-s="3" onclick="showS(3)"><span class="nav-icon">🗣️</span>Le son [ʁ] — la "r"</button>
+  <button class="nav-btn" data-s="4" onclick="showS(4)"><span class="nav-icon">💨</span>Le son [ʒ] — la "j"</button>
+  <button class="nav-btn" data-s="5" onclick="showS(5)"><span class="nav-icon">👃</span>Les nasales</button>
+
+  <div class="nav-section">Pièges visuels</div>
+  <button class="nav-btn" data-s="6" onclick="showS(6)"><span class="nav-icon">🔕</span>Lettres muettes</button>
+  <button class="nav-btn" data-s="7" onclick="showS(7)"><span class="nav-icon">🔡</span>é cerrado vs è abierto</button>
+  <button class="nav-btn" data-s="8" onclick="showS(8)"><span class="nav-icon">🔤</span>V vs B</button>
+  <button class="nav-btn" data-s="10" onclick="showS(10)"><span class="nav-icon">🔀</span>Consonnes spéciales</button>
+
+  <div class="nav-section">Entraînement libre</div>
+  <button class="nav-btn" data-s="9" onclick="showS(9)"><span class="nav-icon">🎙️</span>Phrases complètes</button>
+</nav>
+
+<main class="main" id="main-content"></main>
+</div>
+
+<script>
+// ── Navigation ──
+const SECTION_COLORS = ['','var(--s1)','var(--s2)','var(--s3)','var(--s4)','var(--s5)','var(--s1)','var(--s2)','var(--s4)','var(--s4)','var(--s3)'];
+function showS(n){
+  document.querySelectorAll('.section-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn[data-s]').forEach(b=>{ b.classList.remove('active'); b.style.background=''; b.style.color=''; });
+  window.scrollTo({top:0,behavior:'instant'});
+  document.getElementById('sec-'+n).classList.add('active');
+  const btns = document.querySelectorAll('.nav-btn[data-s="'+n+'"]');
+  btns.forEach(b=>{ b.classList.add('active'); b.style.background=SECTION_COLORS[n]; b.style.color='white'; });
+}
+
+// ── ElevenLabs ──
+const AUDIO_CACHE=new Map();
+const EL_VOICES=[{id:'XB0fDUnXU5powFXDhCwa',name:'Charlotte (féminin)'},{id:'onwK4e9ZLuTAKqWW03F9',name:'Daniel (masculin)'},{id:'pqHfZKP75CvOlQylNhV4',name:'Bill (masculin)'},{id:'jsCqWAovK2LkecY7zXl4',name:'Lily (féminin)'}];
+let EL_KEY=localStorage.getItem('el_api_key')||'';
+let EL_VOICE=localStorage.getItem('el_voice_id')||EL_VOICES[0].id;
+const VOICE_F='XB0fDUnXU5powFXDhCwa', VOICE_M='onwK4e9ZLuTAKqWW03F9';
+
+function browserSpeak(t,r){r=r||.82;window.speechSynthesis.cancel();function g(){const u=new SpeechSynthesisUtterance(t);u.lang='fr-FR';u.rate=r;const v=window.speechSynthesis.getVoices().find(x=>x.lang&&x.lang.startsWith('fr'));if(v)u.voice=v;window.speechSynthesis.speak(u);}window.speechSynthesis.getVoices().length===0?(window.speechSynthesis.onvoiceschanged=g):g();}
+
+function speakWithVoice(text,rate,voice,btn){
+  rate=rate||1.0;if(!EL_KEY){browserSpeak(text,rate*0.82);return;}
+  const k=text+'||'+voice;if(AUDIO_CACHE.has(k)){new Audio(AUDIO_CACHE.get(k)).play();return;}
+  if(btn)btn.classList.add('speaking');
+  fetch('https://api.elevenlabs.io/v1/text-to-speech/'+voice,{method:'POST',headers:{'xi-api-key':EL_KEY,'Content-Type':'application/json'},body:JSON.stringify({text:'<speak><s xml:lang="fr-FR">'+text+'</s></speak>',model_id:'eleven_multilingual_v2',language_code:'fr',voice_settings:{stability:0.5,similarity_boost:0.75}})})
+  .then(r=>r.blob()).then(blob=>{const url=URL.createObjectURL(blob);AUDIO_CACHE.set(k,url);new Audio(url).play();if(btn)btn.classList.remove('speaking');})
+  .catch(()=>{browserSpeak(text,rate*0.82);if(btn)btn.classList.remove('speaking');});
+}
+async function speak(text,rate,btn){
+  rate=rate||1.0;if(!EL_KEY){browserSpeak(text,rate*0.82);return;}
+  const k=text+'||'+EL_VOICE;if(AUDIO_CACHE.has(k)){new Audio(AUDIO_CACHE.get(k)).play();return;}
+  if(btn)btn.classList.add('speaking');
+  try{const res=await fetch('https://api.elevenlabs.io/v1/text-to-speech/'+EL_VOICE,{method:'POST',headers:{'xi-api-key':EL_KEY,'Content-Type':'application/json'},body:JSON.stringify({text:'<speak><s xml:lang="fr-FR">'+text+'</s></speak>',model_id:'eleven_multilingual_v2',language_code:'fr',voice_settings:{stability:0.5,similarity_boost:0.75}})});
+  if(!res.ok)throw new Error(res.status);const blob=await res.blob();const url=URL.createObjectURL(blob);AUDIO_CACHE.set(k,url);new Audio(url).play();}
+  catch{browserSpeak(text,rate*0.82);}finally{if(btn)setTimeout(()=>btn.classList.remove('speaking'),400);}
+}
+
+function buildELPanel(){
+  const fab=document.createElement('button');fab.id='el-fab';fab.title='Configurar voz';fab.textContent='🎙';fab.onclick=()=>document.getElementById('el-modal').classList.add('open');document.body.appendChild(fab);
+  const modal=document.createElement('div');modal.id='el-modal';const box=document.createElement('div');box.id='el-box';
+  box.innerHTML='<h2>🎙️ Voz ElevenLabs</h2><p>Conecta tu cuenta para voz francesa natural.</p><label class="el-label">Clave API</label><input class="el-input" id="el-key-input" type="password" placeholder="sk-..."><label class="el-label">Voz</label><select class="el-select" id="el-voice-select"></select><div class="el-btns"><button class="el-btn" style="background:#7c3aed;color:white" onclick="saveEL()">💾 Guardar</button><button class="el-btn" style="background:#2eaa6b;color:white" onclick="testEL()">▶ Probar</button><button class="el-btn" style="background:#f7f4ef;border:2px solid #e4ddd4" id="el-close-btn">✕ Cerrar</button></div><div class="el-status" id="el-status"></div>';
+  modal.appendChild(box);modal.onclick=e=>{if(e.target===modal)modal.classList.remove('open');};document.body.appendChild(modal);
+  document.getElementById('el-close-btn').onclick=()=>modal.classList.remove('open');
+  const sel=document.getElementById('el-voice-select');EL_VOICES.forEach(v=>{const o=document.createElement('option');o.value=v.id;o.textContent=v.name;if(v.id===EL_VOICE)o.selected=true;sel.appendChild(o);});
+  document.getElementById('el-key-input').value=EL_KEY;const st=document.getElementById('el-status');st.style.color=EL_KEY?'#1d7a4c':'#e88c1a';st.textContent=EL_KEY?'✓ Clave guardada':'⚠ Sin clave → voz navegador';
+}
+function saveEL(){EL_KEY=document.getElementById('el-key-input').value.trim();EL_VOICE=document.getElementById('el-voice-select').value;localStorage.setItem('el_api_key',EL_KEY);localStorage.setItem('el_voice_id',EL_VOICE);AUDIO_CACHE.clear();document.getElementById('el-status').textContent=EL_KEY?'✓ Guardado':'⚠ Sin clave';document.getElementById('el-status').style.color=EL_KEY?'#1d7a4c':'#e88c1a';}
+async function testEL(){const key=document.getElementById('el-key-input').value.trim();const voice=document.getElementById('el-voice-select').value;const st=document.getElementById('el-status');st.textContent='⏳ Probando...';
+  try{const res=await fetch('https://api.elevenlabs.io/v1/text-to-speech/'+voice,{method:'POST',headers:{'xi-api-key':key,'Content-Type':'application/json'},body:JSON.stringify({text:'Bonjour !',model_id:'eleven_multilingual_v2',language_code:'fr',voice_settings:{stability:0.5,similarity_boost:0.75}})});if(!res.ok)throw new Error(res.status);new Audio(URL.createObjectURL(await res.blob())).play();EL_KEY=key;EL_VOICE=voice;localStorage.setItem('el_api_key',key);localStorage.setItem('el_voice_id',voice);st.style.color='#1d7a4c';st.textContent='✓ ¡Perfecto!';}catch(err){st.style.color='#e63946';st.textContent='✗ '+err.message;}}
+
+// ── Recorder ──
+const REC={};
+async function recStart(id){
+  if(REC[id]&&REC[id].recording)return;
+  const sEl=document.getElementById('rs_'+id),bEl=document.getElementById('rb_'+id),cEl=document.getElementById('rc_'+id);
+  try{const stream=await navigator.mediaDevices.getUserMedia({audio:true});REC[id]={chunks:[],recording:true};
+  const mime=MediaRecorder.isTypeSupported('audio/webm;codecs=opus')?'audio/webm;codecs=opus':MediaRecorder.isTypeSupported('audio/webm')?'audio/webm':'audio/mp4';
+  REC[id].recorder=new MediaRecorder(stream,{mimeType:mime});
+  REC[id].recorder.ondataavailable=e=>{if(e.data&&e.data.size>0)REC[id].chunks.push(e.data);};
+  REC[id].recorder.onstop=()=>{REC[id].blob=new Blob(REC[id].chunks,{type:REC[id].recorder.mimeType});REC[id].recording=false;stream.getTracks().forEach(t=>t.stop());
+    if(sEl){sEl.textContent='✓ ¡Grabado!';sEl.style.color='#1d7a4c';}if(bEl){bEl.textContent='🎙️ Grabar de nuevo';bEl.style.background='#555';}
+    if(cEl){cEl.style.display='flex';let p=document.getElementById('player_'+id);if(!p){p=document.createElement('audio');p.id='player_'+id;p.controls=true;p.style.cssText='width:100%;margin-top:6px;border-radius:8px;';cEl.parentElement.insertBefore(p,cEl.nextSibling);}p.src=URL.createObjectURL(REC[id].blob);}};
+  REC[id].recorder.start(100);if(sEl){sEl.textContent='● Grabando…';sEl.style.color='#e63946';}if(bEl){bEl.textContent='⬛ Detener';bEl.style.background='#e63946';}if(cEl)cEl.style.display='none';}
+  catch(err){if(sEl){sEl.textContent=err.name==='NotAllowedError'?'⚠ Autoriza el micrófono':'⚠ Micrófono no disponible';sEl.style.color='#e63946';}}
+}
+function recStop(id){if(REC[id]&&REC[id].recording)REC[id].recorder.stop();}
+function recToggle(id){if(REC[id]&&REC[id].recording)recStop(id);else recStart(id);}
+
+// ── Phone cards (listen + record) ──
+function buildPhoneCards(cid, words, accent){
+  const c=document.getElementById(cid);if(!c)return;c.innerHTML='';
+  words.forEach((w,i)=>{
+    const rid=cid+'_'+i;const card=document.createElement('div');card.className='phone-card';
+    card.innerHTML='<div class="pf">'+w.fr+'</div><div class="pip">'+(w.ipa||'')+'</div><div class="pes">'+w.es+'</div>'+
+      '<div style="display:flex;gap:5px;justify-content:center;flex-wrap:wrap">'+
+      '<button class="pbtn" style="background:'+accent+';color:white" onclick="speak(\''+(w.speak||w.fr).replace(/'/g,"\\'")+'\');this.style.opacity=.6;setTimeout(()=>this.style.opacity=1,800)">🔊</button>'+
+      '<button id="rb_'+rid+'" class="pbtn" style="background:#555;color:white" onclick="recToggle(\''+rid+'\')">🎙️</button></div>'+
+      '<div id="rs_'+rid+'" style="font-size:10px;min-height:14px;margin-top:4px;text-align:center"></div>'+
+      '<div id="rc_'+rid+'" style="display:none;justify-content:center;gap:4px;margin-top:4px"></div>';
+    c.appendChild(card);
+  });
+}
+
+// ── QCM ──
+const qcmState={},qcmTally={};
+function buildQCM(cid,questions,scoreId,color){
+  const c=document.getElementById(cid);if(!c)return;
+  questions.forEach((q,qi)=>{qcmState[cid+'_'+qi]={done:false};const d=document.createElement('div');d.className='qcm-item';
+  const sb=q.speak?'<button style="background:none;border:1.5px solid var(--border);border-radius:8px;padding:4px 10px;cursor:pointer;font-size:13px;margin-left:8px" onclick="speak(\''+q.speak.replace(/'/g,"\\'")+'\')" >🔊</button>':'';
+  d.innerHTML='<div class="q-label">Pregunta '+(qi+1)+'</div><div class="q-text">'+q.q+sb+'</div><div class="opts" id="opts_'+cid+'_'+qi+'">'+q.opts.map((o,oi)=>'<button class="opt" onclick="answerQCM(\''+cid+'_'+qi+'\','+oi+','+q.ans+',\''+scoreId+'\','+questions.length+')">'+o+'</button>').join('')+'</div><div class="fb" id="fb_'+cid+'_'+qi+'"></div>';
+  c.appendChild(d);});
+}
+function answerQCM(id,chosen,correct,scoreId,total){
+  if(qcmState[id]&&qcmState[id].done)return;qcmState[id]={done:true};
+  const opts=document.querySelectorAll('#opts_'+id+' .opt');opts.forEach((b,i)=>{b.disabled=true;if(i===correct)b.classList.add('correct');else if(i===chosen&&chosen!==correct)b.classList.add('wrong');});
+  const fb=document.getElementById('fb_'+id);if(fb){fb.textContent=chosen===correct?'✅ ¡Correcto!':'❌ '+opts[correct].textContent;fb.className='fb show '+(chosen===correct?'ok':'nope');}
+  if(!qcmTally[scoreId])qcmTally[scoreId]={n:0,ok:0,total};qcmTally[scoreId].n++;if(chosen===correct)qcmTally[scoreId].ok++;
+  if(qcmTally[scoreId].n===total){const box=document.getElementById(scoreId);if(!box)return;box.classList.add('show');const pct=qcmTally[scoreId].ok/total;
+  document.getElementById(scoreId+'-em').textContent=pct>=.8?'🎉':pct>=.6?'👍':'💪';document.getElementById(scoreId+'-n').textContent=qcmTally[scoreId].ok+' / '+total;document.getElementById(scoreId+'-m').textContent=pct>=.8?'¡Excelente!':pct>=.6?'¡Bien! Sigue entrenando.':'Escucha más y vuelve a intentarlo.';}
+}
+
+// ── Fill ──
+function buildFill(cid,items){
+  const c=document.getElementById(cid);if(!c)return;
+  items.forEach((item,i)=>{const d=document.createElement('div');d.className='fill-item';
+  d.innerHTML='<div class="fill-sentence">'+item.sentence+'</div><input class="fill-input" id="'+cid+'_'+i+'" placeholder="Tu respuesta…" data-answer="'+item.answer+'" data-translation="'+(item.translation||'')+'" autocomplete="off" autocorrect="off" spellcheck="false"><div class="fill-hint" id="'+cid+'_hint_'+i+'" style="color:var(--muted);font-style:italic">'+(item.hint||'')+'</div>';
+  c.appendChild(d);});
+}
+function checkFill(cid,scoreId){
+  const inputs=document.querySelectorAll('#'+cid+' .fill-input');let ok=0;
+  inputs.forEach((inp,i)=>{const val=inp.value.trim().toLowerCase();const answers=inp.dataset.answer.split('|').map(a=>a.toLowerCase().trim());const correct=answers.some(a=>val===a);
+  inp.className='fill-input '+(correct?'ok':'nope');inp.disabled=true;const hint=document.getElementById(cid+'_hint_'+i);const tr=inp.dataset.translation||'';
+  if(!correct){hint.style.cssText='color:#c0392b;font-style:normal;font-size:12px;margin-top:4px';hint.innerHTML='→ <strong>'+inp.dataset.answer.split('|')[0]+'</strong>'+(tr?'<br><span style="color:var(--muted);font-size:11px;font-style:italic">'+tr+'</span>':'');}
+  else{ok++;hint.style.cssText='color:var(--s4d);font-style:italic;font-size:11px;margin-top:4px';hint.innerHTML=tr||'';}});
+  const box=document.getElementById(scoreId);if(!box)return;box.classList.add('show');const pct=ok/inputs.length;
+  document.getElementById(scoreId+'-em').textContent=pct>=.8?'🎉':pct>=.6?'👍':'💪';document.getElementById(scoreId+'-n').textContent=ok+' / '+inputs.length;document.getElementById(scoreId+'-m').textContent=pct>=.8?'¡Excelente!':pct>=.6?'¡Bien!':'Sigue practicando.';
+  box.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+// ── RA ──
+function speakRA(btn){const voice=btn.dataset.voice;if(voice==='f')speakWithVoice(btn.dataset.phrase,1.0,VOICE_F,btn);else if(voice==='m')speakWithVoice(btn.dataset.phrase,1.0,VOICE_M,btn);else speak(btn.dataset.phrase,1.0,btn);}
+function buildRA(cid,phrases,color){
+  const c=document.getElementById(cid);if(!c)return;c.innerHTML='';
+  phrases.forEach((p,i)=>{const rid=cid+'_p'+i;const d=document.createElement('div');d.className='ra-item';
+  d.innerHTML='<div class="ra-phrase">'+p.phrase+'</div><div class="ra-trad">'+p.translation+'</div>'+
+    '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px">'+
+    '<button id="sb_'+rid+'" data-phrase="'+p.phrase.replace(/"/g,'&quot;').replace(/'/g,'&#39;')+'" data-voice="'+(p.voice||'')+'" onclick="speakRA(this);this.style.opacity=.6;setTimeout(()=>this.style.opacity=1,900)" style="background:'+color+';color:white;border:none;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:\'Nunito\',sans-serif">🔊 Escuchar modelo</button>'+
+    '<button id="rb_'+rid+'" onclick="recToggle(\''+rid+'\')" style="background:#555;color:white;border:none;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:\'Nunito\',sans-serif">🎙️ Grabar mi voz</button>'+
+    '<span id="rs_'+rid+'" style="font-size:12px;color:#8a8a9a"></span></div>'+
+    '<div id="rc_'+rid+'" style="display:none;gap:8px;flex-wrap:wrap"></div>';
+  c.appendChild(d);});
+}
+
+// ── EE Audio (é vs è) ──
+const eeItems=[
+  {word:'été',    type:'cerrado', speak:'été'},
+  {word:'père',   type:'abierto', speak:'le père'},
+  {word:'manger', type:'cerrado', speak:'manger'},
+  {word:'fête',   type:'abierto', speak:'la fête'},
+  {word:'chez',   type:'cerrado', speak:'chez'},
+  {word:'lait',   type:'abierto', speak:'le lait'},
+  {word:"j'ai",   type:'cerrado', speak:"j'ai"},
+  {word:'belle',  type:'abierto', speak:'belle'},
+  {word:'parler', type:'cerrado', speak:'parler'},
+  {word:'seize',  type:'abierto', speak:'seize'},
+  {word:'chanter',type:'cerrado', speak:'chanter'},
+  {word:'forêt',  type:'abierto', speak:'la forêt'},
+];
+const eeState={answered:0,correct:0,total:12};
+function buildEEAudio(cid){
+  const c=document.getElementById(cid);if(!c)return;c.innerHTML='';
+  eeItems.forEach((item,i)=>{
+    const d=document.createElement('div');d.className='ee-card';
+    d.innerHTML='<button onclick="playEE('+i+')" style="flex-shrink:0;width:46px;height:46px;border-radius:50%;background:var(--s2);color:white;border:none;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;">🔊</button>'+
+      '<div id="ee_w_'+i+'" style="font-family:\'Playfair Display\',serif;font-size:18px;font-weight:700;color:transparent;background:#e2ddd7;border-radius:6px;padding:2px 14px;user-select:none;letter-spacing:3px;min-width:70px;text-align:center;">?</div>'+
+      '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-left:auto;">'+
+      '<button onclick="answerEE('+i+',\'cerrado\')" id="ee_ce_'+i+'" style="padding:8px 16px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);font-family:\'Nunito\',sans-serif;font-size:13px;font-weight:700;cursor:pointer;">😬 Cerrado</button>'+
+      '<button onclick="answerEE('+i+',\'abierto\')" id="ee_ab_'+i+'" style="padding:8px 16px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);font-family:\'Nunito\',sans-serif;font-size:13px;font-weight:700;cursor:pointer;">😮 Abierto</button></div>'+
+      '<div id="ee_fb_'+i+'" style="width:100%;font-size:12px;font-weight:700;margin-top:4px;display:none"></div>';
+    c.appendChild(d);
+  });
+}
+function playEE(i){speak(eeItems[i].speak);}
+function answerEE(i,chosen){
+  const item=eeItems[i];const ok=item.type===chosen;
+  const wEl=document.getElementById('ee_w_'+i);const fbEl=document.getElementById('ee_fb_'+i);
+  const ceBtn=document.getElementById('ee_ce_'+i);const abBtn=document.getElementById('ee_ab_'+i);
+  wEl.textContent=item.word;wEl.style.color=ok?'var(--s4d)':'var(--s2d)';wEl.style.background=ok?'var(--s4l)':'var(--s2l)';
+  [ceBtn,abBtn].forEach(b=>{b.disabled=true;b.style.cursor='default';});
+  const cBtn=item.type==='cerrado'?ceBtn:abBtn;cBtn.style.background='var(--s4l)';cBtn.style.borderColor='var(--s4)';cBtn.style.color='var(--s4d)';
+  if(!ok){const wBtn=chosen==='cerrado'?ceBtn:abBtn;wBtn.style.background='var(--s2l)';wBtn.style.borderColor='var(--s2)';wBtn.style.color='var(--s2d)';}
+  fbEl.style.display='block';fbEl.style.color=ok?'var(--s4d)':'var(--s2d)';fbEl.textContent=ok?'✅ "'+item.word+'" → sonido cerrado [e]'.replace('cerrado',item.type==='cerrado'?'cerrado':'abierto')+'✅ "'+item.word+'" → '+item.type:'❌ Es '+item.type+' → "'+item.word+'"';
+  fbEl.textContent=ok?'✅ ¡Correcto! "'+item.word+'" → '+item.type:'❌ Es '+item.type+' → "'+item.word+'"';
+  if(eeState.answered<eeState.total){eeState.answered++;if(ok)eeState.correct++;
+    if(eeState.answered===eeState.total){const box=document.getElementById('sc-ee');if(box){box.classList.add('show');const pct=eeState.correct/eeState.total;
+      document.getElementById('sc-ee-em').textContent=pct>=.8?'🎉':pct>=.6?'👍':'💪';
+      document.getElementById('sc-ee-n').textContent=eeState.correct+' / '+eeState.total;
+      document.getElementById('sc-ee-m').textContent=pct>=.8?'¡Tienes buen oído!':pct>=.6?'¡Bien! Sigue entrenando.':'Escucha más y vuelve a intentarlo.';
+      box.scrollIntoView({behavior:'smooth',block:'nearest'});}}}
+}
+
+// ── Mob Nav ──
+function buildMobNav(){
+  const nav=document.getElementById('mob-nav');if(!nav)return;
+  [{n:1,l:'🔤 A'},{n:2,l:'👄 [y]'},{n:3,l:'🗣 [ʁ]'},{n:4,l:'💨 [ʒ]'},{n:5,l:'👃 ~'},{n:6,l:'🔕 ∅'},{n:7,l:'é/è'},{n:8,l:'V/B'},{n:10,l:'🔀 Ch'},{n:9,l:'🎙️ RA'}].forEach(s=>{
+    const b=document.createElement('button');b.className='mob-nav-btn'+(s.n===1?' active':'');b.dataset.s=s.n;b.textContent=s.l;if(s.n===1){b.style.background='var(--s1)';b.style.color='white';}
+    b.onclick=()=>{showS(s.n);document.querySelectorAll('.mob-nav-btn').forEach(x=>{x.classList.remove('active');x.style.background='';x.style.color='';});b.classList.add('active');b.style.background=SECTION_COLORS[s.n];b.style.color='white';};
+    nav.appendChild(b);});
+}
+
+// ════════════════════════════════
+// PANELS HTML
+// ════════════════════════════════
+function buildAllPanels(){
+  const main=document.getElementById('main-content');
+  const panels=[
+    {n:1, color:'var(--s1)', colorL:'var(--s1l)', colorD:'var(--s1d)', icon:'🔤', tag:'Sons de base', title:"L'alphabet français", desc:"Las 26 letras y cómo se pronuncian. La base para deletrear y entender cualquier palabra."},
+    {n:2, color:'var(--s2)', colorL:'var(--s2l)', colorD:'var(--s2d)', icon:'👄', tag:'Son difficile', title:'Le son [y] — la "u" française', desc:'El error más frecuente de los hispanohablantes. La "u" francesa no existe en español.'},
+    {n:3, color:'var(--s3)', colorL:'var(--s3l)', colorD:'var(--s3d)', icon:'🗣️', tag:'Son difficile', title:'Le son [ʁ] — la "r" française', desc:'La "r" francesa es gutural. Nada que ver con la vibración de la lengua en español.'},
+    {n:4, color:'var(--s4)', colorL:'var(--s4l)', colorD:'var(--s4d)', icon:'💨', tag:'Son difficile', title:'Le son [ʒ] — la "j" française', desc:'La "j" francesa es un sonido suave y continuo. No confundirla con la jota española.'},
+    {n:5, color:'var(--s5)', colorL:'var(--s5l)', colorD:'var(--s5d)', icon:'👃', tag:'Voyelles nasales', title:'Les voyelles nasales', desc:"an/en, in/ain, on — tres sonidos que no existen en español y que caracterizan el francés."},
+    {n:6, color:'var(--s1)', colorL:'var(--s1l)', colorD:'var(--s1d)', icon:'🔕', tag:'Piège visuel', title:'Les lettres finales muettes', desc:'En francés, la mayoría de las consonantes finales no se pronuncian. Regla fundamental.'},
+    {n:7, color:'var(--s2)', colorL:'var(--s2l)', colorD:'var(--s2d)', icon:'🔡', tag:'Piège auditif', title:'é cerrado [e] vs è abierto [ɛ]', desc:'Solo el oído puede distinguirlos. Escucha y clasifica sin ver la escritura.'},
+    {n:8, color:'var(--s4)', colorL:'var(--s4l)', colorD:'var(--s4d)', icon:'🔤', tag:'Piège hispanophones', title:'V vs B — deux sons distincts en français', desc:'En español latinoamericano v y b suenan igual. En francés son completamente diferentes. Un error muy frecuente.'},
+    {n:10, color:'var(--s3)', colorL:'var(--s3l)', colorD:'var(--s3d)', icon:'🔀', tag:'Consonnes', title:'Les consonnes spéciales', desc:'ch, gn, ç, ph, ll — combinaciones que suenan diferente al español.'},
+    {n:9, color:'var(--s4)', colorL:'var(--s4l)', colorD:'var(--s4d)', icon:'🎙️', tag:'Entraînement libre', title:'Phrases complètes', desc:'Frases que concentran todos los sonidos difíciles. Escucha, analiza y graba.'},
+  ];
+  panels.forEach(p=>{
+    const sec=document.createElement('div');sec.className='section-panel'+(p.n===1?' active':'');sec.id='sec-'+p.n;
+    sec.innerHTML='<div class="section-header"><div class="section-tag" style="background:'+p.colorL+';color:'+p.colorD+'">'+p.tag+'</div><div class="section-title">'+p.title+'</div><div class="section-desc">'+p.desc+'</div></div><div id="sec-content-'+p.n+'"></div>';
+    main.appendChild(sec);
+  });
+}
+
+// ════════════════════════════════
+// DATA
+// ════════════════════════════════
+
+// S1 — Alphabet
+const ALPHA={'A':'a','B':'bé','C':'cé','D':'dé','E':'e','F':'èf','G':'gé','H':'ache','I':'i','J':'ji','K':'ka','L':'èl','M':'èm','N':'èn','O':'o','P':'pé','Q':'ku','R':'èr','S':'ès','T':'té','U':'u','V':'vé','W':'double vé','X':'iks','Y':'i grec','Z':'zèd'};
+
+// S2 — [y]
+const wordsY=[
+  {fr:'tu',    ipa:'[ty]',    es:'tú',       speak:'tu'},
+  {fr:'rue',   ipa:'[ʁy]',   es:'calle',    speak:'la rue'},
+  {fr:'lune',  ipa:'[lyn]',   es:'luna',     speak:'la lune'},
+  {fr:'sur',   ipa:'[syʁ]',  es:'sobre',    speak:'sur'},
+  {fr:'vu',    ipa:'[vy]',   es:'visto',    speak:'vu'},
+  {fr:'plus',  ipa:'[ply]',  es:'más',      speak:'plus'},
+  {fr:'une',   ipa:'[yn]',   es:'una',      speak:'une'},
+  {fr:'nature',ipa:'[natyʁ]',es:'naturaleza',speak:'la nature'},
+];
+const qcmY=[
+  {q:'¿Cómo se pronuncia la "u" de "rue" (calle)?', opts:['Como la "u" española de "burro"','Labios en O, lengua en I — sonido [y]','Como "ou" en "vous"'], ans:1, speak:'la rue'},
+  {q:'"tu" y "tout" → ¿suenan igual?', opts:['Sí, los dos suenan [tu]','No — "tu" [ty] ≠ "tout" [tu]','Solo en el sur de Francia'], ans:1, speak:'tu et tout'},
+  {q:'¿Cuál tiene el sonido [y]?', opts:['vous','où','lune'], ans:2, speak:'la lune'},
+];
+
+// S3 — [ʁ]
+const wordsR=[
+  {fr:'rue',      ipa:'[ʁy]',       es:'calle',      speak:'la rue'},
+  {fr:'rouge',    ipa:'[ʁuʒ]',      es:'rojo',       speak:'rouge'},
+  {fr:'merci',    ipa:'[mɛʁsi]',    es:'gracias',    speak:'merci'},
+  {fr:'Paris',    ipa:'[paʁi]',     es:'París',      speak:'Paris'},
+  {fr:'bonjour',  ipa:'[bɔ̃ʒuʁ]',   es:'buenos días',speak:'bonjour'},
+  {fr:'partir',   ipa:'[paʁtiʁ]',   es:'partir',     speak:'partir'},
+  {fr:'restaurant',ipa:'[ʁɛstoʁɑ̃]',es:'restaurante',speak:'le restaurant'},
+  {fr:'après',    ipa:'[apʁɛ]',     es:'después',    speak:'après'},
+];
+const qcmR=[
+  {q:'La "r" francesa se pronuncia…', opts:['Vibrando la lengua como en español','En la garganta, de manera gutural','Como la "r" suave de "pero" en español'], ans:1, speak:'la rue'},
+  {q:'"Paris" → ¿dónde está el sonido [ʁ]?', opts:['Al principio: P[ʁ]aris','En el medio: Pa[ʁ]is','Al final: Pari[ʁ]s — pero es muda'], ans:1, speak:'Paris'},
+  {q:'¿Cuántas R hay en "restaurant"?', opts:['Una sola','Dos — al inicio y al final','Tres'], ans:1, speak:'le restaurant'},
+];
+
+// S4 — [ʒ]
+const wordsJ=[
+  {fr:'jour',    ipa:'[ʒuʁ]',  es:'día',       speak:'le jour'},
+  {fr:'je',      ipa:'[ʒə]',   es:'yo',        speak:'je'},
+  {fr:'jardin',  ipa:'[ʒaʁdɛ̃]',es:'jardín',    speak:'le jardin'},
+  {fr:'girafe',  ipa:'[ʒiʁaf]',es:'jirafa',    speak:'la girafe'},
+  {fr:'rouge',   ipa:'[ʁuʒ]',  es:'rojo',      speak:'rouge'},
+  {fr:'manger',  ipa:'[mɑ̃ʒe]', es:'comer',     speak:'manger'},
+  {fr:'bonjour', ipa:'[bɔ̃ʒuʁ]',es:'buenos días',speak:'bonjour'},
+  {fr:'âge',     ipa:'[aʒ]',   es:'edad',      speak:"l'âge"},
+];
+const qcmJ=[
+  {q:'El sonido [ʒ] de "jour" se parece a…', opts:['La jota española de "jabón"','El sonido "sh" de "shoe" en inglés','El sonido "zh" — suave y continuo'], ans:2, speak:'le jour'},
+  {q:'"girafe" → ¿por qué "g" suena como [ʒ]?', opts:['Siempre suena así','Delante de e, i, y la "g" suena [ʒ]','Es una excepción'], ans:1, speak:'la girafe'},
+  {q:'¿Cuál NO tiene el sonido [ʒ]?', opts:['rouge','jardin','garçon'], ans:2, speak:'le garçon'},
+];
+
+// S5 — Nasales
+const wordsNas=[
+  {fr:'sans',    ipa:'[sɑ̃]',   es:'sin',      speak:'sans'},
+  {fr:'lent',    ipa:'[lɑ̃]',   es:'lento',    speak:'lent'},
+  {fr:'pain',    ipa:'[pɛ̃]',   es:'pan',      speak:'le pain'},
+  {fr:'main',    ipa:'[mɛ̃]',   es:'mano',     speak:'la main'},
+  {fr:'bon',     ipa:'[bɔ̃]',   es:'bueno',    speak:'bon'},
+  {fr:'nom',     ipa:'[nɔ̃]',   es:'nombre',   speak:'le nom'},
+  {fr:'vin',     ipa:'[vɛ̃]',   es:'vino',     speak:'le vin'},
+  {fr:'temps',   ipa:'[tɑ̃]',   es:'tiempo',   speak:'le temps'},
+  {fr:'on',      ipa:'[ɔ̃]',    es:'se (pron)',speak:'on'},
+  {fr:'enfant',  ipa:'[ɑ̃fɑ̃]',  es:'niño',     speak:"l'enfant"},
+  {fr:'vingt',   ipa:'[vɛ̃]',   es:'veinte',   speak:'vingt'},
+  {fr:'faim',    ipa:'[fɛ̃]',   es:'hambre',   speak:'la faim'},
+];
+const qcmNas=[
+  {q:'"an" y "en" → ¿el mismo sonido nasal?', opts:['No, son completamente diferentes','Sí, los dos se pronuncian [ɑ̃]','Depende de la región'], ans:1, speak:'sans et lent'},
+  {q:'"pain" → ¿cuál es su sonido nasal?', opts:['[ɑ̃] como en "sans"','[ɛ̃] como en "main"','[ɔ̃] como en "bon"'], ans:1, speak:'le pain'},
+  {q:'¿Cuál SÍ tiene sonido nasal?', opts:['fine','phone','enfant'], ans:2, speak:"l'enfant"},
+  {q:'"bon" y "bonne" → ¿suenan igual?', opts:['Sí','No — "bon" [bɔ̃] es nasal, "bonne" [bɔn] no lo es'], ans:1, speak:'bon et bonne'},
+];
+
+// S6 — Lettres muettes
+const fillMuettes=[
+  {sentence:'P_r_s → "Paris" → ¿cuántas letras se pronuncian?', answer:'3', hint:'P-a-R-i — la "s" final es muda', translation:'Paris → [paʁi] — 4 letras, 4 sonidos (la "s" es muda)'},
+  {sentence:'"beaucoup" termina en "p". ¿Se pronuncia? Escribe "sí" o "no"', answer:'no', hint:'La "p" final casi siempre es muda en francés', translation:'beaucoup → [boku] — la "p" final es muda'},
+  {sentence:'"vous parlez" → la "s" de "vous", ¿se pronuncia? Escribe "sí" o "no"', answer:'no', hint:'La "s" de "vous" es muda delante de consonante', translation:'vous parlez → [vu paʁle] — la "s" es muda'},
+  {sentence:'"il est grand" → la "d" de "grand", ¿se pronuncia? Escribe "sí" o "no"', answer:'no', hint:'La "d" final es casi siempre muda', translation:'grand → [gʁɑ̃] — la "d" final es muda'},
+  {sentence:'"nez" → la "z" final, ¿se pronuncia? Escribe "sí" o "no"', answer:'no', hint:'La "z" final es muda — "nez" rima con "chez"', translation:'nez → [nɛ] — la "z" final es muda'},
+];
+const qcmMuettes=[
+  {q:'"hôpital" → la "h" inicial, ¿se pronuncia?', opts:['Sí, como la "h" española','No, la "h" francesa casi siempre es muda','Solo en palabras médicas'], ans:1, speak:"l'hôpital"},
+  {q:'"et" (y) → ¿se pronuncia la "t"?', opts:['Sí → [ɛt]','No → [e], la "t" es muda','Solo delante de vocal'], ans:1, speak:'et'},
+  {q:'¿Cuál es la regla general para las consonantes finales en francés?', opts:['Siempre se pronuncian','Casi siempre son mudas — s, t, d, x, z, p','Depende de la velocidad del habla'], ans:1},
+  {q:'"chat" (gato) → ¿se pronuncia la "t" final?', opts:['No → [ʃa]','Sí → [ʃat]','Solo en poesía'], ans:0, speak:'le chat'},
+];
+
+// S8 — V vs B
+const wordsV=[
+  {fr:'vin',    ipa:'[vɛ̃]',  es:'vino',      speak:'le vin'},
+  {fr:'vous',   ipa:'[vu]',   es:'ustedes',   speak:'vous'},
+  {fr:'voir',   ipa:'[vwaʁ]', es:'ver',       speak:'voir'},
+  {fr:'vivre',  ipa:'[vivʁ]', es:'vivir',     speak:'vivre'},
+  {fr:'voiture',ipa:'[vwatyʁ]',es:'coche',    speak:'la voiture'},
+  {fr:'venir',  ipa:'[vəniʁ]',es:'venir',     speak:'venir'},
+];
+const wordsB=[
+  {fr:'bien',   ipa:'[bjɛ̃]',  es:'bien',      speak:'bien'},
+  {fr:'boire',  ipa:'[bwaʁ]',  es:'beber',     speak:'boire'},
+  {fr:'blanc',  ipa:'[blɑ̃]',  es:'blanco',    speak:'blanc'},
+  {fr:'banque', ipa:'[bɑ̃k]',  es:'banco',     speak:'la banque'},
+  {fr:'beau',   ipa:'[bo]',    es:'bonito',    speak:'beau'},
+  {fr:'bureau', ipa:'[byʁo]',  es:'oficina',   speak:'le bureau'},
+];
+const qcmVB=[
+  {q:'En français, le "v" de "voiture" se prononce…', opts:['Comme "b" de "bien"','En appuyant les dents sur les lèvres — son fricatif','Comme en espagnol latinoaméricain (= b)'], ans:1, speak:'la voiture'},
+  {q:'"vin" et "bien" → ¿suenan igual al inicio?', opts:['Sí, los dos son b','No — "v" [v] es fricativo, "b" [b] es oclusivo','Depende del acento regional'], ans:1, speak:'le vin et bien'},
+  {q:'Para pronunciar el [v] francés, ¿qué haces?', opts:['Cierras los dos labios completamente','Apoyas los dientes superiores en el labio inferior','Vibras la lengua'], ans:1, speak:'vous'},
+  {q:'Para pronunciar el [b] francés, ¿qué haces?', opts:['Apoyas los dientes en el labio inferior','Cierras los dos labios y los separas con una pequeña explosión','Abres la boca sin contacto'], ans:1, speak:'bien'},
+  {q:'¿Cuál tiene [v] y no [b]?', opts:['banque','blanc','vivre'], ans:2, speak:'vivre'},
+];
+
+// S8 — Consonnes spéciales
+const qcmCons=[
+  {q:'"chat" → ¿cómo suena "ch"?', opts:['Como "ch" en "chocolate" (español)','Como "sh" en "show" (inglés)','Como "k"'], ans:1, speak:'le chat'},
+  {q:'"montagne" → ¿cómo suena "gn"?', opts:['Como "gn" en "gnomo"','Como la "ñ" española','Como "g" + "n" separadas'], ans:1, speak:'la montagne'},
+  {q:'"garçon" → ¿qué indica la cedilla (ç)?', opts:['Se pronuncia "k"','Se pronuncia "s" suave','Se pronuncia "ch"'], ans:1, speak:'le garçon'},
+  {q:'"photo" → "ph" suena como…', opts:['p + h','f','v'], ans:1, speak:'la photo'},
+  {q:'"fille" → "ll" suena como…', opts:['L fuerte','y / i suave','ll española'], ans:1, speak:'la fille'},
+  {q:'"science" → "sc" delante de "e" suena como…', opts:['sk','s','sc'], ans:1, speak:'la science'},
+];
+
+// S9 — RA phrases complètes
+const raFinal=[
+  {phrase:"Tu as vu la rue derrière le restaurant ?",    voice:'f', translation:"¿Viste la calle detrás del restaurante?"},
+  {phrase:"Je voudrais une bouteille d'eau, s'il vous plaît.",voice:'m',translation:"Quisiera una botella de agua, por favor."},
+  {phrase:"Il est parti sans dire bonjour.",              voice:'m', translation:"Se fue sin decir buenos días."},
+  {phrase:"Les enfants jouent dans le jardin.",           voice:'f', translation:"Los niños juegan en el jardín."},
+  {phrase:"Vous avez l'air en bonne santé aujourd'hui.", voice:'m', translation:"Parece que está en buena salud hoy."},
+  {phrase:"Je prends le train de nuit pour aller à Paris.",voice:'f',translation:"Tomo el tren nocturno para ir a París."},
+  {phrase:"La montagne est magnifique en automne.",       voice:'m', translation:"La montaña es magnífica en otoño."},
+  {phrase:"Mon père mange une bonne soupe chaude.",      voice:'f', translation:"Mi padre come una buena sopa caliente."},
+];
+
+// ════════════════════════════════
+// INJECT CONTENT INTO PANELS
+// ════════════════════════════════
+function injectS1(){
+  const c=document.getElementById('sec-content-1');if(!c)return;
+  // Alphabet grid
+  const card=document.createElement('div');card.className='ex-card';
+  card.innerHTML='<div class="ex-title" style="color:var(--s1)">El abecedario — clic para escuchar</div><div class="ex-instr">Haz clic en cada letra para escuchar su nombre en francés. Luego usa el botón 🎙️ para grabar y comparar.</div><div id="alpha-grid"></div>';
+  c.appendChild(card);
+  const grid=document.getElementById('alpha-grid');
+  const wrap=document.createElement('div');wrap.style.cssText='display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;';
+  'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(l=>{
+    const b=document.createElement('button');b.style.cssText='width:46px;height:46px;border-radius:10px;border:1.5px solid var(--border);background:#faf7f2;font-family:"Playfair Display",serif;font-size:20px;font-weight:700;cursor:pointer;color:var(--s1);transition:all .15s;';
+    b.textContent=l;b.title=ALPHA[l]||l;
+    b.onclick=()=>{speak(ALPHA[l]||l);b.style.background='var(--s1l)';setTimeout(()=>b.style.background='#faf7f2',900);};
+    wrap.appendChild(b);});
+  grid.appendChild(wrap);
+  // RA with alphabet phrases
+  const card2=document.createElement('div');card2.className='ex-card';
+  card2.innerHTML='<div class="ex-title" style="color:var(--s1)">Deletrea estas palabras — prononciation</div><div class="ex-instr">Escucha cómo se deletrea cada palabra letra a letra, luego graba tu versión.</div><div id="ra-alpha"></div>';
+  c.appendChild(card2);
+  buildRA('ra-alpha',[
+    {phrase:'Comment ça s\'écrit ? B-O-N-J-O-U-R', voice:'f', translation:"¿Cómo se escribe? B-O-N-J-O-U-R"},
+    {phrase:'Mon nom est D-U-P-O-N-T', voice:'m', translation:'Mi apellido es D-U-P-O-N-T'},
+    {phrase:'Mon prénom : C-H-A-R-L-O-T-T-E', voice:'f', translation:'Mi nombre: C-H-A-R-L-O-T-T-E'},
+  ],'var(--s1)');
+}
+
+function injectS2(){
+  const c=document.getElementById('sec-content-2');if(!c)return;
+  const card1=document.createElement('div');card1.className='ex-card';
+  card1.innerHTML='<div class="ex-title" style="color:var(--s2)">Écoute et répète — le son [y]</div>'+
+    '<div class="ex-instr">Escucha cada palabra y graba tu pronunciación para comparar.</div>'+
+    '<div class="tip-box" style="background:var(--s2l);color:var(--s2d)"><b>💡 Truco:</b> Pronuncia "i" como en español, luego — sin mover la lengua — redondea los labios como para decir "o". Ese es el sonido [y].</div>'+
+    '<div id="cards-y"></div>';
+  c.appendChild(card1);
+  buildPhoneCards('cards-y', wordsY, 'var(--s2)');
+  const card2=document.createElement('div');card2.className='ex-card';
+  card2.innerHTML='<div class="ex-title" style="color:var(--s2)">QCM — comprende el sonido [y]</div><div class="ex-instr">Pon a prueba tu comprensión del sonido.</div><div id="qcm-y"></div>'+
+    '<div class="score-box" id="sc-y" style="background:var(--s2l)"><div class="score-emoji" id="sc-y-em"></div><div class="score-num" id="sc-y-n" style="color:var(--s2d)"></div><div class="score-msg" id="sc-y-m"></div></div>';
+  c.appendChild(card2);
+  buildQCM('qcm-y', qcmY, 'sc-y', 'var(--s2)');
+  const card3=document.createElement('div');card3.className='ex-card';
+  card3.innerHTML='<div class="ex-title" style="color:var(--s2)">🎙️ Pronuncia frases con [y]</div><div class="ex-instr">Escucha el modelo y graba tu voz.</div><div id="ra-y"></div>';
+  c.appendChild(card3);
+  buildRA('ra-y',[
+    {phrase:"Tu as vu la lune cette nuit ?",    voice:'f', translation:"¿Viste la luna anoche?"},
+    {phrase:"Il habite rue du Musée.",           voice:'m', translation:"Vive en la calle del Museo."},
+    {phrase:"Je suis sur la route de Lyon.",    voice:'f', translation:"Estoy en la carretera de Lyon."},
+  ],'var(--s2)');
+}
+
+function injectS3(){
+  const c=document.getElementById('sec-content-3');if(!c)return;
+  const card1=document.createElement('div');card1.className='ex-card';
+  card1.innerHTML='<div class="ex-title" style="color:var(--s3)">Écoute et répète — le son [ʁ]</div>'+
+    '<div class="ex-instr">Escucha cada palabra y graba tu pronunciación.</div>'+
+    '<div class="tip-box" style="background:var(--s3l);color:var(--s3d)"><b>💡 Truco:</b> Intenta producir una "g" suave muy al fondo de la garganta, sin que sea explosiva. No vibres la lengua — la R francesa sale solo de la garganta.</div>'+
+    '<div id="cards-r"></div>';
+  c.appendChild(card1);
+  buildPhoneCards('cards-r', wordsR, 'var(--s3)');
+  const card2=document.createElement('div');card2.className='ex-card';
+  card2.innerHTML='<div class="ex-title" style="color:var(--s3)">QCM — comprende le son [ʁ]</div><div class="ex-instr">Verifica tu comprensión.</div><div id="qcm-r"></div>'+
+    '<div class="score-box" id="sc-r" style="background:var(--s3l)"><div class="score-emoji" id="sc-r-em"></div><div class="score-num" id="sc-r-n" style="color:var(--s3d)"></div><div class="score-msg" id="sc-r-m"></div></div>';
+  c.appendChild(card2);
+  buildQCM('qcm-r', qcmR, 'sc-r', 'var(--s3)');
+  const card3=document.createElement('div');card3.className='ex-card';
+  card3.innerHTML='<div class="ex-title" style="color:var(--s3)">🎙️ Pronuncia frases con [ʁ]</div><div class="ex-instr">Escucha y graba.</div><div id="ra-r"></div>';
+  c.appendChild(card3);
+  buildRA('ra-r',[
+    {phrase:"Au revoir, à bientôt !",              voice:'f', translation:"¡Adiós, hasta pronto!"},
+    {phrase:"Le restaurant est rue de la Paix.",   voice:'m', translation:"El restaurante está en la calle de la Paz."},
+    {phrase:"Merci beaucoup, au revoir !",         voice:'f', translation:"¡Muchas gracias, adiós!"},
+  ],'var(--s3)');
+}
+
+function injectS4(){
+  const c=document.getElementById('sec-content-4');if(!c)return;
+  const card1=document.createElement('div');card1.className='ex-card';
+  card1.innerHTML='<div class="ex-title" style="color:var(--s4)">Écoute et répète — le son [ʒ]</div>'+
+    '<div class="ex-instr">Escucha cada palabra y graba tu pronunciación.</div>'+
+    '<div class="tip-box" style="background:var(--s4l);color:var(--s4d)"><b>💡 Truco:</b> El sonido [ʒ] es suave y continuo — como la "y" española muy suave, sin cortar el aire. "Jour" suena aproximadamente "zhur", no con la jota española. También es el sonido de "g" delante de e, i.</div>'+
+    '<div id="cards-j"></div>';
+  c.appendChild(card1);
+  buildPhoneCards('cards-j', wordsJ, 'var(--s4)');
+  const card2=document.createElement('div');card2.className='ex-card';
+  card2.innerHTML='<div class="ex-title" style="color:var(--s4)">QCM — comprende le son [ʒ]</div><div class="ex-instr">Verifica tu comprensión.</div><div id="qcm-j"></div>'+
+    '<div class="score-box" id="sc-j" style="background:var(--s4l)"><div class="score-emoji" id="sc-j-em"></div><div class="score-num" id="sc-j-n" style="color:var(--s4d)"></div><div class="score-msg" id="sc-j-m"></div></div>';
+  c.appendChild(card2);
+  buildQCM('qcm-j', qcmJ, 'sc-j', 'var(--s4)');
+  const card3=document.createElement('div');card3.className='ex-card';
+  card3.innerHTML='<div class="ex-title" style="color:var(--s4)">🎙️ Pronuncia frases con [ʒ]</div><div class="ex-instr">Escucha y graba.</div><div id="ra-j"></div>';
+  c.appendChild(card3);
+  buildRA('ra-j',[
+    {phrase:"Bonjour, je m'appelle Charlotte.",  voice:'f', translation:"Buenos días, me llamo Charlotte."},
+    {phrase:"Le jardin est très agréable en juin.",voice:'m',translation:"El jardín es muy agradable en junio."},
+    {phrase:"Quel âge avez-vous ?",              voice:'f', translation:"¿Cuántos años tiene usted?"},
+  ],'var(--s4)');
+}
+
+function injectS5(){
+  const c=document.getElementById('sec-content-5');if(!c)return;
+  const card1=document.createElement('div');card1.className='ex-card';
+  card1.innerHTML='<div class="ex-title" style="color:var(--s5)">Écoute et répète — les trois nasales</div>'+
+    '<div class="ex-instr">El francés tiene tres sonidos nasales principales. Escucha y compara.</div>'+
+    '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px">'+
+    '<div class="tip-box" style="background:var(--s5l);color:var(--s5d);text-align:center"><b>[ɑ̃]</b><br>an, en, am, em<br><small>sans, temps</small></div>'+
+    '<div class="tip-box" style="background:#fdecea;color:#b02030;text-align:center"><b>[ɛ̃]</b><br>in, ain, ein, yn<br><small>pain, main</small></div>'+
+    '<div class="tip-box" style="background:#deeeff;color:#1a5fa0;text-align:center"><b>[ɔ̃]</b><br>on, om<br><small>bon, nom</small></div></div>'+
+    '<div id="cards-nas"></div>';
+  c.appendChild(card1);
+  buildPhoneCards('cards-nas', wordsNas, 'var(--s5)');
+  const card2=document.createElement('div');card2.className='ex-card';
+  card2.innerHTML='<div class="ex-title" style="color:var(--s5)">QCM — las vocales nasales</div><div class="ex-instr">Verifica tu comprensión.</div><div id="qcm-nas"></div>'+
+    '<div class="score-box" id="sc-nas" style="background:var(--s5l)"><div class="score-emoji" id="sc-nas-em"></div><div class="score-num" id="sc-nas-n" style="color:var(--s5d)"></div><div class="score-msg" id="sc-nas-m"></div></div>';
+  c.appendChild(card2);
+  buildQCM('qcm-nas', qcmNas, 'sc-nas', 'var(--s5)');
+  const card3=document.createElement('div');card3.className='ex-card';
+  card3.innerHTML='<div class="ex-title" style="color:var(--s5)">🎙️ Frases con nasales</div><div class="ex-instr">Escucha y graba.</div><div id="ra-nas"></div>';
+  c.appendChild(card3);
+  buildRA('ra-nas',[
+    {phrase:"Un enfant mange du pain blanc.",  voice:'f', translation:"Un niño come pan blanco."},
+    {phrase:"Bonjour, comment vous appelez-vous ?",voice:'m',translation:"Buenos días, ¿cómo se llama usted?"},
+    {phrase:"Le temps est bon en printemps.", voice:'f', translation:"El tiempo es bueno en primavera."},
+  ],'var(--s5)');
+}
+
+function injectS6(){
+  const c=document.getElementById('sec-content-6');if(!c)return;
+  const card1=document.createElement('div');card1.className='ex-card';
+  card1.innerHTML='<div class="ex-title" style="color:var(--s1)">Comprende la règle</div>'+
+    '<div class="ex-instr">Las consonantes finales s, t, d, x, z, p son casi siempre mudas en francés.</div>'+
+    '<div class="tip-box" style="background:var(--s1l);color:var(--s1d)">'+
+    '<b>Mudas :</b> Paris [paʁi] · vous [vu] · grand [gʁɑ̃] · beaucoup [boku] · nez [nɛ]<br>'+
+    '<b>Excepciones que sí suenan :</b> fils [fis] · sens [sɑ̃s] · chef [ʃɛf]<br>'+
+    '<b>La "e" muda :</b> "table", "livre", "prendre" — la "e" final no suena</div>'+
+    '<div id="qcm-muettes"></div>'+
+    '<div class="score-box" id="sc-muettes" style="background:var(--s1l)"><div class="score-emoji" id="sc-muettes-em"></div><div class="score-num" id="sc-muettes-n" style="color:var(--s1d)"></div><div class="score-msg" id="sc-muettes-m"></div></div>';
+  c.appendChild(card1);
+  buildQCM('qcm-muettes', qcmMuettes, 'sc-muettes', 'var(--s1)');
+  const card2=document.createElement('div');card2.className='ex-card';
+  card2.innerHTML='<div class="ex-title" style="color:var(--s1)">🎙️ Escucha y repite — lettres muettes</div><div class="ex-instr">Escucha estas palabras con letras mudas y graba tu pronunciación.</div><div id="ra-muettes"></div>';
+  c.appendChild(card2);
+  buildRA('ra-muettes',[
+    {phrase:"Paris, vous, grand, beaucoup, nez.",voice:'m', translation:"París, ustedes, grande, mucho, nariz — todas con letras finales mudas."},
+    {phrase:"Il est dans le jardin avec les enfants.",voice:'f',translation:"Está en el jardín con los niños."},
+    {phrase:"Vous parlez très bien français.",   voice:'m', translation:"Usted habla muy bien francés."},
+  ],'var(--s1)');
+}
+
+function injectS7(){
+  const c=document.getElementById('sec-content-7');if(!c)return;
+  const card1=document.createElement('div');card1.className='ex-card';
+  card1.innerHTML='<div class="ex-title" style="color:var(--s2)">Solo audio — ¿cerrado o abierto?</div>'+
+    '<div class="ex-instr">Haz clic en 🔊, escucha la palabra <b>sin verla</b>, y elige el sonido. El texto se revela solo después de responder.</div>'+
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px">'+
+    '<div class="tip-box" style="background:var(--s2l);color:var(--s2d);text-align:center"><div style="font-size:24px">😬</div><b>Cerrado [e]</b><br><small>Labios estirados, tensos<br>été, manger, chez</small></div>'+
+    '<div class="tip-box" style="background:#deeeff;color:#1a5fa0;text-align:center"><div style="font-size:24px">😮</div><b>Abierto [ɛ]</b><br><small>Boca más abierta<br>père, fête, lait</small></div></div>'+
+    '<div id="ee-grid"></div>'+
+    '<div class="score-box" id="sc-ee" style="background:var(--s2l)"><div class="score-emoji" id="sc-ee-em"></div><div class="score-num" id="sc-ee-n" style="color:var(--s2d)"></div><div class="score-msg" id="sc-ee-m"></div></div>';
+  c.appendChild(card1);
+  buildEEAudio('ee-grid');
+}
+
+function injectS10(){
+  const c=document.getElementById('sec-content-8');if(!c)return;
+  const card1=document.createElement('div');card1.className='ex-card';
+  card1.innerHTML='<div class="ex-title" style="color:var(--s3)">Tabla de referencia</div>'+
+    '<div class="ex-instr">Las combinaciones que más confunden a los hispanohablantes.</div>'+
+    '<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:13px"><thead><tr style="background:var(--s3l)">'+
+    '<th style="padding:10px 12px;text-align:left;font-weight:800;color:var(--s3d)">Grafía</th>'+
+    '<th style="padding:10px 12px;text-align:left;font-weight:800;color:var(--s3d)">Sonido</th>'+
+    '<th style="padding:10px 12px;text-align:left;font-weight:800;color:var(--s3d)">Ejemplos</th></tr></thead><tbody>'+
+    [['ch','[ʃ] como "sh" en show','chat, chercher, chocolat'],
+     ['gn','[ɲ] como "ñ" española','montagne, champagne, agneau'],
+     ['ç','[s] suave','garçon, ça, façon'],
+     ['ph','[f] como "f"','photo, pharmacie, téléphone'],
+     ['ll (fille)','[j] suave','fille, famille, bouteille'],
+     ['qu','[k]','qui, que, quatre'],
+     ['g + e/i','[ʒ]','girafe, geste, page'],
+     ['j','[ʒ] siempre','je, jour, jardin'],
+    ].map((r,i)=>'<tr style="background:'+(i%2===0?'var(--bg)':'var(--white)')+'"><td style="padding:9px 12px;font-weight:700;font-family:\'Playfair Display\',serif">'+r[0]+'</td><td style="padding:9px 12px;color:var(--s3d);font-weight:700">'+r[1]+'</td><td style="padding:9px 12px;color:var(--muted)">'+r[2]+'</td></tr>').join('')+
+    '</tbody></table></div>';
+  c.appendChild(card1);
+  const card2=document.createElement('div');card2.className='ex-card';
+  card2.innerHTML='<div class="ex-title" style="color:var(--s3)">QCM — consonnes spéciales</div><div class="ex-instr">Pon a prueba tus conocimientos.</div><div id="qcm-cons"></div>'+
+    '<div class="score-box" id="sc-cons" style="background:var(--s3l)"><div class="score-emoji" id="sc-cons-em"></div><div class="score-num" id="sc-cons-n" style="color:var(--s3d)"></div><div class="score-msg" id="sc-cons-m"></div></div>';
+  c.appendChild(card2);
+  buildQCM('qcm-cons', qcmCons, 'sc-cons', 'var(--s3)');
+  const card3=document.createElement('div');card3.className='ex-card';
+  card3.innerHTML='<div class="ex-title" style="color:var(--s3)">🎙️ Pronuncia — consonnes spéciales</div><div class="ex-instr">Escucha y graba estas palabras.</div><div id="ra-cons"></div>';
+  c.appendChild(card3);
+  buildRA('ra-cons',[
+    {phrase:"Le chat est dans la montagne.",    voice:'f', translation:"El gato está en la montaña."},
+    {phrase:"Le garçon prend une photo.",       voice:'m', translation:"El chico toma una foto."},
+    {phrase:"La famille mange du fromage.",     voice:'f', translation:"La familia come queso."},
+  ],'var(--s3)');
+}
+
+function injectS8(){
+  const c=document.getElementById('sec-content-8');if(!c)return;
+  const card0=document.createElement('div');card0.className='ex-card';
+  card0.innerHTML='<div class="ex-title" style="color:var(--s4)">Le "v" français — son fricatif [v]</div>'+
+    '<div class="ex-instr">Escucha y graba cada palabra con "v".</div>'+
+    '<div class="tip-box" style="background:var(--s4l);color:var(--s4d)"><b>💡 Cómo producir [v]:</b> Apoya los dientes superiores en el labio inferior y sopla — el aire pasa de forma continua. <b>No cierres los dos labios</b> como para [b].<br>En español latinoamericano, "v" y "b" suenan igual. En francés son completamente distintos.</div>'+
+    '<div id="cards-v"></div>';
+  c.appendChild(card0);
+  buildPhoneCards('cards-v', wordsV, 'var(--s4)');
+
+  const card1=document.createElement('div');card1.className='ex-card';
+  card1.innerHTML='<div class="ex-title" style="color:var(--s4)">Le "b" français — son occlusif [b]</div>'+
+    '<div class="ex-instr">Escucha y graba cada palabra con "b".</div>'+
+    '<div class="tip-box" style="background:var(--s4l);color:var(--s4d)"><b>💡 Cómo producir [b]:</b> Cierra los dos labios completamente, luego ábrelos con una pequeña explosión de aire. Es el mismo sonido que la "b" al inicio de palabra en español.</div>'+
+    '<div id="cards-b"></div>';
+  c.appendChild(card1);
+  buildPhoneCards('cards-b', wordsB, 'var(--s4)');
+
+  const card2=document.createElement('div');card2.className='ex-card';
+  card2.innerHTML='<div class="ex-title" style="color:var(--s4)">QCM — V vs B</div>'+
+    '<div class="ex-instr">Verifica tu comprensión de la diferencia.</div><div id="qcm-vb"></div>'+
+    '<div class="score-box" id="sc-vb" style="background:var(--s4l)"><div class="score-emoji" id="sc-vb-em"></div><div class="score-num" id="sc-vb-n" style="color:var(--s4d)"></div><div class="score-msg" id="sc-vb-m"></div></div>';
+  c.appendChild(card2);
+  buildQCM('qcm-vb', qcmVB, 'sc-vb', 'var(--s4)');
+
+  const card3=document.createElement('div');card3.className='ex-card';
+  card3.innerHTML='<div class="ex-title" style="color:var(--s4)">🎙️ Paires minimales V / B</div>'+
+    '<div class="ex-instr">Estos pares tienen sonidos casi idénticos excepto por V vs B. Escucha atentamente y graba.</div><div id="ra-vb"></div>';
+  c.appendChild(card3);
+  buildRA('ra-vb',[
+    {phrase:"Vous buvez du bon vin blanc.",      voice:'f', translation:"Ustedes beben buen vino blanco."},
+    {phrase:"La voiture est bien garée.",        voice:'m', translation:"El coche está bien estacionado."},
+    {phrase:"Je vais au bureau en vélo.",        voice:'f', translation:"Voy a la oficina en bicicleta."},
+    {phrase:"Boire du vin blanc, c\'est bon.",  voice:'m', translation:"Beber vino blanco es bueno."},
+  ],'var(--s4)');
+}
+
+function injectS9(){
+  const c=document.getElementById('sec-content-9');if(!c)return;
+  const card1=document.createElement('div');card1.className='ex-card';
+  card1.innerHTML='<div class="ex-title" style="color:var(--s4)">🎙️ Frases que concentran todos los sonidos difíciles</div>'+
+    '<div class="ex-instr">Cada frase contiene múltiples piezas fonéticas: [ʁ], [y], [ʒ], nasales, letras muettes. Escucha el modelo, analiza qué sonidos aparecen, y graba.</div>'+
+    '<div id="ra-final"></div>';
+  c.appendChild(card1);
+  buildRA('ra-final', raFinal, 'var(--s4)');
+}
+
+// ════════════════════════════════
+// INIT
+// ════════════════════════════════
+document.addEventListener('DOMContentLoaded',()=>{
+  window.speechSynthesis.getVoices();
+  buildAllPanels();
+  buildELPanel();
+  buildMobNav();
+  // Inject all section content
+  injectS1();injectS2();injectS3();injectS4();injectS5();
+  injectS6();injectS7();injectS8();injectS9();injectS10();
+  // Set initial active nav color
+  document.querySelectorAll('.nav-btn[data-s="1"]').forEach(b=>{b.style.background='var(--s1)';b.style.color='white';});
+});
+</script>
+</body>
+</html>
