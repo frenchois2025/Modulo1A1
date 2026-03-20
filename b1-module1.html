@@ -430,6 +430,8 @@ body {
 }
 .sidebar-back:hover { background: var(--bg); color: var(--text); }
 </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="auth.js"></script>
 </head>
 <body>
 <div class="app">
@@ -1079,12 +1081,12 @@ const match1c=[
   {left:'où',right:'reemplaza lugar o tiempo'},
 ];
 const dialogueL1=[
-  {speaker:'f', text:"Tu as vu le film dont tout le monde parle ?"},
-  {speaker:'m', text:"Oui ! C'est celui qui a gagné le festival de Cannes."},
-  {speaker:'f', text:"Exactement. C'est un film que j'ai adoré."},
-  {speaker:'m', text:"La ville où il a été tourné est magnifique aussi."},
-  {speaker:'f', text:"Tu parles de Lyon ? C'est une ville où j'ai vécu deux ans."},
-  {speaker:'m', text:"Vraiment ? C'est une ville que je voudrais visiter."},
+  {speaker:'f', name:'Charlotte', text:"Tu as vu le film dont tout le monde parle ?", translation:"¿Viste la película de la que todo el mundo habla?"},
+  {speaker:'m', name:'Lucas', text:"Oui ! C'est celui qui a gagné le festival de Cannes.", translation:"¡Sí! Es la que ganó el festival de Cannes."},
+  {speaker:'f', name:'Charlotte', text:"Exactement. C'est un film que j'ai adoré.", translation:"Exactamente. Es una película que adoré."},
+  {speaker:'m', name:'Lucas', text:"La ville où il a été tourné est magnifique aussi.", translation:"La ciudad donde fue filmada también es magnífica."},
+  {speaker:'f', name:'Charlotte', text:"Tu parles de Lyon ? C'est une ville où j'ai vécu deux ans.", translation:"¿Hablas de Lyon? Es una ciudad donde viví dos años."},
+  {speaker:'m', name:'Lucas', text:"Vraiment ? C'est une ville que je voudrais visiter.", translation:"¿En serio? Es una ciudad que me gustaría visitar."},
 ];
 const qcmEcoute1=[
   {q:"¿Qué ganó la película mencionada?", opts:['El Oscar','El festival de Cannes','El BAFTA'], ans:1},
@@ -1112,11 +1114,11 @@ const fill2b=[
   {sentence:"Elle a le livre ___ tu as besoin.", answer:"dont"},
 ];
 const dialogueL2=[
-  {speaker:'f', text:"Tu connais ce chanteur dont tout le monde parle ?"},
-  {speaker:'m', text:"Oui, c'est celui dont la voix est incroyable."},
-  {speaker:'f', text:"C'est un artiste dont j'admire vraiment le talent."},
-  {speaker:'m', text:"Il vient d'un pays dont je ne connais pas bien la langue."},
-  {speaker:'f', text:"Il est brésilien. Le portugais est une langue dont les sons sont très beaux."},
+  {speaker:'f', name:'Charlotte', text:"Tu connais ce chanteur dont tout le monde parle ?", translation:"¿Conoces a ese cantante del que todo el mundo habla?"},
+  {speaker:'m', name:'Lucas', text:"Oui, c'est celui dont la voix est incroyable.", translation:"Sí, es el de la voz increíble."},
+  {speaker:'f', name:'Charlotte', text:"C'est un artiste dont j'admire vraiment le talent.", translation:"Es un artista cuyo talento admiro de verdad."},
+  {speaker:'m', name:'Lucas', text:"Il vient d'un pays dont je ne connais pas bien la langue.", translation:"Viene de un país cuya lengua no conozco bien."},
+  {speaker:'f', name:'Charlotte', text:"Il est brésilien. Le portugais est une langue dont les sons sont très beaux.", translation:"Es brasileño. El portugués es una lengua cuyos sonidos son muy bonitos."},
 ];
 const qcmEcoute2=[
   {q:"¿De quién hablan?", opts:['Un actor','Un chanteur','Un sportif'], ans:1},
@@ -1143,11 +1145,11 @@ const fill3b=[
   {sentence:"C'est l'outil ___ j'ai besoin. (de)", answer:"dont"},
 ];
 const dialogueL3=[
-  {speaker:'f', text:"Quel est le projet sur lequel tu travailles en ce moment ?"},
-  {speaker:'m', text:"C'est un projet auquel je pense depuis longtemps."},
-  {speaker:'f', text:"C'est le type de travail pour lequel tu es vraiment qualifié."},
-  {speaker:'m', text:"Oui, c'est une opportunité à laquelle je ne veux pas renoncer."},
-  {speaker:'f', text:"Les défis auxquels tu feras face seront importants mais surmontables."},
+  {speaker:'f', name:'Charlotte', text:"Quel est le projet sur lequel tu travailles en ce moment ?", translation:"¿En qué proyecto estás trabajando ahora?"},
+  {speaker:'m', name:'Lucas', text:"C'est un projet auquel je pense depuis longtemps.", translation:"Es un proyecto en el que llevo mucho tiempo pensando."},
+  {speaker:'f', name:'Charlotte', text:"C'est le type de travail pour lequel tu es vraiment qualifié.", translation:"Es el tipo de trabajo para el que estás realmente cualificado."},
+  {speaker:'m', name:'Lucas', text:"Oui, c'est une opportunité à laquelle je ne veux pas renoncer.", translation:"Sí, es una oportunidad a la que no quiero renunciar."},
+  {speaker:'f', name:'Charlotte', text:"Les défis auxquels tu feras face seront importants mais surmontables.", translation:"Los desafíos a los que te enfrentarás serán importantes pero superables."},
 ];
 const qcmEcoute3=[
   {q:"¿Sobre qué hablan?", opts:['Un viaje','Un proyecto de trabajo','Una película'], ans:1},
@@ -1172,11 +1174,11 @@ const fill4b=[
   {sentence:"Mon frère, ___ habite à Lyon, viendra ce week-end.", answer:"qui"},
 ];
 const dialogueL4=[
-  {speaker:'f', text:"Je cherche un appartement qui soit grand et dont le loyer soit raisonnable."},
-  {speaker:'m', text:"J'en connais un qui est situé dans un quartier où il y a beaucoup de commerces."},
-  {speaker:'f', text:"C'est exactement le type d'endroit dont j'ai besoin."},
-  {speaker:'m', text:"C'est un appartement que le propriétaire, qui est très sympa, vient de rénover."},
-  {speaker:'f', text:"C'est le genre d'offre pour laquelle je ne veux pas attendre !"},
+  {speaker:'f', name:'Charlotte', text:"Je cherche un appartement qui soit grand et dont le loyer soit raisonnable.", translation:"Busco un apartamento que sea grande y cuyo alquiler sea razonable."},
+  {speaker:'m', name:'Lucas', text:"J'en connais un qui est situé dans un quartier où il y a beaucoup de commerces.", translation:"Conozco uno en un barrio donde hay muchos comercios."},
+  {speaker:'f', name:'Charlotte', text:"C'est exactement le type d'endroit dont j'ai besoin.", translation:"Es exactamente el tipo de lugar que necesito."},
+  {speaker:'m', name:'Lucas', text:"C'est un appartement que le propriétaire, qui est très sympa, vient de rénover.", translation:"Es un apartamento que el propietario, muy simpático, acaba de renovar."},
+  {speaker:'f', name:'Charlotte', text:"C'est le genre d'offre pour laquelle je ne veux pas attendre !", translation:"¡Es el tipo de oferta por la que no quiero esperar!"},
 ];
 const qcmEcoute4=[
   {q:"¿Qué busca ella?", opts:['Una casa','Un appartement','Una oficina'], ans:1},
@@ -1190,51 +1192,84 @@ const ra4=[
 ];
 
 
-function buildDialogue(containerId, lines, qcmData, scoreId){
-  const c = document.getElementById(containerId);
-  if(!c) return;
-  const playBtn = document.createElement('button');
-  playBtn.style.cssText = 'background:var(--l1);color:white;border:none;border-radius:10px;padding:10px 20px;font-size:14px;font-weight:700;cursor:pointer;font-family:"Nunito",sans-serif;margin-bottom:16px;display:block;';
-  playBtn.innerHTML = '▶ Escuchar el diálogo';
-  playBtn.onclick = () => { playBtn.innerHTML='⏸ Reproduciendo...'; playDialogueLines(lines, 0, playBtn); };
-  c.appendChild(playBtn);
-  const hint = document.createElement('div');
-  hint.style.cssText = 'font-size:12px;color:var(--muted);margin-bottom:16px;font-style:italic;';
-  hint.textContent = 'Escucha el diálogo completo y luego responde las preguntas.';
-  c.appendChild(hint);
-  const qDiv = document.createElement('div');
-  qDiv.id = containerId + '_q';
-  c.appendChild(qDiv);
-  buildQCM(containerId + '_q', qcmData, scoreId);
+// ── Dialogue Listen Engine (phase 1 + phase 2 karaoke) ──
+const dlTally={}, dlDataStore={};
+function registerDL(id,data){dlDataStore[id]=data;}
+
+function buildDialogueListen(cid,data,accentColor){
+  const c=document.getElementById(cid);if(!c)return;c.innerHTML='';
+  const ph1=document.createElement('div');ph1.id=cid+'_phase1';
+  const lb=document.createElement('div');lb.style.cssText='text-align:center;padding:20px 0 24px';
+  lb.innerHTML='<div style="font-size:13px;color:#7a7a8c;margin-bottom:14px;font-style:italic">Escucha el diálogo completo, luego responde las preguntas sin ver el texto.</div>'+
+    '<button id="'+cid+'_listenAll" onclick="playDialogueFull(\''+cid+'\',dlDataStore[\''+cid+'\'])" style="background:'+accentColor+';color:white;border:none;border-radius:12px;padding:14px 28px;font-size:15px;font-weight:800;cursor:pointer;font-family:\'Nunito\',sans-serif;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 16px rgba(0,0,0,.12)">🔊 Écouter le dialogue</button>'+
+    '<div id="'+cid+'_playing" style="margin-top:10px;font-size:12px;color:'+accentColor+';font-weight:700;display:none">▶ En cours…</div>';
+  ph1.appendChild(lb);
+  const ql=document.createElement('div');ql.style.cssText='font-size:12px;font-weight:800;color:'+accentColor+';text-transform:uppercase;letter-spacing:1px;margin-bottom:10px';
+  ql.textContent='🧠 Comprensión — responde sin ver el texto';ph1.appendChild(ql);
+  data.qcm.forEach((q,qi)=>{
+    const d=document.createElement('div');d.className='qcm-item';
+    d.innerHTML='<div class="q-label">Pregunta '+(qi+1)+'</div><div class="q-text">'+q.q+'</div>'+
+      '<div class="opts" id="'+cid+'_opts_'+qi+'">'+q.opts.map((o,oi)=>'<button class="opt" onclick="answerDLQ(\''+cid+'\','+qi+','+oi+','+q.ans+','+data.qcm.length+')">'+o+'</button>').join('')+'</div>'+
+      '<div class="fb" id="'+cid+'_fb_'+qi+'"></div>';
+    ph1.appendChild(d);
+  });
+  const sc=document.createElement('div');sc.className='score-box';sc.id=cid+'_score';sc.style.background=accentColor+'22';
+  sc.innerHTML='<div class="score-emoji" id="'+cid+'_sc_em"></div><div class="score-num" id="'+cid+'_sc_n" style="color:'+accentColor+'"></div><div class="score-msg" id="'+cid+'_sc_m"></div>';
+  ph1.appendChild(sc);c.appendChild(ph1);
+  // Phase 2
+  const ph2=document.createElement('div');ph2.id=cid+'_phase2';ph2.style.display='none';
+  ph2.innerHTML='<div style="font-size:12px;font-weight:800;color:'+accentColor+';text-transform:uppercase;letter-spacing:1px;margin:18px 0 10px">📖 Transcripción del diálogo</div>';
+  const dw=document.createElement('div');dw.style.cssText='background:#1a1a2e;border:1.5px solid #2a2a4e;border-radius:14px;padding:16px 18px';
+  data.lines.forEach((line,li)=>{
+    const isF=line.speaker==='f';const al=isF?'#e63946':'#2a7dd1';const bl=isF?'#fdecea':'#deeeff';
+    const words=line.text.split(' ');
+    const ws=words.map((w,wi)=>'<span id="'+cid+'_w'+li+'_'+wi+'" style="color:rgba(255,255,255,0.5);transition:color .12s">'+w+'</span>').join(' ');
+    const row=document.createElement('div');row.style.cssText='display:flex;align-items:flex-start;gap:10px;margin-bottom:'+(li<data.lines.length-1?'16':'0')+'px';
+    row.innerHTML='<button onclick="playLineKaraoke(\''+cid+'\','+li+',dlDataStore[\''+cid+'\'].lines['+li+'],this)" style="flex-shrink:0;width:34px;height:34px;border-radius:50%;border:1.5px solid '+al+';background:'+bl+';cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center">🔊</button>'+
+      '<div style="flex:1"><div style="font-size:11px;font-weight:800;color:'+al+';margin-bottom:4px">'+(line.name||line.speaker)+'</div>'+
+      '<div style="font-family:\'Playfair Display\',serif;font-size:15px;font-weight:700;line-height:1.6">'+ws+'</div>'+
+      '<div style="font-size:11px;color:rgba(255,255,255,.35);margin-top:4px;font-style:italic">'+(line.translation||'')+'</div></div>';
+    dw.appendChild(row);
+  });
+  ph2.appendChild(dw);c.appendChild(ph2);
 }
 
-function playDialogueLines(lines, i, btn){
-  if(i >= lines.length){ if(btn) btn.innerHTML='▶ Escuchar de nuevo'; return; }
-  const line = lines[i];
-  const voice = line.speaker === 'f' ? VOICE_F : VOICE_M;
-  const cacheKey = line.text + '||' + voice;
-  if(AUDIO_CACHE.has(cacheKey)){
-    const audio = new Audio(AUDIO_CACHE.get(cacheKey));
-    audio.onended = () => setTimeout(() => playDialogueLines(lines, i+1, btn), 350);
-    audio.play();
-  } else if(EL_KEY){
-    fetch('https://api.elevenlabs.io/v1/text-to-speech/' + voice, {
-      method:'POST', headers:{'xi-api-key': EL_KEY, 'Content-Type':'application/json'},
-      body: JSON.stringify({text: line.text, model_id:'eleven_multilingual_v2', language_code:'fr',
-        voice_settings:{stability:0.5, similarity_boost:0.75}})
-    }).then(r=>r.blob()).then(blob=>{
-      const url = URL.createObjectURL(blob);
-      AUDIO_CACHE.set(cacheKey, url);
-      const audio = new Audio(url);
-      audio.onended = () => setTimeout(() => playDialogueLines(lines, i+1, btn), 350);
-      audio.play();
-    }).catch(()=>{ if(btn) btn.innerHTML='▶ Escuchar de nuevo'; });
-  } else {
-    window.speechSynthesis.cancel();
-    const utt = new SpeechSynthesisUtterance(line.text);
-    utt.lang='fr-FR'; utt.rate=0.85;
-    utt.onend = () => setTimeout(() => playDialogueLines(lines, i+1, btn), 350);
-    window.speechSynthesis.speak(utt);
+async function playDialogueFull(cid,data){
+  const btn=document.getElementById(cid+'_listenAll');const ind=document.getElementById(cid+'_playing');
+  if(!data)return;if(btn)btn.disabled=true;if(ind)ind.style.display='block';
+  for(const line of data.lines){await speakPromise(line.text,line.speaker==='f'?VOICE_F:VOICE_M);await new Promise(r=>setTimeout(r,320));}
+  if(btn){btn.disabled=false;btn.innerHTML='🔊 Écouter à nouveau';}if(ind)ind.style.display='none';
+}
+function speakPromise(text,voiceId){
+  if(!EL_KEY){return new Promise(res=>{const u=new SpeechSynthesisUtterance(text);u.lang='fr-FR';u.rate=0.88;u.onend=res;window.speechSynthesis.cancel();window.speechSynthesis.speak(u);});}
+  return fetch('https://api.elevenlabs.io/v1/text-to-speech/'+voiceId,{method:'POST',headers:{'xi-api-key':EL_KEY,'Content-Type':'application/json'},body:JSON.stringify({text,model_id:'eleven_multilingual_v2',language_code:'fr',voice_settings:{stability:0.5,similarity_boost:0.75}})})
+  .then(r=>r.blob()).then(blob=>new Promise(res=>{const url=URL.createObjectURL(blob);const a=new Audio(url);a.play();a.onended=()=>{URL.revokeObjectURL(url);res();};}))
+  .catch(()=>speakPromise(text,null));
+}
+async function playLineKaraoke(cid,li,line,btn){
+  if(!line)return;const words=line.text.split(' ');const voiceId=line.speaker==='f'?VOICE_F:VOICE_M;
+  btn.disabled=true;words.forEach((_,wi)=>{const s=document.getElementById(cid+'_w'+li+'_'+wi);if(s)s.style.color='rgba(255,255,255,0.5)';});
+  const sk=dur=>{const ms=(dur*1000)/words.length;words.forEach((_,wi)=>setTimeout(()=>{const s=document.getElementById(cid+'_w'+li+'_'+wi);if(s)s.style.color='#ffd166';},wi*ms));setTimeout(()=>btn.disabled=false,dur*1000+200);};
+  if(!EL_KEY){const u=new SpeechSynthesisUtterance(line.text);u.lang='fr-FR';u.rate=0.88;window.speechSynthesis.cancel();window.speechSynthesis.speak(u);sk(words.length*0.42);return;}
+  try{const r=await fetch('https://api.elevenlabs.io/v1/text-to-speech/'+voiceId,{method:'POST',headers:{'xi-api-key':EL_KEY,'Content-Type':'application/json'},body:JSON.stringify({text:line.text,model_id:'eleven_multilingual_v2',language_code:'fr',voice_settings:{stability:0.5,similarity_boost:0.75}})});
+  const blob=await r.blob();const url=URL.createObjectURL(blob);const audio=new Audio(url);
+  audio.addEventListener('loadedmetadata',()=>sk(audio.duration));audio.play();audio.onended=()=>{URL.revokeObjectURL(url);btn.disabled=false;};}catch{btn.disabled=false;}
+}
+function answerDLQ(cid,qi,chosen,correct,total){
+  const key=cid+'_'+qi;if(dlTally[key])return;dlTally[key]={done:true,wasCorrect:chosen===correct};
+  const opts=document.querySelectorAll('#'+cid+'_opts_'+qi+' .opt');
+  opts.forEach((b,i)=>{b.disabled=true;if(i===correct)b.classList.add('correct');else if(i===chosen&&chosen!==correct)b.classList.add('wrong');});
+  const fb=document.getElementById(cid+'_fb_'+qi);
+  fb.textContent=chosen===correct?'✅ ¡Correcto!':'❌ '+opts[correct].textContent;
+  fb.style.cssText='color:'+(chosen===correct?'#1d7a4c':'#c0392b')+';font-size:12px;margin-top:6px;font-weight:700';
+  let answered=0,good=0;for(let i=0;i<total;i++){if(dlTally[cid+'_'+i]){answered++;if(dlTally[cid+'_'+i].wasCorrect)good++;}}
+  if(answered===total){
+    const sc=document.getElementById(cid+'_score');if(sc){sc.classList.add('show');const pct=good/total;
+      document.getElementById(cid+'_sc_em').textContent=pct>=.75?'🎉':pct>=.5?'👍':'💪';
+      document.getElementById(cid+'_sc_n').textContent=good+' / '+total;
+      document.getElementById(cid+'_sc_m').textContent=pct>=.75?'¡Excelente comprensión!':pct>=.5?'¡Bien! Vuelve a escuchar.':'Escucha el diálogo otra vez.';
+      sc.scrollIntoView({behavior:'smooth',block:'nearest'});}
+    setTimeout(()=>{const p2=document.getElementById(cid+'_phase2');if(p2){p2.style.display='block';p2.scrollIntoView({behavior:'smooth',block:'nearest'});}},900);
   }
 }
 
@@ -1269,19 +1304,19 @@ document.addEventListener('DOMContentLoaded',()=>{
   buildQCM('ex1a',qcm1a,'sc1a','var(--l1)');
   buildFill('ex1b',fill1b);
   buildMatch('ex1c',match1c,'sc1c');
-  buildDialogue('dial1',dialogueL1,qcmEcoute1,'sc1d');
+  buildDialogueListen('dial1',{lines:dialogueL1,qcm:qcmEcoute1},'var(--l1)');registerDL('dial1',{lines:dialogueL1,qcm:qcmEcoute1});
   buildReadAloud('ra1',ra1,'var(--l1)');
   buildQCM('ex2a',qcm2a,'sc2a','var(--l2)');
   buildFill('ex2b',fill2b);
-  buildDialogue('dial2',dialogueL2,qcmEcoute2,'sc2d');
+  buildDialogueListen('dial2',{lines:dialogueL2,qcm:qcmEcoute2},'var(--l2)');registerDL('dial2',{lines:dialogueL2,qcm:qcmEcoute2});
   buildReadAloud('ra2',ra2,'var(--l2)');
   buildQCM('ex3a',qcm3a,'sc3a','var(--l3)');
   buildFill('ex3b',fill3b);
-  buildDialogue('dial3',dialogueL3,qcmEcoute3,'sc3d');
+  buildDialogueListen('dial3',{lines:dialogueL3,qcm:qcmEcoute3},'var(--l3)');registerDL('dial3',{lines:dialogueL3,qcm:qcmEcoute3});
   buildReadAloud('ra3',ra3,'var(--l3)');
   buildQCM('ex4a',qcm4a,'sc4a','var(--l4)');
   buildFill('ex4b',fill4b);
-  buildDialogue('dial4',dialogueL4,qcmEcoute4,'sc4d');
+  buildDialogueListen('dial4',{lines:dialogueL4,qcm:qcmEcoute4},'var(--l4)');registerDL('dial4',{lines:dialogueL4,qcm:qcmEcoute4});
   buildReadAloud('ra4',ra4,'var(--l4)');
 
   buildMobNav();
