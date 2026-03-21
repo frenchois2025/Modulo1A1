@@ -1,5 +1,4 @@
 export default async function handler(req, res) {
-  // Handle CORS preflight
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -7,25 +6,32 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   try {
-    // Parse body — Vercel may pass it as string or object
     const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
+    const prompt = body.messages?.[0]?.content || '';
+    const apiKey = process.env.GEMINI_API_KEY;
 
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': process.env.ANTHROPIC_API_KEY,
-        'anthropic-version': '2023-06-01'
-      },
-      body: JSON.stringify({
-        model: body.model || 'claude-sonnet-4-20250514',
-        max_tokens: body.max_tokens || 1500,
-        messages: body.messages
-      })
-    });
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: { temperature: 0.7, maxOutputTokens: 1500 }
+        })
+      }
+    );
 
     const data = await response.json();
-    return res.status(response.status).json(data);
+    if (!response.ok) return res.status(response.status).json({ error: data });
+
+    // Extract text from Gemini response
+    const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
+
+    // Return in Anthropic-compatible format so comprehension.html works unchanged
+    return res.status(200).json({
+      content: [{ type: "text", text }]
+    });
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
