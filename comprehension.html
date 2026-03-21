@@ -309,11 +309,13 @@ async function generateText(){
     const jsonStart=clean.indexOf('{');
     const jsonEnd=clean.lastIndexOf('}');
     if(jsonStart>=0&&jsonEnd>=0) clean=clean.slice(jsonStart,jsonEnd+1);
+    // Fix common JSON issues from Gemini
+    clean=clean
+      .replace(/[ -]/g,' ') // remove control chars
+      .replace(/,\s*([}\]])/g,'$1')           // trailing commas
+      .replace(/([{,]\s*)(\w+)\s*:/g,'$1"$2":'); // unquoted keys
     CD=JSON.parse(clean);
-    // Validate structure — show what we got if wrong
-    if(!CD.paragraphs){
-      throw new Error('Structure incorrecte: ' + JSON.stringify(Object.keys(CD)));
-    }
+    if(!CD.paragraphs) throw new Error('Structure incorrecte: '+JSON.stringify(Object.keys(CD)));
     phase=1;QS={};QScore=0;
     renderReader();showView('view-reader');
   }catch(err){showView('view-gen');alert('Error al generar: '+err.message+'\nIntenta de nuevo.');}
