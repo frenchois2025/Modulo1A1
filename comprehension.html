@@ -304,7 +304,11 @@ async function generateText(){
     if(!res.ok){const e=await res.json();throw new Error(e.error?.message||res.status);}
     const data=await res.json();
     const raw=data.content.filter(b=>b.type==='text').map(b=>b.text).join('');
-    const clean=raw.replace(/```json|```/g,'').trim();
+    // Strip markdown, find JSON object
+    let clean=raw.replace(/```json|```/g,'').trim();
+    const jsonStart=clean.indexOf('{');
+    const jsonEnd=clean.lastIndexOf('}');
+    if(jsonStart>=0&&jsonEnd>=0) clean=clean.slice(jsonStart,jsonEnd+1);
     CD=JSON.parse(clean);
     phase=1;QS={};QScore=0;
     renderReader();showView('view-reader');
