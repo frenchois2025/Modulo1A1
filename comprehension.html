@@ -299,7 +299,7 @@ async function generateText(){
   const prompt='Tu es un professeur de fran&#231;ais expert cr&#233;ant du mat&#233;riel p&#233;dagogique pour hispanophones.\n\nCr&#233;e un texte de compr&#233;hension de niveau '+CL+' sur le th&#232;me "'+STh+'", de type "'+ST+'".\n\nCONTRAINTES :\n- Niveau : '+lvDesc[CL]+'\n- Longueur : '+wc[CL]+' mots environ\n- Type : '+ST+' authentique et r&#233;aliste\n- Th&#232;me : '+STh+'\n- Naturel, pas artificiel\n\nR&#233;ponds UNIQUEMENT avec un objet JSON valide, sans markdown, sans texte avant ou apr&#232;s :\n\n{"title":"titre","type":"'+ST+'","paragraphs":[[{"word":"mot_important","es":"traducci&#243;n"},"mot_simple","mot_simple"]],"qcm":[{"q":"pregunta en espa&#241;ol","opts":["A","B","C"],"ans":0}],"vocab":[{"word":"mot","es":"traducci&#243;n","sentence":"frase con ___ en lugar del mot","answer":"mot","hint":"pista en espa&#241;ol"}]}\n\nR&#200;GLES :\n- paragraphs : chaque paragraphe = tableau de tokens. Token = string simple OU objet {"word":"...","es":"..."} pour mots importants (5-8 max, les plus utiles p&#233;dagogiquement)\n- qcm : exactement 4 questions en espagnol, 3 options chacune, "ans" = index 0/1/2\n- vocab : exactement 3 mots cl&#233;s du texte avec phrase &#224; trous diff&#233;rente du texte\n- JSON pur uniquement';
 
   try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},
+    const res=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1500,messages:[{role:'user',content:prompt}]})});
     if(!res.ok){const e=await res.json();throw new Error(e.error?.message||res.status);}
     const data=await res.json();
