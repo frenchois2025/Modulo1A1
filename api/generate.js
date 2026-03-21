@@ -11,7 +11,7 @@ const handler = async (req, res) => {
     const apiKey = process.env.GEMINI_API_KEY;
 
     const response = await fetch(
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=" + apiKey,
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" + apiKey,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -23,10 +23,15 @@ const handler = async (req, res) => {
     );
 
     const data = await response.json();
+    if (!response.ok) return res.status(200).json({ content: [{ type: "text", text: JSON.stringify(data) }] });
 
-    // DEBUG: always return full Gemini response
-    return res.status(200).json({ content: [{ type: "text", text: JSON.stringify(data) }] });
+    const text = data.candidates && data.candidates[0]
+      ? data.candidates[0].content.parts[0].text
+      : "";
 
+    return res.status(200).json({
+      content: [{ type: "text", text: text }]
+    });
   } catch (err) {
     return res.status(200).json({ content: [{ type: "text", text: "CATCH ERROR: " + err.message }] });
   }
