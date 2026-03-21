@@ -291,12 +291,24 @@ function updBtn(col){
 async function generateText(){
   showView('view-loading');
   const lvDesc={
-    A1:'A1 d&#233;butant absolu : phrases courtes (5-8 mots), vocabulaire tr&#232;s simple, pr&#233;sent indicatif uniquement, structures sujet-verbe-objet basiques',
-    A2:'A2 &#233;l&#233;mentaire : phrases simples &#224; moyennes, pass&#233; compos&#233;, futur proche, connecteurs logiques simples, vocabulaire courant',
-    B1:'B1 interm&#233;diaire : phrases complexes, subjonctif, conditionnel, imparfait, vocabulaire vari&#233;, registres diff&#233;rents'
+    A1:'A1 debutant : phrases courtes (5-8 mots), present indicatif, vocabulaire simple',
+    A2:'A2 elementaire : phrases simples, passe compose, futur proche, vocabulaire courant',
+    B1:'B1 intermediaire : phrases complexes, subjonctif, conditionnel, vocabulaire varie'
   };
-  const wc={A1:'60-90',A2:'100-130',B1:'140-180'};
-  const prompt='Tu es un professeur de fran&#231;ais expert cr&#233;ant du mat&#233;riel p&#233;dagogique pour hispanophones.\n\nCr&#233;e un texte de compr&#233;hension de niveau '+CL+' sur le th&#232;me "'+STh+'", de type "'+ST+'".\n\nCONTRAINTES :\n- Niveau : '+lvDesc[CL]+'\n- Longueur : '+wc[CL]+' mots environ\n- Type : '+ST+' authentique et r&#233;aliste\n- Th&#232;me : '+STh+'\n- Naturel, pas artificiel\n\nR&#233;ponds UNIQUEMENT avec un objet JSON valide, sans markdown, sans texte avant ou apr&#232;s :\n\n{"title":"titre","type":"'+ST+'","paragraphs":[[{"word":"mot_important","es":"traducci&#243;n"},"mot_simple","mot_simple"]],"qcm":[{"q":"pregunta en espa&#241;ol","opts":["A","B","C"],"ans":0}],"vocab":[{"word":"mot","es":"traducci&#243;n","sentence":"frase con ___ en lugar del mot","answer":"mot","hint":"pista en espa&#241;ol"}]}\n\nR&#200;GLES :\n- paragraphs : chaque paragraphe = tableau de tokens. Token = string simple OU objet {"word":"...","es":"..."} pour mots importants (5-8 max, les plus utiles p&#233;dagogiquement)\n- qcm : exactement 4 questions en espagnol, 3 options chacune, "ans" = index 0/1/2\n- vocab : exactement 3 mots cl&#233;s du texte avec phrase &#224; trous diff&#233;rente du texte\n- JSON pur uniquement';
+  const wc={A1:'70',A2:'110',B1:'150'};
+
+  const prompt='Tu es un professeur de francais. Cree un texte de comprehension niveau '+CL+' sur le theme "'+STh+'", type "'+ST+'".'
+    +'\n\nReponds UNIQUEMENT avec du JSON valide selon ce schema exact :'
+    +'\n{"title":"string","type":"string","text":"le texte complet en francais sans apostrophes HTML",'
+    +'"words":[{"word":"mot_francais","es":"traduccion_espanol"}],'
+    +'"qcm":[{"q":"pregunta en espanol","opts":["A","B","C"],"ans":0}],'
+    +'"vocab":[{"word":"mot","es":"traduccion","sentence":"frase con ___ en lugar del mot","answer":"mot","hint":"pista en espanol"}]}'
+    +'\n\nREGLES :'
+    +'\n- text : le texte complet (~'+wc[CL]+' mots), niveau '+lvDesc[CL]
+    +'\n- words : 5 mots importants du texte avec leur traduction espagnole'
+    +'\n- qcm : exactement 4 questions en espanol, 3 options, "ans" = index 0/1/2'
+    +'\n- vocab : exactement 3 mots avec phrase a trous differente du texte'
+    +'\n- JSON pur sans markdown, sans apostrophes non echappees';
 
   try{
     const res=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},
@@ -304,13 +316,22 @@ async function generateText(){
     if(!res.ok){const e=await res.json();throw new Error(e.error?.message||res.status);}
     const data=await res.json();
     const raw=data.content.filter(b=>b.type==='text').map(b=>b.text).join('');
-    // Strip markdown, find JSON object
     let clean=raw.replace(/```json|```/g,'').trim();
     const jsonStart=clean.indexOf('{');
     const jsonEnd=clean.lastIndexOf('}');
     if(jsonStart>=0&&jsonEnd>=0) clean=clean.slice(jsonStart,jsonEnd+1);
     CD=JSON.parse(clean);
-    if(!CD.paragraphs) throw new Error('Structure incorrecte: '+JSON.stringify(Object.keys(CD)));
+    if(!CD.text&&!CD.paragraphs) throw new Error('Structure incorrecte: '+JSON.stringify(Object.keys(CD)));
+    // Convert flat text to paragraphs format if needed
+    if(CD.text&&!CD.paragraphs){
+      CD.paragraphs=CD.text.split(/\n+/).filter(p=>p.trim()).map(para=>{
+        const tokens=para.split(' ');
+        return tokens.map(tok=>{
+          const match=(CD.words||[]).find(w=>w.word&&tok.replace(/[.,!?;:]/g,'')===w.word);
+          return match?{word:tok,es:match.es}:tok;
+        });
+      });
+    }
     phase=1;QS={};QScore=0;
     renderReader();showView('view-reader');
   }catch(err){showView('view-gen');alert('Error al generar: '+err.message+'\nIntenta de nuevo.');}
