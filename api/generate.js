@@ -24,18 +24,11 @@ const handler = async (req, res) => {
 
     const data = await response.json();
 
-    // Debug: always return 200 so we can see the error
-    if (!response.ok) return res.status(200).json({ content: [{ type: "text", text: JSON.stringify(data) }] });
+    // DEBUG: always return full Gemini response
+    return res.status(200).json({ content: [{ type: "text", text: JSON.stringify(data) }] });
 
-    const text = data.candidates && data.candidates[0]
-      ? data.candidates[0].content.parts[0].text
-      : "";
-
-    return res.status(200).json({
-      content: [{ type: "text", text: text }]
-    });
   } catch (err) {
-    return res.status(200).json({ content: [{ type: "text", text: "ERROR: " + err.message }] });
+    return res.status(200).json({ content: [{ type: "text", text: "CATCH ERROR: " + err.message }] });
   }
 };
 
