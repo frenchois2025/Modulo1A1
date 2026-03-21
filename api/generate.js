@@ -23,7 +23,7 @@ const handler = async (req, res) => {
     );
 
     const data = await response.json();
-    if (!response.ok) return res.status(200).json({ content: [{ type: "text", text: JSON.stringify(data) }] });
+    if (!response.ok) return res.status(500).json({ error: data });
 
     const text = data.candidates && data.candidates[0]
       ? data.candidates[0].content.parts[0].text
@@ -33,7 +33,7 @@ const handler = async (req, res) => {
       content: [{ type: "text", text: text }]
     });
   } catch (err) {
-    return res.status(200).json({ content: [{ type: "text", text: "CATCH ERROR: " + err.message }] });
+    return res.status(500).json({ error: err.message });
   }
 };
 
