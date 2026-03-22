@@ -16,8 +16,7 @@ module.exports = async function handler(req, res) {
       model: "gemini-1.5-flash",
       generationConfig: {
         temperature: 0.7,
-        maxOutputTokens: 2000,
-        responseMimeType: "application/json"
+        maxOutputTokens: 2000
       }
     });
 
