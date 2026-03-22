@@ -20,23 +20,25 @@ module.exports = async function handler(req, res) {
     const result = await model.generateContent(prompt);
     let text = result.response.text();
 
-    // Clean markdown
-    text = text.replace(/```json|```/g, "").trim();
-
-    // Extract JSON object
+    text = text.replace(/```json/g, "").replace(/```/g, "").trim();
     const start = text.indexOf("{");
     const end = text.lastIndexOf("}");
-    if (start < 0 || end < 0) throw new Error("No JSON found in response");
+    if (start < 0 || end < 0) throw new Error("No JSON in response");
     text = text.slice(start, end + 1);
 
-    // Parse server-side to validate, then re-stringify cleanly
-    const parsed = JSON.parse(text);
+    let parsed;
+    try {
+      parsed = JSON.parse(text);
+    } catch(e) {
+      const safe = text.substring(0, 300).replace(/"/g, "'");
+      const errJson = `{"title":"Debug","type":"debug","text":"${e.message.replace(/"/g,"'")} | ${safe}","words":[],"qcm":[],"vocab":[]}`;
+      return res.status(200).json({ content: [{ type: "text", text: errJson }] });
+    }
 
-    return res.status(200).json({
-      content: [{ type: "text", text: JSON.stringify(parsed) }]
-    });
+    return res.status(200).json({ content: [{ type: "text", text: JSON.stringify(parsed) }] });
 
   } catch (err) {
-    return res.status(500).json({ error: err.message });
+    const errJson = `{"title":"Erreur","type":"debug","text":"${err.message.replace(/"/g,"'")}","words":[],"qcm":[],"vocab":[]}`;
+    return res.status(200).json({ content: [{ type: "text", text: errJson }] });
   }
 };
