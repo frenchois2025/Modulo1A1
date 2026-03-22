@@ -1,5 +1,3 @@
-const { GoogleGenerativeAI } = require("@google/generative-ai");
-
 module.exports = async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
@@ -10,20 +8,29 @@ module.exports = async function handler(req, res) {
   try {
     const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
     const prompt = body.messages?.[0]?.content || "";
+    const apiKey = process.env.GEMINI_API_KEY;
 
-    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-    const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-flash-001",
-      generationConfig: { temperature: 0.7, maxOutputTokens: 2000 }
-    });
+    // Direct HTTP call using v1 (not v1beta)
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: { temperature: 0.7, maxOutputTokens: 2000 }
+        })
+      }
+    );
 
-    const result = await model.generateContent(prompt);
-    let text = result.response.text();
+    const data = await response.json();
+    if (!response.ok) throw new Error(JSON.stringify(data));
 
+    let text = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
     text = text.replace(/```json/g, "").replace(/```/g, "").trim();
     const start = text.indexOf("{");
     const end = text.lastIndexOf("}");
-    if (start < 0 || end < 0) throw new Error("No JSON in response");
+    if (start < 0 || end < 0) throw new Error("No JSON found");
     text = text.slice(start, end + 1);
 
     let parsed;
@@ -31,14 +38,13 @@ module.exports = async function handler(req, res) {
       parsed = JSON.parse(text);
     } catch(e) {
       const safe = text.substring(0, 300).replace(/"/g, "'");
-      const errJson = `{"title":"Debug","type":"debug","text":"${e.message.replace(/"/g,"'")} | ${safe}","words":[],"qcm":[],"vocab":[]}`;
-      return res.status(200).json({ content: [{ type: "text", text: errJson }] });
+      parsed = { title: "Debug", type: "debug", text: e.message + " | " + safe, words: [], qcm: [], vocab: [] };
     }
 
     return res.status(200).json({ content: [{ type: "text", text: JSON.stringify(parsed) }] });
 
   } catch (err) {
-    const errJson = `{"title":"Erreur","type":"debug","text":"${err.message.replace(/"/g,"'")}","words":[],"qcm":[],"vocab":[]}`;
-    return res.status(200).json({ content: [{ type: "text", text: errJson }] });
+    const parsed = { title: "Erreur", type: "debug", text: err.message, words: [], qcm: [], vocab: [] };
+    return res.status(200).json({ content: [{ type: "text", text: JSON.stringify(parsed) }] });
   }
 };
