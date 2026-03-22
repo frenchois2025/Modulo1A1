@@ -53,7 +53,9 @@ module.exports = async function handler(req, res) {
     }
 
     // Restore apostrophes from placeholder
-    const restored = JSON.stringify(parsed).replace(/APOSTROPHE_MARKER/g, "'");
+    // Restore apostrophes - handle cases where Gemini adds spaces around marker
+    const restored = JSON.stringify(parsed)
+      .replace(/\s*APOSTROPHE_MARKER\s*/g, "'");
     return res.status(200).json({ content: [{ type: "text", text: restored }] });
 
   } catch (err) {
