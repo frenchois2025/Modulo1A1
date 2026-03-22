@@ -297,19 +297,6 @@ async function generateText(){
   };
   const wc={A1:'70',A2:'110',B1:'150'};
 
-  const prompt='Tu es un professeur de francais. Cree un texte de comprehension niveau '+CL+' sur le theme "'+STh+'", type "'+ST+'".'
-    +'\n\nReponds UNIQUEMENT avec du JSON valide selon ce schema exact :'
-    +'\n{"title":"string","type":"string","text":"le texte complet en francais sans apostrophes HTML",'
-    +'"words":[{"word":"mot_francais","es":"traduccion_espanol"}],'
-    +'"qcm":[{"q":"pregunta en espanol","opts":["A","B","C"],"ans":0}],'
-    +'"vocab":[{"word":"mot","es":"traduccion","sentence":"frase con ___ en lugar del mot","answer":"mot","hint":"pista en espanol"}]}'
-    +'\n\nREGLES :'
-    +'\n- text : le texte complet (~'+wc[CL]+' mots), niveau '+lvDesc[CL]
-    +'\n- words : 5 mots importants du texte avec leur traduction espagnole'
-    +'\n- qcm : exactement 4 questions en espanol, 3 options, "ans" = index 0/1/2'
-    +'\n- vocab : exactement 3 mots avec phrase a trous differente du texte'
-    +'\n- JSON pur sans markdown, sans apostrophes non echappees';
-
   try{
     const res=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1500,messages:[{role:'user',content:prompt}]})});
