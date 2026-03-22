@@ -1,3 +1,4 @@
+// v1 direct HTTP - no SDK
 module.exports = async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
@@ -10,9 +11,8 @@ module.exports = async function handler(req, res) {
     const prompt = body.messages?.[0]?.content || "";
     const apiKey = process.env.GEMINI_API_KEY;
 
-    // Direct HTTP call using v1 (not v1beta)
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+      "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=" + apiKey,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -24,7 +24,7 @@ module.exports = async function handler(req, res) {
     );
 
     const data = await response.json();
-    if (!response.ok) throw new Error(JSON.stringify(data));
+    if (!response.ok) throw new Error(JSON.stringify(data.error || data));
 
     let text = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
     text = text.replace(/```json/g, "").replace(/```/g, "").trim();
@@ -37,14 +37,12 @@ module.exports = async function handler(req, res) {
     try {
       parsed = JSON.parse(text);
     } catch(e) {
-      const safe = text.substring(0, 300).replace(/"/g, "'");
-      parsed = { title: "Debug", type: "debug", text: e.message + " | " + safe, words: [], qcm: [], vocab: [] };
+      parsed = { title: "Debug", type: "debug", text: e.message + " | " + text.substring(0,200), words: [], qcm: [], vocab: [] };
     }
 
     return res.status(200).json({ content: [{ type: "text", text: JSON.stringify(parsed) }] });
 
   } catch (err) {
-    const parsed = { title: "Erreur", type: "debug", text: err.message, words: [], qcm: [], vocab: [] };
-    return res.status(200).json({ content: [{ type: "text", text: JSON.stringify(parsed) }] });
+    return res.status(200).json({ content: [{ type: "text", text: JSON.stringify({ title: "Erreur", type: "debug", text: err.message, words: [], qcm: [], vocab: [] }) }] });
   }
 };
