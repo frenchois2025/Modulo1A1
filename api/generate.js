@@ -61,7 +61,9 @@ module.exports = async function handler(req, res) {
       parsed = { title: "Debug", type: "debug", text: e.message + " | " + fixed.substring(0,300), words: [], qcm: [], vocab: [] };
     }
 
-    return res.status(200).json({ content: [{ type: "text", text: JSON.stringify(parsed) }] });
+    // Restore apostrophes from placeholder
+    const restored = JSON.stringify(parsed).replace(/APOSTROPHE_MARKER/g, "'");
+    return res.status(200).json({ content: [{ type: "text", text: restored }] });
 
   } catch (err) {
     return res.status(200).json({ content: [{ type: "text", text: JSON.stringify({ title: "Erreur", type: "debug", text: err.message, words: [], qcm: [], vocab: [] }) }] });
