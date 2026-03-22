@@ -31,7 +31,12 @@ module.exports = async function handler(req, res) {
     const textPart = parts.find(p => p.text && !p.thought);
     let text = textPart ? textPart.text : (parts[parts.length-1]?.text || "");
 
-    // Parse and return
+    // Fix apostrophes inside JSON string values before parsing
+    // Strategy: only replace apostrophes that are inside string values
+    text = text.replace(/"([^"\\]*(\\.[^"\\]*)*)"/g, function(match) {
+      return match.replace(/'/g, "");
+    });
+
     let parsed;
     try {
       parsed = JSON.parse(text);
