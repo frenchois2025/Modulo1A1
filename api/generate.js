@@ -14,19 +14,29 @@ module.exports = async function handler(req, res) {
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     const model = genAI.getGenerativeModel({
       model: "gemini-1.5-flash",
-      generationConfig: {
-        temperature: 0.7,
-        maxOutputTokens: 2000
-      }
+      generationConfig: { temperature: 0.7, maxOutputTokens: 2000 }
     });
 
     const result = await model.generateContent(prompt);
-    const text = result.response.text();
+    let text = result.response.text();
+
+    // Clean markdown
+    text = text.replace(/```json|```/g, "").trim();
+
+    // Extract JSON object
+    const start = text.indexOf("{");
+    const end = text.lastIndexOf("}");
+    if (start < 0 || end < 0) throw new Error("No JSON found in response");
+    text = text.slice(start, end + 1);
+
+    // Parse server-side to validate, then re-stringify cleanly
+    const parsed = JSON.parse(text);
 
     return res.status(200).json({
-      content: [{ type: "text", text: text }]
+      content: [{ type: "text", text: JSON.stringify(parsed) }]
     });
+
   } catch (err) {
-    return res.status(200).json({ content: [{ type: "text", text: "ERROR: " + err.message + " | " + err.toString() }] });
+    return res.status(500).json({ error: err.message });
   }
 };
