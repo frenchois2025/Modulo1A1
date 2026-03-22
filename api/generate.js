@@ -42,18 +42,9 @@ module.exports = async function handler(req, res) {
 
     // Fix unescaped apostrophes that break JSON
     // Strategy: escape them as \u0027 inside string values
-    let fixed = "";
-    let inStr = false;
-    let escaped = false;
-    for (let i = 0; i < text.length; i++) {
-      const c = text[i];
-      if (escaped) { fixed += c; escaped = false; continue; }
-      if (c === "\\") { fixed += c; escaped = true; continue; }
-      if (c === '"') { inStr = !inStr; fixed += c; continue; }
-      const code = c.charCodeAt(0);
-      if (inStr && (code === 39 || code === 0x2019 || code === 0x2018)) { fixed += "\u0027"; continue; }
-      fixed += c;
-    }
+    // Replace APOSTROPHE_MARKER with a safe placeholder already done in prompt
+    // Just use the text as-is since Gemini uses the marker
+    let fixed = text;
     let parsed;
     try {
       parsed = JSON.parse(fixed);
