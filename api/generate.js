@@ -40,8 +40,8 @@ module.exports = async function handler(req, res) {
     if (start < 0 || end < 0) throw new Error("No JSON found");
     text = text.slice(start, end + 1);
 
-    // Fix unescaped apostrophes inside JSON string values
-    // Replace ' with nothing only inside string values
+    // Fix unescaped apostrophes that break JSON
+    // Strategy: escape them as \u0027 inside string values
     let fixed = "";
     let inStr = false;
     let escaped = false;
@@ -50,7 +50,7 @@ module.exports = async function handler(req, res) {
       if (escaped) { fixed += c; escaped = false; continue; }
       if (c === "\\") { fixed += c; escaped = true; continue; }
       if (c === '"') { inStr = !inStr; fixed += c; continue; }
-      if (inStr && c === "'") { fixed += ""; continue; } // remove apostrophe
+      if (inStr && c === "'") { fixed += "\u0027"; continue; } // escape apostrophe
       fixed += c;
     }
 
