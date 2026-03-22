@@ -31,9 +31,14 @@ module.exports = async function handler(req, res) {
     const textPart = parts.find(p => p.text && !p.thought);
     let text = textPart ? textPart.text : (parts[parts.length-1]?.text || "");
 
-    // Return raw for debugging
-    const debugJson = JSON.stringify({ title: "Raw", type: "debug", text: text.substring(0, 500), words: [], qcm: [], vocab: [] });
-    return res.status(200).json({ content: [{ type: "text", text: debugJson }] });
+    // Parse and return
+    let parsed;
+    try {
+      parsed = JSON.parse(text);
+    } catch(e) {
+      parsed = { title: "Debug", type: "debug", text: e.message + " | " + text.substring(0,200), words: [], qcm: [], vocab: [] };
+    }
+    return res.status(200).json({ content: [{ type: "text", text: JSON.stringify(parsed) }] });
 
   } catch (err) {
     const errJson = JSON.stringify({ title: "Erreur", type: "debug", text: err.message, words: [], qcm: [], vocab: [] });
