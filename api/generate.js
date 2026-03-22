@@ -1,4 +1,4 @@
-// v1 direct HTTP - no SDK
+// v1beta gemini-2.5-flash debug
 module.exports = async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
@@ -26,23 +26,17 @@ module.exports = async function handler(req, res) {
     const data = await response.json();
     if (!response.ok) throw new Error(JSON.stringify(data.error || data));
 
-    let text = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
-    text = text.replace(/```json/g, "").replace(/```/g, "").trim();
-    const start = text.indexOf("{");
-    const end = text.lastIndexOf("}");
-    if (start < 0 || end < 0) throw new Error("No JSON found");
-    text = text.slice(start, end + 1);
+    // gemini-2.5-flash may return thinking parts - find text part
+    const parts = data.candidates?.[0]?.content?.parts || [];
+    const textPart = parts.find(p => p.text && !p.thought);
+    let text = textPart ? textPart.text : (parts[parts.length-1]?.text || "");
 
-    let parsed;
-    try {
-      parsed = JSON.parse(text);
-    } catch(e) {
-      parsed = { title: "Debug", type: "debug", text: e.message + " | " + text.substring(0,200), words: [], qcm: [], vocab: [] };
-    }
-
-    return res.status(200).json({ content: [{ type: "text", text: JSON.stringify(parsed) }] });
+    // Return raw for debugging
+    const debugJson = JSON.stringify({ title: "Raw", type: "debug", text: text.substring(0, 500), words: [], qcm: [], vocab: [] });
+    return res.status(200).json({ content: [{ type: "text", text: debugJson }] });
 
   } catch (err) {
-    return res.status(200).json({ content: [{ type: "text", text: JSON.stringify({ title: "Erreur", type: "debug", text: err.message, words: [], qcm: [], vocab: [] }) }] });
+    const errJson = JSON.stringify({ title: "Erreur", type: "debug", text: err.message, words: [], qcm: [], vocab: [] });
+    return res.status(200).json({ content: [{ type: "text", text: errJson }] });
   }
 };
