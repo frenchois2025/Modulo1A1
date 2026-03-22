@@ -316,11 +316,21 @@ async function generateText(){
     if(!res.ok){const e=await res.json();throw new Error(e.error?.message||res.status);}
     const data=await res.json();
     const raw=data.content.filter(b=>b.type==='text').map(b=>b.text).join('');
+    // Extract JSON robustly
     let clean=raw.replace(/```json|```/g,'').trim();
+    // Find first { and last } 
     const jsonStart=clean.indexOf('{');
     const jsonEnd=clean.lastIndexOf('}');
-    if(jsonStart>=0&&jsonEnd>=0) clean=clean.slice(jsonStart,jsonEnd+1);
-    CD=JSON.parse(clean);
+    if(jsonStart<0||jsonEnd<0) throw new Error('Pas de JSON trouvé dans la réponse');
+    clean=clean.slice(jsonStart,jsonEnd+1);
+    // Fix apostrophes in French text that break JSON
+    clean=clean.replace(/([^\\])'/g,"$1\'");
+    try { CD=JSON.parse(clean); }
+    catch(e) {
+      // Try again without apostrophe fix
+      clean=clean.replace(/([^\\])\\'/g,"$1'");
+      CD=JSON.parse(clean);
+    }
     if(!CD.text&&!CD.paragraphs) throw new Error('Structure incorrecte: '+JSON.stringify(Object.keys(CD)));
     // Convert flat text to paragraphs format if needed
     if(CD.text&&!CD.paragraphs){
