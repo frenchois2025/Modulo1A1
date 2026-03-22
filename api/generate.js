@@ -1,4 +1,4 @@
-// v1beta gemini-2.5-flash debug
+// v1beta gemini-2.5-flash-lite
 module.exports = async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
@@ -18,7 +18,11 @@ module.exports = async function handler(req, res) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: { temperature: 0.7, maxOutputTokens: 4000, thinkingConfig: { thinkingBudget: 0 } }
+          generationConfig: {
+            temperature: 0.7,
+            maxOutputTokens: 8192,
+            thinkingConfig: { thinkingBudget: 0 }
+          }
         })
       }
     );
@@ -26,27 +30,40 @@ module.exports = async function handler(req, res) {
     const data = await response.json();
     if (!response.ok) throw new Error(JSON.stringify(data.error || data));
 
-    // gemini-2.5-flash may return thinking parts - find text part
     const parts = data.candidates?.[0]?.content?.parts || [];
     const textPart = parts.find(p => p.text && !p.thought);
     let text = textPart ? textPart.text : (parts[parts.length-1]?.text || "");
 
-    // Fix apostrophes inside JSON string values before parsing
-    // Strategy: only replace apostrophes that are inside string values
-    text = text.replace(/"([^"\\]*(\\.[^"\\]*)*)"/g, function(match) {
-      return match.replace(/'/g, "");
-    });
+    text = text.replace(/```json/g, "").replace(/```/g, "").trim();
+    const start = text.indexOf("{");
+    const end = text.lastIndexOf("}");
+    if (start < 0 || end < 0) throw new Error("No JSON found");
+    text = text.slice(start, end + 1);
+
+    // Fix unescaped apostrophes inside JSON string values
+    // Replace ' with nothing only inside string values
+    let fixed = "";
+    let inStr = false;
+    let escaped = false;
+    for (let i = 0; i < text.length; i++) {
+      const c = text[i];
+      if (escaped) { fixed += c; escaped = false; continue; }
+      if (c === "\\") { fixed += c; escaped = true; continue; }
+      if (c === '"') { inStr = !inStr; fixed += c; continue; }
+      if (inStr && c === "'") { fixed += ""; continue; } // remove apostrophe
+      fixed += c;
+    }
 
     let parsed;
     try {
-      parsed = JSON.parse(text);
+      parsed = JSON.parse(fixed);
     } catch(e) {
-      parsed = { title: "Debug", type: "debug", text: e.message + " | " + text.substring(0,200), words: [], qcm: [], vocab: [] };
+      parsed = { title: "Debug", type: "debug", text: e.message + " | " + fixed.substring(0,300), words: [], qcm: [], vocab: [] };
     }
+
     return res.status(200).json({ content: [{ type: "text", text: JSON.stringify(parsed) }] });
 
   } catch (err) {
-    const errJson = JSON.stringify({ title: "Erreur", type: "debug", text: err.message, words: [], qcm: [], vocab: [] });
-    return res.status(200).json({ content: [{ type: "text", text: errJson }] });
+    return res.status(200).json({ content: [{ type: "text", text: JSON.stringify({ title: "Erreur", type: "debug", text: err.message, words: [], qcm: [], vocab: [] }) }] });
   }
 };
