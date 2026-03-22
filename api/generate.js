@@ -1,7 +1,6 @@
-import { google } from "@ai-sdk/google";
-import { generateText } from "ai";
+const { GoogleGenerativeAI } = require("@google/generative-ai");
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
@@ -12,15 +11,23 @@ export default async function handler(req, res) {
     const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
     const prompt = body.messages?.[0]?.content || "";
 
-    const { text } = await generateText({
-      model: google("gemini-2.0-flash"),
-      prompt: prompt,
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+    const model = genAI.getGenerativeModel({
+      model: "gemini-2.0-flash",
+      generationConfig: {
+        temperature: 0.7,
+        maxOutputTokens: 2000,
+        responseMimeType: "application/json"
+      }
     });
 
+    const result = await model.generateContent(prompt);
+    const text = result.response.text();
+
     return res.status(200).json({
-      content: [{ type: "text", text }]
+      content: [{ type: "text", text: text }]
     });
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
-}
+};
