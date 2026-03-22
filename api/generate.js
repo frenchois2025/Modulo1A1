@@ -27,6 +27,6 @@ module.exports = async function handler(req, res) {
       content: [{ type: "text", text: text }]
     });
   } catch (err) {
-    return res.status(500).json({ error: err.message });
+    return res.status(200).json({ content: [{ type: "text", text: "ERROR: " + err.message + " | " + err.toString() }] });
   }
 };
