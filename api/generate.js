@@ -50,10 +50,10 @@ module.exports = async function handler(req, res) {
       if (escaped) { fixed += c; escaped = false; continue; }
       if (c === "\\") { fixed += c; escaped = true; continue; }
       if (c === '"') { inStr = !inStr; fixed += c; continue; }
-      if (inStr && c === "'") { fixed += "\u0027"; continue; } // escape apostrophe
+      const code = c.charCodeAt(0);
+      if (inStr && (code === 39 || code === 0x2019 || code === 0x2018)) { fixed += "\u0027"; continue; }
       fixed += c;
     }
-
     let parsed;
     try {
       parsed = JSON.parse(fixed);
