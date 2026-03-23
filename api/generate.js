@@ -34,29 +34,54 @@ module.exports = async function handler(req, res) {
     const textPart = parts.find(p => p.text && !p.thought);
     let text = textPart ? textPart.text : (parts[parts.length-1]?.text || "");
 
+    // Extract JSON
     text = text.replace(/```json/g, "").replace(/```/g, "").trim();
     const start = text.indexOf("{");
     const end = text.lastIndexOf("}");
     if (start < 0 || end < 0) throw new Error("No JSON found");
     text = text.slice(start, end + 1);
 
-    // Fix unescaped apostrophes that break JSON
-    // Strategy: escape them as \u0027 inside string values
-    // Replace APOSTROPHE_MARKER with a safe placeholder already done in prompt
-    // Just use the text as-is since Gemini uses the marker
-    let fixed = text;
+    // Fix apostrophes: replace unescaped ' inside JSON strings
+    // We parse char by char to only touch content inside string values
+    let fixed = "";
+    let inString = false;
+    let prevBackslash = false;
+    for (let i = 0; i < text.length; i++) {
+      const ch = text[i];
+      if (prevBackslash) {
+        fixed += ch;
+        prevBackslash = false;
+        continue;
+      }
+      if (ch === "\\") {
+        fixed += ch;
+        prevBackslash = true;
+        continue;
+      }
+      if (ch === '"') {
+        inString = !inString;
+        fixed += ch;
+        continue;
+      }
+      // Inside a string: escape apostrophe and curly apostrophe
+      if (inString) {
+        const code = ch.codePointAt(0);
+        if (code === 39 || code === 8217 || code === 8216) {
+          fixed += "\\'";
+          continue;
+        }
+      }
+      fixed += ch;
+    }
+
     let parsed;
     try {
       parsed = JSON.parse(fixed);
     } catch(e) {
-      parsed = { title: "Debug", type: "debug", text: e.message + " | " + fixed.substring(0,300), words: [], qcm: [], vocab: [] };
+      parsed = { title: "Debug", type: "debug", text: e.message + " | " + fixed.substring(0, 300), words: [], qcm: [], vocab: [] };
     }
 
-    // Restore apostrophes from placeholder
-    // Restore apostrophes - handle cases where Gemini adds spaces around marker
-    const restored = JSON.stringify(parsed)
-      .replace(/\s*APOSTROPHE_MARKER\s*/g, "'");
-    return res.status(200).json({ content: [{ type: "text", text: restored }] });
+    return res.status(200).json({ content: [{ type: "text", text: JSON.stringify(parsed) }] });
 
   } catch (err) {
     return res.status(200).json({ content: [{ type: "text", text: JSON.stringify({ title: "Erreur", type: "debug", text: err.message, words: [], qcm: [], vocab: [] }) }] });
