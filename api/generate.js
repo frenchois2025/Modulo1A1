@@ -1,18 +1,21 @@
-// v1beta gemini-2.5-flash-lite
+// v1beta gemini-1.5-flash - Backend fonctionnel pour Vercel/Netlify
 module.exports = async function handler(req, res) {
+  // Gestion des CORS
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  
   if (req.method === "OPTIONS") return res.status(200).end();
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
   try {
-    const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
-    const prompt = body.messages?.[0]?.content || "";
+    const { prompt } = req.body;
     const apiKey = process.env.GEMINI_API_KEY;
 
+    if (!apiKey) throw new Error("API Key manquante dans l'environnement");
+
     const response = await fetch(
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=" + apiKey,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -20,70 +23,30 @@ module.exports = async function handler(req, res) {
           contents: [{ parts: [{ text: prompt }] }],
           generationConfig: {
             temperature: 0.7,
-            maxOutputTokens: 8192,
-            thinkingConfig: { thinkingBudget: 0 }
+            maxOutputTokens: 2000,
+            responseMimeType: "application/json" // Force Gemini à répondre en JSON
           }
         })
       }
     );
 
     const data = await response.json();
-    if (!response.ok) throw new Error(JSON.stringify(data.error || data));
-
-    const parts = data.candidates?.[0]?.content?.parts || [];
-    const textPart = parts.find(p => p.text && !p.thought);
-    let text = textPart ? textPart.text : (parts[parts.length-1]?.text || "");
-
-    // Extract JSON
-    text = text.replace(/```json/g, "").replace(/```/g, "").trim();
-    const start = text.indexOf("{");
-    const end = text.lastIndexOf("}");
-    if (start < 0 || end < 0) throw new Error("No JSON found");
-    text = text.slice(start, end + 1);
-
-    // Fix apostrophes: replace unescaped ' inside JSON strings
-    // We parse char by char to only touch content inside string values
-    let fixed = "";
-    let inString = false;
-    let prevBackslash = false;
-    for (let i = 0; i < text.length; i++) {
-      const ch = text[i];
-      if (prevBackslash) {
-        fixed += ch;
-        prevBackslash = false;
-        continue;
-      }
-      if (ch === "\\") {
-        fixed += ch;
-        prevBackslash = true;
-        continue;
-      }
-      if (ch === '"') {
-        inString = !inString;
-        fixed += ch;
-        continue;
-      }
-      // Inside a string: escape apostrophe and curly apostrophe
-      if (inString) {
-        const code = ch.codePointAt(0);
-        if (code === 39 || code === 8217 || code === 8216) {
-          fixed += "\u0027";
-          continue;
-        }
-      }
-      fixed += ch;
+    
+    if (!response.ok) {
+      console.error("Gemini Error:", data);
+      throw new Error(data.error?.message || "Erreur API Gemini");
     }
 
-    let parsed;
-    try {
-      parsed = JSON.parse(fixed);
-    } catch(e) {
-      parsed = { title: "Debug", type: "debug", text: e.message + " | " + fixed.substring(0, 300), words: [], qcm: [], vocab: [] };
-    }
+    // Extraction du texte de la réponse
+    let aiText = data.candidates?.[0]?.content?.parts?.[0]?.text || "{}";
 
-    return res.status(200).json({ content: [{ type: "text", text: JSON.stringify(parsed) }] });
+    // Renvoi au format attendu par le frontend
+    return res.status(200).json({ 
+      content: [{ type: "text", text: aiText }] 
+    });
 
   } catch (err) {
-    return res.status(200).json({ content: [{ type: "text", text: JSON.stringify({ title: "Erreur", type: "debug", text: err.message, words: [], qcm: [], vocab: [] }) }] });
+    console.error("Handler Error:", err.message);
+    return res.status(500).json({ error: err.message });
   }
 };
