@@ -67,7 +67,7 @@ module.exports = async function handler(req, res) {
       if (inString) {
         const code = ch.codePointAt(0);
         if (code === 39 || code === 8217 || code === 8216) {
-          fixed += "\\'";
+          fixed += "\u0027";
           continue;
         }
       }
