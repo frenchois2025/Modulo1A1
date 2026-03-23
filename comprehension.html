@@ -109,13 +109,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .el-btn{padding:10px 18px;border-radius:10px;border:none;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer}
 .el-status{margin-top:12px;font-size:13px;font-weight:700;min-height:20px;text-align:center}
 .speaking{opacity:.65;pointer-events:none}
-
-@media print {
-  body * { visibility: hidden; }
-  #print-area, #print-area * { visibility: visible; }
-  #print-area { position: fixed; top: 0; left: 0; width: 100%; padding: 24px; }
-}
-#print-area { display: none; }
 </style>
 </head>
 <body>
@@ -508,62 +501,62 @@ function checkV(t,col){
 
 
 function downloadPDF(){
-  const area = document.getElementById('print-area');
   const t = CD;
-  const col = COL[CL];
+  let html = `<!DOCTYPE html><html><head><meta charset="UTF-8">
+<title>${t.title}</title>
+<style>
+  body{font-family:Georgia,serif;max-width:700px;margin:40px auto;color:#1c1c2e;padding:0 20px}
+  h1{font-size:24px;margin-bottom:4px}
+  .meta{font-size:12px;color:#666;margin-bottom:20px;border-bottom:1px solid #ddd;padding-bottom:12px}
+  h2{font-size:13px;text-transform:uppercase;letter-spacing:1px;color:#666;margin:20px 0 10px}
+  .textbox{background:#f7f4ef;border-radius:8px;padding:16px 20px;margin-bottom:20px;line-height:1.9;font-size:15px}
+  .textbox p{margin-bottom:10px}
+  table{width:100%;border-collapse:collapse;margin-bottom:20px;font-size:14px}
+  th{background:#eee;padding:8px;text-align:left}
+  td{padding:8px;border-bottom:1px solid #eee}
+  .q{font-weight:bold;font-size:14px;margin-bottom:6px}
+  .opt{padding:3px 8px;font-size:13px}
+  .correct{color:#1d7a4c;font-weight:bold}
+  .wrong{color:#999}
+  .vocab-item{margin-bottom:14px;border-left:3px solid #ddd;padding-left:12px}
+</style></head><body>`;
 
-  let html = '<div style="font-family:Georgia,serif;max-width:700px;margin:0 auto;color:#1c1c2e">';
-  
-  // Header
-  html += '<h1 style="font-size:24px;margin-bottom:4px">'+t.title+'</h1>';
-  html += '<div style="font-size:12px;color:#666;margin-bottom:20px;border-bottom:1px solid #ddd;padding-bottom:12px">'+CL+' · '+t.type+'</div>';
+  html += `<h1>${t.title}</h1><div class="meta">${CL} · ${t.type}</div>`;
 
-  // Texte
-  html += '<h2 style="font-size:15px;text-transform:uppercase;letter-spacing:1px;color:#666;margin-bottom:10px">📖 Texte</h2>';
-  html += '<div style="background:#f7f4ef;border-radius:8px;padding:16px 20px;margin-bottom:24px;line-height:1.9;font-size:15px">';
+  html += '<h2>📖 Texte</h2><div class="textbox">';
   t.paragraphs.forEach(para=>{
-    html += '<p style="margin-bottom:10px">'+para.map(tok=>typeof tok==='object'?'<strong style="text-decoration:underline">'+tok.word+'</strong>':tok).join(' ')+'</p>';
+    html += '<p>'+para.map(tok=>typeof tok==='object'?'<strong><u>'+tok.word+'</u></strong>':tok).join(' ')+'</p>';
   });
   html += '</div>';
 
-  // Vocabulaire clé
   if(t.words&&t.words.length){
-    html += '<h2 style="font-size:15px;text-transform:uppercase;letter-spacing:1px;color:#666;margin-bottom:10px">📝 Vocabulaire clé</h2>';
-    html += '<table style="width:100%;border-collapse:collapse;margin-bottom:24px;font-size:14px">';
-    html += '<tr style="background:#eee"><th style="padding:8px;text-align:left">Français</th><th style="padding:8px;text-align:left">Español</th></tr>';
-    t.words.forEach(w=>{
-      html += '<tr style="border-bottom:1px solid #eee"><td style="padding:8px">'+w.word+'</td><td style="padding:8px;color:#666">'+w.es+'</td></tr>';
-    });
+    html += '<h2>📝 Vocabulaire clé</h2><table><tr><th>Français</th><th>Español</th></tr>';
+    t.words.forEach(w=>{ html += `<tr><td>${w.word}</td><td style="color:#666">${w.es}</td></tr>`; });
     html += '</table>';
   }
 
-  // QCM avec réponses
-  html += '<h2 style="font-size:15px;text-transform:uppercase;letter-spacing:1px;color:#666;margin-bottom:10px">🧠 Questions de compréhension</h2>';
+  html += '<h2>🧠 Questions de compréhension</h2>';
   t.qcm.forEach((q,qi)=>{
-    html += '<div style="margin-bottom:16px">';
-    html += '<div style="font-weight:bold;margin-bottom:6px;font-size:14px">'+(qi+1)+'. '+q.q+'</div>';
+    html += `<div style="margin-bottom:16px"><div class="q">${qi+1}. ${q.q}</div>`;
     q.opts.forEach((opt,oi)=>{
-      const isCorrect = oi===q.ans;
-      const style = isCorrect ? 'color:#1d7a4c;font-weight:bold' : 'color:#999';
-      html += '<div style="padding:4px 8px;font-size:13px;'+style+'">'+(isCorrect?'✓ ':'  ')+opt+'</div>';
+      html += `<div class="opt ${oi===q.ans?'correct':'wrong'}">${oi===q.ans?'✓ ':'✗ '}${opt}</div>`;
     });
     html += '</div>';
   });
 
-  // Vocabulaire en contexte
   if(t.vocab&&t.vocab.length){
-    html += '<h2 style="font-size:15px;text-transform:uppercase;letter-spacing:1px;color:#666;margin:20px 0 10px">✏️ Vocabulaire en contexte</h2>';
+    html += '<h2>✏️ Vocabulaire en contexte</h2>';
     t.vocab.forEach(v=>{
-      html += '<div style="margin-bottom:14px;border-left:3px solid #ddd;padding-left:12px">';
-      html += '<div style="font-weight:bold;font-size:14px">'+v.word+' <span style="font-weight:normal;color:#666;font-size:12px">— '+v.es+'</span></div>';
-      html += '<div style="font-size:13px;color:#444;margin-top:4px">'+v.sentence.replace('___','<u>'+v.answer+'</u>')+'</div>';
-      html += '</div>';
+      html += `<div class="vocab-item"><strong>${v.word}</strong> <span style="color:#666;font-size:12px">— ${v.es}</span><div style="font-size:13px;margin-top:4px">${v.sentence.replace('___','<u><b>'+v.answer+'</b></u>')}</div></div>`;
     });
   }
 
-  html += '</div>';
-  area.innerHTML = html;
-  window.print();
+  html += '</body></html>';
+
+  const win = window.open('', '_blank');
+  win.document.write(html);
+  win.document.close();
+  win.onload = () => { win.print(); };
 }
 
 document.addEventListener('DOMContentLoaded',()=>{
@@ -571,7 +564,5 @@ document.addEventListener('DOMContentLoaded',()=>{
   buildEL();
 });
 </script>
-
-<div id="print-area"></div>
 </body>
 </html>
