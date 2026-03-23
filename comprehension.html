@@ -458,7 +458,7 @@ function p3(c,t,col){
     const sentHtml=v.sentence.replace('___','<input class="fi" id="'+sid+'" data-answer="'+v.answer.replace(/"/g,'&quot;')+'" placeholder="\u2026" autocomplete="off" autocorrect="off" spellcheck="false" autocapitalize="off">');
     item.innerHTML=
       '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">'+
-      '<button onclick="speak(\''+v.word.replace(/'/g,"\\'")+'\')" style="background:'+col.c+';color:white;border:none;border-radius:8px;padding:7px 16px;font-size:13px;font-weight:800;cursor:pointer">\uD83D\uDD0A \u00C9couter le mot</button>'+
+      '<button onclick="speak(\''+v.sentence.replace('___',v.answer).replace(/'/g,"\\'")+'\')" style="background:'+col.c+';color:white;border:none;border-radius:8px;padding:7px 16px;font-size:13px;font-weight:800;cursor:pointer">\uD83D\uDD0A \u00C9couter la phrase</button>'+
       '<span style="font-size:12px;color:var(--muted);font-style:italic">'+v.es+'</span>'+
       '</div>'+
       '<div class="vsent">'+sentHtml+'</div>'+
