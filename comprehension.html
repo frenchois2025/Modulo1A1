@@ -455,13 +455,15 @@ function p3(c,t,col){
   t.vocab.forEach((v,i)=>{
     const item=document.createElement('div');item.className='vitem';
     const sid='vi'+i;
-    const sentHtml=v.sentence.replace('___','<input class="fi" id="'+sid+'" data-answer="'+v.answer.replace(/"/g,'&quot;')+'" placeholder="\u2026" autocomplete="off" autocorrect="off" spellcheck="false">');
-    item.innerHTML='<div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">'+
-      '<div class="vword">'+v.word+'</div>'+
-      '<button onclick="speak(\''+v.word.replace(/'/g,"\\'")+'\');" style="background:'+col.l+';color:'+col.d+';border:none;border-radius:6px;padding:3px 10px;font-size:12px;font-weight:700;cursor:pointer">\uD83D\uDD0A</button></div>'+
-      '<div class="ves">'+v.es+'</div>'+
+    const sentHtml=v.sentence.replace('___','<input class="fi" id="'+sid+'" data-answer="'+v.answer.replace(/"/g,'&quot;')+'" placeholder="\u2026" autocomplete="off" autocorrect="off" spellcheck="false" autocapitalize="off">');
+    item.innerHTML=
+      '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">'+
+      '<button onclick="speak(\''+v.word.replace(/'/g,"\\'")+'\')" style="background:'+col.c+';color:white;border:none;border-radius:8px;padding:7px 16px;font-size:13px;font-weight:800;cursor:pointer">\uD83D\uDD0A \u00C9couter le mot</button>'+
+      '<span style="font-size:12px;color:var(--muted);font-style:italic">'+v.es+'</span>'+
+      '</div>'+
       '<div class="vsent">'+sentHtml+'</div>'+
-      '<div class="fhint" id="vh'+i+'">'+v.hint+'</div>';
+      '<div class="fhint" id="vh'+i+'">'+v.hint+'</div>'+
+      '<div class="vword" id="vw'+i+'" style="display:none;margin-top:6px;color:var(--okd)"></div>';
     card.appendChild(item);
   });
   const cb=document.createElement('button');cb.className='btn-p';cb.style.cssText='background:'+col.c+';color:white;margin-top:16px';cb.textContent='Verificar';
@@ -491,6 +493,7 @@ function checkV(t,col){
     const hint=document.getElementById('vh'+i);
     if(!correct){hint.style.cssText='color:var(--errd);font-style:normal;font-size:12px;margin-top:4px';hint.innerHTML='\u2192 <strong>'+v.answer.split('|')[0]+'</strong>';}
     else{ok++;hint.style.cssText='color:var(--okd);font-size:11px;margin-top:4px';hint.textContent='\u2713';}
+    const wordDiv=document.getElementById('vw'+i);if(wordDiv){wordDiv.style.display='block';wordDiv.textContent='\u2192 '+v.answer.split('|')[0];}
   });
   const sc=document.getElementById('sc3');sc.classList.add('show');const pct=ok/t.vocab.length;
   document.getElementById('s3em').textContent=pct>=.8?'\uD83C\uDF89':pct>=.6?'\uD83D\uDC4D':'\uD83D\uDCAA';
