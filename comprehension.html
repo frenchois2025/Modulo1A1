@@ -1,61 +1,75 @@
-<script>
-async function generateText(){
-  showView('view-loading');
-  const lvDesc={
-    A1:'A1 debutant : phrases courtes, present indicatif, vocabulaire simple',
-    A2:'A2 elementaire : phrases simples, passe compose, futur proche, vocabulaire courant',
-    B1:'B1 intermediaire : phrases complexes, subjonctif, conditionnel, vocabulaire varie'
-  };
-  const wc={A1:'70',A2:'110',B1:'150'};
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Générateur de Français</title>
+    </head>
+<body>
+    <script>
+// Ces variables doivent être définies par vos menus de sélection (A1, A2, etc.)
+let CL = "A2"; // Niveau par défaut
+let STh = "La gastronomie"; // Thème par défaut
+let ST = "Article de blog"; // Type par défaut
+let CD = {}; // Données de l'exercice
 
-  // Le prompt est optimisé pour Gemini
-  const prompt = `Tu es un professeur de français. Crée un exercice de compréhension écrite. 
-  Niveau: ${CL} (${lvDesc[CL]}). Thème: "${STh}". Type de document: "${ST}". 
-  Longueur: environ ${wc[CL]} mots. 
-  REPONDS UNIQUEMENT EN JSON STRICT avec cette structure :
-  {
-    "title": "Titre en français",
-    "type": "Type",
-    "text": "Texte complet en français",
-    "words": [{"word":"mot", "es":"traducción"}],
-    "qcm": [{"q":"pregunta en español", "opts":["A","B","C"], "ans":0}],
-    "vocab": [{"word":"mot", "es":"trad", "sentence":"phrase avec ___", "answer":"mot", "hint":"pista"}]
-  }
-  Règles : words=5, qcm=4 questions, vocab=3. Pas de texte avant ou après le JSON.`;
+async function generateText() {
+    // 1. Afficher l'écran de chargement (si vous en avez un)
+    if (typeof showView === 'function') showView('view-loading');
 
-  try {
-    const res = await fetch('/api/generate', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ prompt: prompt }) // Structure simplifiée pour le backend
-    });
+    const promptsParams = {
+        A1: { desc: 'débutant, phrases très simples au présent', words: '80' },
+        A2: { desc: 'élémentaire, passé composé et futur proche', words: '120' },
+        B1: { desc: 'intermédiaire, subjonctif et phrases complexes', words: '180' }
+    };
 
-    if (!res.ok) throw new Error('Erreur serveur');
+    const prompt = `Tu es un professeur de français (FLE). Crée un exercice complet.
+    Niveau: ${CL} (${promptsParams[CL].desc}). Thème: ${STh}. Type: ${ST}.
     
-    const data = await res.json();
-    // Le backend renvoie directement le contenu parsé ou une erreur
-    if (data.error) throw new Error(data.error);
+    RENVOIE UNIQUEMENT UN JSON STRICT AVEC CETTE STRUCTURE :
+    {
+      "title": "Titre",
+      "type": "${ST}",
+      "text": "Texte de ${promptsParams[CL].words} mots environ en français",
+      "words": [{"word":"mot", "es":"traduction espagnole"}],
+      "qcm": [{"q":"question en espagnol", "opts":["A","B","C"], "ans":0}],
+      "vocab": [{"word":"mot", "es":"trad", "sentence":"phrase avec ___", "answer":"mot", "hint":"pista"}]
+    }`;
 
-    CD = JSON.parse(data.content[0].text);
-
-    // Conversion automatique du texte plat en paragraphes pour l'affichage
-    if (CD.text && !CD.paragraphs) {
-      CD.paragraphs = CD.text.split(/\n+/).filter(p => p.trim()).map(para => {
-        return para.split(' ').map(tok => {
-          const cleanTok = tok.replace(/[.,!?;:]/g, '');
-          const match = (CD.words || []).find(w => w.word === cleanTok);
-          return match ? { word: tok, es: match.es } : tok;
+    try {
+        const res = await fetch('/api/generate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ prompt: prompt })
         });
-      });
-    }
 
-    phase = 1; QS = {}; QScore = 0;
-    renderReader(); 
-    showView('view-reader');
-  } catch (err) {
-    console.error(err);
-    showView('view-gen');
-    alert('Erreur : ' + err.message);
-  }
+        const data = await res.json();
+
+        if (!res.ok) throw new Error(data.error || "Erreur serveur");
+
+        // On parse la chaîne JSON renvoyée par l'IA
+        CD = JSON.parse(data.content);
+
+        // Traitement du texte pour la liseuse (paragraphes et mots cliquables)
+        if (CD.text) {
+            CD.paragraphs = CD.text.split(/\n+/).filter(p => p.trim()).map(para => {
+                return para.split(' ').map(token => {
+                    const cleanToken = token.replace(/[.,!?;:]/g, '');
+                    const match = (CD.words || []).find(w => w.word.toLowerCase() === cleanToken.toLowerCase());
+                    return match ? { word: token, es: match.es } : token;
+                });
+            });
+        }
+
+        // Affichage du résultat
+        if (typeof renderReader === 'function') renderReader();
+        if (typeof showView === 'function') showView('view-reader');
+
+    } catch (err) {
+        console.error(err);
+        if (typeof showView === 'function') showView('view-gen');
+        alert("Erreur lors de la génération : " + err.message);
+    }
 }
 </script>
+</body>
+</html>
