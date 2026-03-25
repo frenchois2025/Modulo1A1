@@ -787,7 +787,12 @@ body {
     <div class="ex-title" style="color:var(--l3)">Ejercicio 3 — Une el color francés con su traducción</div>
     <div class="ex-instr">Haz clic en un color francés y luego en su traducción española.</div>
     <div id="ex3c"></div>
-    <div class="match-score" id="sc3c"></div>
+    <button class="check-btn" style="background:var(--l3);color:white" onclick="checkFillColors()">Verificar</button>
+    <div class="score-box" id="sc3c" style="background:var(--l3l)">
+      <div class="score-emoji" id="sc3c-em"></div>
+      <div class="score-num" id="sc3c-n" style="color:var(--l3d)"></div>
+      <div class="score-msg" id="sc3c-m"></div>
+    </div>
   </div>
 
   <!-- Ex 3D: Ordinaux QCM -->
@@ -827,6 +832,19 @@ body {
     <div class="ex-title" style="color:var(--l3)">Ejercicio 7 — 🎙️ Lee los números en voz alta</div>
     <div class="ex-instr">Escucha cómo se dice el número (🔊), luego grábate diciéndolo tú mismo.</div>
     <div id="readaloud3"></div>
+  </div>
+
+  <!-- Ex dictée nombres -->
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l3)">Ejercicio 8 — 🎧 Dictée de nombres</div>
+    <div class="ex-instr">Escucha el número en francés y escríbelo en cifras.</div>
+    <div id="ex3dictee"></div>
+    <button class="check-btn" style="background:var(--l3);color:white" onclick="checkFill('ex3dictee','sc3dictee')">Verificar</button>
+    <div class="score-box" id="sc3dictee" style="background:var(--l3l)">
+      <div class="score-emoji" id="sc3dictee-em"></div>
+      <div class="score-num" id="sc3dictee-n" style="color:var(--l3d)"></div>
+      <div class="score-msg" id="sc3dictee-m"></div>
+    </div>
   </div>
 </div>
 
@@ -1432,7 +1450,7 @@ function buildNasales(){
   const c=document.getElementById('ex5b');
   if(!c) return;
   [
-    {comb:'an, en, am, em', words:[{fr:'sans',es:'sin'},{fr:'lent',es:'lento'},{fr:'la lampe',es:'la lámpara'},{fr:'le temps',es:'el tiempo'}], bg:'#fdecea'},
+    {comb:'an, en, am, em', words:[{fr:'sans',es:'sin'},{fr:'le vent',es:'el viento'},{fr:'la lampe',es:'la lámpara'},{fr:'le temps',es:'el tiempo'}], bg:'#fdecea'},
     {comb:'in, ain, ein, un', words:[{fr:'le pain',es:'el pan'},{fr:'la main',es:'la mano'},{fr:'vingt',es:'veinte'},{fr:'la synthèse',es:'el resumen'}], bg:'#deeeff'},
     {comb:'on, om', words:[{fr:'le bon',es:'el bueno'},{fr:'le nom',es:'el nombre'},{fr:'le pont',es:'el puente'},{fr:'la pompe',es:'la bomba'}], bg:'#dcf5ea'}
   ].forEach(n=>{
@@ -1534,10 +1552,12 @@ const qcmPronoms=[
   {q:'¿Cuál es el pronombre para "ellas"?', opts:['Ils','Elles','Nous','Elles o Ils (igual)'], ans:1},
 ];
 const qcmLiaison=[
-  {q:'"Ils aiment" → ¿singular o plural?', speak:'Ils aiment', opts:['Singular — no hay liaison','Plural — hay liaison [z]'], ans:1},
-  {q:'"Il aime" → ¿singular o plural?', speak:'Il aime', opts:['Singular — no hay liaison','Plural — hay liaison [z]'], ans:0},
-  {q:'"Elles arrivent" → ¿singular o plural?', speak:'Elles arrivent', opts:['Singular','Plural — hay liaison [z]'], ans:1},
-  {q:'"Elle arrive" → ¿singular o plural?', speak:'Elle arrive', opts:['Singular — no hay liaison','Plural'], ans:0},
+  {speak:'Il aime',        ans:0, text:'Il aime',        expl:'Singular — no hay liaison. "Il" termina en "l", no hay [z].'},
+  {speak:'Ils aiment',     ans:1, text:'Ils aiment',     expl:'Plural — hay liaison [z] : "il-z-aiment". La "s" de "Ils" se pronuncia como [z] ante vocal.'},
+  {speak:'Elle arrive',    ans:0, text:'Elle arrive',    expl:'Singular — no hay liaison. Solo una persona.'},
+  {speak:'Ils ont',        ans:1, text:'Ils ont',        expl:'Plural — liaison forte [z] : "il-z-ont". La liaison est obligatoire avec "avoir".'},
+  {speak:'Elles arrivent', ans:1, text:'Elles arrivent', expl:'Plural — hay liaison [z] : "el-z-arrivent". La "s" de "Elles" se pronuncia como [z].'},
+  {speak:'Il a',           ans:0, text:'Il a',           expl:'Singular — no hay liaison. Una sola persona.'},
 ];
 const wordsL2=[
   {fr:'Je parle',es:'Yo hablo',ipa:'[ʒə paʁl]'},{fr:'Tu habites',es:'Tú vives',ipa:'[ty a.bit]'},
@@ -1644,7 +1664,7 @@ const raL4=[
 
 // ── INTRO PRONONCIATION ──
 const qcmSons=[
-  {q:'Escucha 🔊 — ¿qué sonido tiene "ch" en "chat" ?', speak:'chat', opts:['[k] como "kilo"','[ʃ] suave, como "sh" inglés','[tʃ] como en español'], ans:1},
+  {q:'Escucha 🔊 — ¿qué sonido tiene "ch" en "chat" ?', speak:'le chat', opts:['[k] como "kilo"','[ʃ] suave, como "sh" inglés','[tʃ] como en español'], ans:1},
   {q:'Escucha 🔊 — ¿cómo se pronuncia "oi" en "moi" ?', speak:'moi', opts:['[oi] como en español "hoy"','[wa] como en "water"','[o] como en "solo"'], ans:1},
   {q:'Escucha 🔊 — ¿cómo suena "ou" en "vous" ?', speak:'vous', opts:['[u] como en español "luna"','[o] como en "solo"','[w] como "w"'], ans:0},
   {q:'Escucha 🔊 — ¿cómo suena "gn" en "montagne" ?', speak:'montagne', opts:['[g]+[n] separados','[ɲ] como la "ñ" española','solo [n]'], ans:1},
@@ -1665,18 +1685,18 @@ const wordsJ=[
 
 // ── DIALOGUE L4 ──
 const dialogueL4=[
-  {speaker:'f',text:'Bonjour ! Je vais vous poser quelques questions pour remplir votre formulaire.'},
-  {speaker:'m',text:'Bien sûr, je vous écoute.'},
-  {speaker:'f',text:'Quel est votre prénom ?'},
-  {speaker:'m',text:'Je m\'appelle Paul.'},
-  {speaker:'f',text:'Et votre nom de famille ?'},
-  {speaker:'m',text:'Mon nom de famille est Martin. Paul Martin.'},
-  {speaker:'f',text:'Quelle est votre nationalité ?'},
-  {speaker:'m',text:'Je suis argentin.'},
-  {speaker:'f',text:'Quel est votre âge ?'},
-  {speaker:'m',text:'J\'ai trente-deux ans.'},
-  {speaker:'f',text:'Et votre adresse email ?'},
-  {speaker:'m',text:'Mon e-mail est paul point martin arobase gmail point com.'},
+  {speaker:'f',text:'Bonjour ! Je vais vous poser quelques questions pour remplir votre formulaire.', trad:'¡Buenos días! Voy a hacerle algunas preguntas para rellenar su formulario.'},
+  {speaker:'m',text:'Bien sûr, je vous écoute.', trad:'Por supuesto, le escucho.'},
+  {speaker:'f',text:'Quel est votre prénom ?', trad:'¿Cuál es su nombre de pila?'},
+  {speaker:'m',text:"Je m'appelle Paul.", trad:'Me llamo Paul.'},
+  {speaker:'f',text:'Et votre nom de famille ?', trad:'¿Y su apellido?'},
+  {speaker:'m',text:'Mon nom de famille est Martin. Paul Martin.', trad:'Mi apellido es Martin. Paul Martin.'},
+  {speaker:'f',text:'Quelle est votre nationalité ?', trad:'¿Cuál es su nacionalidad?'},
+  {speaker:'m',text:'Je suis argentin.', trad:'Soy argentino.'},
+  {speaker:'f',text:'Quel est votre âge ?', trad:'¿Qué edad tiene?'},
+  {speaker:'m',text:"J'ai trente-deux ans.", trad:'Tengo treinta y dos años.'},
+  {speaker:'f',text:'Et votre adresse email ?', trad:'¿Y su dirección de correo electrónico?'},
+  {speaker:'m',text:'Mon e-mail est paul point martin arobase gmail point com.', trad:'Mi email es paul punto martin arroba gmail punto com.'},
 ];
 
 function buildDialogue4b(){
@@ -1700,9 +1720,25 @@ function buildDialogue4b(){
       <div style="width:32px;height:32px;border-radius:50%;background:${isF ? 'var(--l4)' : '#555'};color:white;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">${isF ? '👩' : '👨'}</div>
       <div style="background:${isF ? 'var(--l4l)' : '#f0f0f0'};border-radius:12px;padding:10px 14px;max-width:75%;font-size:14px;font-family:'Nunito',sans-serif;font-weight:600;color:var(--text);cursor:pointer;" onclick="playLineL4(${i})" title="Haz clic para escuchar">
         ${line.text}
+        <div id="trad4b_${i}" style="display:none;font-size:11px;color:var(--muted);margin-top:4px;font-style:italic">${line.trad||''}</div>
       </div>`;
     c.appendChild(div);
   });
+
+  // Reveal translations button
+  const tradBtn = document.createElement('button');
+  tradBtn.style.cssText = 'margin-top:8px;background:white;border:1.5px solid var(--border);border-radius:10px;padding:9px 18px;font-size:13px;font-weight:700;cursor:pointer;font-family:"Nunito",sans-serif;color:var(--muted);';
+  tradBtn.textContent = '📄 Mostrar traducción';
+  let tradVisible = false;
+  tradBtn.onclick = () => {
+    tradVisible = !tradVisible;
+    dialogueL4.forEach((_, i) => {
+      const el = document.getElementById('trad4b_'+i);
+      if(el) el.style.display = tradVisible ? 'block' : 'none';
+    });
+    tradBtn.textContent = tradVisible ? '📄 Ocultar traducción' : '📄 Mostrar traducción';
+  };
+  c.appendChild(tradBtn);
 }
 
 let dialoguePlaying = false;
@@ -1860,11 +1896,11 @@ const qcmLiais = [
 
 // Ex 11 — Mini-dialogue
 const dial5Data = [
-  {speaker:'Charlotte', voice:'f', text:'Bonjour ! Tu as vu ma rue ? Elle est très jolie.'},
-  {speaker:'Lucas',     voice:'m', text:'Oui, j\'y suis passé hier. Il y a un restaurant délicieux !'},
-  {speaker:'Charlotte', voice:'f', text:'Ah oui ! Ils font une bonne soupe et des croissants frais.'},
-  {speaker:'Lucas',     voice:'m', text:'Et les enfants jouent dans le jardin ? C\'est magnifique.'},
-  {speaker:'Charlotte', voice:'f', text:'Exactement. Vous êtes les bienvenus samedi après-midi !'},
+  {speaker:'Charlotte', voice:'f', text:'Bonjour ! Tu as vu ma rue ? Elle est très jolie.', trad:'¡Buenos días! ¿Has visto mi calle? Es muy bonita.'},
+  {speaker:'Lucas',     voice:'m', text:"Oui, j'y suis passé hier. Il y a un restaurant délicieux !", trad:'Sí, pasé por allí ayer. ¡Hay un restaurante delicioso!'},
+  {speaker:'Charlotte', voice:'f', text:'Ah oui ! Ils font une bonne soupe et des croissants frais.', trad:'¡Ah sí! Hacen una buena sopa y croissants frescos.'},
+  {speaker:'Lucas',     voice:'m', text:"Et les enfants jouent dans le jardin ? C'est magnifique.", trad:'¿Y los niños juegan en el jardín? Es magnífico.'},
+  {speaker:'Charlotte', voice:'f', text:'Exactement. Vous êtes les bienvenus samedi après-midi !', trad:'Exactamente. ¡Estáis bienvenidos el sábado por la tarde!'},
 ];
 
 function buildDial5(){
@@ -1887,6 +1923,7 @@ function buildDial5(){
         <div style="background:${isF?'var(--l1l)':'var(--l2l)'};border-radius:12px;padding:10px 14px;font-size:14px;font-family:'Nunito',sans-serif;font-weight:600;cursor:pointer;" onclick="playDial5Line(${i})" title="Clic para escuchar">
           ${line.text}
         </div>
+        <div style="font-size:11px;color:var(--muted);margin-top:3px;padding-left:4px;font-style:italic">${line.trad||''}</div>
       </div>`;
     c.appendChild(div);
   });
@@ -1932,6 +1969,74 @@ const raFinal = [
   {phrase:'La rue est très calme le dimanche matin.',              voice:'f', translation:'La calle está muy tranquila el domingo por la mañana.'},
 ];
 
+const fillDicteeNombres=[
+  {sentence:'🔊', answer:'17', hint:'¿Cuánto es?', speak:'dix-sept'},
+  {sentence:'🔊', answer:'42', hint:'¿Cuánto es?', speak:'quarante-deux'},
+  {sentence:'🔊', answer:'75', hint:'¿Cuánto es?', speak:'soixante-quinze'},
+  {sentence:'🔊', answer:'91', hint:'¿Cuánto es?', speak:'quatre-vingt-onze'},
+  {sentence:'🔊', answer:'2023', hint:'¿Qué año es?', speak:'deux mille vingt-trois'},
+  {sentence:'🔊', answer:'1998', hint:'¿Qué año es?', speak:'mille neuf cent quatre-vingt-dix-huit'},
+  {sentence:'🔊', answer:'150', hint:'¿Cuánto es?', speak:'cent cinquante'},
+  {sentence:'🔊', answer:'680', hint:'¿Cuánto es?', speak:'six cent quatre-vingts'},
+];
+
+function answerLiaison(i, chosen){
+  var q = qcmLiaison[i];
+  var opts = document.querySelectorAll('#liaisonopts_' + i + ' .opt');
+  var fb = document.getElementById('liaisonfb_' + i);
+  opts.forEach(function(b){ b.disabled = true; });
+  var ok = chosen === q.ans;
+  opts[q.ans].classList.add('correct');
+  if(!ok) opts[chosen].classList.add('wrong');
+  // Reveal text + explanation
+  fb.innerHTML = (ok ? '✅ ' : '❌ ') +
+    '<strong style="font-family:\'Playfair Display\',serif;font-size:15px">' + q.text + '</strong>' +
+    '<span style="font-size:12px;color:var(--muted);margin-left:8px">(' + (q.ans===1?'hay liaison [z]':'no hay liaison') + ')</span>' +
+    '<div style="margin-top:6px;font-size:13px;color:' + (ok?'var(--l4d)':'var(--l1d)') + ';background:' + (ok?'var(--l4l)':'var(--l1l)') + ';border-radius:8px;padding:8px 12px">' + q.expl + '</div>';
+  fb.className = 'fb show ' + (ok ? 'ok' : 'nope');
+  if(ok) window._liaisonScore = (window._liaisonScore||0) + 1;
+  window._liaisonDone = (window._liaisonDone||0) + 1;
+  if(window._liaisonDone === qcmLiaison.length){
+    var sc = document.getElementById('sc2d');
+    var s = window._liaisonScore, t = qcmLiaison.length, pct = s/t;
+    if(sc){
+      sc.classList.add('show');
+      document.getElementById('sc2d-em').textContent = pct>=.8?'🎉':pct>=.6?'👍':'💪';
+      document.getElementById('sc2d-n').textContent = s + ' / ' + t;
+      document.getElementById('sc2d-m').textContent = pct>=.8?'¡Excelente oído!':pct>=.6?'¡Bien! Sigue practicando.':'Vuelve a escuchar con atención.';
+      sc.scrollIntoView({behavior:'smooth',block:'nearest'});
+    }
+  }
+}
+
+function checkFillColors(){
+  const inputs = document.querySelectorAll('#ex3c .fill-input');
+  const seen = [];
+  let hasDup = false;
+  inputs.forEach(inp => {
+    const v = inp.value.trim().toLowerCase();
+    if(v && seen.includes(v)) hasDup = true;
+    if(v) seen.push(v);
+  });
+  if(hasDup){
+    const seen2 = [];
+    inputs.forEach(inp => {
+      const v = inp.value.trim().toLowerCase();
+      const hint = document.getElementById('ex3c_hint_' + Array.from(inputs).indexOf(inp));
+      if(v && seen2.includes(v)){
+        inp.style.cssText = 'border-color:#e88c1a;background:#fff3dc;color:#b86a00;';
+        if(hint){ hint.textContent = '⚠ ¡No puedes usar el mismo color dos veces!'; hint.style.color='#b86a00'; }
+      } else {
+        inp.style.cssText = '';
+        if(hint) hint.textContent = '';
+        if(v) seen2.push(v);
+      }
+    });
+    return;
+  }
+  checkFill('ex3c','sc3c');
+}
+
 document.addEventListener('DOMContentLoaded', ()=>{
   // Pre-load voices
   window.speechSynthesis.getVoices();
@@ -1950,7 +2055,31 @@ document.addEventListener('DOMContentLoaded', ()=>{
   buildMatch('ex2a', matchPronoms, 'sc2a');
   buildFill('ex2b', fillPronoms);
   buildQCM('ex2c', qcmPronoms, 'sc2c', 'var(--l2)');
-  buildQCM('ex2d', qcmLiaison, 'sc2d', 'var(--l2)');
+  // Custom liaison exercise — audio only, no text shown until answered
+  (function(){
+    var c = document.getElementById('ex2d');
+    if(!c) return;
+    var score = 0;
+    var done = 0;
+    var total = qcmLiaison.length;
+    qcmLiaison.forEach(function(q, i){
+      var div = document.createElement('div');
+      div.className = 'qcm-item';
+      div.innerHTML =
+        '<div class="q-label">Pregunta ' + (i+1) + ' / ' + total + '</div>' +
+        '<div style="margin-bottom:12px">' +
+          '<button onclick="speak(\'' + q.speak + '\')" style="background:var(--l2);color:white;border:none;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:700;cursor:pointer;font-family:\'Nunito\',sans-serif">🔊 Escuchar</button>' +
+        '</div>' +
+        '<div class="opts" id="liaisonopts_' + i + '">' +
+          '<button class="opt" onclick="answerLiaison(' + i + ',0)">🔇 No hay liaison</button>' +
+          '<button class="opt" onclick="answerLiaison(' + i + ',1)">🔗 Hay liaison [z]</button>' +
+        '</div>' +
+        '<div class="fb" id="liaisonfb_' + i + '"></div>';
+      c.appendChild(div);
+    });
+    window._liaisonScore = 0;
+    window._liaisonDone = 0;
+  })();
   buildWordCards('phon2', wordsL2, 'var(--l2)', 'var(--l2l)');
   buildReadAloud('readaloud2', raL2, 'var(--l2)');
 
@@ -1962,6 +2091,20 @@ document.addEventListener('DOMContentLoaded', ()=>{
   buildFill('ex3e', fillNombres);
   buildWordCards('phon3', wordsL3, 'var(--l3)', 'var(--l3l)');
   buildReadAloud('readaloud3', raL3, 'var(--l3)');
+  // Custom build for dictée — audio button + number input
+  (function(){
+    var c = document.getElementById('ex3dictee');
+    if(!c) return;
+    fillDicteeNombres.forEach(function(item, i){
+      var div = document.createElement('div');
+      div.className = 'fill-item';
+      var btn = '<button onclick="speak(\'' + item.speak + '\')" style="background:var(--l3);color:white;border:none;border-radius:8px;padding:9px 18px;font-size:14px;font-weight:700;cursor:pointer;font-family:\'Nunito\',sans-serif;flex-shrink:0">🔊 Escuchar</button>';
+      var inp = '<input class="fill-input" id="ex3dictee_' + i + '" placeholder="Escribe el número…" data-answer="' + item.answer + '" autocomplete="off" inputmode="numeric" style="max-width:160px">';
+      var hint = '<div class="fill-hint" id="ex3dictee_hint_' + i + '" style="color:var(--muted);font-size:12px;margin-top:4px">' + item.hint + '</div>';
+      div.innerHTML = '<div class="fill-sentence" style="display:flex;align-items:center;gap:12px">' + btn + inp + '</div>' + hint;
+      c.appendChild(div);
+    });
+  })();
 
   // L4
   buildMatch('ex4a', matchFormulaire, 'sc4a');
