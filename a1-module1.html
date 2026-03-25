@@ -511,9 +511,12 @@ body {
   <!-- Ex 5E: Prononciation du J -->
   <div class="ex-card">
     <div class="ex-title" style="color:var(--l0)">Ejercicio 5 — El sonido [ʒ] : la "j" francesa</div>
-    <div class="ex-instr">⚠️ La "j" francesa NO es como la jota española (que es fuerte y gutural). Es un sonido suave, continuo, como si susurraras "zh". También es el sonido de "g" antes de "e" o "i".</div>
+    <div class="ex-instr">⚠️ La "j" francesa NO es como la jota española (fuerte y gutural). Es un sonido <b>sonoro y continuo</b>, producido entre la lengua y el paladar — el aire fluye sin cortarse. También es el sonido de "g" antes de "e" o "i" (girafe, gel).</div>
     <div style="background:var(--l0l);border-radius:12px;padding:14px 18px;margin-bottom:16px;font-size:13px;color:var(--l0d);line-height:1.7;">
-      <b>💡 Truco:</b> Pronuncia una "y" española muy suave y continua, sin cortar el aire. Ej: "jour" suena casi como "zhur", no como "jour" con jota española.
+      <b>💡 Referencia para hispanohablantes :</b><br>
+      • Si hablas español <b>rioplatense</b> (Argentina/Uruguay) : es la "ll" de <em>lluvia</em> o la "y" de <em>yo</em> — ya tienes este sonido.<br>
+      • Si no : imagina una "s" muy suave que vibra en la garganta. En inglés es el sonido de la "s" en <em>pleasure</em> o <em>measure</em>.<br>
+      • <b>⚠️ No susurres</b> — el sonido debe ser sonoro (con vibración), no soplado.
     </div>
     <div class="phone-grid" id="phon5j"></div>
     <div id="rec5j"></div>
@@ -581,16 +584,19 @@ body {
   <!-- Ex 10: Lettres finales muettes -->
   <div class="ex-card">
     <div class="ex-title" style="color:var(--l5)">Ejercicio 10 — Las letras finales mudas</div>
-    <div class="ex-instr">En francés, muchas letras al final de una palabra NO se pronuncian. ¡Es uno de los errores más comunes de los hispanohablantes! Escucha y elige si la letra final se pronuncia o es muda.</div>
+    <div class="ex-instr">En francés, muchas letras al final de una palabra NO se pronuncian. ¡Es uno de los errores más comunes de los hispanohablantes!</div>
     <div style="background:var(--l5l);border-radius:12px;padding:14px 18px;margin-bottom:16px;font-size:13px;color:var(--l5d);line-height:1.7;">
-      <b>Regla general :</b> las consonantes finales <b>s, t, d, x, z, p</b> son casi siempre mudas.<br>
-      <b>Excepciones que SÍ suenan :</b> <em>fils, sens, mars, cap, chef…</em> y palabras de origen extranjero.
+      <b>Regla general :</b> las consonantes finales <b>s, t, d, x, z, p</b> son casi siempre mudas.
     </div>
     <div id="ex5liais"></div>
     <div class="score-box" id="sc5liais" style="background:var(--l5l)">
       <div class="score-emoji" id="sc5liais-em"></div>
       <div class="score-num" id="sc5liais-n" style="color:var(--l5d)"></div>
       <div class="score-msg" id="sc5liais-m"></div>
+    </div>
+    <div style="margin-top:20px;padding:16px 20px;background:var(--l5l);border-radius:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+      <div style="font-size:13px;color:var(--l5d);line-height:1.6;"><b>🔊 ¿Quieres ir más lejos?</b><br>El módulo de pronunciación completo cubre todos los sonidos difíciles con ejercicios detallados.</div>
+      <a href="prononciation.html" style="background:var(--l5);color:white;border:none;border-radius:10px;padding:10px 20px;font-size:13px;font-weight:800;cursor:pointer;text-decoration:none;white-space:nowrap;">→ Ir a Prononciation</a>
     </div>
   </div>
 
@@ -1420,30 +1426,27 @@ function buildAlphabet(){
     grid.appendChild(b);
   });
   c.appendChild(grid);
-  // Read-aloud for alphabet section
-  buildReadAloud('rec5', [
-    {phrase:'Bonjour, comment vous appelez-vous ?', translation:'Buenos días, ¿cómo se llama usted?'},
-    {phrase:'Au revoir, à bientôt !',              translation:'Adiós, ¡hasta pronto!'},
-    {phrase:'Merci beaucoup, enchanté !',           translation:'Muchas gracias, ¡encantado!'},
-  ], 'var(--l5)');
 }
 
 function buildNasales(){
   const c=document.getElementById('ex5b');
   if(!c) return;
-  [{comb:'an, en, am, em',ex:'sans, lent, lampe, temps',trad:'sin, lento, lámpara, tiempo',bg:'#fdecea',speak_w:'sans'},
-   {comb:'in, ain, ein, un',ex:'pain, main, vingt, synthèse',trad:'pan, mano, veinte, resumen',bg:'#deeeff',speak_w:'le pain'},
-   {comb:'on, om',ex:'bon, nom',trad:'bueno, nombre',bg:'#dcf5ea',speak_w:'le bon'}
+  [
+    {comb:'an, en, am, em', words:[{fr:'sans',es:'sin'},{fr:'lent',es:'lento'},{fr:'la lampe',es:'la lámpara'},{fr:'le temps',es:'el tiempo'}], bg:'#fdecea'},
+    {comb:'in, ain, ein, un', words:[{fr:'le pain',es:'el pan'},{fr:'la main',es:'la mano'},{fr:'vingt',es:'veinte'},{fr:'la synthèse',es:'el resumen'}], bg:'#deeeff'},
+    {comb:'on, om', words:[{fr:'le bon',es:'el bueno'},{fr:'le nom',es:'el nombre'},{fr:'le pont',es:'el puente'},{fr:'la pompe',es:'la bomba'}], bg:'#dcf5ea'}
   ].forEach(n=>{
     const d=document.createElement('div');
-    d.className='liaison-card'; d.style.background=n.bg;
+    d.className='liaison-card'; d.style.cssText='background:'+n.bg+';border-radius:14px;padding:16px 18px;margin-bottom:10px;';
+    let wordsHtml = n.words.map(w=>
+      `<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+        <button onclick="speak('${w.fr}')" style="background:white;border:1.5px solid #e4ddd4;border-radius:7px;padding:5px 12px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif">🔊 ${w.fr}</button>
+        <span style="font-size:12px;color:#888">${w.es}</span>
+      </div>`
+    ).join('');
     d.innerHTML=`
-      <div>
-        <div style="font-size:11px;font-weight:800;letter-spacing:1px;color:#8a8a9a;margin-bottom:4px">COMBINACIÓN</div>
-        <div style="font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:#1a1a2e">${n.comb}</div>
-        <div style="font-size:13px;color:#8a8a9a;margin-top:4px">Ej: <em>${n.ex}</em> → ${n.trad}</div>
-      </div>
-      <button class="speak-btn" onclick="speak('${n.speak_w}')">🔊</button>`;
+      <div style="font-size:11px;font-weight:800;letter-spacing:1px;color:#8a8a9a;margin-bottom:6px">COMBINACIÓN : ${n.comb}</div>
+      ${wordsHtml}`;
     c.appendChild(d);
   });
 }
@@ -1642,7 +1645,7 @@ const raL4=[
 // ── INTRO PRONONCIATION ──
 const qcmSons=[
   {q:'Escucha 🔊 — ¿qué sonido tiene "ch" en "chat" ?', speak:'chat', opts:['[k] como "kilo"','[ʃ] suave, como "sh" inglés','[tʃ] como en español'], ans:1},
-  {q:'Escucha 🔊 — ¿cómo suena la "j" en "jour" ?', speak:'jour', opts:['[x] jota española (fuerte)','[ʒ] suave, como "zh"','[dʒ] como "dj"'], ans:1},
+  {q:'Escucha 🔊 — ¿cómo se pronuncia "oi" en "moi" ?', speak:'moi', opts:['[oi] como en español "hoy"','[wa] como en "water"','[o] como en "solo"'], ans:1},
   {q:'Escucha 🔊 — ¿cómo suena "ou" en "vous" ?', speak:'vous', opts:['[u] como en español "luna"','[o] como en "solo"','[w] como "w"'], ans:0},
   {q:'Escucha 🔊 — ¿cómo suena "gn" en "montagne" ?', speak:'montagne', opts:['[g]+[n] separados','[ɲ] como la "ñ" española','solo [n]'], ans:1},
   {q:'Escucha 🔊 — ¿"lune" y "loup" suenan igual?', speak:'lune', opts:['Sí, los dos son [u]','No — "lune" es [y] (labios redondeados), "loup" es [u]','Sí, los dos son [ou]'], ans:1},
@@ -1790,12 +1793,8 @@ const eeAudioData = [
   {word:'fête',    type:'abierto', speak:'la fête'},
   {word:'chez',    type:'cerrado', speak:'chez'},
   {word:'lait',    type:'abierto', speak:'le lait'},
-  {word:"j'ai",    type:'cerrado', speak:"j'ai"},
-  {word:'belle',   type:'abierto', speak:'belle'},
-  {word:'parler',  type:'cerrado', speak:'parler'},
-  {word:'seize',   type:'abierto', speak:'seize'},
 ];
-const eeState = { answered:0, correct:0, total:10 };
+const eeState = { answered:0, correct:0, total:6 };
 function buildEEAudio(cid){
   const c=document.getElementById(cid);if(!c)return;c.innerHTML='';
   eeAudioData.forEach((item,i)=>{
@@ -1852,14 +1851,11 @@ const qcmCons = [
   {q:'"photo" → la combinación "ph" suena como…', opts:['p + h separadas','f','v'], ans:1, speak:'la photo'},
 ];
 
-// Ex 10 — Lettres finales muettes
+// Ex 10 — Lettres finales muettes (version courte)
 const qcmLiais = [
-  {q:'"Paris" → ¿se pronuncia la "s" final?', opts:['No, es muda → [paʁi]','Sí → [paʁis]','Depende del contexto'], ans:0, speak:'Paris'},
-  {q:'"vous parlez" → ¿se pronuncia la "s" de "vous"?', opts:['Sí, siempre','No, es muda → [vu paʁle]','Solo con ElevenLabs 😄'], ans:1, speak:'vous parlez'},
-  {q:'"grand" → ¿se pronuncia la "d" final?', opts:['Sí → [gʁɑ̃d]','No, es muda → [gʁɑ̃]','A veces'], ans:1, speak:'grand'},
-  {q:'"beaucoup" → ¿se pronuncia la "p" final?', opts:['No, es muda → [boku]','Sí → [bokup]','Solo en el sur de Francia'], ans:0, speak:'beaucoup'},
-  {q:'"il est" → ¿se pronuncia la "t" de "est"?', opts:['Sí → [ɛst]','No, es muda → [ɛ]','Solo al plural'], ans:1, speak:'il est'},
-  {q:'"nez" → ¿se pronuncia la "z" final?', opts:['Sí → [nɛz]','No, es muda → [nɛ]','Solo en plural'], ans:1, speak:'le nez'},
+  {q:'"Paris" → ¿se pronuncia la "s" final?', opts:['No, es muda → [paʁi]','Sí → [paʁis]'], ans:0, speak:'Paris'},
+  {q:'"grand" → ¿se pronuncia la "d" final?', opts:['Sí → [gʁɑ̃d]','No, es muda → [gʁɑ̃]'], ans:1, speak:'grand'},
+  {q:'"beaucoup" → ¿se pronuncia la "p" final?', opts:['No, es muda → [boku]','Sí → [bokup]'], ans:0, speak:'beaucoup'},
 ];
 
 // Ex 11 — Mini-dialogue
