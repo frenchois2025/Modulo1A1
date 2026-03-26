@@ -1284,9 +1284,10 @@ function buildQCM(containerId, questions, scoreId, color){
     const div=document.createElement('div');
     div.className='qcm-item';
     const speakBtn=q.speak?`<button class="speak-btn" onclick="speak('${q.speak.replace(/'/g,"\\'")}')">🔊</button>`:'';
+        const speakBtn2=q.speak2?'<button class="speak-btn" onclick="speak(\''+q.speak2.replace(/'/g,"\\'")+'\')">🔊 '+q.speak2+'</button>':'';
     div.innerHTML=`
       <div class="q-label">Pregunta ${qi+1}</div>
-      <div class="q-text">${q.q}${speakBtn}</div>
+      <div class="q-text">${q.q}${speakBtn}${speakBtn2}</div>
       <div class="opts" id="opts_${id}">
         ${q.opts.map((o,oi)=>`<button class="opt" onclick="answerQCM('${id}',${oi},${q.ans},'${scoreId}',${questions.length})">${o}</button>`).join('')}
       </div>
@@ -1668,11 +1669,11 @@ const qcmSons=[
   {q:'Escucha 🔊 — ¿cómo se pronuncia "oi" en "moi" ?', speak:'moi', opts:['[oi] como en español "hoy"','[wa] como en "water"','[o] como en "solo"'], ans:1},
   {q:'Escucha 🔊 — ¿cómo suena "ou" en "vous" ?', speak:'vous', opts:['[u] como en español "luna"','[o] como en "solo"','[w] como "w"'], ans:0},
   {q:'Escucha 🔊 — ¿cómo suena "gn" en "montagne" ?', speak:'montagne', opts:['[g]+[n] separados','[ɲ] como la "ñ" española','solo [n]'], ans:1},
-  {q:'Escucha 🔊 — ¿"lune" y "loup" suenan igual?', speak:'lune', opts:['Sí, los dos son [u]','No — "lune" es [y] (labios redondeados), "loup" es [u]','Sí, los dos son [ou]'], ans:1},
+  {q:'Escucha 🔊 — ¿"lune" y "loup" suenan igual?', speak:'la lune', speak2:'le loup', opts:['Sí, los dos son [u]','No — "lune" es [y] (labios redondeados), "loup" es [u]','Sí, los dos son [ou]'], ans:1},
 ];
 const wordsU=[
-  {fr:'lune',es:'luna',ipa:'[lyn]'},{fr:'rue',es:'calle',ipa:'[ʁy]'},{fr:'tu',es:'tú',ipa:'[ty]'},
-  {fr:'pur',es:'puro',ipa:'[pyʁ]'},{fr:'mur',es:'pared',ipa:'[myʁ]'},{fr:'sur',es:'sobre',ipa:'[syʁ]'},
+  {fr:'la lune',es:'la luna',ipa:'[la lyn]'},{fr:'la rue',es:'la calle',ipa:'[la ʁy]'},{fr:'tu',es:'tú',ipa:'[ty]'},
+  {fr:'pur',es:'puro',ipa:'[pyʁ]'},{fr:'le mur',es:'la pared',ipa:'[lə myʁ]'},{fr:'au-dessus',es:'encima',ipa:'[o d(ə).sy]'},
 ];
 const wordsJ=[
   {fr:'jour',es:'día',ipa:'[ʒuʁ]'},{fr:'je',es:'yo',ipa:'[ʒə]'},{fr:'joli',es:'bonito',ipa:'[ʒɔ.li]'},
@@ -1880,7 +1881,7 @@ const wordsUOU = [
 
 // Ex 9 — Consonnes spéciales QCM
 const qcmCons = [
-  {q:'"chat" → ¿cómo se pronuncia "ch"?', opts:['Como la "ch" española (chocolate)','Como "sh" en inglés (show)','Como "k"'], ans:1, speak:'le chat'},
+  {q:'"boulanger" → ¿cómo se pronuncia "an"?', opts:['[an] como en español','[ɑ̃] nasal — el aire pasa por la nariz','[en] como en inglés'], ans:1, speak:'le boulanger'},
   {q:'"montagne" → ¿cómo se pronuncia "gn"?', opts:['Como "gn" en "gnomo"','Como la "ñ" española','Como "g" + "n" separadas'], ans:1, speak:'la montagne'},
   {q:'"vous" → ¿se pronuncia la "s" final?', opts:['Sí, siempre','No, la "s" final es muda','Solo si la siguiente palabra empieza por vocal'], ans:2, speak:'vous avez'},
   {q:'"garçon" → ¿qué indica la cedilla (ç)?', opts:['Se pronuncia como "k"','Se pronuncia como "s" suave','Se pronuncia como "sh"'], ans:1, speak:'le garçon'},
