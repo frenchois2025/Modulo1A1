@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Français A2 · Module 1 · Le Récit et les Pronoms</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    :root {
+      --a2: #2a7dd1;
+    }
+    .lesson-panel {
+      --l0: #d4a574;
+      --l0l: #f5ead6;
+      --l0d: #8b6f47;
+
+      --l1: #d23e48;
+      --l1l: #f8d5d9;
+      --l1d: #8b2633;
+
+      --l2: #7030a0;
+      --l2l: #e8d5f0;
+      --l2d: #4a1f66;
+
+      --l3: #0070c0;
+      --l3l: #d6e6f7;
+      --l3d: #003366;
+
+      --l4: #00b050;
+      --l4l: #d9f4e6;
+      --l4d: #005a2a;
+    }
+  </style>
+  <script src="moteur.js"></script>
+</head>
+<body>
+<div class="app">
+  <!-- ═══════════════════════════════════════════════════════════════
+       SIDEBAR NAVIGATION
+       ═══════════════════════════════════════════════════════════════ -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">Module 1 · <span style="color: var(--a2);">A2</span></div>
+
+    <!-- Lesson Navigation -->
+    <button class="nav-btn active" data-lesson="0" onclick="showLesson(0, this)">
+      <span class="nav-icon">🗓️</span>
+      <span>Raconter une journée</span>
+    </button>
+    <button class="nav-btn" data-lesson="1" onclick="showLesson(1, this)">
+      <span class="nav-icon">⚖️</span>
+      <span>Obligations et interdictions</span>
+    </button>
+    <button class="nav-btn" data-lesson="2" onclick="showLesson(2, this)">
+      <span class="nav-icon">🚫</span>
+      <span>La négation amplifiée</span>
+    </button>
+    <button class="nav-btn" data-lesson="3" onclick="showLesson(3, this)">
+      <span class="nav-icon">💪</span>
+      <span>Les pronoms toniques</span>
+    </button>
+    <button class="nav-btn" data-lesson="4" onclick="showLesson(4, this)">
+      <span class="nav-icon">👑</span>
+      <span>Les pronoms possessifs</span>
+    </button>
+  </aside>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       MAIN CONTENT AREA
+       ═══════════════════════════════════════════════════════════════ -->
+  <main class="main">
+
+    <!-- ───────────────────────────────────────────────────────────
+         LEÇON 0: RACONTER UNE JOURNÉE
+         ─────────────────────────────────────────────────────────── -->
+    <div class="lesson-panel active" data-lesson="0">
+      <div class="lesson-header">
+        <div class="lesson-icon-big" style="background: var(--l0l); color: var(--l0);">🗓️</div>
+        <div class="lesson-meta">
+          <div class="lesson-tag" style="background: var(--l0l); color: var(--l0d);">NARRATIF</div>
+          <h1 class="lesson-title">Raconter une journée</h1>
+          <p class="lesson-desc">Les connecteurs temporels qui structurent un récit et racontent une histoire dans l'ordre chronologique.</p>
+        </div>
+      </div>
+
+      <!-- Les Connecteurs Temporels -->
+      <div class="ex-card">
+        <h3 class="ex-title">Les Connecteurs Temporels</h3>
+        <p style="margin-bottom: 16px; font-size: 14px; color: var(--muted); line-height: 1.6;">
+          Pour raconter une histoire ou une journée, utilisez ces connecteurs pour donner un ordre logique à vos idées.
+        </p>
+        <table class="form-table">
+          <tbody>
+            <tr>
+              <td class="form-fr"><strong>Connecteur</strong></td>
+              <td class="form-fr"><strong>Fonction</strong></td>
+              <td class="form-es"><strong>Español</strong></td>
+            </tr>
+            <tr>
+              <td class="form-fr">D'abord</td>
+              <td class="form-fr">Orden (primero)</td>
+              <td class="form-es">Primero</td>
+            </tr>
+            <tr>
+              <td class="form-fr">Ensuite / Puis</td>
+              <td class="form-fr">Secuencia (después)</td>
+              <td class="form-es">Luego / Después</td>
+            </tr>
+            <tr>
+              <td class="form-fr">Vers</td>
+              <td class="form-fr">Aproximativo (alrededor de)</td>
+              <td class="form-es">Hacia / Alrededor de</td>
+            </tr>
+            <tr>
+              <td class="form-fr">Après</td>
+              <td class="form-fr">Posterioridad (después de)</td>
+              <td class="form-es">Después de</td>
+            </tr>
+            <tr>
+              <td class="form-fr">Avant</td>
+              <td class="form-fr">Anterioridad (antes de)</td>
+              <td class="form-es">Antes de</td>
+            </tr>
+            <tr>
+              <td class="form-fr">Quand</td>
+              <td class="form-fr">Tiempo (cuando)</td>
+              <td class="form-es">Cuando</td>
+            </tr>
+            <tr>
+              <td class="form-fr">Mais</td>
+              <td class="form-fr">Contraste (sin embargo)</td>
+              <td class="form-es">Pero / Sin embargo</td>
+            </tr>
+            <tr>
+              <td class="form-fr">Si</td>
+              <td class="form-fr">Condición (si)</td>
+              <td class="form-es">Si</td>
+            </tr>
+            <tr>
+              <td class="form-fr">Car / Parce que</td>
+              <td class="form-fr">Justificación (porque)</td>
+              <td class="form-es">Porque</td>
+            </tr>
+            <tr>
+              <td class="form-fr">Comme</td>
+              <td class="form-fr">Comparación (como)</td>
+              <td class="form-es">Como</td>
+            </tr>
+            <tr>
+              <td class="form-fr">Enfin</td>
+              <td class="form-fr">Conclusión (finalmente)</td>
+              <td class="form-es">Finalmente / Al fin</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Exemples avec connecteurs -->
+      <div class="ex-card">
+        <h3 class="ex-title">Exemples : Une journée type</h3>
+        <p style="font-size: 14px; margin-bottom: 12px; line-height: 1.7;">
+          <strong>D'abord,</strong> je me réveille à 9h du matin. <button class="btn-mini" onclick="speak('D\'abord, je me réveille à neuf heures du matin.')">🔊</button><br>
+          <strong>Ensuite,</strong> je prends une douche. <button class="btn-mini" onclick="speak('Ensuite, je prends une douche.')">🔊</button><br>
+          <strong>Vers</strong> 10h, je vais au travail à pied. <button class="btn-mini" onclick="speak('Vers dix heures, je vais au travail à pied.')">🔊</button><br>
+          <strong>Après</strong> le travail, je vais à la salle de sport. <button class="btn-mini" onclick="speak('Après le travail, je vais à la salle de sport.')">🔊</button><br>
+          <strong>Avant</strong> de rentrer, j'achète du pain. <button class="btn-mini" onclick="speak('Avant de rentrer, j\'achète du pain.')">🔊</button><br>
+          <strong>Quand</strong> je rentre, je fais à manger. <button class="btn-mini" onclick="speak('Quand je rentre, je fais à manger.')">🔊</button><br>
+          <strong>Mais</strong> aujourd'hui, je suis fatigué. <button class="btn-mini" onclick="speak('Mais aujourd\'hui, je suis fatigué.')">🔊</button><br>
+          <strong>Si</strong> j'ai du temps, je lis un livre. <button class="btn-mini" onclick="speak('Si j\'ai du temps, je lis un livre.')">🔊</button><br>
+          <strong>Car</strong> je suis passionné par la lecture. <button class="btn-mini" onclick="speak('Car je suis passionné par la lecture.')">🔊</button><br>
+          <strong>Enfin,</strong> je me couche à 22h. <button class="btn-mini" onclick="speak('Enfin, je me couche à vingt-deux heures.')">🔊</button>
+        </p>
+      </div>
+
+      <!-- Texte de compréhension -->
+      <div class="ex-card">
+        <h3 class="ex-title">Texte de compréhension : La journée de Marc</h3>
+        <p style="font-size: 14px; line-height: 1.8; margin-bottom: 12px;">
+          <strong>D'abord,</strong> Marc se réveille à 9 heures du matin. <button class="btn-mini" onclick="speak('D\'abord, Marc se réveille à neuf heures du matin.')">🔊</button> Il prend une douche et s'habille. <strong>Ensuite,</strong> il prend un café et du pain au chocolat pour le petit-déjeuner. <button class="btn-mini" onclick="speak('Ensuite, il prend un café et du pain au chocolat.')">🔊</button><br><br>
+          <strong>Vers</strong> 10 heures, Marc marche vers le bureau. <button class="btn-mini" onclick="speak('Vers dix heures, Marc marche vers le bureau.')">🔊</button> <strong>Avant</strong> d'arriver, il achète une revue à la gare. <button class="btn-mini" onclick="speak('Avant d\'arriver, il achète une revue à la gare.')">🔊</button> <strong>Après</strong> le travail à 17h, il va à la salle de sport <strong>car</strong> il adore faire du sport. <button class="btn-mini" onclick="speak('Après le travail à dix-sept heures, il va à la salle de sport car il adore faire du sport.')">🔊</button><br><br>
+          <strong>Quand</strong> il rentre, il prépare le dîner. <button class="btn-mini" onclick="speak('Quand il rentre, il prépare le dîner.')">🔊</button> <strong>Si</strong> il a du temps, il regarde un film. <button class="btn-mini" onclick="speak('Si il a du temps, il regarde un film.')">🔊</button> <strong>Enfin,</strong> il se couche à 22 heures. <button class="btn-mini" onclick="speak('Enfin, il se couche à vingt-deux heures.')">🔊</button>
+        </p>
+      </div>
+
+      <!-- Exercice 1 : QCM -->
+      <div class="ex-card">
+        <h3 class="ex-title">Exercice 1 : Compréhension - QCM</h3>
+        <p class="ex-instr">Lisez le texte et répondez aux questions.</p>
+
+        <div id="qcm-l0-score" style="font-size: 13px; margin-bottom: 20px; padding: 8px 12px; background: var(--border); border-radius: 8px; display: inline-block;">Score : <strong>0 / 5</strong></div>
+
+        <script>
+          const l0State = { score: 0, total: 5 };
+        </script>
+
+        <div class="qcm-item">
+          <div class="q-text">À quelle heure Marc se réveille-t-il ?</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-l0-score', l0State)">À 9 heures</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l0-score', l0State)">À 10 heures</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l0-score', l0State)">À 8 heures</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Quel connecteur utilise-t-on pour commencer une histoire ?</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-l0-score', l0State)">D'abord</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l0-score', l0State)">Enfin</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l0-score', l0State)">Puis</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Pourquoi Marc va à la salle de sport ?</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l0-score', l0State)">Parce qu'il doit aller au travail</button>
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-l0-score', l0State)">Car il adore faire du sport</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l0-score', l0State)">Parce qu'il a faim</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Quel connecteur indique la fin d'une histoire ?</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l0-score', l0State)">Avant</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l0-score', l0State)">Mais</button>
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-l0-score', l0State)">Enfin</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">À quelle heure Marc se couche-t-il ?</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l0-score', l0State)">À 21 heures</button>
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-l0-score', l0State)">À 22 heures</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l0-score', l0State)">À 23 heures</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+      </div>
+
+      <!-- Exercice 2 : Compléter avec connecteurs -->
+      <div class="ex-card">
+        <h3 class="ex-title">Exercice 2 : Complétez avec les connecteurs</h3>
+        <p class="ex-instr">Remplissez les blancs avec un connecteur temporel approprié.</p>
+
+        <div id="fill-l0" style="margin-bottom: 20px;">
+          <div class="fill-item">
+            <div class="fill-sentence">___ je me réveille, j'ai faim.</div>
+            <input type="text" class="fill-input" data-answer="Quand">
+            <div class="fill-hint">Indice : moment du réveil</div>
+          </div>
+
+          <div class="fill-item">
+            <div class="fill-sentence">___ , je vais au travail.</div>
+            <input type="text" class="fill-input" data-answer="Ensuite">
+            <div class="fill-hint">Indice : après la douche</div>
+          </div>
+
+          <div class="fill-item">
+            <div class="fill-sentence">___ 12h, je prends le déjeuner.</div>
+            <input type="text" class="fill-input" data-answer="Vers">
+            <div class="fill-hint">Indice : approximatif</div>
+          </div>
+
+          <div class="fill-item">
+            <div class="fill-sentence">Je suis fatigué, ___ je vais à la salle de sport.</div>
+            <input type="text" class="fill-input" data-answer="mais">
+            <div class="fill-hint">Indice : contraste</div>
+          </div>
+
+          <div class="fill-item">
+            <div class="fill-sentence">___ , je me couche.</div>
+            <input type="text" class="fill-input" data-answer="Enfin">
+            <div class="fill-hint">Indice : fin de la journée</div>
+          </div>
+        </div>
+
+        <button class="btn-check" style="background: var(--l0); color: white;" onclick="checkFill('fill-l0')">✓ Vérifier</button>
+      </div>
+
+      <!-- Exercice 3 : Match -->
+      <div class="ex-card">
+        <h3 class="ex-title">Exercice 3 : Associez le connecteur à sa fonction</h3>
+        <div id="match-l0" class="match-zone"></div>
+        <script>
+          buildMatch('match-l0', [
+            ['D\'abord', 'Finalement'],
+            ['Ensuite', 'Après cela'],
+            ['Enfin', 'En premier lieu'],
+            ['Mais', 'Cependant'],
+            ['Car', 'Parce que']
+          ]);
+        </script>
+      </div>
+    </div>
+
+    <!-- ───────────────────────────────────────────────────────────
+         LEÇON 1: OBLIGATIONS ET INTERDICTIONS
+         ─────────────────────────────────────────────────────────── -->
+    <div class="lesson-panel" data-lesson="1">
+      <div class="lesson-header">
+        <div class="lesson-icon-big" style="background: var(--l1l); color: var(--l1);">⚖️</div>
+        <div class="lesson-meta">
+          <div class="lesson-tag" style="background: var(--l1l); color: var(--l1d);">MODALITÉ</div>
+          <h1 class="lesson-title">Obligations et interdictions</h1>
+          <p class="lesson-desc">Exprimer ce qui est obligatoire, permis ou interdit en français.</p>
+        </div>
+      </div>
+
+      <!-- Les trois structures -->
+      <div class="ex-card">
+        <h3 class="ex-title">Les trois structures principales</h3>
+        <p style="margin-bottom: 16px; font-size: 14px; color: var(--muted); line-height: 1.6;">
+          Pour exprimer l'obligation ou l'interdiction, on utilise trois structures différentes :
+        </p>
+
+        <p style="font-size: 14px; margin-bottom: 12px; margin-top: 16px;">
+          <strong style="color: var(--l1);">Structure 1 : C'est + adjectif + de + infinitif</strong><br>
+          C'est obligatoire de prendre son passeport. <button class="btn-mini" onclick="speak('C\'est obligatoire de prendre son passeport.')">🔊</button><br>
+          C'est interdit de fumer ici. <button class="btn-mini" onclick="speak('C\'est interdit de fumer ici.')">🔊</button>
+        </p>
+
+        <p style="font-size: 14px; margin-bottom: 12px;">
+          <strong style="color: var(--l1);">Structure 2 : Il est + adjectif + de + infinitif</strong><br>
+          Il est nécessaire d'avoir un visa. <button class="btn-mini" onclick="speak('Il est nécessaire d\'avoir un visa.')">🔊</button><br>
+          Il est interdit de parler pendant l'examen. <button class="btn-mini" onclick="speak('Il est interdit de parler pendant l\'examen.')">🔊</button>
+        </p>
+
+        <p style="font-size: 14px; margin-bottom: 12px;">
+          <strong style="color: var(--l1);">Structure 3 : Il faut + infinitif (la plus courante)</strong><br>
+          Il faut apporter une pièce d'identité. <button class="btn-mini" onclick="speak('Il faut apporter une pièce d\'identité.')">🔊</button><br>
+          Il ne faut pas être en retard. <button class="btn-mini" onclick="speak('Il ne faut pas être en retard.')">🔊</button>
+        </p>
+      </div>
+
+      <!-- Dévoir et Pouvoir -->
+      <div class="ex-card">
+        <h3 class="ex-title">Devoir et Pouvoir pour l'obligation personnelle</h3>
+        <p style="font-size: 14px; margin-bottom: 12px;">
+          <strong style="color: var(--l1);">Devoir (obligation personnelle)</strong><br>
+          Je dois étudier pour l'examen. <button class="btn-mini" onclick="speak('Je dois étudier pour l\'examen.')">🔊</button><br>
+          Tu dois te lever tôt demain. <button class="btn-mini" onclick="speak('Tu dois te lever tôt demain.')">🔊</button><br>
+          Elle doit prendre ses médicaments. <button class="btn-mini" onclick="speak('Elle doit prendre ses médicaments.')">🔊</button>
+        </p>
+
+        <p style="font-size: 14px; margin-bottom: 12px;">
+          <strong style="color: var(--l1);">Pouvoir (permission, possibilité)</strong><br>
+          Je peux sortir ce soir ? <button class="btn-mini" onclick="speak('Je peux sortir ce soir ?')">🔊</button><br>
+          Tu peux regarder la télévision. <button class="btn-mini" onclick="speak('Tu peux regarder la télévision.')">🔊</button><br>
+          On peut entrer maintenant ? <button class="btn-mini" onclick="speak('On peut entrer maintenant ?')">🔊</button>
+        </p>
+      </div>
+
+      <!-- Vocabulaire -->
+      <div class="ex-card">
+        <h3 class="ex-title">Vocabulaire : Interdiction et Autorisation</h3>
+        <table class="form-table">
+          <tbody>
+            <tr>
+              <td class="form-fr"><strong>Interdiction</strong></td>
+              <td class="form-fr"><strong>Français</strong></td>
+              <td class="form-es"><strong>Español</strong></td>
+            </tr>
+            <tr>
+              <td class="form-fr">Interdit</td>
+              <td class="form-fr">Défendu, Prohibé</td>
+              <td class="form-es">Prohibido, Vedado</td>
+            </tr>
+            <tr>
+              <td class="form-fr">Ne pas + infinitif</td>
+              <td class="form-fr">Interdiction directe</td>
+              <td class="form-es">No + infinitivo</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table class="form-table" style="margin-top: 16px;">
+          <tbody>
+            <tr>
+              <td class="form-fr"><strong>Autorisation</strong></td>
+              <td class="form-fr"><strong>Français</strong></td>
+              <td class="form-es"><strong>Español</strong></td>
+            </tr>
+            <tr>
+              <td class="form-fr">Permis</td>
+              <td class="form-fr">Autorisé, Légal</td>
+              <td class="form-es">Permitido, Autorizado</td>
+            </tr>
+            <tr>
+              <td class="form-fr">Pouvoir</td>
+              <td class="form-fr">Avoir la permission</td>
+              <td class="form-es">Poder, Tener permiso</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Exemples -->
+      <div class="ex-card">
+        <h3 class="ex-title">Exemples : À l'école et au travail</h3>
+        <p style="font-size: 14px; line-height: 1.8;">
+          <strong>Interdictions :</strong><br>
+          C'est interdit de manger en classe. <button class="btn-mini" onclick="speak('C\'est interdit de manger en classe.')">🔊</button><br>
+          Il ne faut pas arriver en retard. <button class="btn-mini" onclick="speak('Il ne faut pas arriver en retard.')">🔊</button><br>
+          On ne peut pas utiliser le téléphone pendant les cours. <button class="btn-mini" onclick="speak('On ne peut pas utiliser le téléphone pendant les cours.')">🔊</button>
+        </p>
+
+        <p style="font-size: 14px; line-height: 1.8; margin-top: 12px;">
+          <strong>Obligations :</strong><br>
+          Il faut avoir un diplôme pour ce travail. <button class="btn-mini" onclick="speak('Il faut avoir un diplôme pour ce travail.')">🔊</button><br>
+          Je dois respecter les horaires. <button class="btn-mini" onclick="speak('Je dois respecter les horaires.')">🔊</button><br>
+          C'est nécessaire d'être ponctuel. <button class="btn-mini" onclick="speak('C\'est nécessaire d\'être ponctuel.')">🔊</button>
+        </p>
+
+        <p style="font-size: 14px; line-height: 1.8; margin-top: 12px;">
+          <strong>Permissions :</strong><br>
+          On peut sortir à 17h. <button class="btn-mini" onclick="speak('On peut sortir à dix-sept heures.')">🔊</button><br>
+          Tu peux prendre une pause. <button class="btn-mini" onclick="speak('Tu peux prendre une pause.')">🔊</button><br>
+          C'est permis de parler doucement. <button class="btn-mini" onclick="speak('C\'est permis de parler doucement.')">🔊</button>
+        </p>
+      </div>
+
+      <!-- Exercice 1 : QCM -->
+      <div class="ex-card">
+        <h3 class="ex-title">Exercice 1 : QCM</h3>
+        <p class="ex-instr">Choisissez la meilleure réponse.</p>
+
+        <div id="qcm-l1-score" style="font-size: 13px; margin-bottom: 20px; padding: 8px 12px; background: var(--border); border-radius: 8px; display: inline-block;">Score : <strong>0 / 5</strong></div>
+
+        <script>
+          const l1State = { score: 0, total: 5 };
+        </script>
+
+        <div class="qcm-item">
+          <div class="q-text">_____ avoir un passeport pour voyager à l'étranger.</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-l1-score', l1State)">Il faut</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l1-score', l1State)">On peut</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l1-score', l1State)">C'est facile</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">C'est _____ de fumer à la gare.</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-l1-score', l1State)">interdit</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l1-score', l1State)">permis</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l1-score', l1State)">obligatoire</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Je _____ me lever tôt demain.</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-l1-score', l1State)">dois</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l1-score', l1State)">peux</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l1-score', l1State)">suis</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Quel verbe exprime la permission ?</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l1-score', l1State)">Devoir</button>
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-l1-score', l1State)">Pouvoir</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l1-score', l1State)">Falloir</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Il _____ pas être en retard à l'école.</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-l1-score', l1State)">ne faut</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l1-score', l1State)">ne peut</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l1-score', l1State)">ne dois</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+      </div>
+
+      <!-- Exercice 2 : Compléter -->
+      <div class="ex-card">
+        <h3 class="ex-title">Exercice 2 : Complétez avec devoir ou pouvoir</h3>
+        <p class="ex-instr">Remplissez les blancs avec le verbe conjugué correctement.</p>
+
+        <div id="fill-l1" style="margin-bottom: 20px;">
+          <div class="fill-item">
+            <div class="fill-sentence">Je _____ étudier pour l'examen.</div>
+            <input type="text" class="fill-input" data-answer="dois">
+            <div class="fill-hint">Indice : obligation</div>
+          </div>
+
+          <div class="fill-item">
+            <div class="fill-sentence">Tu _____ sortir ce week-end ?</div>
+            <input type="text" class="fill-input" data-answer="peux">
+            <div class="fill-hint">Indice : permission</div>
+          </div>
+
+          <div class="fill-item">
+            <div class="fill-sentence">Elle _____ prendre ses médicaments.</div>
+            <input type="text" class="fill-input" data-answer="doit">
+            <div class="fill-hint">Indice : obligation</div>
+          </div>
+
+          <div class="fill-item">
+            <div class="fill-sentence">On ne _____ pas fumer ici.</div>
+            <input type="text" class="fill-input" data-answer="peut">
+            <div class="fill-hint">Indice : interdiction</div>
+          </div>
+        </div>
+
+        <button class="btn-check" style="background: var(--l1); color: white;" onclick="checkFill('fill-l1')">✓ Vérifier</button>
+      </div>
+
+      <!-- Exercice 3 : Match -->
+      <div class="ex-card">
+        <h3 class="ex-title">Exercice 3 : Associez la phrase au sens</h3>
+        <div id="match-l1" class="match-zone"></div>
+        <script>
+          buildMatch('match-l1', [
+            ['Il faut étudier.', 'C\'est une obligation.'],
+            ['Je peux sortir.', 'C\'est permis.'],
+            ['C\'est interdit.', 'C\'est défendu.'],
+            ['Il est nécessaire.', 'C\'est obligatoire.'],
+            ['On ne peut pas.', 'C\'est une interdiction.']
+          ]);
+        </script>
+      </div>
+    </div>
+
+    <!-- ───────────────────────────────────────────────────────────
+         LEÇON 2: LA NÉGATION AMPLIFIÉE
+         ─────────────────────────────────────────────────────────── -->
+    <div class="lesson-panel" data-lesson="2">
+      <div class="lesson-header">
+        <div class="lesson-icon-big" style="background: var(--l2l); color: var(--l2);">🚫</div>
+        <div class="lesson-meta">
+          <div class="lesson-tag" style="background: var(--l2l); color: var(--l2d);">SYNTAXE</div>
+          <h1 class="lesson-title">La négation amplifiée</h1>
+          <p class="lesson-desc">Différentes formes de négation pour exprimer le doute, la restriction, ou l'absence.</p>
+        </div>
+      </div>
+
+      <!-- Les formes de négation -->
+      <div class="ex-card">
+        <h3 class="ex-title">Les cinq formes principales</h3>
+
+        <p style="font-size: 14px; margin-bottom: 16px; margin-top: 16px;">
+          <strong style="color: var(--l2);">1. Ne…jamais (nunca)</strong><br>
+          Je ne voyage jamais en avion. <button class="btn-mini" onclick="speak('Je ne voyage jamais en avion.')">🔊</button><br>
+          Il ne joue jamais au football. <button class="btn-mini" onclick="speak('Il ne joue jamais au football.')">🔊</button>
+        </p>
+
+        <p style="font-size: 14px; margin-bottom: 16px;">
+          <strong style="color: var(--l2);">2. Ne…plus (ya no)</strong><br>
+          Je ne travaille plus le samedi. <button class="btn-mini" onclick="speak('Je ne travaille plus le samedi.')">🔊</button><br>
+          Elle ne fume plus depuis un an. <button class="btn-mini" onclick="speak('Elle ne fume plus depuis un an.')">🔊</button>
+        </p>
+
+        <p style="font-size: 14px; margin-bottom: 16px;">
+          <strong style="color: var(--l2);">3. Ne…ni…ni (ni...ni)</strong><br>
+          Je ne mange ni viande ni poisson. <button class="btn-mini" onclick="speak('Je ne mange ni viande ni poisson.')">🔊</button><br>
+          Il n'aime ni le café ni le thé. <button class="btn-mini" onclick="speak('Il n\'aime ni le café ni le thé.')">🔊</button>
+        </p>
+
+        <p style="font-size: 14px; margin-bottom: 16px;">
+          <strong style="color: var(--l2);">4. Ne…rien (nada)</strong><br>
+          Je ne comprends rien à la physique. <button class="btn-mini" onclick="speak('Je ne comprends rien à la physique.')">🔊</button><br>
+          Il ne dit rien quand il est triste. <button class="btn-mini" onclick="speak('Il ne dit rien quand il est triste.')">🔊</button>
+        </p>
+
+        <p style="font-size: 14px; margin-bottom: 16px;">
+          <strong style="color: var(--l2);">5. Ne…personne (nadie)</strong><br>
+          Je ne vois personne à cette heure. <button class="btn-mini" onclick="speak('Je ne vois personne à cette heure.')">🔊</button><br>
+          Elle ne connaît personne dans cette ville. <button class="btn-mini" onclick="speak('Elle ne connaît personne dans cette ville.')">🔊</button>
+        </p>
+      </div>
+
+      <!-- Remarques importantes -->
+      <div class="ex-card">
+        <h3 class="ex-title">Remarques importantes</h3>
+        <p style="font-size: 14px; line-height: 1.8;">
+          <strong>Avec ne…rien et ne…personne :</strong> l'ordre peut changer.<br>
+          Rien ne me plaît. (Nada me agrada.) <button class="btn-mini" onclick="speak('Rien ne me plaît.')">🔊</button><br>
+          Personne ne m'appelle. (Nadie me llama.) <button class="btn-mini" onclick="speak('Personne ne m\'appelle.')">🔊</button>
+        </p>
+
+        <p style="font-size: 14px; line-height: 1.8; margin-top: 16px;">
+          <strong>Avec ne…ni…ni :</strong> pas de article défini.<br>
+          Je n'aime pas les chats. (Je n'aime pas + article)<br>
+          Je n'aime ni les chats ni les chiens. (Pas d'article)<br>
+        </p>
+
+        <p style="font-size: 14px; line-height: 1.8; margin-top: 16px;">
+          <strong>Forme courte (à l'oral) :</strong><br>
+          Je comprends rien (colloquial) = Je ne comprends rien (formel)
+        </p>
+      </div>
+
+      <!-- Exemples contextuels -->
+      <div class="ex-card">
+        <h3 class="ex-title">Exemples contextuels</h3>
+        <p style="font-size: 14px; line-height: 1.8; margin-bottom: 12px;">
+          <strong>Au restaurant :</strong><br>
+          Je ne veux jamais de dessert. <button class="btn-mini" onclick="speak('Je ne veux jamais de dessert.')">🔊</button><br>
+          Je ne bois plus d'alcool. <button class="btn-mini" onclick="speak('Je ne bois plus d\'alcool.')">🔊</button><br>
+          Je ne mange ni poisson ni fruits de mer. <button class="btn-mini" onclick="speak('Je ne mange ni poisson ni fruits de mer.')">🔊</button>
+        </p>
+
+        <p style="font-size: 14px; line-height: 1.8; margin-bottom: 12px;">
+          <strong>En classe :</strong><br>
+          Je ne comprends rien au cours de maths. <button class="btn-mini" onclick="speak('Je ne comprends rien au cours de maths.')">🔊</button><br>
+          Personne ne lève la main. <button class="btn-mini" onclick="speak('Personne ne lève la main.')">🔊</button>
+        </p>
+
+        <p style="font-size: 14px; line-height: 1.8;">
+          <strong>Dans la vie quotidienne :</strong><br>
+          Je ne sors jamais le vendredi. <button class="btn-mini" onclick="speak('Je ne sors jamais le vendredi.')">🔊</button><br>
+          Elle ne fume plus depuis trois ans. <button class="btn-mini" onclick="speak('Elle ne fume plus depuis trois ans.')">🔊</button>
+        </p>
+      </div>
+
+      <!-- Exercice 1 : QCM -->
+      <div class="ex-card">
+        <h3 class="ex-title">Exercice 1 : QCM</h3>
+        <p class="ex-instr">Choisissez la bonne réponse.</p>
+
+        <div id="qcm-l2-score" style="font-size: 13px; margin-bottom: 20px; padding: 8px 12px; background: var(--border); border-radius: 8px; display: inline-block;">Score : <strong>0 / 5</strong></div>
+
+        <script>
+          const l2State = { score: 0, total: 5 };
+        </script>
+
+        <div class="qcm-item">
+          <div class="q-text">Je ne _____ jamais en avion.</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-l2-score', l2State)">voyage</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l2-score', l2State)">voyages</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l2-score', l2State)">voyagé</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Quel connecteur signifie "ya no" ?</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l2-score', l2State)">ne…jamais</button>
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-l2-score', l2State)">ne…plus</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l2-score', l2State)">ne…rien</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Je n'aime ni _____ ni les chiens.</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-l2-score', l2State)">les chats</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l2-score', l2State)">des chats</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l2-score', l2State)">aux chats</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Je ne _____ personne.</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-l2-score', l2State)">vois</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l2-score', l2State)">voir</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l2-score', l2State)">vu</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Complétez : "Je ne comprends _____ à la physique."</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-l2-score', l2State)">rien</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l2-score', l2State)">personne</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l2-score', l2State)">plus</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+      </div>
+
+      <!-- Exercice 2 : Compléter -->
+      <div class="ex-card">
+        <h3 class="ex-title">Exercice 2 : Complétez avec la bonne négation</h3>
+        <p class="ex-instr">Remplissez les blancs avec la forme de négation appropriée.</p>
+
+        <div id="fill-l2" style="margin-bottom: 20px;">
+          <div class="fill-item">
+            <div class="fill-sentence">Je ne _____ de dessert.</div>
+            <input type="text" class="fill-input" data-answer="veux jamais">
+            <div class="fill-hint">Indice : nunca</div>
+          </div>
+
+          <div class="fill-item">
+            <div class="fill-sentence">Elle ne travaille _____.</div>
+            <input type="text" class="fill-input" data-answer="plus">
+            <div class="fill-hint">Indice : ya no</div>
+          </div>
+
+          <div class="fill-item">
+            <div class="fill-sentence">Je n'aime _____ café _____ thé.</div>
+            <input type="text" class="fill-input" data-answer="ni le ni le">
+            <div class="fill-hint">Indice : ni...ni</div>
+          </div>
+
+          <div class="fill-item">
+            <div class="fill-sentence">Je ne comprends _____ à cette leçon.</div>
+            <input type="text" class="fill-input" data-answer="rien">
+            <div class="fill-hint">Indice : nada</div>
+          </div>
+
+          <div class="fill-item">
+            <div class="fill-sentence">Je ne vois _____ dans cette rue.</div>
+            <input type="text" class="fill-input" data-answer="personne">
+            <div class="fill-hint">Indice : nadie</div>
+          </div>
+        </div>
+
+        <button class="btn-check" style="background: var(--l2); color: white;" onclick="checkFill('fill-l2')">✓ Vérifier</button>
+      </div>
+
+      <!-- Exercice 3 : Réécrire -->
+      <div class="ex-card">
+        <h3 class="ex-title">Exercice 3 : Réécrire avec la négation amplifiée</h3>
+        <p class="ex-instr">Réécrire les phrases en remplaçant ne…pas par une forme plus précise.</p>
+
+        <div id="fill-l2-rewrite" style="margin-bottom: 20px;">
+          <div class="fill-item">
+            <div class="fill-sentence">Je ne voyage pas en avion. → Je ne _____ en avion.</div>
+            <input type="text" class="fill-input" data-answer="voyage jamais">
+            <div class="fill-hint">Indice : jamais</div>
+          </div>
+
+          <div class="fill-item">
+            <div class="fill-sentence">Elle ne fume pas maintenant. → Elle ne fume _____.</div>
+            <input type="text" class="fill-input" data-answer="plus">
+            <div class="fill-hint">Indice : plus</div>
+          </div>
+
+          <div class="fill-item">
+            <div class="fill-sentence">Il ne comprend pas à l'examen. → Il ne _____ _____ à l'examen.</div>
+            <input type="text" class="fill-input" data-answer="comprend rien">
+            <div class="fill-hint">Indice : rien</div>
+          </div>
+        </div>
+
+        <button class="btn-check" style="background: var(--l2); color: white;" onclick="checkFill('fill-l2-rewrite')">✓ Vérifier</button>
+      </div>
+    </div>
+
+    <!-- ───────────────────────────────────────────────────────────
+         LEÇON 3: LES PRONOMS TONIQUES
+         ─────────────────────────────────────────────────────────── -->
+    <div class="lesson-panel" data-lesson="3">
+      <div class="lesson-header">
+        <div class="lesson-icon-big" style="background: var(--l3l); color: var(--l3);">💪</div>
+        <div class="lesson-meta">
+          <div class="lesson-tag" style="background: var(--l3l); color: var(--l3d);">PRONOMS</div>
+          <h1 class="lesson-title">Les pronoms toniques</h1>
+          <p class="lesson-desc">Moi, toi, lui, elle, nous, vous, eux, elles : quand et comment les utiliser.</p>
+        </div>
+      </div>
+
+      <!-- Les trois usages -->
+      <div class="ex-card">
+        <h3 class="ex-title">Les trois usages des pronoms toniques</h3>
+
+        <p style="font-size: 14px; margin-bottom: 16px; margin-top: 16px;">
+          <strong style="color: var(--l3);">1. Pour l'emphasis (emphasizer un pronom)</strong><br>
+          <em>Toi,</em> tu es très gentil. <button class="btn-mini" onclick="speak('Toi, tu es très gentil.')">🔊</button><br>
+          <em>Moi,</em> je suis français. <button class="btn-mini" onclick="speak('Moi, je suis français.')">🔊</button><br>
+          <em>Eux,</em> ils ne savent pas. <button class="btn-mini" onclick="speak('Eux, ils ne savent pas.')">🔊</button>
+        </p>
+
+        <p style="font-size: 14px; margin-bottom: 16px;">
+          <strong style="color: var(--l3);">2. Après les prépositions (à, de, avec, pour, etc.)</strong><br>
+          Je vais avec <em>toi.</em> <button class="btn-mini" onclick="speak('Je vais avec toi.')">🔊</button><br>
+          C'est pour <em>elle.</em> <button class="btn-mini" onclick="speak('C\'est pour elle.')">🔊</button><br>
+          Je parle de <em>lui.</em> <button class="btn-mini" onclick="speak('Je parle de lui.')">🔊</button>
+        </p>
+
+        <p style="font-size: 14px; margin-bottom: 16px;">
+          <strong style="color: var(--l3);">3. Après C'est / Ce sont</strong><br>
+          C'est <em>moi.</em> <button class="btn-mini" onclick="speak('C\'est moi.')">🔊</button><br>
+          Ce sont <em>eux.</em> <button class="btn-mini" onclick="speak('Ce sont eux.')">🔊</button><br>
+          C'est <em>nous.</em> <button class="btn-mini" onclick="speak('C\'est nous.')">🔊</button>
+        </p>
+      </div>
+
+      <!-- Tableau des pronoms toniques -->
+      <div class="ex-card">
+        <h3 class="ex-title">Tableau : Pronoms toniques</h3>
+        <table class="form-table">
+          <tbody>
+            <tr>
+              <td class="form-fr"><strong>Pronoms</strong></td>
+              <td class="form-fr"><strong>Français</strong></td>
+              <td class="form-es"><strong>Español</strong></td>
+              <td class="form-fr"><strong>Exemple</strong></td>
+            </tr>
+            <tr>
+              <td class="form-fr">Yo</td>
+              <td class="form-fr">Moi</td>
+              <td class="form-es">Yo</td>
+              <td class="form-fr">Moi, je suis ici.</td>
+            </tr>
+            <tr>
+              <td class="form-fr">Tú</td>
+              <td class="form-fr">Toi</td>
+              <td class="form-es">Tú</td>
+              <td class="form-fr">Toi, tu es ici.</td>
+            </tr>
+            <tr>
+              <td class="form-fr">Él</td>
+              <td class="form-fr">Lui</td>
+              <td class="form-es">Él</td>
+              <td class="form-fr">Lui, il comprend.</td>
+            </tr>
+            <tr>
+              <td class="form-fr">Ella</td>
+              <td class="form-fr">Elle</td>
+              <td class="form-es">Ella</td>
+              <td class="form-fr">Elle, elle sait.</td>
+            </tr>
+            <tr>
+              <td class="form-fr">Nosotros</td>
+              <td class="form-fr">Nous</td>
+              <td class="form-es">Nosotros</td>
+              <td class="form-fr">Nous, on est là.</td>
+            </tr>
+            <tr>
+              <td class="form-fr">Vosotros</td>
+              <td class="form-fr">Vous</td>
+              <td class="form-es">Vosotros</td>
+              <td class="form-fr">Vous, vous partez ?</td>
+            </tr>
+            <tr>
+              <td class="form-fr">Ellos</td>
+              <td class="form-fr">Eux</td>
+              <td class="form-es">Ellos</td>
+              <td class="form-fr">Eux, ils partent.</td>
+            </tr>
+            <tr>
+              <td class="form-fr">Ellas</td>
+              <td class="form-fr">Elles</td>
+              <td class="form-es">Ellas</td>
+              <td class="form-fr">Elles, elles restent.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Cas spéciaux -->
+      <div class="ex-card">
+        <h3 class="ex-title">Cas spéciaux : Non plus et moi aussi</h3>
+        <p style="font-size: 14px; line-height: 1.8;">
+          <strong>Moi aussi</strong> (also, yo también)<br>
+          Tu aimes le café ? - Moi aussi ! <button class="btn-mini" onclick="speak('Tu aimes le café ? Moi aussi !')">🔊</button>
+        </p>
+
+        <p style="font-size: 14px; line-height: 1.8; margin-top: 12px;">
+          <strong>Non plus</strong> (neither, tampoco)<br>
+          Je n'aime pas le poisson. - Moi non plus. <button class="btn-mini" onclick="speak('Je n\'aime pas le poisson. Moi non plus.')">🔊</button><br>
+          Elle ne parle pas allemand. - Lui non plus. <button class="btn-mini" onclick="speak('Elle ne parle pas allemand. Lui non plus.')">🔊</button>
+        </p>
+      </div>
+
+      <!-- Exemples contextuels -->
+      <div class="ex-card">
+        <h3 class="ex-title">Exemples contextuels</h3>
+        <p style="font-size: 14px; line-height: 1.8; margin-bottom: 12px;">
+          <strong>Avec les prépositions :</strong><br>
+          Je vais au cinéma avec toi. <button class="btn-mini" onclick="speak('Je vais au cinéma avec toi.')">🔊</button><br>
+          C'est un cadeau pour lui. <button class="btn-mini" onclick="speak('C\'est un cadeau pour lui.')">🔊</button><br>
+          Elle parle de nous tous les jours. <button class="btn-mini" onclick="speak('Elle parle de nous tous les jours.')">🔊</button>
+        </p>
+
+        <p style="font-size: 14px; line-height: 1.8;">
+          <strong>Après c'est / ce sont :</strong><br>
+          Qui est là ? C'est moi ! <button class="btn-mini" onclick="speak('Qui est là ? C\'est moi !')">🔊</button><br>
+          Ce sont eux ? Non, c'est nous. <button class="btn-mini" onclick="speak('Ce sont eux ? Non, c\'est nous.')">🔊</button>
+        </p>
+      </div>
+
+      <!-- Exercice 1 : QCM -->
+      <div class="ex-card">
+        <h3 class="ex-title">Exercice 1 : QCM</h3>
+        <p class="ex-instr">Choisissez le pronom tonique correct.</p>
+
+        <div id="qcm-l3-score" style="font-size: 13px; margin-bottom: 20px; padding: 8px 12px; background: var(--border); border-radius: 8px; display: inline-block;">Score : <strong>0 / 4</strong></div>
+
+        <script>
+          const l3State = { score: 0, total: 4 };
+        </script>
+
+        <div class="qcm-item">
+          <div class="q-text">Je vais au cinéma avec _____.</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-l3-score', l3State)">toi</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l3-score', l3State)">tu</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l3-score', l3State)">te</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">C'est _____ ! (It's me!)</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-l3-score', l3State)">moi</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l3-score', l3State)">je</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l3-score', l3State)">m'</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Eux, _____ partent demain.</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-l3-score', l3State)">ils</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l3-score', l3State)">eux</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l3-score', l3State)">leur</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Elle ne parle pas allemand. - Lui _____.</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-l3-score', l3State)">non plus</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l3-score', l3State)">aussi</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l3-score', l3State)">non</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+      </div>
+
+      <!-- Exercice 2 : Compléter -->
+      <div class="ex-card">
+        <h3 class="ex-title">Exercice 2 : Complétez avec le pronom tonique</h3>
+        <p class="ex-instr">Remplissez les blancs avec le pronom tonique approprié.</p>
+
+        <div id="fill-l3" style="margin-bottom: 20px;">
+          <div class="fill-item">
+            <div class="fill-sentence">C'est _____ qui parle français.</div>
+            <input type="text" class="fill-input" data-answer="moi">
+            <div class="fill-hint">Indice : yo</div>
+          </div>
+
+          <div class="fill-item">
+            <div class="fill-sentence">Je vais au marché avec _____.</div>
+            <input type="text" class="fill-input" data-answer="vous">
+            <div class="fill-hint">Indice : ustedes</div>
+          </div>
+
+          <div class="fill-item">
+            <div class="fill-sentence">Ce sont _____ qui gagnent la course.</div>
+            <input type="text" class="fill-input" data-answer="eux">
+            <div class="fill-hint">Indice : ellos</div>
+          </div>
+
+          <div class="fill-item">
+            <div class="fill-sentence">Toi et _____ , on va à la plage.</div>
+            <input type="text" class="fill-input" data-answer="moi">
+            <div class="fill-hint">Indice : yo</div>
+          </div>
+        </div>
+
+        <button class="btn-check" style="background: var(--l3); color: white;" onclick="checkFill('fill-l3')">✓ Vérifier</button>
+      </div>
+
+      <!-- Exercice 3 : Match -->
+      <div class="ex-card">
+        <h3 class="ex-title">Exercice 3 : Associez le pronom français au pronom espagnol</h3>
+        <div id="match-l3" class="match-zone"></div>
+        <script>
+          buildMatch('match-l3', [
+            ['Moi', 'Yo'],
+            ['Toi', 'Tú'],
+            ['Lui / Elle', 'Él / Ella'],
+            ['Nous', 'Nosotros'],
+            ['Eux / Elles', 'Ellos / Ellas']
+          ]);
+        </script>
+      </div>
+    </div>
+
+    <!-- ───────────────────────────────────────────────────────────
+         LEÇON 4: LES PRONOMS POSSESSIFS
+         ─────────────────────────────────────────────────────────── -->
+    <div class="lesson-panel" data-lesson="4">
+      <div class="lesson-header">
+        <div class="lesson-icon-big" style="background: var(--l4l); color: var(--l4);">👑</div>
+        <div class="lesson-meta">
+          <div class="lesson-tag" style="background: var(--l4l); color: var(--l4d);">PRONOMS</div>
+          <h1 class="lesson-title">Les pronoms possessifs</h1>
+          <p class="lesson-desc">Le mien, la mienne, les miens, etc. : comment indiquer la possession avec un pronom.</p>
+        </div>
+      </div>
+
+      <!-- Différence entre adjectif et pronom possessif -->
+      <div class="ex-card">
+        <h3 class="ex-title">Différence : Adjectif vs Pronom possessif</h3>
+        <p style="font-size: 14px; margin-bottom: 12px;">
+          <strong style="color: var(--l4);">Adjectif possessif</strong> (accompagne un nom) :<br>
+          Mon chien, Ma maison, Mes livres<br>
+          Tu aimes <strong>mon</strong> chien ? <button class="btn-mini" onclick="speak('Tu aimes mon chien ?')">🔊</button>
+        </p>
+
+        <p style="font-size: 14px; margin-bottom: 12px;">
+          <strong style="color: var(--l4);">Pronom possessif</strong> (remplace un nom) :<br>
+          Le mien, La mienne, Les miens, Les miennes<br>
+          Tu aimes <strong>le mien</strong> ? <button class="btn-mini" onclick="speak('Tu aimes le mien ?')">🔊</button>
+        </p>
+
+        <p style="font-size: 14px; line-height: 1.8;">
+          Ma voiture est bleue. La tienne est rouge. = Ma voiture est bleue. <strong>La tienne</strong> est rouge. <button class="btn-mini" onclick="speak('Ma voiture est bleue. La tienne est rouge.')">🔊</button>
+        </p>
+      </div>
+
+      <!-- Tableau des pronoms possessifs -->
+      <div class="ex-card">
+        <h3 class="ex-title">Tableau : Les pronoms possessifs</h3>
+        <table class="form-table">
+          <tbody>
+            <tr>
+              <td class="form-fr"><strong>Possesseur</strong></td>
+              <td class="form-fr"><strong>Singulier masculin</strong></td>
+              <td class="form-fr"><strong>Singulier féminin</strong></td>
+              <td class="form-fr"><strong>Pluriel</strong></td>
+            </tr>
+            <tr>
+              <td class="form-fr">Je (Yo)</td>
+              <td class="form-fr">Le mien</td>
+              <td class="form-fr">La mienne</td>
+              <td class="form-fr">Les miens/miennes</td>
+            </tr>
+            <tr>
+              <td class="form-fr">Tu (Tú)</td>
+              <td class="form-fr">Le tien</td>
+              <td class="form-fr">La tienne</td>
+              <td class="form-fr">Les tiens/tiennes</td>
+            </tr>
+            <tr>
+              <td class="form-fr">Il/Elle (Él/Ella)</td>
+              <td class="form-fr">Le sien</td>
+              <td class="form-fr">La sienne</td>
+              <td class="form-fr">Les siens/siennes</td>
+            </tr>
+            <tr>
+              <td class="form-fr">Nous (Nosotros)</td>
+              <td class="form-fr">Le nôtre</td>
+              <td class="form-fr">La nôtre</td>
+              <td class="form-fr">Les nôtres</td>
+            </tr>
+            <tr>
+              <td class="form-fr">Vous (Vosotros)</td>
+              <td class="form-fr">Le vôtre</td>
+              <td class="form-fr">La vôtre</td>
+              <td class="form-fr">Les vôtres</td>
+            </tr>
+            <tr>
+              <td class="form-fr">Ils/Elles (Ellos/Ellas)</td>
+              <td class="form-fr">Le leur</td>
+              <td class="form-fr">La leur</td>
+              <td class="form-fr">Les leurs</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Exemples d'utilisation -->
+      <div class="ex-card">
+        <h3 class="ex-title">Exemples d'utilisation</h3>
+        <p style="font-size: 14px; line-height: 1.8; margin-bottom: 12px;">
+          <strong>Dans une conversation :</strong><br>
+          Ma maison est grande. Quelle est la tienne ? <button class="btn-mini" onclick="speak('Ma maison est grande. Quelle est la tienne ?')">🔊</button><br>
+          J'aime mon chapeau. Elle aime le sien. <button class="btn-mini" onclick="speak('J\'aime mon chapeau. Elle aime le sien.')">🔊</button><br>
+          Tes enfants et les miens jouent ensemble. <button class="btn-mini" onclick="speak('Tes enfants et les miens jouent ensemble.')">🔊</button>
+        </p>
+
+        <p style="font-size: 14px; line-height: 1.8; margin-bottom: 12px;">
+          <strong>À qui est…?</strong><br>
+          À qui est ce blouson ? C'est le mien. <button class="btn-mini" onclick="speak('À qui est ce blouson ? C\'est le mien.')">🔊</button><br>
+          À qui sont ces clés ? Ce sont les leurs. <button class="btn-mini" onclick="speak('À qui sont ces clés ? Ce sont les leurs.')">🔊</button>
+        </p>
+
+        <p style="font-size: 14px; line-height: 1.8;">
+          <strong>Comparaison de possession :</strong><br>
+          Votre voiture est moins chère que la nôtre. <button class="btn-mini" onclick="speak('Votre voiture est moins chère que la nôtre.')">🔊</button><br>
+          Son problème et le vôtre sont différents. <button class="btn-mini" onclick="speak('Son problème et le vôtre sont différents.')">🔊</button>
+        </p>
+      </div>
+
+      <!-- Remarques -->
+      <div class="ex-card">
+        <h3 class="ex-title">Remarques importantes</h3>
+        <p style="font-size: 14px; line-height: 1.8;">
+          <strong>1. Accord du pronom possessif :</strong><br>
+          Le genre et le nombre du pronom dépendent de la chose possédée, pas du possesseur.<br>
+          Ma photo (f.) → la mienne<br>
+          Mon livre (m.) → le mien<br>
+        </p>
+
+        <p style="font-size: 14px; line-height: 1.8; margin-top: 12px;">
+          <strong>2. Avec "à" :</strong><br>
+          Ce livre est à moi. (belongs to me)<br>
+          Ce livre est le mien. (This is my book / This one is mine)<br>
+        </p>
+
+        <p style="font-size: 14px; line-height: 1.8; margin-top: 12px;">
+          <strong>3. C'est + pronom possessif :</strong><br>
+          C'est le mien ! <button class="btn-mini" onclick="speak('C\'est le mien !')">🔊</button><br>
+          Ce sont les leurs. <button class="btn-mini" onclick="speak('Ce sont les leurs.')">🔊</button>
+        </p>
+      </div>
+
+      <!-- Exercice 1 : QCM -->
+      <div class="ex-card">
+        <h3 class="ex-title">Exercice 1 : QCM</h3>
+        <p class="ex-instr">Choisissez le pronom possessif correct.</p>
+
+        <div id="qcm-l4-score" style="font-size: 13px; margin-bottom: 20px; padding: 8px 12px; background: var(--border); border-radius: 8px; display: inline-block;">Score : <strong>0 / 4</strong></div>
+
+        <script>
+          const l4State = { score: 0, total: 4 };
+        </script>
+
+        <div class="qcm-item">
+          <div class="q-text">Ma voiture est bleue. Quelle est _____?</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-l4-score', l4State)">la tienne</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l4-score', l4State)">la mienne</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l4-score', l4State)">la sienne</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">À qui est ce blouson ? C'est _____.</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-l4-score', l4State)">le mien</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l4-score', l4State)">le tien</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l4-score', l4State)">le leur</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">À qui sont ces clés ? Ce sont _____.</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-l4-score', l4State)">les leurs</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l4-score', l4State)">les miennes</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l4-score', l4State)">les siennes</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Nos enfants et _____ jouent ensemble.</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-l4-score', l4State)">les vôtres</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l4-score', l4State)">les nôtres</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l4-score', l4State)">les siens</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+      </div>
+
+      <!-- Exercice 2 : Remplacer par pronom possessif -->
+      <div class="ex-card">
+        <h3 class="ex-title">Exercice 2 : Remplacez par un pronom possessif</h3>
+        <p class="ex-instr">Remplacez les mots soulignés par un pronom possessif.</p>
+
+        <div id="fill-l4" style="margin-bottom: 20px;">
+          <div class="fill-item">
+            <div class="fill-sentence">Tu aimes ta maison ? Moi, j'aime _____.</div>
+            <input type="text" class="fill-input" data-answer="la mienne">
+            <div class="fill-hint">Indice : my house (feminine)</div>
+          </div>
+
+          <div class="fill-item">
+            <div class="fill-sentence">Ses livres et _____ sont sur la table.</div>
+            <input type="text" class="fill-input" data-answer="les miens">
+            <div class="fill-hint">Indice : my books (plural, masculine)</div>
+          </div>
+
+          <div class="fill-item">
+            <div class="fill-sentence">Votre opinion est différente de _____.</div>
+            <input type="text" class="fill-input" data-answer="la nôtre">
+            <div class="fill-hint">Indice : our opinion (feminine singular)</div>
+          </div>
+
+          <div class="fill-item">
+            <div class="fill-sentence">C'est ton stylo ? Non, c'est _____.</div>
+            <input type="text" class="fill-input" data-answer="le sien">
+            <div class="fill-hint">Indice : his/her pen (masculine singular)</div>
+          </div>
+        </div>
+
+        <button class="btn-check" style="background: var(--l4); color: white;" onclick="checkFill('fill-l4')">✓ Vérifier</button>
+      </div>
+
+      <!-- Exercice 3 : Match -->
+      <div class="ex-card">
+        <h3 class="ex-title">Exercice 3 : Associez le possesseur au pronom</h3>
+        <div id="match-l4" class="match-zone"></div>
+        <script>
+          buildMatch('match-l4', [
+            ['Je', 'Le mien / La mienne'],
+            ['Tu', 'Le tien / La tienne'],
+            ['Il/Elle', 'Le sien / La sienne'],
+            ['Nous', 'Le nôtre / La nôtre'],
+            ['Vous', 'Le vôtre / La vôtre']
+          ]);
+        </script>
+      </div>
+    </div>
+
+  </main>
+</div>
+</body>
+</html>

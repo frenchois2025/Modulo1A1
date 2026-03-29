@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Français A2 · Module 2 · Les Temps du Passé et les Pronoms</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="moteur.js"></script>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="sidebar-logo">Module 2 · <span>A2</span></div>
+    <button class="nav-btn" onclick="showLesson(0, this)"><span class="nav-icon">📘</span> Le Passé Composé</button>
+    <button class="nav-btn" onclick="showLesson(1, this)"><span class="nav-icon">🪞</span> Verbes Pronominaux</button>
+    <button class="nav-btn" onclick="showLesson(2, this)"><span class="nav-icon">📖</span> L'Imparfait</button>
+    <button class="nav-btn" onclick="showLesson(3, this)"><span class="nav-icon">⚔️</span> Imparfait + PC</button>
+    <button class="nav-btn" onclick="showLesson(4, this)"><span class="nav-icon">🎯</span> Pronoms COD</button>
+    <button class="nav-btn" onclick="showLesson(5, this)"><span class="nav-icon">📬</span> COI, EN, Y</button>
+  </aside>
+
+  <main class="main">
+
+    <!-- LEÇON 0: Le Passé Composé -->
+    <section id="lesson-0" class="lesson-panel" style="display: none;">
+      <div class="lesson-header">
+        <div class="lesson-icon-big">📘</div>
+        <div class="lesson-meta">
+          <span class="lesson-tag" style="background: var(--l0); color: var(--l0d);">Leçon 0</span>
+          <h1 class="lesson-title">Le Passé Composé</h1>
+          <p class="lesson-desc">Maîtriser la formation du passé avec avoir et être, et les règles d'accord</p>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-title">📚 Formation du Passé Composé</div>
+        <div class="ex-instr">
+          Le passé composé se forme avec un auxiliaire (avoir ou être) conjugué au présent + le participe passé du verbe.
+        </div>
+        <div style="margin: 20px 0; padding: 15px; background: var(--border); border-radius: 8px;">
+          <strong>Auxiliaire AVOIR + Participe Passé</strong><br>
+          <em>Pour la majorité des verbes</em>
+          <table class="form-table" style="width: 100%; margin-top: 10px;">
+            <tr style="background: var(--l0l);">
+              <td><strong>Pronoun</strong></td>
+              <td><strong>Avoir (Présent)</strong></td>
+              <td><strong>Participe Passé</strong></td>
+              <td><strong>Exemple</strong></td>
+            </tr>
+            <tr>
+              <td>je</td>
+              <td>ai</td>
+              <td rowspan="6" style="text-align: center; vertical-align: middle;"><strong>mangé</strong> (ER→é)<br><strong>fini</strong> (IR→i)<br><strong>perdu</strong> (RE→u)</td>
+              <td>J'ai mangé une pomme.</td>
+            </tr>
+            <tr>
+              <td>tu</td>
+              <td>as</td>
+              <td>Tu as fini tes devoirs.</td>
+            </tr>
+            <tr>
+              <td>il/elle/on</td>
+              <td>a</td>
+              <td>Il a perdu ses clés.</td>
+            </tr>
+            <tr>
+              <td>nous</td>
+              <td>avons</td>
+              <td>Nous avons joué au football.</td>
+            </tr>
+            <tr>
+              <td>vous</td>
+              <td>avez</td>
+              <td>Vous avez appelé un taxi.</td>
+            </tr>
+            <tr>
+              <td>ils/elles</td>
+              <td>ont</td>
+              <td>Ils ont vu un film.</td>
+            </tr>
+          </table>
+        </div>
+
+        <div style="margin: 20px 0; padding: 15px; background: var(--border); border-radius: 8px;">
+          <strong>Auxiliaire ÊTRE + Participe Passé</strong><br>
+          <em>Pour 16 verbes de mouvement/état</em>
+          <table class="form-table" style="width: 100%; margin-top: 10px;">
+            <tr style="background: var(--l0l);">
+              <td><strong>Pronoun</strong></td>
+              <td><strong>Être (Présent)</strong></td>
+              <td><strong>Exemple</strong></td>
+            </tr>
+            <tr>
+              <td>je</td>
+              <td>suis</td>
+              <td>Je suis allé au parc.</td>
+            </tr>
+            <tr>
+              <td>tu</td>
+              <td>es</td>
+              <td>Tu es venu hier.</td>
+            </tr>
+            <tr>
+              <td>il/elle/on</td>
+              <td>est</td>
+              <td>Elle est arrivée à l'heure.</td>
+            </tr>
+            <tr>
+              <td>nous</td>
+              <td>sommes</td>
+              <td>Nous sommes partis en vacances.</td>
+            </tr>
+            <tr>
+              <td>vous</td>
+              <td>êtes</td>
+              <td>Vous êtes restés longtemps.</td>
+            </tr>
+            <tr>
+              <td>ils/elles</td>
+              <td>sont</td>
+              <td>Elles sont tombées.</td>
+            </tr>
+          </table>
+          <div style="margin-top: 12px; padding: 10px; background: var(--l0); border-radius: 6px; font-size: 13px;">
+            <strong>Les 16 verbes ÊTRE:</strong> aller, venir, arriver, partir, entrer, sortir, monter, descendre, naître, mourir, rester, retourner, tomber, passer, devenir, revenir
+          </div>
+        </div>
+
+        <div style="margin: 20px 0; padding: 15px; background: var(--border); border-radius: 8px;">
+          <strong>Règle d'Accord avec ÊTRE</strong><br>
+          Le participe passé s'accorde avec le sujet:
+          <ul style="margin: 10px 0 0 20px;">
+            <li>Féminin singulier: <strong>-e</strong> → Elle est allé<strong>e</strong></li>
+            <li>Pluriel: <strong>-s</strong> → Ils sont arrivé<strong>s</strong></li>
+            <li>Féminin pluriel: <strong>-es</strong> → Elles sont descendu<strong>es</strong></li>
+          </ul>
+        </div>
+
+        <div style="margin: 20px 0; padding: 15px; background: var(--border); border-radius: 8px;">
+          <strong>La Négation au Passé Composé</strong><br>
+          Structure: <strong>ne + auxiliaire + pas + participe passé</strong>
+          <ul style="margin: 10px 0 0 20px;">
+            <li>Je n'ai pas mangé. <button class="btn-mini" onclick="speak('Je n\'ai pas mangé.')">🔊</button></li>
+            <li>Elle n'est pas venue. <button class="btn-mini" onclick="speak('Elle n\'est pas venue.')">🔊</button></li>
+            <li>Nous n'avons pas compris. <button class="btn-mini" onclick="speak('Nous n\'avons pas compris.')">🔊</button></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-title">🎯 Exercice 1: QCM - Avoir ou Être?</div>
+        <div class="ex-instr">Sélectionnez l'auxiliaire correct (avoir ou être).</div>
+        <div id="qcm-pc0-score" style="font-size: 13px; margin-bottom: 20px; padding: 8px 12px; background: var(--border); border-radius: 8px; display: inline-block;">Score : <strong>0 / 5</strong></div>
+        <script>const pcState0 = { score: 0, total: 5 };</script>
+
+        <div class="qcm-item">
+          <div class="q-text">Je ___ allé au cinéma.</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-pc0-score', pcState0)">suis</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-pc0-score', pcState0)">ai</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Nous ___ mangé une pizza.</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-pc0-score', pcState0)">sommes</button>
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-pc0-score', pcState0)">avons</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Ils ___ arrivés tard.</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-pc0-score', pcState0)">sont</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-pc0-score', pcState0)">ont</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Elle ___ vu un ami.</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-pc0-score', pcState0)">est</button>
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-pc0-score', pcState0)">a</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Vous ___ sorties hier soir.</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-pc0-score', pcState0)">êtes</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-pc0-score', pcState0)">avez</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-title">✏️ Exercice 2: Conjuguer au Passé Composé</div>
+        <div class="ex-instr">Écrivez le verbe au passé composé.</div>
+        <div id="fill-pc0">
+          <div class="fill-item">
+            <div class="fill-sentence">Je ___ (aller) au marché ce matin.</div>
+            <input type="text" class="fill-input" data-answer="suis allé">
+            <div class="fill-hint"></div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Ils ___ (finir) leurs études l'année dernière.</div>
+            <input type="text" class="fill-input" data-answer="ont fini">
+            <div class="fill-hint"></div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Elle ___ (partir) en vacances.</div>
+            <input type="text" class="fill-input" data-answer="est partie">
+            <div class="fill-hint"></div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Nous ___ (perdre) nos bagages à l'aéroport.</div>
+            <input type="text" class="fill-input" data-answer="avons perdu">
+            <div class="fill-hint"></div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Tu ___ (rester) à la maison?</div>
+            <input type="text" class="fill-input" data-answer="es resté">
+            <div class="fill-hint"></div>
+          </div>
+        </div>
+        <button class="btn-check" onclick="checkFill('fill-pc0')">Vérifier</button>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-title">🔗 Exercice 3: Match - Infinitif → Participe Passé</div>
+        <div class="ex-instr">Associez chaque verbe à son participe passé.</div>
+        <div id="match-pc0" class="match-zone"></div>
+        <script>buildMatch('match-pc0', [
+          ['aller', 'allé'],
+          ['avoir', 'eu'],
+          ['être', 'été'],
+          ['faire', 'fait'],
+          ['voir', 'vu'],
+          ['venir', 'venu'],
+          ['pouvoir', 'pu'],
+          ['vouloir', 'voulu']
+        ]);</script>
+      </div>
+    </section>
+
+    <!-- LEÇON 1: Les Verbes Pronominaux au PC -->
+    <section id="lesson-1" class="lesson-panel" style="display: none;">
+      <div class="lesson-header">
+        <div class="lesson-icon-big">🪞</div>
+        <div class="lesson-meta">
+          <span class="lesson-tag" style="background: var(--l1); color: var(--l1d);">Leçon 1</span>
+          <h1 class="lesson-title">Les Verbes Pronominaux au Passé Composé</h1>
+          <p class="lesson-desc">Formation et accord des verbes réfléchis au passé</p>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-title">📚 Les Verbes Pronominaux</div>
+        <div class="ex-instr">
+          Les verbes pronominaux utilisent toujours <strong>être</strong> comme auxiliaire au passé composé.
+        </div>
+        <div style="margin: 20px 0; padding: 15px; background: var(--border); border-radius: 8px;">
+          <strong>Structure: Sujet + Pronom Réfléchi + ÊTRE + Participe Passé</strong>
+          <table class="form-table" style="width: 100%; margin-top: 10px;">
+            <tr style="background: var(--l1l);">
+              <td><strong>Pronoun</strong></td>
+              <td><strong>Exemple</strong></td>
+              <td><strong>Traduction</strong></td>
+            </tr>
+            <tr>
+              <td>je</td>
+              <td>Je m'endormis. → Je me suis endormi(e)</td>
+              <td>I fell asleep</td>
+            </tr>
+            <tr>
+              <td>tu</td>
+              <td>Tu t'énervais. → Tu t'es énervé(e)</td>
+              <td>You got annoyed</td>
+            </tr>
+            <tr>
+              <td>il/elle</td>
+              <td>Elle s'est dépêchée</td>
+              <td>She hurried</td>
+            </tr>
+            <tr>
+              <td>nous</td>
+              <td>Nous nous sommes détendus</td>
+              <td>We relaxed</td>
+            </tr>
+            <tr>
+              <td>vous</td>
+              <td>Vous vous êtes amusés</td>
+              <td>You had fun</td>
+            </tr>
+            <tr>
+              <td>ils/elles</td>
+              <td>Elles se sont ennuyées</td>
+              <td>They got bored</td>
+            </tr>
+          </table>
+        </div>
+
+        <div style="margin: 20px 0; padding: 15px; background: var(--border); border-radius: 8px;">
+          <strong>⚠️ Accord du Participe Passé</strong><br>
+          L'accord dépend du <strong>complément d'objet direct (COD)</strong>:
+          <ul style="margin: 10px 0 0 20px;">
+            <li><strong style="color: var(--l1d);">✅ ACCORD si pas de COD</strong><br>
+              Elle s'est lavé<strong>e</strong>. (pas de COD) <button class="btn-mini" onclick="speak('Elle s\'est lavée.')">🔊</button>
+            </li>
+            <li><strong style="color: var(--l1d);">❌ PAS D'ACCORD si COD après</strong><br>
+              Elle s'est lavé les mains. (les mains = COD) <button class="btn-mini" onclick="speak('Elle s\'est lavé les mains.')">🔊</button>
+            </li>
+          </ul>
+        </div>
+
+        <div style="margin: 20px 0; padding: 15px; background: var(--border); border-radius: 8px;">
+          <strong>16 Verbes Pronominaux Courants</strong><br>
+          <div style="columns: 2; column-gap: 20px;">
+            <ul style="margin: 10px 0 0 20px;">
+              <li>s'endormir</li>
+              <li>s'énerver</li>
+              <li>se dépêcher</li>
+              <li>se détendre</li>
+              <li>s'ennuyer</li>
+              <li>se moquer</li>
+              <li>se fâcher</li>
+              <li>se souvenir</li>
+            </ul>
+            <ul style="margin: 10px 0 0 20px;">
+              <li>s'installer</li>
+              <li>s'occuper</li>
+              <li>se tromper</li>
+              <li>s'améliorer</li>
+              <li>se disputer</li>
+              <li>se blesser</li>
+              <li>se cacher</li>
+              <li>se marier</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-title">🎯 Exercice 1: QCM - Accord Correct?</div>
+        <div class="ex-instr">Choisissez la forme correcte.</div>
+        <div id="qcm-pron-score" style="font-size: 13px; margin-bottom: 20px; padding: 8px 12px; background: var(--border); border-radius: 8px; display: inline-block;">Score : <strong>0 / 4</strong></div>
+        <script>const pronState = { score: 0, total: 4 };</script>
+
+        <div class="qcm-item">
+          <div class="q-text">Elle s'est...</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-pron-score', pronState)">maquillée</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-pron-score', pronState)">maquillé</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Ils se sont...</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-pron-score', pronState)">marié</button>
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-pron-score', pronState)">mariés</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Nous nous sommes...</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-pron-score', pronState)">disputés</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-pron-score', pronState)">disputé</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Tu t'es... à l'heure.</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-pron-score', pronState)">dépêché(e)</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-pron-score', pronState)">dépêchée</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-title">✏️ Exercice 2: Conjuguer les Verbes Pronominaux</div>
+        <div class="ex-instr">Écrivez les verbes pronominaux au passé composé.</div>
+        <div id="fill-pron">
+          <div class="fill-item">
+            <div class="fill-sentence">Hier, je ___ (se réveiller) très tôt.</div>
+            <input type="text" class="fill-input" data-answer="me suis réveillé">
+            <div class="fill-hint"></div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Ma mère ___ (se fâcher) contre moi.</div>
+            <input type="text" class="fill-input" data-answer="s'est fâchée">
+            <div class="fill-hint"></div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">On ___ (se moquer) de lui toute la journée.</div>
+            <input type="text" class="fill-input" data-answer="s'est moqué">
+            <div class="fill-hint"></div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Vous ___ (s'améliorer) beaucoup!</div>
+            <input type="text" class="fill-input" data-answer="vous êtes améliorés">
+            <div class="fill-hint"></div>
+          </div>
+        </div>
+        <button class="btn-check" onclick="checkFill('fill-pron')">Vérifier</button>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-title">🔗 Exercice 3: Match - Verbe → Passé Composé</div>
+        <div class="ex-instr">Associez le verbe infinitif à sa conjugaison au passé composé.</div>
+        <div id="match-pron" class="match-zone"></div>
+        <script>buildMatch('match-pron', [
+          ['s\'endormir', 'Je me suis endormi(e)'],
+          ['se détendre', 'Elle s\'est détendue'],
+          ['se tromper', 'Tu t\'es trompé(e)'],
+          ['se souvenir', 'Ils se sont souvenus'],
+          ['s\'installer', 'Nous nous sommes installés'],
+          ['se marier', 'Elles se sont mariées']
+        ]);</script>
+      </div>
+    </section>
+
+    <!-- LEÇON 2: L'Imparfait -->
+    <section id="lesson-2" class="lesson-panel" style="display: none;">
+      <div class="lesson-header">
+        <div class="lesson-icon-big">📖</div>
+        <div class="lesson-meta">
+          <span class="lesson-tag" style="background: var(--l2); color: var(--l2d);">Leçon 2</span>
+          <h1 class="lesson-title">L'Imparfait</h1>
+          <p class="lesson-desc">Le temps du passé pour décrire, raconter des habitudes et des états</p>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-title">📚 Formation de l'Imparfait</div>
+        <div class="ex-instr">
+          L'imparfait a les mêmes terminaisons pour TOUS les verbes: -ais, -ais, -ait, -ions, -iez, -aient.<br>
+          Base: prenez la forme "nous" du présent, enlevez "-ons", puis ajoutez les terminaisons.
+        </div>
+        <div style="margin: 20px 0; padding: 15px; background: var(--border); border-radius: 8px;">
+          <strong>Exemple: PARLER</strong> (nous parlons → parl...)
+          <table class="form-table" style="width: 100%; margin-top: 10px;">
+            <tr style="background: var(--l2l);">
+              <td><strong>Pronoun</strong></td>
+              <td><strong>Imparfait</strong></td>
+              <td><strong>Prononciation</strong></td>
+            </tr>
+            <tr>
+              <td>je</td>
+              <td>parlais</td>
+              <td>par-lé</td>
+            </tr>
+            <tr>
+              <td>tu</td>
+              <td>parlais</td>
+              <td>par-lé</td>
+            </tr>
+            <tr>
+              <td>il/elle/on</td>
+              <td>parlait</td>
+              <td>par-lé</td>
+            </tr>
+            <tr>
+              <td>nous</td>
+              <td>parlions</td>
+              <td>par-li-on</td>
+            </tr>
+            <tr>
+              <td>vous</td>
+              <td>parliez</td>
+              <td>par-li-é</td>
+            </tr>
+            <tr>
+              <td>ils/elles</td>
+              <td>parlaient</td>
+              <td>par-lé</td>
+            </tr>
+          </table>
+        </div>
+
+        <div style="margin: 20px 0; padding: 15px; background: var(--border); border-radius: 8px;">
+          <strong>Autres Exemples</strong>
+          <table class="form-table" style="width: 100%; margin-top: 10px;">
+            <tr style="background: var(--l2l);">
+              <td><strong>Infinitif</strong></td>
+              <td><strong>Base (nous)</strong></td>
+              <td><strong>Je / Il</strong></td>
+              <td><strong>Nous</strong></td>
+            </tr>
+            <tr>
+              <td>finir</td>
+              <td>finiss-</td>
+              <td>je finissais</td>
+              <td>nous finissions</td>
+            </tr>
+            <tr>
+              <td>aller</td>
+              <td>all-</td>
+              <td>j'allais</td>
+              <td>nous allions</td>
+            </tr>
+            <tr>
+              <td>avoir</td>
+              <td>av-</td>
+              <td>j'avais</td>
+              <td>nous avions</td>
+            </tr>
+            <tr>
+              <td>être</td>
+              <td>ét-</td>
+              <td>j'étais</td>
+              <td>nous étions</td>
+            </tr>
+          </table>
+        </div>
+
+        <div style="margin: 20px 0; padding: 15px; background: var(--border); border-radius: 8px;">
+          <strong>Les 3 Usages Principaux</strong>
+          <div style="margin-top: 12px;">
+            <strong style="display: block; margin-bottom: 8px; color: var(--l2d);">1) Actions habituelles ou répétées</strong>
+            <div style="padding: 8px; background: var(--l2); border-radius: 4px; margin-bottom: 12px;">
+              Quand j'étais petit, je jouais dans le jardin tous les jours.
+              <button class="btn-mini" onclick="speak('Quand j\'étais petit, je jouais dans le jardin tous les jours.')">🔊</button><br>
+              <span style="font-size: 12px; color: var(--muted);">When I was young, I used to play in the garden every day.</span>
+            </div>
+
+            <strong style="display: block; margin-bottom: 8px; color: var(--l2d);">2) Description de situations ou états</strong>
+            <div style="padding: 8px; background: var(--l2); border-radius: 4px; margin-bottom: 12px;">
+              Il faisait beau et les oiseaux chantaient.
+              <button class="btn-mini" onclick="speak('Il faisait beau et les oiseaux chantaient.')">🔊</button><br>
+              <span style="font-size: 12px; color: var(--muted);">It was nice and the birds were singing.</span>
+            </div>
+
+            <strong style="display: block; margin-bottom: 8px; color: var(--l2d);">3) Action en cours interrompue par une autre</strong>
+            <div style="padding: 8px; background: var(--l2); border-radius: 4px;">
+              Je regardais la télé quand tu as appelé.
+              <button class="btn-mini" onclick="speak('Je regardais la télé quand tu as appelé.')">🔊</button><br>
+              <span style="font-size: 12px; color: var(--muted);">I was watching TV when you called.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-title">🎯 Exercice 1: QCM - Conjugaison de l'Imparfait</div>
+        <div class="ex-instr">Choisissez la forme correcte à l'imparfait.</div>
+        <div id="qcm-imp-score" style="font-size: 13px; margin-bottom: 20px; padding: 8px 12px; background: var(--border); border-radius: 8px; display: inline-block;">Score : <strong>0 / 5</strong></div>
+        <script>const impState = { score: 0, total: 5 };</script>
+
+        <div class="qcm-item">
+          <div class="q-text">Quand tu étais enfant, tu ___ (jouer) dehors.</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-imp-score', impState)">jouais</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-imp-score', impState)">as joué</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Nous ___ (avoir) une maison à la campagne.</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-imp-score', impState)">avions</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-imp-score', impState)">avons eu</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Il ___ (faire) très froid ce jour-là.</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-imp-score', impState)">a fait</button>
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-imp-score', impState)">faisait</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Vous ___ (finir) toujours vos études le soir.</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-imp-score', impState)">finissiez</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-imp-score', impState)">avez fini</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Les enfants ___ (aller) à l'école chaque matin.</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-imp-score', impState)">allaient</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-imp-score', impState)">sont allés</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-title">✏️ Exercice 2: Conjuguer à l'Imparfait</div>
+        <div class="ex-instr">Écrivez les verbes à l'imparfait.</div>
+        <div id="fill-imp">
+          <div class="fill-item">
+            <div class="fill-sentence">Avant, tu ___ (habiter) à Paris.</div>
+            <input type="text" class="fill-input" data-answer="habitais">
+            <div class="fill-hint"></div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Elle ___ (être) très heureuse en ce temps.</div>
+            <input type="text" class="fill-input" data-answer="était">
+            <div class="fill-hint"></div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Nous ___ (prendre) le train chaque jour.</div>
+            <input type="text" class="fill-input" data-answer="prenions">
+            <div class="fill-hint"></div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Ils ___ (venir) nous voir souvent.</div>
+            <input type="text" class="fill-input" data-answer="venaient">
+            <div class="fill-hint"></div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Je ___ (voir) cette émission chaque semaine.</div>
+            <input type="text" class="fill-input" data-answer="voyais">
+            <div class="fill-hint"></div>
+          </div>
+        </div>
+        <button class="btn-check" onclick="checkFill('fill-imp')">Vérifier</button>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-title">🔗 Exercice 3: Match - Verbe → Forme à l'Imparfait</div>
+        <div class="ex-instr">Associez chaque verbe à sa forme à l'imparfait (3e personne singular).</div>
+        <div id="match-imp" class="match-zone"></div>
+        <script>buildMatch('match-imp', [
+          ['parler', 'il parlait'],
+          ['finir', 'elle finissait'],
+          ['avoir', 'j\'avais'],
+          ['aller', 'tu allais'],
+          ['faire', 'vous faisiez'],
+          ['venir', 'ils venaient']
+        ]);</script>
+      </div>
+    </section>
+
+    <!-- LEÇON 3: Imparfait + Passé Composé -->
+    <section id="lesson-3" class="lesson-panel" style="display: none;">
+      <div class="lesson-header">
+        <div class="lesson-icon-big">⚔️</div>
+        <div class="lesson-meta">
+          <span class="lesson-tag" style="background: var(--l3); color: var(--l3d);">Leçon 3</span>
+          <h1 class="lesson-title">Imparfait + Passé Composé</h1>
+          <p class="lesson-desc">Combiner les deux temps du passé pour raconter une histoire</p>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-title">📚 Imparfait vs Passé Composé</div>
+        <div class="ex-instr">
+          <strong>Imparfait</strong> = contexte, description, situation de base<br>
+          <strong>Passé Composé</strong> = action principale, événement spécifique
+        </div>
+        <div style="margin: 20px 0; padding: 15px; background: var(--border); border-radius: 8px;">
+          <strong>Comparaison</strong>
+          <table class="form-table" style="width: 100%; margin-top: 10px;">
+            <tr style="background: var(--l3l);">
+              <td><strong>Imparfait</strong></td>
+              <td><strong>Passé Composé</strong></td>
+            </tr>
+            <tr>
+              <td>Action habituelle</td>
+              <td>Action spécifique, complète</td>
+            </tr>
+            <tr>
+              <td>Description d'une situation</td>
+              <td>Événement ponctuel</td>
+            </tr>
+            <tr>
+              <td>Durée indéfinie</td>
+              <td>Moment précis</td>
+            </tr>
+            <tr>
+              <td>Fond de l'histoire</td>
+              <td>Premier plan de l'histoire</td>
+            </tr>
+          </table>
+        </div>
+
+        <div style="margin: 20px 0; padding: 15px; background: var(--border); border-radius: 8px;">
+          <strong>Les 4 Combinaisons Principales</strong>
+          <div style="margin-top: 12px;">
+            <strong style="display: block; margin-bottom: 8px; color: var(--l3d);">1) Description + Action Principale</strong>
+            <div style="padding: 8px; background: var(--l3); border-radius: 4px; margin-bottom: 12px;">
+              <span style="color: var(--l3d);">Il faisait beau</span> (imparfait) <strong>et</strong>
+              <span style="color: var(--l3d);">soudain, il a commencé à pleuvoir</span> (PC).
+              <button class="btn-mini" onclick="speak('Il faisait beau et soudain, il a commencé à pleuvoir.')">🔊</button>
+            </div>
+
+            <strong style="display: block; margin-bottom: 8px; color: var(--l3d);">2) Situation = Action Interrompue</strong>
+            <div style="padding: 8px; background: var(--l3); border-radius: 4px; margin-bottom: 12px;">
+              <span style="color: var(--l3d);">Je dormais</span> (imparfait) <strong>quand</strong>
+              <span style="color: var(--l3d);">tu as sonné à la porte</span> (PC).
+              <button class="btn-mini" onclick="speak('Je dormais quand tu as sonné à la porte.')">🔊</button>
+            </div>
+
+            <strong style="display: block; margin-bottom: 8px; color: var(--l3d);">3) Séquence d'Actions (tout PC)</strong>
+            <div style="padding: 8px; background: var(--l3); border-radius: 4px; margin-bottom: 12px;">
+              <span style="color: var(--l3d);">Il a pris sa veste, a ouvert la porte et est parti</span> (tout PC).
+              <button class="btn-mini" onclick="speak('Il a pris sa veste, a ouvert la porte et est parti.')">🔊</button>
+            </div>
+
+            <strong style="display: block; margin-bottom: 8px; color: var(--l3d);">4) Habitudes Passées (tout Imparfait)</strong>
+            <div style="padding: 8px; background: var(--l3); border-radius: 4px;">
+              <span style="color: var(--l3d);">Chaque matin, je me réveillais tôt et j'allais courir</span> (tout imparfait).
+              <button class="btn-mini" onclick="speak('Chaque matin, je me réveillais tôt et j\'allais courir.')">🔊</button>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin: 20px 0; padding: 15px; background: var(--border); border-radius: 8px;">
+          <strong>Dialogue Exemple: Marie et Paul</strong>
+          <div style="margin-top: 12px; padding: 10px; background: var(--l3l); border-radius: 6px; font-style: italic;">
+            <strong>Marie:</strong> Qu'est-ce que tu faisais hier soir?<br>
+            <button class="btn-mini" onclick="speak('Qu\'est-ce que tu faisais hier soir?')">🔊</button><br>
+            <strong>Paul:</strong> J'étais à la maison et je regardais un film, quand soudain j'ai reçu un coup de téléphone.
+            <button class="btn-mini" onclick="speak('J\'étais à la maison et je regardais un film, quand soudain j\'ai reçu un coup de téléphone.')">🔊</button><br>
+            <strong>Marie:</strong> De qui?<br>
+            <strong>Paul:</strong> De mon patron! Il a dit qu'il avait besoin de moi au bureau.
+            <button class="btn-mini" onclick="speak('De mon patron! Il a dit qu\'il avait besoin de moi au bureau.')">🔊</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-title">🎯 Exercice 1: QCM - Quel Temps Utiliser?</div>
+        <div class="ex-instr">Choisissez le temps correct (imparfait ou passé composé).</div>
+        <div id="qcm-imppc-score" style="font-size: 13px; margin-bottom: 20px; padding: 8px 12px; background: var(--border); border-radius: 8px; display: inline-block;">Score : <strong>0 / 5</strong></div>
+        <script>const imppcState = { score: 0, total: 5 };</script>
+
+        <div class="qcm-item">
+          <div class="q-text">Pendant que je ___ (faire) mes devoirs, mon ami a appelé.</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-imppc-score', imppcState)">faisais</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-imppc-score', imppcState)">ai fait</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Hier, je ___ (aller) au cinéma.</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-imppc-score', imppcState)">allais</button>
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-imppc-score', imppcState)">suis allé</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Avant, nous ___ (habiter) près de la mer.</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-imppc-score', imppcState)">habitions</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-imppc-score', imppcState)">avons habité</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Il ___ (pleuvoir) quand nous sommes arrivés.</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-imppc-score', imppcState)">pleuvait</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-imppc-score', imppcState)">a plu</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Elle ___ (prendre) la clé et est sortie.</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-imppc-score', imppcState)">a pris</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-imppc-score', imppcState)">prenait</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-title">✏️ Exercice 2: Compléter l'Histoire</div>
+        <div class="ex-instr">Remplissez les blancs avec le temps correct (imparfait ou passé composé).</div>
+        <div id="fill-imppc">
+          <div class="fill-item">
+            <div class="fill-sentence">C'___ (être) une belle journée d'été.</div>
+            <input type="text" class="fill-input" data-answer="était">
+            <div class="fill-hint"></div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Je ___ (marcher) dans la forêt quand j'ai vu un ours.</div>
+            <input type="text" class="fill-input" data-answer="marchais">
+            <div class="fill-hint"></div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Mon cœur ___ (accélérer) immédiatement!</div>
+            <input type="text" class="fill-input" data-answer="a accéléré">
+            <div class="fill-hint"></div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Heureusement, l'ours ___ (disparaître) rapidement.</div>
+            <input type="text" class="fill-input" data-answer="a disparu">
+            <div class="fill-hint"></div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Je ___ (avoir) très peur et je ___ (rentrer) à la maison.</div>
+            <input type="text" class="fill-input" data-answer="avais peur et je suis rentré">
+            <div class="fill-hint"></div>
+          </div>
+        </div>
+        <button class="btn-check" onclick="checkFill('fill-imppc')">Vérifier</button>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-title">🔗 Exercice 3: Match - Contexte → Temps</div>
+        <div class="ex-instr">Associez la situation à l'usage du temps.</div>
+        <div id="match-imppc" class="match-zone"></div>
+        <script>buildMatch('match-imppc', [
+          ['Action qui interrompt une autre', 'Passé composé'],
+          ['Description de la situation', 'Imparfait'],
+          ['Habitude du passé', 'Imparfait'],
+          ['Événement spécifique', 'Passé composé'],
+          ['Fond de l\'histoire', 'Imparfait'],
+          ['Succession d\'événements', 'Passé composé']
+        ]);</script>
+      </div>
+    </section>
+
+    <!-- LEÇON 4: Les Pronoms COD -->
+    <section id="lesson-4" class="lesson-panel" style="display: none;">
+      <div class="lesson-header">
+        <div class="lesson-icon-big">🎯</div>
+        <div class="lesson-meta">
+          <span class="lesson-tag" style="background: var(--l4); color: var(--l4d);">Leçon 4</span>
+          <h1 class="lesson-title">Les Pronoms Compléments d'Objet Direct (COD)</h1>
+          <p class="lesson-desc">Remplacer les noms directs par des pronoms et accorder au passé composé</p>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-title">📚 Les Pronoms COD</div>
+        <div class="ex-instr">
+          Le COD (complément d'objet direct) répond à "Qui?" ou "Quoi?" et remplace l'objet du verbe.
+        </div>
+        <div style="margin: 20px 0; padding: 15px; background: var(--border); border-radius: 8px;">
+          <strong>Tableau des Pronoms COD</strong>
+          <table class="form-table" style="width: 100%; margin-top: 10px;">
+            <tr style="background: var(--l4l);">
+              <td><strong>Personne</strong></td>
+              <td><strong>Pronoun</strong></td>
+              <td><strong>Exemple</strong></td>
+              <td><strong>Traduction</strong></td>
+            </tr>
+            <tr>
+              <td>1ère sg</td>
+              <td>me (m')</td>
+              <td>Tu me vois.</td>
+              <td>You see me.</td>
+            </tr>
+            <tr>
+              <td>2e sg</td>
+              <td>te (t')</td>
+              <td>Je te regarde.</td>
+              <td>I look at you.</td>
+            </tr>
+            <tr>
+              <td>3e sg masc</td>
+              <td>le (l')</td>
+              <td>Je le mange.</td>
+              <td>I eat it.</td>
+            </tr>
+            <tr>
+              <td>3e sg fem</td>
+              <td>la (l')</td>
+              <td>Je la bois.</td>
+              <td>I drink it.</td>
+            </tr>
+            <tr>
+              <td>1ère pl</td>
+              <td>nous</td>
+              <td>Vous nous attendez.</td>
+              <td>You wait for us.</td>
+            </tr>
+            <tr>
+              <td>2e pl</td>
+              <td>vous</td>
+              <td>Je vous aime.</td>
+              <td>I love you.</td>
+            </tr>
+            <tr>
+              <td>3e pl</td>
+              <td>les</td>
+              <td>Je les vois.</td>
+              <td>I see them.</td>
+            </tr>
+          </table>
+        </div>
+
+        <div style="margin: 20px 0; padding: 15px; background: var(--border); border-radius: 8px;">
+          <strong>⚠️ Position du Pronoun COD</strong><br>
+          Le pronom se place <strong>AVANT</strong> le verbe conjugué, JAMAIS après.
+          <div style="margin-top: 12px;">
+            <div style="padding: 8px; background: var(--l4); border-radius: 4px; margin-bottom: 8px;">
+              ✅ <strong>Je le mange.</strong> (Correct)
+              <button class="btn-mini" onclick="speak('Je le mange.')">🔊</button>
+            </div>
+            <div style="padding: 8px; background: var(--l4); border-radius: 4px;">
+              ❌ Je mange le. (Incorrect)
+            </div>
+          </div>
+        </div>
+
+        <div style="margin: 20px 0; padding: 15px; background: var(--border); border-radius: 8px;">
+          <strong>Accord du Participe Passé avec COD (Passé Composé)</strong><br>
+          Si le COD est AVANT l'auxiliaire, le participe passé s'accorde avec le COD.
+          <ul style="margin: 10px 0 0 20px;">
+            <li><strong>Les livres? Je les ai achetés.</strong> (livres masc pl → -s)
+              <button class="btn-mini" onclick="speak('Les livres? Je les ai achetés.')">🔊</button>
+            </li>
+            <li><strong>La pomme? Je l'ai mangée.</strong> (pomme fem sg → -e)
+              <button class="btn-mini" onclick="speak('La pomme? Je l\'ai mangée.')">🔊</button>
+            </li>
+            <li><strong>Sans COD avant: J'ai acheté les livres.</strong> (pas d'accord)
+              <button class="btn-mini" onclick="speak('J\'ai acheté les livres.')">🔊</button>
+            </li>
+          </ul>
+        </div>
+
+        <div style="margin: 20px 0; padding: 15px; background: var(--border); border-radius: 8px;">
+          <strong>Avec la Négation</strong><br>
+          Structure: <strong>ne + pronoun + verbe + pas</strong>
+          <ul style="margin: 10px 0 0 20px;">
+            <li>Je ne te vois pas. <button class="btn-mini" onclick="speak('Je ne te vois pas.')">🔊</button></li>
+            <li>Nous ne les attendons pas. <button class="btn-mini" onclick="speak('Nous ne les attendons pas.')">🔊</button></li>
+          </ul>
+        </div>
+
+        <div style="margin: 20px 0; padding: 15px; background: var(--border); border-radius: 8px;">
+          <strong>Lecture: Paul et ses Livres</strong>
+          <div style="margin-top: 12px; padding: 10px; background: var(--l4l); border-radius: 6px;">
+            Paul adore les livres. Il les collectionne depuis dix ans. Hier, il a trouvé un très ancien livre français au marché. Il l'a acheté immédiatement. Maintenant, il les montre à tous ses amis. Ses amis les adorent aussi!
+          </div>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-title">🎯 Exercice 1: QCM - Remplacer par le Pronoun COD</div>
+        <div class="ex-instr">Quel pronom remplace le nom?</div>
+        <div id="qcm-cod-score" style="font-size: 13px; margin-bottom: 20px; padding: 8px 12px; background: var(--border); border-radius: 8px; display: inline-block;">Score : <strong>0 / 5</strong></div>
+        <script>const codState = { score: 0, total: 5 };</script>
+
+        <div class="qcm-item">
+          <div class="q-text">Je regarde le film. Je ___ regarde.</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-cod-score', codState)">le</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-cod-score', codState)">la</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Tu manges la pomme. Tu ___ manges.</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-cod-score', codState)">le</button>
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-cod-score', codState)">la</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Nous attendons Paul et Marie. Nous ___ attendons.</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-cod-score', codState)">les</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-cod-score', codState)">leur</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Je vous invite à la fête. Je ___ invite à la fête.</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-cod-score', codState)">vous</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-cod-score', codState)">leur</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Elle m'appelle. Je ___ écoute.</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-cod-score', codState)">l'</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-cod-score', codState)">le</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-title">✏️ Exercice 2: Remplacer par un Pronoun COD</div>
+        <div class="ex-instr">Remplacez le nom souligné par un pronom COD.</div>
+        <div id="fill-cod">
+          <div class="fill-item">
+            <div class="fill-sentence">J'aime le chocolat. Je ___ aime.</div>
+            <input type="text" class="fill-input" data-answer="le">
+            <div class="fill-hint"></div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Tu as vu nos amis hier? Tu ___ as vus.</div>
+            <input type="text" class="fill-input" data-answer="les">
+            <div class="fill-hint"></div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Elle attend sa mère. Elle ___ attend.</div>
+            <input type="text" class="fill-input" data-answer="l'">
+            <div class="fill-hint"></div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Nous avons acheté les fleurs. Nous ___ avons achetées.</div>
+            <input type="text" class="fill-input" data-answer="les">
+            <div class="fill-hint"></div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Il a trouvé la clé. Il ___ a trouvée.</div>
+            <input type="text" class="fill-input" data-answer="l'">
+            <div class="fill-hint"></div>
+          </div>
+        </div>
+        <button class="btn-check" onclick="checkFill('fill-cod')">Vérifier</button>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-title">🔗 Exercice 3: Match - Nom → Pronoun COD</div>
+        <div class="ex-instr">Associez le nom au pronoun COD correspondant.</div>
+        <div id="match-cod" class="match-zone"></div>
+        <script>buildMatch('match-cod', [
+          ['le livre', 'le'],
+          ['la maison', 'la'],
+          ['l\'arbre', 'l\''],
+          ['les enfants', 'les'],
+          ['moi', 'me'],
+          ['toi', 'te']
+        ]);</script>
+      </div>
+    </section>
+
+    <!-- LEÇON 5: COI, EN, Y -->
+    <section id="lesson-5" class="lesson-panel" style="display: none;">
+      <div class="lesson-header">
+        <div class="lesson-icon-big">📬</div>
+        <div class="lesson-meta">
+          <span class="lesson-tag" style="background: var(--l5); color: var(--l5d);">Leçon 5</span>
+          <h1 class="lesson-title">Les Pronoms COI, EN, Y</h1>
+          <p class="lesson-desc">Remplacer les compléments indirects, les quantités et les lieux</p>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-title">📚 Les Pronoms Indirects et Adverbiaux</div>
+        <div class="ex-instr">
+          Ces pronoms remplacent des compléments qui ne sont pas directs (COI, lieux, quantités).
+        </div>
+        <div style="margin: 20px 0; padding: 15px; background: var(--border); border-radius: 8px;">
+          <strong>Les Pronoms COI (Complément d'Objet Indirect)</strong><br>
+          Remplacent "à + personne" → <strong>lui / leur</strong>
+          <table class="form-table" style="width: 100%; margin-top: 10px;">
+            <tr style="background: var(--l5l);">
+              <td><strong>Cas</strong></td>
+              <td><strong>Pronoun</strong></td>
+              <td><strong>Exemple</strong></td>
+            </tr>
+            <tr>
+              <td>Singulier</td>
+              <td>lui</td>
+              <td>Je parle à Paul → Je lui parle. <button class="btn-mini" onclick="speak('Je lui parle.')">🔊</button></td>
+            </tr>
+            <tr>
+              <td>Pluriel</td>
+              <td>leur</td>
+              <td>Je parle aux enfants → Je leur parle. <button class="btn-mini" onclick="speak('Je leur parle.')">🔊</button></td>
+            </tr>
+          </table>
+          <div style="margin-top: 10px; padding: 8px; background: var(--l5); border-radius: 6px; font-size: 13px;">
+            <strong>Verbes courants:</strong> parler à, téléphoner à, écrire à, donner à, dire à, demander à, répondre à
+          </div>
+        </div>
+
+        <div style="margin: 20px 0; padding: 15px; background: var(--border); border-radius: 8px;">
+          <strong>Le Pronoun EN</strong><br>
+          Remplace <strong>de/du/de la/des</strong> ou une quantité
+          <ul style="margin: 10px 0 0 20px;">
+            <li><strong>Quantité:</strong> Tu veux du café? → J'en veux. (= Je veux du café)
+              <button class="btn-mini" onclick="speak('J\'en veux.')">🔊</button>
+            </li>
+            <li><strong>Provenance:</strong> Tu reviens de Paris? → Oui, j'en reviens. (= Je reviens de Paris)
+              <button class="btn-mini" onclick="speak('Oui, j\'en reviens.')">🔊</button>
+            </li>
+            <li><strong>Possession:</strong> Tu as des frères? → J'en ai deux. (= J'ai deux frères)
+              <button class="btn-mini" onclick="speak('J\'en ai deux.')">🔊</button>
+            </li>
+          </ul>
+        </div>
+
+        <div style="margin: 20px 0; padding: 15px; background: var(--border); border-radius: 8px;">
+          <strong>Le Pronoun Y</strong><br>
+          Remplace un <strong>lieu</strong> ou <strong>à + chose</strong> (pas personne)
+          <ul style="margin: 10px 0 0 20px;">
+            <li><strong>Lieu:</strong> Tu vas à Paris? → Oui, j'y vais. (= Je vais à Paris)
+              <button class="btn-mini" onclick="speak('Oui, j\'y vais.')">🔊</button>
+            </li>
+            <li><strong>Chose:</strong> Tu crois à cette histoire? → Oui, j'y crois. (= Je crois à cette histoire)
+              <button class="btn-mini" onclick="speak('Oui, j\'y crois.')">🔊</button>
+            </li>
+            <li><strong>⚠️ JAMAIS pour personne:</strong> Je parle à Paul. → Je lui parle. (PAS "j'y parle")
+              <button class="btn-mini" onclick="speak('Je lui parle.')">🔊</button>
+            </li>
+          </ul>
+        </div>
+
+        <div style="margin: 20px 0; padding: 15px; background: var(--border); border-radius: 8px;">
+          <strong>Tableau Comparatif: COD vs COI vs EN vs Y</strong>
+          <table class="form-table" style="width: 100%; margin-top: 10px; font-size: 12px;">
+            <tr style="background: var(--l5l);">
+              <td><strong>Type</strong></td>
+              <td><strong>Pronoun</strong></td>
+              <td><strong>Remplace</strong></td>
+              <td><strong>Exemple</strong></td>
+            </tr>
+            <tr>
+              <td>COD</td>
+              <td>le, la, les</td>
+              <td>Objet direct (chose)</td>
+              <td>Je vois le film → Je le vois.</td>
+            </tr>
+            <tr>
+              <td>COI</td>
+              <td>lui, leur</td>
+              <td>À + personne</td>
+              <td>Je parle à Paul → Je lui parle.</td>
+            </tr>
+            <tr>
+              <td>EN</td>
+              <td>en</td>
+              <td>De/du, quantité</td>
+              <td>Tu veux du café? → J'en veux.</td>
+            </tr>
+            <tr>
+              <td>Y</td>
+              <td>y</td>
+              <td>Lieu ou à + chose</td>
+              <td>Tu vas à Paris? → J'y vais.</td>
+            </tr>
+          </table>
+        </div>
+
+        <div style="margin: 20px 0; padding: 15px; background: var(--border); border-radius: 8px;">
+          <strong>Lecture: Paul prépare sa fête d'anniversaire</strong>
+          <div style="margin-top: 12px; padding: 10px; background: var(--l5l); border-radius: 6px;">
+            Paul prépare sa fête. Il téléphone à ses amis pour les inviter. Il leur dit que la fête est samedi. Il a besoin de bouteilles de vin. Il en achète cinq au marché. Il va aussi chez le boucher pour acheter de la viande. Le boucher lui vend du jambon. Paul en prend deux kilos. Il pense aussi aux gâteaux. Il y en a plusieurs chez le pâtissier. Il aime les gâteaux au chocolat. Il en commande un très grand. Voilà! Tout est prêt pour la fête!
+          </div>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-title">🎯 Exercice 1: QCM - Quel Pronoun Choisir?</div>
+        <div class="ex-instr">Choisissez le pronom correct (lui, leur, en, y).</div>
+        <div id="qcm-coimeny-score" style="font-size: 13px; margin-bottom: 20px; padding: 8px 12px; background: var(--border); border-radius: 8px; display: inline-block;">Score : <strong>0 / 5</strong></div>
+        <script>const coimenyState = { score: 0, total: 5 };</script>
+
+        <div class="qcm-item">
+          <div class="q-text">J'ai écrit une lettre à Marie. Je ___ ai écrit une lettre.</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-coimeny-score', coimenyState)">lui</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-coimeny-score', coimenyState)">y</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Tu veux des livres? Oui, je ___ veux.</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-coimeny-score', coimenyState)">en</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-coimeny-score', coimenyState)">le</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Vous allez à la plage? Oui, nous ___ allons.</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-coimeny-score', coimenyState)">y</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-coimeny-score', coimenyState)">en</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Je donne le cadeau à mes enfants. Je ___ donne le cadeau.</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-coimeny-score', coimenyState)">le</button>
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-coimeny-score', coimenyState)">leur</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Tu penses à ton examen? Oui, je ___ pense.</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-coimeny-score', coimenyState)">y</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-coimeny-score', coimenyState)">lui</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-title">✏️ Exercice 2: Remplacer par le Pronoun Correct</div>
+        <div class="ex-instr">Remplacez le complément par un pronom (COI, EN ou Y).</div>
+        <div id="fill-coimeny">
+          <div class="fill-item">
+            <div class="fill-sentence">Je parle à mon ami. Je ___ parle.</div>
+            <input type="text" class="fill-input" data-answer="lui">
+            <div class="fill-hint"></div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Tu manges du pain? Oui, j'___ mange tous les jours.</div>
+            <input type="text" class="fill-input" data-answer="en">
+            <div class="fill-hint"></div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Nous habitons à Lyon. Nous ___ habitons depuis 5 ans.</div>
+            <input type="text" class="fill-input" data-answer="y">
+            <div class="fill-hint"></div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Elle téléphone à ses parents chaque jour. Elle ___ téléphone chaque jour.</div>
+            <input type="text" class="fill-input" data-answer="leur">
+            <div class="fill-hint"></div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Vous avez des questions? Oui, nous ___ avons plusieurs.</div>
+            <input type="text" class="fill-input" data-answer="en">
+            <div class="fill-hint"></div>
+          </div>
+        </div>
+        <button class="btn-check" onclick="checkFill('fill-coimeny')">Vérifier</button>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-title">🔗 Exercice 3: Match - Pronoun → Usage</div>
+        <div class="ex-instr">Associez chaque pronom à son usage principal.</div>
+        <div id="match-coimeny" class="match-zone"></div>
+        <script>buildMatch('match-coimeny', [
+          ['lui', 'À + personne singulière'],
+          ['leur', 'À + personne plurielle'],
+          ['en', 'De/du ou quantité'],
+          ['y', 'Lieu ou à + chose'],
+          ['le/la/les', 'Objet direct (chose)'],
+          ['me/te', 'Objet direct (personne)']
+        ]);</script>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  // Initialize first lesson visible
+  document.getElementById('lesson-0').style.display = 'block';
+  const navButtons = document.querySelectorAll('.nav-btn');
+  navButtons[0].style.background = 'var(--l0d)';
+  navButtons[0].style.color = 'white';
+</script>
+
+</body>
+</html>

@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Français A2 · Module 4 · Le Futur et les Voyages</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="moteur.js"></script>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="sidebar-logo">Module 4 · <span>A2</span></div>
+    <button class="nav-btn active" data-lesson="0" onclick="showLesson(0, this)">
+      <span class="nav-icon">🔮</span><span>Le Futur simple</span>
+    </button>
+    <button class="nav-btn" data-lesson="1" onclick="showLesson(1, this)">
+      <span class="nav-icon">✈️</span><span>Préparer un voyage</span>
+    </button>
+  </aside>
+
+  <main class="main">
+    <!-- LESSON 0: Le Futur simple -->
+    <section class="lesson-panel" data-lesson="0" style="display: none;">
+      <div class="lesson-header">
+        <div class="lesson-icon-big">🔮</div>
+        <div class="lesson-meta">
+          <span class="lesson-tag" style="background: var(--l0);">A2</span>
+          <h1 class="lesson-title">Le Futur Simple</h1>
+          <p class="lesson-desc">Construire et utiliser le futur simple pour parler d'actions futures</p>
+        </div>
+      </div>
+
+      <!-- Introduction Card -->
+      <div class="ex-card" style="border-left: 4px solid var(--l0);">
+        <div class="ex-title">Introduction au Futur Simple</div>
+        <div class="ex-instr">
+          <p><strong>El "Futur Simple"</strong> en francés se utiliza para hablar de proyectos, deseos o acciones que ocurrirán en un futuro más lejano (mañana, el próximo año, en unas vacaciones...).</p>
+          <p style="margin-top: 12px;"><strong>Recordatorio sobre Futur Proche (A1):</strong> Se construye con <em>aller + infinitivo</em></p>
+          <ul style="margin-top: 8px; margin-left: 20px;">
+            <li>Ce soir, je vais regarder un film. <button class="btn-mini" onclick="speak('Ce soir, je vais regarder un film')">🔊</button> → Esta noche, voy a ver una película.</li>
+            <li>Demain, je vais apprendre le français. <button class="btn-mini" onclick="speak('Demain, je vais apprendre le français')">🔊</button> → Mañana, voy a aprender francés.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Construction Card -->
+      <div class="ex-card" style="border-left: 4px solid var(--l0);">
+        <div class="ex-title">Construction du Futur Simple</div>
+        <div class="ex-instr">
+          <p><strong>Formule générale:</strong> INFINITIF + Terminaison (-ai, -as, -a, -ons, -ez, -ont)</p>
+          <p style="margin-top: 10px;"><strong>⚠️ Important pour les verbes en -RE:</strong> On enlève le -e final avant la terminaison.</p>
+          <ul style="margin-top: 8px; margin-left: 20px;">
+            <li><strong>vendre</strong> → vendr + ai = <strong>je vendrai</strong> <button class="btn-mini" onclick="speak('je vendrai')">🔊</button> → venderé</li>
+            <li><strong>prendre</strong> → prendr + ai = <strong>je prendrai</strong> <button class="btn-mini" onclick="speak('je prendrai')">🔊</button> → tomaré</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Regular Conjugation Table -->
+      <div class="ex-card" style="border-left: 4px solid var(--l0);">
+        <div class="ex-title">Tableau de Conjugaison (Verbes Réguliers)</div>
+        <table class="form-table">
+          <thead>
+            <tr>
+              <th>Pronom</th>
+              <th>PARLER (1er groupe)</th>
+              <th>FINIR (2e groupe)</th>
+              <th>VENDRE (3e groupe)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Je</strong></td>
+              <td>je parlerai <button class="btn-mini" onclick="speak('je parlerai')">🔊</button></td>
+              <td>je finirai <button class="btn-mini" onclick="speak('je finirai')">🔊</button></td>
+              <td>je vendrai <button class="btn-mini" onclick="speak('je vendrai')">🔊</button></td>
+            </tr>
+            <tr>
+              <td><strong>Tu</strong></td>
+              <td>tu parleras <button class="btn-mini" onclick="speak('tu parleras')">🔊</button></td>
+              <td>tu finiras <button class="btn-mini" onclick="speak('tu finiras')">🔊</button></td>
+              <td>tu vendras <button class="btn-mini" onclick="speak('tu vendras')">🔊</button></td>
+            </tr>
+            <tr>
+              <td><strong>Il/Elle/On</strong></td>
+              <td>il parlera <button class="btn-mini" onclick="speak('il parlera')">🔊</button></td>
+              <td>il finira <button class="btn-mini" onclick="speak('il finira')">🔊</button></td>
+              <td>il vendra <button class="btn-mini" onclick="speak('il vendra')">🔊</button></td>
+            </tr>
+            <tr>
+              <td><strong>Nous</strong></td>
+              <td>nous parlerons <button class="btn-mini" onclick="speak('nous parlerons')">🔊</button></td>
+              <td>nous finirons <button class="btn-mini" onclick="speak('nous finirons')">🔊</button></td>
+              <td>nous vendrons <button class="btn-mini" onclick="speak('nous vendrons')">🔊</button></td>
+            </tr>
+            <tr>
+              <td><strong>Vous</strong></td>
+              <td>vous parlerez <button class="btn-mini" onclick="speak('vous parlerez')">🔊</button></td>
+              <td>vous finirez <button class="btn-mini" onclick="speak('vous finirez')">🔊</button></td>
+              <td>vous vendrez <button class="btn-mini" onclick="speak('vous vendrez')">🔊</button></td>
+            </tr>
+            <tr>
+              <td><strong>Ils/Elles</strong></td>
+              <td>ils parleront <button class="btn-mini" onclick="speak('ils parleront')">🔊</button></td>
+              <td>ils finiront <button class="btn-mini" onclick="speak('ils finiront')">🔊</button></td>
+              <td>ils vendront <button class="btn-mini" onclick="speak('ils vendront')">🔊</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Irregular Verbs Table -->
+      <div class="ex-card" style="border-left: 4px solid var(--l0);">
+        <div class="ex-title">Verbes Irréguliers (Racines Irrégulières)</div>
+        <p style="font-size: 13px; margin-bottom: 12px; color: var(--muted);">Les terminaisons (-ai, -as, -a, -ons, -ez, -ont) restent régulières, seule la racine change.</p>
+        <table class="form-table">
+          <thead>
+            <tr>
+              <th>Verbe (Infinitif)</th>
+              <th>Racine Irrégulière</th>
+              <th>Exemple (je)</th>
+              <th>Traduction (Español)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Être</strong></td>
+              <td>ser-</td>
+              <td>je serai <button class="btn-mini" onclick="speak('je serai')">🔊</button></td>
+              <td>yo seré / estaré</td>
+            </tr>
+            <tr>
+              <td><strong>Avoir</strong></td>
+              <td>aur-</td>
+              <td>j'aurai <button class="btn-mini" onclick="speak('j\\'aurai')">🔊</button></td>
+              <td>yo tendré</td>
+            </tr>
+            <tr>
+              <td><strong>Aller</strong></td>
+              <td>ir-</td>
+              <td>j'irai <button class="btn-mini" onclick="speak('j\\'irai')">🔊</button></td>
+              <td>yo iré</td>
+            </tr>
+            <tr>
+              <td><strong>Faire</strong></td>
+              <td>fer-</td>
+              <td>je ferai <button class="btn-mini" onclick="speak('je ferai')">🔊</button></td>
+              <td>yo haré</td>
+            </tr>
+            <tr>
+              <td><strong>Venir</strong></td>
+              <td>viendr-</td>
+              <td>je viendrai <button class="btn-mini" onclick="speak('je viendrai')">🔊</button></td>
+              <td>yo vendré</td>
+            </tr>
+            <tr>
+              <td><strong>Pouvoir</strong></td>
+              <td>pourr-</td>
+              <td>je pourrai <button class="btn-mini" onclick="speak('je pourrai')">🔊</button></td>
+              <td>yo podré</td>
+            </tr>
+            <tr>
+              <td><strong>Vouloir</strong></td>
+              <td>voudr-</td>
+              <td>je voudrai <button class="btn-mini" onclick="speak('je voudrai')">🔊</button></td>
+              <td>yo querré</td>
+            </tr>
+            <tr>
+              <td><strong>Voir</strong></td>
+              <td>verr-</td>
+              <td>je verrai <button class="btn-mini" onclick="speak('je verrai')">🔊</button></td>
+              <td>yo veré</td>
+            </tr>
+            <tr>
+              <td><strong>Devoir</strong></td>
+              <td>devr-</td>
+              <td>je devrai <button class="btn-mini" onclick="speak('je devrai')">🔊</button></td>
+              <td>yo deberé</td>
+            </tr>
+            <tr>
+              <td><strong>Savoir</strong></td>
+              <td>saur-</td>
+              <td>je saurai <button class="btn-mini" onclick="speak('je saurai')">🔊</button></td>
+              <td>yo sabré</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Example Sentences -->
+      <div class="ex-card" style="border-left: 4px solid var(--l0);">
+        <div class="ex-title">Phrases d'Exemple</div>
+        <div class="ex-instr">
+          <ul style="margin-left: 20px;">
+            <li><strong>Demain, je serai à la maison et je ferai mes devoirs.</strong> <button class="btn-mini" onclick="speak('Demain, je serai à la maison et je ferai mes devoirs')">🔊</button> → Mañana, estaré en casa y haré mis deberes.</li>
+            <li><strong>L'année prochaine, je serai à ma cinquième année d'études de médecine.</strong> <button class="btn-mini" onclick="speak('L\\'année prochaine, je serai à ma cinquième année d\\'études de médecine')">🔊</button> → El próximo año estaré en mi quinto año de estudios de medicina.</li>
+            <li><strong>Le weekend prochain, nous irons à la plage.</strong> <button class="btn-mini" onclick="speak('Le weekend prochain, nous irons à la plage')">🔊</button> → El próximo fin de semana iremos a la playa.</li>
+            <li><strong>Dans dix ans, elle sera médecin.</strong> <button class="btn-mini" onclick="speak('Dans dix ans, elle sera médecin')">🔊</button> → En diez años, será médica.</li>
+            <li><strong>Vous aurez un examen difficile la semaine prochaine.</strong> <button class="btn-mini" onclick="speak('Vous aurez un examen difficile la semaine prochaine')">🔊</button> → Tendrán un examen difícil la próxima semana.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- EXERCISE 1: QCM -->
+      <div class="ex-card" style="border-left: 4px solid var(--l0);">
+        <div class="ex-title">Exercice 1 : QCM - Choisir la forme correcte</div>
+        <div class="ex-instr" style="margin-bottom: 20px;">Sélectionnez la bonne réponse.</div>
+
+        <div id="qcm-futur-score" style="font-size: 13px; margin-bottom: 20px; padding: 8px 12px; background: var(--border); border-radius: 8px; display: inline-block;">Score : <strong>0 / 5</strong></div>
+        <script>const futureState = { score: 0, total: 5 };</script>
+
+        <div class="qcm-item">
+          <div class="q-text">Q1. Quelle est la forme correcte du futur de "aller" avec "je"?</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-futur-score', futureState)">j'irai 🔊</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-futur-score', futureState)">j'allerai</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-futur-score', futureState)">je vais aller</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Q2. Complétez : "Nous ___ (finir) le travail demain."</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-futur-score', futureState)">finissons</button>
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-futur-score', futureState)">finirons 🔊</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-futur-score', futureState)">allons finir</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Q3. Quelle forme exprime un futur PROCHE et immédiat?</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-futur-score', futureState)">Je mangerai</button>
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-futur-score', futureState)">Je vais manger 🔊</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-futur-score', futureState)">Je mangeais</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Q4. Complétez : "Elle ___ (être) médecin dans le futur."</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-futur-score', futureState)">est</button>
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-futur-score', futureState)">sera 🔊</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-futur-score', futureState)">serait</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Q5. Complétez : "Ils ___ (vendre) leur maison l'année prochaine."</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-futur-score', futureState)">vendent</button>
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-futur-score', futureState)">vendront 🔊</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-futur-score', futureState)">vendaient</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+      </div>
+
+      <!-- EXERCISE 2: Fill-in -->
+      <div class="ex-card" style="border-left: 4px solid var(--l0);">
+        <div class="ex-title">Exercice 2 : Complétez au Futur Simple</div>
+        <div class="ex-instr" style="margin-bottom: 20px;">Conjuguez les verbes entre parenthèses au futur simple.</div>
+
+        <div id="fill-futur">
+          <div class="fill-item">
+            <div class="fill-sentence">La semaine prochaine, je ___ (aller) au cinéma avec mes amis.</div>
+            <input type="text" class="fill-input" data-answer="irai">
+            <div class="fill-hint" style="font-size: 12px; color: var(--muted); margin-top: 4px;">Racine irrégulière : ir-</div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Demain, elle ___ (faire) ses devoirs avant de dîner.</div>
+            <input type="text" class="fill-input" data-answer="fera">
+            <div class="fill-hint" style="font-size: 12px; color: var(--muted); margin-top: 4px;">Racine irrégulière : fer-</div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Dans cinq ans, nous ___ (avoir) une grande maison.</div>
+            <input type="text" class="fill-input" data-answer="aurons">
+            <div class="fill-hint" style="font-size: 12px; color: var(--muted); margin-top: 4px;">Racine irrégulière : aur-</div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">L'année prochaine, ils ___ (venir) nous rendre visite.</div>
+            <input type="text" class="fill-input" data-answer="viendront">
+            <div class="fill-hint" style="font-size: 12px; color: var(--muted); margin-top: 4px;">Racine irrégulière : viendr-</div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Tu ___ (pouvoir) partir dès que tu finiras tes études.</div>
+            <input type="text" class="fill-input" data-answer="pourras">
+            <div class="fill-hint" style="font-size: 12px; color: var(--muted); margin-top: 4px;">Racine irrégulière : pourr-</div>
+          </div>
+        </div>
+        <button class="btn-check" onclick="checkFill('fill-futur')">Vérifier</button>
+      </div>
+
+      <!-- EXERCISE 3: Matching -->
+      <div class="ex-card" style="border-left: 4px solid var(--l0);">
+        <div class="ex-title">Exercice 3 : Appariement - Infinitif ↔ Futur (je)</div>
+        <div class="ex-instr" style="margin-bottom: 20px;">Associez chaque infinitif à sa forme au futur simple avec "je".</div>
+        <div id="match-futur" class="match-zone"></div>
+        <script>buildMatch('match-futur', [
+          ['être', 'je serai'],
+          ['avoir', "j'aurai"],
+          ['aller', "j'irai"],
+          ['faire', 'je ferai'],
+          ['venir', 'je viendrai'],
+          ['pouvoir', 'je pourrai'],
+          ['voir', 'je verrai'],
+          ['savoir', 'je saurai']
+        ]);</script>
+      </div>
+    </section>
+
+    <!-- LESSON 1: Préparer un voyage -->
+    <section class="lesson-panel" data-lesson="1" style="display: none;">
+      <div class="lesson-header">
+        <div class="lesson-icon-big">✈️</div>
+        <div class="lesson-meta">
+          <span class="lesson-tag" style="background: var(--l1);">A2</span>
+          <h1 class="lesson-title">Préparer un Voyage</h1>
+          <p class="lesson-desc">Vocabulaire et texte de lecture sur la préparation d'un voyage</p>
+        </div>
+      </div>
+
+      <!-- Vocabulary Table -->
+      <div class="ex-card" style="border-left: 4px solid var(--l1);">
+        <div class="ex-title">Vocabulaire : Préparation de Voyage</div>
+        <table class="form-table">
+          <thead>
+            <tr>
+              <th>Français</th>
+              <th>Traduction (Español)</th>
+              <th>Prononciation 🔊</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>réserver un billet</strong></td>
+              <td>reservar un boleto/billete</td>
+              <td><button class="btn-mini" onclick="speak('réserver un billet')">🔊</button></td>
+            </tr>
+            <tr>
+              <td><strong>faire ses valises</strong></td>
+              <td>hacer las maletas</td>
+              <td><button class="btn-mini" onclick="speak('faire ses valises')">🔊</button></td>
+            </tr>
+            <tr>
+              <td><strong>un séjour</strong></td>
+              <td>una estancia / un viaje</td>
+              <td><button class="btn-mini" onclick="speak('un séjour')">🔊</button></td>
+            </tr>
+            <tr>
+              <td><strong>une assurance voyage</strong></td>
+              <td>un seguro de viaje</td>
+              <td><button class="btn-mini" onclick="speak('une assurance voyage')">🔊</button></td>
+            </tr>
+            <tr>
+              <td><strong>changer de l'argent</strong></td>
+              <td>cambiar dinero</td>
+              <td><button class="btn-mini" onclick="speak('changer de l\\'argent')">🔊</button></td>
+            </tr>
+            <tr>
+              <td><strong>un billet digital</strong></td>
+              <td>un boleto digital</td>
+              <td><button class="btn-mini" onclick="speak('un billet digital')">🔊</button></td>
+            </tr>
+            <tr>
+              <td><strong>une valise cabine</strong></td>
+              <td>maleta de cabina</td>
+              <td><button class="btn-mini" onclick="speak('une valise cabine')">🔊</button></td>
+            </tr>
+            <tr>
+              <td><strong>un bagage en soute</strong></td>
+              <td>equipaje de bodega</td>
+              <td><button class="btn-mini" onclick="speak('un bagage en soute')">🔊</button></td>
+            </tr>
+            <tr>
+              <td><strong>l'enregistrement</strong></td>
+              <td>el registro/facturación</td>
+              <td><button class="btn-mini" onclick="speak('l\\'enregistrement')">🔊</button></td>
+            </tr>
+            <tr>
+              <td><strong>le décollage</strong></td>
+              <td>el despegue</td>
+              <td><button class="btn-mini" onclick="speak('le décollage')">🔊</button></td>
+            </tr>
+            <tr>
+              <td><strong>l'atterrissage</strong></td>
+              <td>el aterrizaje</td>
+              <td><button class="btn-mini" onclick="speak('l\\'atterrissage')">🔊</button></td>
+            </tr>
+            <tr>
+              <td><strong>la douane</strong></td>
+              <td>la aduana</td>
+              <td><button class="btn-mini" onclick="speak('la douane')">🔊</button></td>
+            </tr>
+            <tr>
+              <td><strong>un monument</strong></td>
+              <td>un monumento</td>
+              <td><button class="btn-mini" onclick="speak('un monument')">🔊</button></td>
+            </tr>
+            <tr>
+              <td><strong>des souvenirs</strong></td>
+              <td>recuerdos</td>
+              <td><button class="btn-mini" onclick="speak('des souvenirs')">🔊</button></td>
+            </tr>
+            <tr>
+              <td><strong>un périple</strong></td>
+              <td>un periplo / un viaje largo</td>
+              <td><button class="btn-mini" onclick="speak('un périple')">🔊</button></td>
+            </tr>
+            <tr>
+              <td><strong>planifier</strong></td>
+              <td>planificar</td>
+              <td><button class="btn-mini" onclick="speak('planifier')">🔊</button></td>
+            </tr>
+            <tr>
+              <td><strong>prévoir</strong></td>
+              <td>prever</td>
+              <td><button class="btn-mini" onclick="speak('prévoir')">🔊</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Reading Text Part 1 -->
+      <div class="ex-card" style="border-left: 4px solid var(--l1);">
+        <div class="ex-title">Texte de Lecture : Mon Voyage en France - AVANT LE VOYAGE</div>
+        <div class="ex-instr" style="line-height: 1.8; font-size: 15px;">
+          <p><strong>"Demain, je réserverai mon billet d'avion sur Internet."</strong> <button class="btn-mini" onclick="speak('Demain, je réserverai mon billet d\\'avion sur Internet')">🔊</button></p>
+          <p style="margin-top: 10px;"><em>Mañana, reservaré mi boleto de avión en Internet.</em></p>
+
+          <p style="margin-top: 12px;"><strong>"Ce weekend, avec mon ami, nous ferons nos valises."</strong> <button class="btn-mini" onclick="speak('Ce weekend, avec mon ami, nous ferons nos valises')">🔊</button></p>
+          <p style="margin-top: 10px;"><em>Este fin de semana, con mi amigo, haremos nuestras maletas.</em></p>
+
+          <p style="margin-top: 12px;"><strong>"Pendant mon séjour, je veux apprendre à bien parler français."</strong> <button class="btn-mini" onclick="speak('Pendant mon séjour, je veux apprendre à bien parler français')">🔊</button></p>
+          <p style="margin-top: 10px;"><em>Durante mi estancia, quiero aprender a hablar bien francés.</em></p>
+
+          <p style="margin-top: 12px;"><strong>"Nous resterons à Paris une semaine."</strong> <button class="btn-mini" onclick="speak('Nous resterons à Paris une semaine')">🔊</button></p>
+          <p style="margin-top: 10px;"><em>Nos quedaremos en París una semana.</em></p>
+
+          <p style="margin-top: 12px;"><strong>"Mais nous n'avons pas planifié plus pour l'instant."</strong> <button class="btn-mini" onclick="speak('Mais nous n\\'avons pas planifié plus pour l\\'instant')">🔊</button></p>
+          <p style="margin-top: 10px;"><em>Pero no hemos planificado más por ahora.</em></p>
+
+          <p style="margin-top: 12px;"><strong>"Nous prévoyons tous les deux de prendre une assurance voyage car c'est obligatoire."</strong> <button class="btn-mini" onclick="speak('Nous prévoyons tous les deux de prendre une assurance voyage car c\\'est obligatoire')">🔊</button></p>
+          <p style="margin-top: 10px;"><em>Ambos planeamos tomar un seguro de viaje porque es obligatorio.</em></p>
+
+          <p style="margin-top: 12px;"><strong>"Je lui rappellerai de changer de l'argent en euro avant de partir."</strong> <button class="btn-mini" onclick="speak('Je lui rappellerai de changer de l\\'argent en euro avant de partir')">🔊</button></p>
+          <p style="margin-top: 10px;"><em>Le recordaré que cambie dinero a euros antes de partir.</em></p>
+        </div>
+      </div>
+
+      <!-- Reading Text Part 2 -->
+      <div class="ex-card" style="border-left: 4px solid var(--l1);">
+        <div class="ex-title">Texte de Lecture : Mon Voyage en France - PENDANT LE VOYAGE</div>
+        <div class="ex-instr" style="line-height: 1.8; font-size: 15px;">
+          <p><strong>"À l'aéroport, je vais prendre un café en attendant l'avion et je vais essayer de me détendre car le décollage de l'avion me rend nerveux."</strong> <button class="btn-mini" onclick="speak('À l\\'aéroport, je vais prendre un café en attendant l\\'avion et je vais essayer de me détendre car le décollage de l\\'avion me rend nerveux')">🔊</button></p>
+          <p style="margin-top: 10px;"><em>En el aeropuerto, voy a tomar un café esperando el avión e voy a tratar de relajarme porque el despegue del avión me pone nervioso.</em></p>
+
+          <p style="margin-top: 12px;"><strong>"Je n'aurai pas d'enregistrement de bagage à faire car j'ai un billet digital et seulement une valise cabine."</strong> <button class="btn-mini" onclick="speak('Je n\\'aurai pas d\\'enregistrement de bagage à faire car j\\'ai un billet digital et seulement une valise cabine')">🔊</button></p>
+          <p style="margin-top: 10px;"><em>No tendré que facturar equipaje porque tengo un boleto digital y solo una maleta de cabina.</em></p>
+
+          <p style="margin-top: 12px;"><strong>"Mon ami, lui devra arriver avant moi car il a un gros bagage à mettre en soute."</strong> <button class="btn-mini" onclick="speak('Mon ami, lui devra arriver avant moi car il a un gros bagage à mettre en soute')">🔊</button></p>
+          <p style="margin-top: 10px;"><em>Mi amigo tendrá que llegar antes que yo porque tiene equipaje grande para poner en la bodega.</em></p>
+
+          <p style="margin-top: 12px;"><strong>"Il n'est pas stressé au décollage de l'appareil ni à l'atterrissage."</strong> <button class="btn-mini" onclick="speak('Il n\\'est pas stressé au décollage de l\\'appareil ni à l\\'atterrissage')">🔊</button></p>
+          <p style="margin-top: 10px;"><em>No está estresado por el despegue del avión ni por el aterrizaje.</em></p>
+
+          <p style="margin-top: 12px;"><strong>"Cependant je pense qu'il sera stressé au moment de passer à la douane car c'est quelqu'un de nerveux quand on lui met la pression."</strong> <button class="btn-mini" onclick="speak('Cependant je pense qu\\'il sera stressé au moment de passer à la douane car c\\'est quelqu\\'un de nerveux quand on lui met la pression')">🔊</button></p>
+          <p style="margin-top: 10px;"><em>Sin embargo, creo que estará estresado cuando pase por la aduana porque es alguien que se pone nervioso bajo presión.</em></p>
+        </div>
+      </div>
+
+      <!-- Reading Text Part 3 -->
+      <div class="ex-card" style="border-left: 4px solid var(--l1);">
+        <div class="ex-title">Texte de Lecture : Mon Voyage en France - DÉCOUVERTE & RETOUR</div>
+        <div class="ex-instr" style="line-height: 1.8; font-size: 15px;">
+          <p><strong>"Dès notre arrivée à Paris, nous irons voir la Tour Eiffel!"</strong> <button class="btn-mini" onclick="speak('Dès notre arrivée à Paris, nous irons voir la Tour Eiffel')">🔊</button></p>
+          <p style="margin-top: 10px;"><em>¡Apenas lleguemos a París, iremos a ver la Torre Eiffel!</em></p>
+
+          <p style="margin-top: 12px;"><strong>"Pendant nos vacances, nous allons visiter beaucoup de monuments et faire plein d'activités."</strong> <button class="btn-mini" onclick="speak('Pendant nos vacances, nous allons visiter beaucoup de monuments et faire plein d\\'activités')">🔊</button></p>
+          <p style="margin-top: 10px;"><em>Durante nuestras vacaciones, vamos a visitar muchos monumentos y hacer un montón de actividades.</em></p>
+
+          <p style="margin-top: 12px;"><strong>"Cela va être un séjour inoubliable."</strong> <button class="btn-mini" onclick="speak('Cela va être un séjour inoubliable')">🔊</button></p>
+          <p style="margin-top: 10px;"><em>Va a ser una estancia inolvidable.</em></p>
+
+          <p style="margin-top: 12px;"><strong>"Aussi nous apprendrons à cuisiner des plats français typiques pour pouvoir les recuisiner à notre famille."</strong> <button class="btn-mini" onclick="speak('Aussi nous apprendrons à cuisiner des plats français typiques pour pouvoir les recuisiner à notre famille')">🔊</button></p>
+          <p style="margin-top: 10px;"><em>También aprenderemos a cocinar platos franceses típicos para poder prepararlos para nuestra familia.</em></p>
+
+          <p style="margin-top: 12px;"><strong>"Je ramènerai beaucoup de souvenirs pour ma famille et je leur cuisinerai les plats que j'ai découvert en France."</strong> <button class="btn-mini" onclick="speak('Je ramènerai beaucoup de souvenirs pour ma famille et je leur cuisinerai les plats que j\\'ai découvert en France')">🔊</button></p>
+          <p style="margin-top: 10px;"><em>Traeré muchos recuerdos para mi familia y les cocinaré los platos que descubrí en Francia.</em></p>
+
+          <p style="margin-top: 12px;"><strong>"Je montrerai toutes mes photos à mes parents et je leur raconterai des anecdotes de mon périple."</strong> <button class="btn-mini" onclick="speak('Je montrerai toutes mes photos à mes parents et je leur raconterai des anecdotes de mon périple')">🔊</button></p>
+          <p style="margin-top: 10px;"><em>Mostraré todas mis fotos a mis padres y les contaré anécdotas de mi viaje.</em></p>
+        </div>
+      </div>
+
+      <!-- EXERCISE 1: QCM Text Comprehension -->
+      <div class="ex-card" style="border-left: 4px solid var(--l1);">
+        <div class="ex-title">Exercice 1 : QCM - Compréhension du Texte</div>
+        <div class="ex-instr" style="margin-bottom: 20px;">Répondez aux questions sur le texte "Mon Voyage en France".</div>
+
+        <div id="qcm-voyage-score" style="font-size: 13px; margin-bottom: 20px; padding: 8px 12px; background: var(--border); border-radius: 8px; display: inline-block;">Score : <strong>0 / 5</strong></div>
+        <script>const voyageState = { score: 0, total: 5 };</script>
+
+        <div class="qcm-item">
+          <div class="q-text">Q1. Quand est-ce que le narrateur réservera son billet?</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-voyage-score', voyageState)">Ce soir</button>
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-voyage-score', voyageState)">Demain 🔊</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-voyage-score', voyageState)">Ce weekend</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Q2. Pourquoi le narrateur n'a pas d'enregistrement de bagage à faire?</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-voyage-score', voyageState)">Il a un grand bagage</button>
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-voyage-score', voyageState)">Il a un billet digital et une valise cabine 🔊</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-voyage-score', voyageState)">Il voyage sans bagage</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Q3. Qui sera stressé à la douane?</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-voyage-score', voyageState)">Le narrateur</button>
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-voyage-score', voyageState)">Son ami 🔊</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-voyage-score', voyageState)">Les deux</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Q4. Qu'est-ce qu'ils feront dès leur arrivée à Paris?</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-voyage-score', voyageState)">Ils iront à l'hôtel</button>
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-voyage-score', voyageState)">Ils iront voir la Tour Eiffel 🔊</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-voyage-score', voyageState)">Ils mangeront</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">Q5. Que fera le narrateur après le voyage?</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-voyage-score', voyageState)">Il oubliera le voyage</button>
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-voyage-score', voyageState)">Il ramènera des souvenirs et racontera des anecdotes 🔊</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-voyage-score', voyageState)">Il retournera à Paris</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+      </div>
+
+      <!-- EXERCISE 2: Fill-in Vocabulary -->
+      <div class="ex-card" style="border-left: 4px solid var(--l1);">
+        <div class="ex-title">Exercice 2 : Complétez avec le Vocabulaire</div>
+        <div class="ex-instr" style="margin-bottom: 20px;">Utilisez les termes de voyage appropriés.</div>
+
+        <div id="fill-voyage">
+          <div class="fill-item">
+            <div class="fill-sentence">Avant de partir, il faut ___ ses valises.</div>
+            <input type="text" class="fill-input" data-answer="faire">
+            <div class="fill-hint" style="font-size: 12px; color: var(--muted); margin-top: 4px;">Verbe : to pack</div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">On prend l'avion au moment du ___.</div>
+            <input type="text" class="fill-input" data-answer="décollage">
+            <div class="fill-hint" style="font-size: 12px; color: var(--muted); margin-top: 4px;">Moment du takeoff</div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Pour entrer dans un pays étranger, on passe à la ___.</div>
+            <input type="text" class="fill-input" data-answer="douane">
+            <div class="fill-hint" style="font-size: 12px; color: var(--muted); margin-top: 4px;">Customs</div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Une ___ de voyage est recommandée en cas de problème.</div>
+            <input type="text" class="fill-input" data-answer="assurance">
+            <div class="fill-hint" style="font-size: 12px; color: var(--muted); margin-top: 4px;">Travel insurance</div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Le bagage qu'on met sous l'avion s'appelle un bagage en ___.</div>
+            <input type="text" class="fill-input" data-answer="soute">
+            <div class="fill-hint" style="font-size: 12px; color: var(--muted); margin-top: 4px;">Cargo hold</div>
+          </div>
+        </div>
+        <button class="btn-check" onclick="checkFill('fill-voyage')">Vérifier</button>
+      </div>
+
+      <!-- EXERCISE 3: Matching Verbs -->
+      <div class="ex-card" style="border-left: 4px solid var(--l1);">
+        <div class="ex-title">Exercice 3 : Appariement - Conjugaison du Texte</div>
+        <div class="ex-instr" style="margin-bottom: 20px;">Associez les formes du futur simple du texte avec leurs traductions en espagnol.</div>
+        <div id="match-voyage" class="match-zone"></div>
+        <script>buildMatch('match-voyage', [
+          ['je réserverai', 'reservaré'],
+          ['nous ferons', 'haremos'],
+          ['nous resterons', 'nos quedaremos'],
+          ['je ramènerai', 'traeré'],
+          ['nous irons', 'iremos'],
+          ["j'aurai", 'tendré'],
+          ['je montrerai', 'mostraré'],
+          ['je raconterai', 'contaré']
+        ]);</script>
+      </div>
+    </section>
+  </main>
+</div>
+</body>
+</html>

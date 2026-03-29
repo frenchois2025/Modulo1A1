@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Français A2 · Module 5 · Santé et Bien-être</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="moteur.js"></script>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="sidebar-logo">Module 5 · <span>A2</span></div>
+    <button class="nav-btn" onclick="showLesson(0, this)">
+      <span class="nav-icon">🦴</span>
+      <span>Le corps et les douleurs</span>
+    </button>
+    <button class="nav-btn" onclick="showLesson(1, this)">
+      <span class="nav-icon">🩺</span>
+      <span>Chez le médecin</span>
+    </button>
+    <button class="nav-btn" onclick="showLesson(2, this)">
+      <span class="nav-icon">📣</span>
+      <span>L'impératif présent</span>
+    </button>
+    <button class="nav-btn" onclick="showLesson(3, this)">
+      <span class="nav-icon">💊</span>
+      <span>À la pharmacie</span>
+    </button>
+  </aside>
+
+  <main class="main">
+    <!-- LEÇON 0: Le corps et les douleurs -->
+    <section class="lesson-panel" style="display: none;">
+      <div class="lesson-header">
+        <div class="lesson-icon-big">🦴</div>
+        <div class="lesson-meta">
+          <span class="lesson-tag" style="background: var(--l0);">Leçon 0</span>
+          <h1 class="lesson-title">Le corps et les douleurs</h1>
+          <p class="lesson-desc">Apprenez le vocabulaire du corps humain et comment exprimer la douleur.</p>
+        </div>
+      </div>
+
+      <!-- Vocabulaire: Le Visage -->
+      <div class="ex-card">
+        <div class="ex-title">Le Visage (The Face)</div>
+        <div class="ex-instr">Découvrez les parties du visage :</div>
+        <table class="form-table">
+          <tr>
+            <th style="color: var(--l0);">Français</th>
+            <th>English / Español</th>
+            <th>Exemple</th>
+          </tr>
+          <tr>
+            <td class="form-fr">les yeux <button class="btn-mini" onclick="speak('les yeux')">🔊</button></td>
+            <td>eyes / los ojos</td>
+            <td><em>Mes yeux sont bleus.</em> <button class="btn-mini" onclick="speak('Mes yeux sont bleus')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">les paupières <button class="btn-mini" onclick="speak('les paupières')">🔊</button></td>
+            <td>eyelids / los párpados</td>
+            <td><em>Ses paupières sont fermées.</em> <button class="btn-mini" onclick="speak('Ses paupières sont fermées')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">le nez <button class="btn-mini" onclick="speak('le nez')">🔊</button></td>
+            <td>nose / la nariz</td>
+            <td><em>Je me lave le nez.</em> <button class="btn-mini" onclick="speak('Je me lave le nez')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">la bouche <button class="btn-mini" onclick="speak('la bouche')">🔊</button></td>
+            <td>mouth / la boca</td>
+            <td><em>Ouvre la bouche!</em> <button class="btn-mini" onclick="speak('Ouvre la bouche')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">la langue <button class="btn-mini" onclick="speak('la langue')">🔊</button></td>
+            <td>tongue / la lengua</td>
+            <td><em>Tire la langue!</em> <button class="btn-mini" onclick="speak('Tire la langue')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">les joues <button class="btn-mini" onclick="speak('les joues')">🔊</button></td>
+            <td>cheeks / las mejillas</td>
+            <td><em>Elle a les joues rouges.</em> <button class="btn-mini" onclick="speak('Elle a les joues rouges')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">le front <button class="btn-mini" onclick="speak('le front')">🔊</button></td>
+            <td>forehead / la frente</td>
+            <td><em>Il a une ride sur le front.</em> <button class="btn-mini" onclick="speak('Il a une ride sur le front')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">les sourcils <button class="btn-mini" onclick="speak('les sourcils')">🔊</button></td>
+            <td>eyebrows / las cejas</td>
+            <td><em>Ses sourcils sont noirs.</em> <button class="btn-mini" onclick="speak('Ses sourcils sont noirs')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">les cils <button class="btn-mini" onclick="speak('les cils')">🔊</button></td>
+            <td>eyelashes / las pestañas</td>
+            <td><em>Elle a les cils longs.</em> <button class="btn-mini" onclick="speak('Elle a les cils longs')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">les oreilles <button class="btn-mini" onclick="speak('les oreilles')">🔊</button></td>
+            <td>ears / los oídos</td>
+            <td><em>J'écoute avec les oreilles.</em> <button class="btn-mini" onclick="speak('J\'écoute avec les oreilles')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">les cheveux <button class="btn-mini" onclick="speak('les cheveux')">🔊</button></td>
+            <td>hair / el cabello</td>
+            <td><em>Elle a les cheveux longs et blonds.</em> <button class="btn-mini" onclick="speak('Elle a les cheveux longs et blonds')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">le menton <button class="btn-mini" onclick="speak('le menton')">🔊</button></td>
+            <td>chin / la barbilla</td>
+            <td><em>Il a un menton fort.</em> <button class="btn-mini" onclick="speak('Il a un menton fort')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">les dents <button class="btn-mini" onclick="speak('les dents')">🔊</button></td>
+            <td>teeth / los dientes</td>
+            <td><em>Je brosse mes dents.</em> <button class="btn-mini" onclick="speak('Je brosse mes dents')">🔊</button></td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Vocabulaire: Le Corps -->
+      <div class="ex-card">
+        <div class="ex-title">Le Corps (The Body)</div>
+        <div class="ex-instr">Apprenez les parties principales du corps :</div>
+        <table class="form-table">
+          <tr>
+            <th style="color: var(--l0);">Français</th>
+            <th>English / Español</th>
+            <th>Exemple</th>
+          </tr>
+          <tr>
+            <td class="form-fr">l'épaule <button class="btn-mini" onclick="speak('l\'épaule')">🔊</button></td>
+            <td>shoulder / el hombro</td>
+            <td><em>J'ai mal à l'épaule.</em> <button class="btn-mini" onclick="speak('J\'ai mal à l\'épaule')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">le bras <button class="btn-mini" onclick="speak('le bras')">🔊</button></td>
+            <td>arm / el brazo</td>
+            <td><em>Mon bras gauche me fait mal.</em> <button class="btn-mini" onclick="speak('Mon bras gauche me fait mal')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">la main <button class="btn-mini" onclick="speak('la main')">🔊</button></td>
+            <td>hand / la mano</td>
+            <td><em>Je lève la main.</em> <button class="btn-mini" onclick="speak('Je lève la main')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">les doigts <button class="btn-mini" onclick="speak('les doigts')">🔊</button></td>
+            <td>fingers / los dedos</td>
+            <td><em>J'ai cinq doigts à chaque main.</em> <button class="btn-mini" onclick="speak('J\'ai cinq doigts à chaque main')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">le ventre <button class="btn-mini" onclick="speak('le ventre')">🔊</button></td>
+            <td>belly / el vientre</td>
+            <td><em>J'ai mal au ventre.</em> <button class="btn-mini" onclick="speak('J\'ai mal au ventre')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">la hanche <button class="btn-mini" onclick="speak('la hanche')">🔊</button></td>
+            <td>hip / la cadera</td>
+            <td><em>Elle a une douleur à la hanche.</em> <button class="btn-mini" onclick="speak('Elle a une douleur à la hanche')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">la jambe <button class="btn-mini" onclick="speak('la jambe')">🔊</button></td>
+            <td>leg / la pierna</td>
+            <td><em>Je me casse la jambe.</em> <button class="btn-mini" onclick="speak('Je me casse la jambe')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">le genou <button class="btn-mini" onclick="speak('le genou')">🔊</button></td>
+            <td>knee / la rodilla</td>
+            <td><em>Mon genou est gonflé.</em> <button class="btn-mini" onclick="speak('Mon genou est gonflé')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">le pied <button class="btn-mini" onclick="speak('le pied')">🔊</button></td>
+            <td>foot / el pie</td>
+            <td><em>J'ai les pieds froids.</em> <button class="btn-mini" onclick="speak('J\'ai les pieds froids')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">le coude <button class="btn-mini" onclick="speak('le coude')">🔊</button></td>
+            <td>elbow / el codo</td>
+            <td><em>Je me suis cogné le coude.</em> <button class="btn-mini" onclick="speak('Je me suis cogné le coude')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">les aisselles <button class="btn-mini" onclick="speak('les aisselles')">🔊</button></td>
+            <td>armpits / las axilas</td>
+            <td><em>Sueur sous les aisselles.</em> <button class="btn-mini" onclick="speak('Sueur sous les aisselles')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">le dos <button class="btn-mini" onclick="speak('le dos')">🔊</button></td>
+            <td>back / la espalda</td>
+            <td><em>J'ai mal au dos.</em> <button class="btn-mini" onclick="speak('J\'ai mal au dos')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">le cou <button class="btn-mini" onclick="speak('le cou')">🔊</button></td>
+            <td>neck / el cuello</td>
+            <td><em>J'ai mal à la gorge et au cou.</em> <button class="btn-mini" onclick="speak('J\'ai mal à la gorge et au cou')">🔊</button></td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Expressions de douleur et malaise -->
+      <div class="ex-card">
+        <div class="ex-title">Expressions : Douleur et Malaise</div>
+        <div class="ex-instr">Comment exprimer la douleur et le malaise :</div>
+        <table class="form-table">
+          <tr>
+            <th style="color: var(--l0);">Expression</th>
+            <th>Meaning</th>
+            <th>Exemple</th>
+          </tr>
+          <tr>
+            <td class="form-fr">avoir mal à + partie du corps <button class="btn-mini" onclick="speak('avoir mal à')">🔊</button></td>
+            <td>to have pain in</td>
+            <td><em>J'ai mal à la tête.</em> <button class="btn-mini" onclick="speak('J\'ai mal à la tête')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">se sentir faible <button class="btn-mini" onclick="speak('se sentir faible')">🔊</button></td>
+            <td>to feel weak</td>
+            <td><em>Je me sens très faible.</em> <button class="btn-mini" onclick="speak('Je me sens très faible')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">se sentir malade <button class="btn-mini" onclick="speak('se sentir malade')">🔊</button></td>
+            <td>to feel sick</td>
+            <td><em>Elle se sent malade ce matin.</em> <button class="btn-mini" onclick="speak('Elle se sent malade ce matin')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">avoir de la fièvre <button class="btn-mini" onclick="speak('avoir de la fièvre')">🔊</button></td>
+            <td>to have a fever</td>
+            <td><em>Paul a 38°C de fièvre.</em> <button class="btn-mini" onclick="speak('Paul a 38°C de fièvre')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">avoir des vertiges <button class="btn-mini" onclick="speak('avoir des vertiges')">🔊</button></td>
+            <td>to feel dizzy</td>
+            <td><em>J'ai des vertiges en me levant.</em> <button class="btn-mini" onclick="speak('J\'ai des vertiges en me levant')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">avoir des nausées <button class="btn-mini" onclick="speak('avoir des nausées')">🔊</button></td>
+            <td>to feel nauseous</td>
+            <td><em>Elle a des nausées.</em> <button class="btn-mini" onclick="speak('Elle a des nausées')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">avoir des courbatures <button class="btn-mini" onclick="speak('avoir des courbatures')">🔊</button></td>
+            <td>to have aches</td>
+            <td><em>J'ai des courbatures après le sport.</em> <button class="btn-mini" onclick="speak('J\'ai des courbatures après le sport')">🔊</button></td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Lecture : Paul se sent mal -->
+      <div class="ex-card">
+        <div class="ex-title">📖 Lecture : Paul se sent mal</div>
+        <div class="ex-instr">Lisez le texte et comprenez la situation de Paul :</div>
+        <div style="background: var(--l0l); padding: 20px; border-radius: 12px; line-height: 1.8; margin-bottom: 15px;">
+          <p style="margin-bottom: 12px;">
+            <strong>Paul se lève le matin avec un mal de tête terrible.</strong>
+            <button class="btn-mini" onclick="speak('Paul se lève le matin avec un mal de tête terrible')">🔊</button>
+            <br>Il a aussi le nez bouché et une vilaine toux. Pire encore, il a mal au dos.
+            <button class="btn-mini" onclick="speak('Il a aussi le nez bouché et une vilaine toux. Pire encore, il a mal au dos')">🔊</button>
+          </p>
+          <p style="margin-bottom: 12px;">
+            <strong>Il va se regarder dans le miroir.</strong>
+            <button class="btn-mini" onclick="speak('Il va se regarder dans le miroir')">🔊</button>
+            <br>Son visage est très pâle! Il a les joues rouges et il voit qu'il a de la fièvre.
+            <button class="btn-mini" onclick="speak('Son visage est très pâle! Il a les joues rouges et il voit qu\'il a de la fièvre')">🔊</button>
+          </p>
+          <p style="margin-bottom: 12px;">
+            <strong>Paul ressent aussi des douleurs partout.</strong>
+            <button class="btn-mini" onclick="speak('Paul ressent aussi des douleurs partout')">🔊</button>
+            <br>Il a mal à l'épaule, au bras, et aux jambes. En marchant vers la clinique, il a des vertiges et des nausées.
+            <button class="btn-mini" onclick="speak('Il a mal à l\'épaule, au bras, et aux jambes. En marchant vers la clinique, il a des vertiges et des nausées')">🔊</button>
+          </p>
+          <p style="margin-bottom: 12px;">
+            <strong>À la clinique, Paul attends dans une salle d'attente.</strong>
+            <button class="btn-mini" onclick="speak('À la clinique, Paul attends dans une salle d\'attente')">🔊</button>
+            <br>Il voit un enfant avec un pied tordu, une personne âgée qui souffre de la hanche, un homme musclé avec la langue bleu, une femme mince avec les yeux rouges, et un sportif avec une douleur au bras et au coude.
+            <button class="btn-mini" onclick="speak('Il voit un enfant avec un pied tordu, une personne âgée qui souffre de la hanche, un homme musclé avec la langue bleu, une femme mince avec les yeux rouges, et un sportif avec une douleur au bras et au coude')">🔊</button>
+          </p>
+        </div>
+      </div>
+
+      <!-- QCM : Compréhension -->
+      <div class="ex-card">
+        <div class="ex-title">🎯 QCM : Compréhension du texte</div>
+        <div id="qcm-l0-score" style="font-size: 13px; margin-bottom: 20px; padding: 8px 12px; background: var(--border); border-radius: 8px; display: inline-block;">Score : <strong>0 / 5</strong></div>
+        <script>const l0State = { score: 0, total: 5 };</script>
+
+        <div class="qcm-item">
+          <div class="q-text">1. Quels sont les premiers symptômes de Paul?</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-l0-score', l0State)">Mal de tête, nez bouché, toux, mal au dos</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l0-score', l0State)">Fièvre et vertiges seulement</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l0-score', l0State)">Nausées et courbatures</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">2. Comment Paul se voit dans le miroir?</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-l0-score', l0State)">Visage pâle, joues rouges, de la fièvre</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l0-score', l0State)">Visage rouge et pied tordu</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l0-score', l0State)">Yeux bleus et cheveux courts</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">3. Où Paul a-t-il mal?</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-l0-score', l0State)">À l'épaule, au bras, aux jambes et au dos</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l0-score', l0State)">Seulement à la tête</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l0-score', l0State)">Aux genoux et aux pieds</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">4. Que ressent Paul en allant à la clinique?</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l0-score', l0State)">Rien de particulier</button>
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-l0-score', l0State)">Des vertiges et des nausées</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l0-score', l0State)">Seulement une faiblesse</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">5. Quel est le problème d'un enfant à la clinique?</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l0-score', l0State)">La langue bleue</button>
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-l0-score', l0State)">Un pied tordu</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l0-score', l0State)">Une douleur à la hanche</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+      </div>
+
+      <!-- Remplissage : Parties du corps -->
+      <div class="ex-card">
+        <div class="ex-title">✏️ Remplissez les trous</div>
+        <div class="ex-instr">Complétez les phrases avec la partie du corps correcte :</div>
+        <div id="fill-l0">
+          <div class="fill-item">
+            <div class="fill-sentence">Paul a mal à la ___ (head).</div>
+            <input type="text" class="fill-input" data-answer="tête">
+            <div class="fill-hint">Indice : où vous pensez</div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Il a aussi le ___ bouché (stuffy nose).</div>
+            <input type="text" class="fill-input" data-answer="nez">
+            <div class="fill-hint">Indice : vous respirez par là</div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Son ___ est très pâle (face).</div>
+            <input type="text" class="fill-input" data-answer="visage">
+            <div class="fill-hint">Indice : avec yeux, nez, bouche</div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Il a des vertiges en marchant vers la ___ (clinic).</div>
+            <input type="text" class="fill-input" data-answer="clinique">
+            <div class="fill-hint">Indice : où les docteurs travaillent</div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">L'enfant a un ___ tordu (twisted foot).</div>
+            <input type="text" class="fill-input" data-answer="pied">
+            <div class="fill-hint">Indice : bas du corps</div>
+          </div>
+        </div>
+        <button class="btn-check" onclick="checkFill('fill-l0')">Vérifier</button>
+      </div>
+
+      <!-- Match : Corps et traduction -->
+      <div class="ex-card">
+        <div class="ex-title">🔀 Associez les parties du corps</div>
+        <div class="ex-instr">Reliez les mots français à leur traduction en espagnol :</div>
+        <div id="match-l0" class="match-zone"></div>
+        <script>
+          buildMatch('match-l0', [
+            ['les yeux', 'los ojos'],
+            ['la tête', 'la cabeza'],
+            ['le cœur', 'el corazón'],
+            ['le bras', 'el brazo'],
+            ['la jambe', 'la pierna'],
+            ['le pied', 'el pie'],
+            ['le dos', 'la espalda'],
+            ['le genou', 'la rodilla']
+          ]);
+        </script>
+      </div>
+    </section>
+
+    <!-- LEÇON 1: Chez le médecin -->
+    <section class="lesson-panel" style="display: none;">
+      <div class="lesson-header">
+        <div class="lesson-icon-big">🩺</div>
+        <div class="lesson-meta">
+          <span class="lesson-tag" style="background: var(--l1);">Leçon 1</span>
+          <h1 class="lesson-title">Chez le médecin</h1>
+          <p class="lesson-desc">Apprenez le vocabulaire médical et comment parler avec un docteur.</p>
+        </div>
+      </div>
+
+      <!-- Vocabulaire: Symptômes -->
+      <div class="ex-card">
+        <div class="ex-title">Les Symptômes (Symptoms)</div>
+        <div class="ex-instr">Vocabulaire des symptômes courants :</div>
+        <table class="form-table">
+          <tr>
+            <th style="color: var(--l1);">Français</th>
+            <th>English / Español</th>
+            <th>Exemple</th>
+          </tr>
+          <tr>
+            <td class="form-fr">la fièvre <button class="btn-mini" onclick="speak('la fièvre')">🔊</button></td>
+            <td>fever / la fiebre</td>
+            <td><em>J'ai 38°C de fièvre.</em> <button class="btn-mini" onclick="speak('J\'ai 38 degrés de fièvre')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">la toux <button class="btn-mini" onclick="speak('la toux')">🔊</button></td>
+            <td>cough / la tos</td>
+            <td><em>J'ai une vilaine toux.</em> <button class="btn-mini" onclick="speak('J\'ai une vilaine toux')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">les courbatures <button class="btn-mini" onclick="speak('les courbatures')">🔊</button></td>
+            <td>aches / los dolores musculares</td>
+            <td><em>J'ai des courbatures partout.</em> <button class="btn-mini" onclick="speak('J\'ai des courbatures partout')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">mal à la gorge <button class="btn-mini" onclick="speak('mal à la gorge')">🔊</button></td>
+            <td>sore throat / dolor de garganta</td>
+            <td><em>J'ai mal à la gorge.</em> <button class="btn-mini" onclick="speak('J\'ai mal à la gorge')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">le nez bouché <button class="btn-mini" onclick="speak('le nez bouché')">🔊</button></td>
+            <td>stuffy nose / la nariz taponada</td>
+            <td><em>Mon nez est bouché.</em> <button class="btn-mini" onclick="speak('Mon nez est bouché')">🔊</button></td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Vocabulaire: Instruments et consultation -->
+      <div class="ex-card">
+        <div class="ex-title">À la Consultation Médicale</div>
+        <div class="ex-instr">Vocabulaire de la consultation :</div>
+        <table class="form-table">
+          <tr>
+            <th style="color: var(--l1);">Français</th>
+            <th>English / Español</th>
+            <th>Exemple</th>
+          </tr>
+          <tr>
+            <td class="form-fr">le cabinet <button class="btn-mini" onclick="speak('le cabinet')">🔊</button></td>
+            <td>office / el consultorio</td>
+            <td><em>Bienvenue au cabinet du docteur.</em> <button class="btn-mini" onclick="speak('Bienvenue au cabinet du docteur')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">le thermomètre <button class="btn-mini" onclick="speak('le thermomètre')">🔊</button></td>
+            <td>thermometer / el termómetro</td>
+            <td><em>Mettez le thermomètre sous la langue.</em> <button class="btn-mini" onclick="speak('Mettez le thermomètre sous la langue')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">le stéthoscope <button class="btn-mini" onclick="speak('le stéthoscope')">🔊</button></td>
+            <td>stethoscope / el estetoscopio</td>
+            <td><em>Le docteur utilise un stéthoscope.</em> <button class="btn-mini" onclick="speak('Le docteur utilise un stéthoscope')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">l'ordonnance <button class="btn-mini" onclick="speak('l\'ordonnance')">🔊</button></td>
+            <td>prescription / la receta</td>
+            <td><em>Voici votre ordonnance.</em> <button class="btn-mini" onclick="speak('Voici votre ordonnance')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">prescrire <button class="btn-mini" onclick="speak('prescrire')">🔊</button></td>
+            <td>to prescribe / prescribir</td>
+            <td><em>Le docteur prescrit des médicaments.</em> <button class="btn-mini" onclick="speak('Le docteur prescrit des médicaments')">🔊</button></td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Expressions utiles -->
+      <div class="ex-card">
+        <div class="ex-title">Expressions Utiles</div>
+        <div class="ex-instr">Phrases courantes chez le docteur :</div>
+        <table class="form-table">
+          <tr>
+            <th style="color: var(--l1);">Français</th>
+            <th>English / Español</th>
+          </tr>
+          <tr>
+            <td class="form-fr">Qu'est-ce qui se passe? <button class="btn-mini" onclick="speak('Qu\'est-ce qui se passe')">🔊</button></td>
+            <td>What's wrong? / ¿Qué pasa?</td>
+          </tr>
+          <tr>
+            <td class="form-fr">Vous n'avez pas l'air en forme. <button class="btn-mini" onclick="speak('Vous n\'avez pas l\'air en forme')">🔊</button></td>
+            <td>You don't look well. / No te ves bien.</td>
+          </tr>
+          <tr>
+            <td class="form-fr">Ce n'est pas grave. <button class="btn-mini" onclick="speak('Ce n\'est pas grave')">🔊</button></td>
+            <td>It's not serious. / No es grave.</td>
+          </tr>
+          <tr>
+            <td class="form-fr">Bon rétablissement! <button class="btn-mini" onclick="speak('Bon rétablissement')">🔊</button></td>
+            <td>Get well soon! / ¡Que te mejores!</td>
+          </tr>
+          <tr>
+            <td class="form-fr">Prenez un comprimé matin et soir. <button class="btn-mini" onclick="speak('Prenez un comprimé matin et soir')">🔊</button></td>
+            <td>Take a tablet morning and evening. / Toma una pastilla mañana y noche.</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Lecture : Dialogue à la clinique -->
+      <div class="ex-card">
+        <div class="ex-title">📖 Lecture : Paul chez le docteur</div>
+        <div class="ex-instr">Lisez le dialogue entre Paul et le docteur :</div>
+        <div style="background: var(--l1l); padding: 20px; border-radius: 12px; line-height: 1.8; margin-bottom: 15px;">
+          <p style="margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--border);">
+            <strong>Le docteur :</strong> "Bonjour Paul, qu'est-ce qui se passe? Vous n'avez pas l'air en forme."
+            <button class="btn-mini" onclick="speak('Bonjour Paul, qu\'est-ce qui se passe? Vous n\'avez pas l\'air en forme')">🔊</button>
+          </p>
+          <p style="margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--border);">
+            <strong>Paul :</strong> "Docteur, j'ai très mal à la tête, j'ai la toux et mal à la gorge. J'ai aussi des courbatures partout."
+            <button class="btn-mini" onclick="speak('Docteur, j\'ai très mal à la tête, j\'ai la toux et mal à la gorge. J\'ai aussi des courbatures partout')">🔊</button>
+          </p>
+          <p style="margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--border);">
+            <strong>Le docteur :</strong> "Je vais prendre votre température. Mettez le thermomètre."
+            <button class="btn-mini" onclick="speak('Je vais prendre votre température. Mettez le thermomètre')">🔊</button>
+          </p>
+          <p style="margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--border);">
+            [Le docteur examine Paul avec le stéthoscope]
+            <button class="btn-mini" onclick="speak('Le docteur examine Paul avec le stéthoscope')">🔊</button>
+          </p>
+          <p style="margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--border);">
+            <strong>Le docteur :</strong> "Vous avez 38,5 degrés de fièvre. C'est la grippe. Ce n'est pas grave. Je vous prescris des médicaments pour la fièvre et du sirop pour la toux."
+            <button class="btn-mini" onclick="speak('Vous avez 38.5 degrés de fièvre. C\'est la grippe. Ce n\'est pas grave. Je vous prescris des médicaments pour la fièvre et du sirop pour la toux')">🔊</button>
+          </p>
+          <p style="margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--border);">
+            <strong>Le docteur :</strong> "Buvez beaucoup d'eau, reposez-vous et prenez un comprimé matin et soir. Le sirop, trois fois par jour. Si ce n'est pas mieux dans trois jours, revenez me voir."
+            <button class="btn-mini" onclick="speak('Buvez beaucoup d\'eau, reposez-vous et prenez un comprimé matin et soir. Le sirop, trois fois par jour. Si ce n\'est pas mieux dans trois jours, revenez me voir')">🔊</button>
+          </p>
+          <p style="margin-bottom: 0;">
+            <strong>Paul :</strong> "Merci, docteur! Au revoir!"
+            <button class="btn-mini" onclick="speak('Merci, docteur! Au revoir!')">🔊</button>
+          </p>
+        </div>
+      </div>
+
+      <!-- QCM : Compréhension du dialogue -->
+      <div class="ex-card">
+        <div class="ex-title">🎯 QCM : Compréhension</div>
+        <div id="qcm-l1-score" style="font-size: 13px; margin-bottom: 20px; padding: 8px 12px; background: var(--border); border-radius: 8px; display: inline-block;">Score : <strong>0 / 5</strong></div>
+        <script>const l1State = { score: 0, total: 5 };</script>
+
+        <div class="qcm-item">
+          <div class="q-text">1. Quel est le diagnostic du docteur?</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l1-score', l1State)">Une infection</button>
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-l1-score', l1State)">La grippe</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l1-score', l1State)">Une pneumonie</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">2. Quelle est la température de Paul?</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l1-score', l1State)">37 degrés</button>
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-l1-score', l1State)">38,5 degrés</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l1-score', l1State)">39 degrés</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">3. Combien de fois par jour Paul doit-il prendre le sirop?</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l1-score', l1State)">Deux fois</button>
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-l1-score', l1State)">Trois fois</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l1-score', l1State)">Quatre fois</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">4. Quand Paul doit-il revenir chez le docteur?</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l1-score', l1State)">Demain</button>
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-l1-score', l1State)">Dans trois jours si ce n'est pas mieux</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l1-score', l1State)">Une semaine</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">5. Que recommande le docteur à Paul?</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l1-score', l1State)">Faire du sport</button>
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-l1-score', l1State)">Boire de l'eau, se reposer et prendre les médicaments</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l1-score', l1State)">Aller travailler normalement</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+      </div>
+
+      <!-- Remplissage : Expressions médicales -->
+      <div class="ex-card">
+        <div class="ex-title">✏️ Remplissez les trous</div>
+        <div class="ex-instr">Complétez les phrases avec les expressions médicales :</div>
+        <div id="fill-l1">
+          <div class="fill-item">
+            <div class="fill-sentence">Le docteur demande : "___ ?" pour savoir les symptômes.</div>
+            <input type="text" class="fill-input" data-answer="Qu'est-ce qui se passe">
+            <div class="fill-hint">Indice : question du docteur</div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Paul a 38,5 degrés de ___.</div>
+            <input type="text" class="fill-input" data-answer="fièvre">
+            <div class="fill-hint">Indice : avec le thermomètre</div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Le docteur prescrit des ___ pour la toux.</div>
+            <input type="text" class="fill-input" data-answer="sirop">
+            <div class="fill-hint">Indice : en bouteille</div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Voici votre ___ avec les médicaments.</div>
+            <input type="text" class="fill-input" data-answer="ordonnance">
+            <div class="fill-hint">Indice : document médical</div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Le docteur utilise un ___ pour écouter le cœur.</div>
+            <input type="text" class="fill-input" data-answer="stéthoscope">
+            <div class="fill-hint">Indice : instrument médical</div>
+          </div>
+        </div>
+        <button class="btn-check" onclick="checkFill('fill-l1')">Vérifier</button>
+      </div>
+
+      <!-- Match : Symptômes et traitements -->
+      <div class="ex-card">
+        <div class="ex-title">🔀 Associez les symptômes aux traitements</div>
+        <div class="ex-instr">Reliez les symptômes à leur traitement :</div>
+        <div id="match-l1" class="match-zone"></div>
+        <script>
+          buildMatch('match-l1', [
+            ['La toux', 'Sirop'],
+            ['La fièvre', 'Comprimés'],
+            ['Mal à la gorge', 'Pastilles'],
+            ['Courbatures', 'Médicaments'],
+            ['Nez bouché', 'Repos']
+          ]);
+        </script>
+      </div>
+    </section>
+
+    <!-- LEÇON 2: L'impératif présent -->
+    <section class="lesson-panel" style="display: none;">
+      <div class="lesson-header">
+        <div class="lesson-icon-big">📣</div>
+        <div class="lesson-meta">
+          <span class="lesson-tag" style="background: var(--l2);">Leçon 2</span>
+          <h1 class="lesson-title">L'impératif présent</h1>
+          <p class="lesson-desc">Apprenez comment donner des ordres, conseils et instructions.</p>
+        </div>
+      </div>
+
+      <!-- Explication de l'impératif -->
+      <div class="ex-card">
+        <div class="ex-title">Qu'est-ce que l'impératif?</div>
+        <div class="ex-instr">L'impératif est utilisé pour :</div>
+        <div style="background: var(--l2l); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+          <p>✓ Donner un <strong>ordre</strong> : "Arrête!" (Stop!)</p>
+          <p>✓ Donner un <strong>conseil</strong> : "Repose-toi!" (Rest!)</p>
+          <p>✓ Faire une <strong>invitation</strong> : "Viens avec moi!" (Come with me!)</p>
+          <p>✓ Donner une <strong>instruction</strong> : "Prends le thermomètre!" (Take the thermometer!)</p>
+        </div>
+        <p style="color: var(--l2); font-weight: 600;">Personnes de l'impératif : <strong>tu</strong>, <strong>nous</strong>, <strong>vous</strong></strong></p>
+        <p style="color: var(--muted);">(pas de "je", "il/elle", "ils/elles")</p>
+      </div>
+
+      <!-- Groupe 1 (-ER) -->
+      <div class="ex-card">
+        <div class="ex-title">Groupe 1 : Verbes en -ER</div>
+        <div class="ex-instr">Exemple : <strong>PARLER</strong> <button class="btn-mini" onclick="speak('parler')">🔊</button></div>
+        <table class="form-table">
+          <tr>
+            <th style="color: var(--l2);">Personne</th>
+            <th>Impératif</th>
+            <th>Exemple</th>
+          </tr>
+          <tr>
+            <td><strong>Tu</strong></td>
+            <td class="form-fr">Parle! <button class="btn-mini" onclick="speak('Parle')">🔊</button></td>
+            <td><em>Parle avec le docteur!</em> <button class="btn-mini" onclick="speak('Parle avec le docteur')">🔊</button></td>
+          </tr>
+          <tr>
+            <td><strong>Nous</strong></td>
+            <td class="form-fr">Parlons! <button class="btn-mini" onclick="speak('Parlons')">🔊</button></td>
+            <td><em>Parlons au docteur ensemble!</em> <button class="btn-mini" onclick="speak('Parlons au docteur ensemble')">🔊</button></td>
+          </tr>
+          <tr>
+            <td><strong>Vous</strong></td>
+            <td class="form-fr">Parlez! <button class="btn-mini" onclick="speak('Parlez')">🔊</button></td>
+            <td><em>Parlez au docteur!</em> <button class="btn-mini" onclick="speak('Parlez au docteur')">🔊</button></td>
+          </tr>
+        </table>
+        <p style="margin-top: 15px; padding: 12px; background: var(--border); border-radius: 8px; font-size: 14px;">
+          <strong>⚠️ Important :</strong> Au verbe "aller" (go), on garde le <strong>-s</strong> avant "en" ou "y" :
+          <br>"Va à la pharmacie!" mais "Vas-y!" <button class="btn-mini" onclick="speak('Vas-y')">🔊</button>
+        </p>
+      </div>
+
+      <!-- Groupe 2 et 3 (-IR/-RE) -->
+      <div class="ex-card">
+        <div class="ex-title">Groupe 2 et 3 : Verbes en -IR et -RE</div>
+        <div class="ex-instr">Exemples : <strong>FINIR</strong> et <strong>ATTENDRE</strong></div>
+        <table class="form-table">
+          <tr>
+            <th style="color: var(--l2);">Personne</th>
+            <th>-IR (FINIR)</th>
+            <th>-RE (ATTENDRE)</th>
+          </tr>
+          <tr>
+            <td><strong>Tu</strong></td>
+            <td class="form-fr">Finis! <button class="btn-mini" onclick="speak('Finis')">🔊</button></td>
+            <td class="form-fr">Attends! <button class="btn-mini" onclick="speak('Attends')">🔊</button></td>
+          </tr>
+          <tr>
+            <td><strong>Nous</strong></td>
+            <td class="form-fr">Finissons! <button class="btn-mini" onclick="speak('Finissons')">🔊</button></td>
+            <td class="form-fr">Attendons! <button class="btn-mini" onclick="speak('Attendons')">🔊</button></td>
+          </tr>
+          <tr>
+            <td><strong>Vous</strong></td>
+            <td class="form-fr">Finissez! <button class="btn-mini" onclick="speak('Finissez')">🔊</button></td>
+            <td class="form-fr">Attendez! <button class="btn-mini" onclick="speak('Attendez')">🔊</button></td>
+          </tr>
+        </table>
+        <div style="margin-top: 15px; padding: 12px; background: var(--l2l); border-radius: 8px;">
+          <p><em>Exemples :</em></p>
+          <p>"Finis tes médicaments!" <button class="btn-mini" onclick="speak('Finis tes médicaments')">🔊</button></p>
+          <p>"Attendez le docteur!" <button class="btn-mini" onclick="speak('Attendez le docteur')">🔊</button></p>
+        </div>
+      </div>
+
+      <!-- Verbes irréguliers -->
+      <div class="ex-card">
+        <div class="ex-title">Verbes Irréguliers</div>
+        <div class="ex-instr">Attention aux verbes spéciaux :</div>
+        <table class="form-table">
+          <tr>
+            <th style="color: var(--l2);">Verbe</th>
+            <th>Tu</th>
+            <th>Nous</th>
+            <th>Vous</th>
+          </tr>
+          <tr>
+            <td class="form-fr"><strong>ÊTRE</strong> <button class="btn-mini" onclick="speak('être')">🔊</button></td>
+            <td class="form-fr">Sois! <button class="btn-mini" onclick="speak('Sois')">🔊</button></td>
+            <td class="form-fr">Soyons! <button class="btn-mini" onclick="speak('Soyons')">🔊</button></td>
+            <td class="form-fr">Soyez! <button class="btn-mini" onclick="speak('Soyez')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr"><strong>AVOIR</strong> <button class="btn-mini" onclick="speak('avoir')">🔊</button></td>
+            <td class="form-fr">Aie! <button class="btn-mini" onclick="speak('Aie')">🔊</button></td>
+            <td class="form-fr">Ayons! <button class="btn-mini" onclick="speak('Ayons')">🔊</button></td>
+            <td class="form-fr">Ayez! <button class="btn-mini" onclick="speak('Ayez')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr"><strong>SAVOIR</strong> <button class="btn-mini" onclick="speak('savoir')">🔊</button></td>
+            <td class="form-fr">Sache! <button class="btn-mini" onclick="speak('Sache')">🔊</button></td>
+            <td class="form-fr">Sachons! <button class="btn-mini" onclick="speak('Sachons')">🔊</button></td>
+            <td class="form-fr">Sachez! <button class="btn-mini" onclick="speak('Sachez')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr"><strong>ALLER</strong> <button class="btn-mini" onclick="speak('aller')">🔊</button></td>
+            <td class="form-fr">Va! <button class="btn-mini" onclick="speak('Va')">🔊</button></td>
+            <td class="form-fr">Allons! <button class="btn-mini" onclick="speak('Allons')">🔊</button></td>
+            <td class="form-fr">Allez! <button class="btn-mini" onclick="speak('Allez')">🔊</button></td>
+          </tr>
+        </table>
+        <div style="margin-top: 15px; padding: 12px; background: var(--l2l); border-radius: 8px;">
+          <p><em>Exemples :</em></p>
+          <p>"Sois courageux!" <button class="btn-mini" onclick="speak('Sois courageux')">🔊</button></p>
+          <p>"Ayez confiance!" <button class="btn-mini" onclick="speak('Ayez confiance')">🔊</button></p>
+          <p>"Va à la pharmacie!" <button class="btn-mini" onclick="speak('Va à la pharmacie')">🔊</button></p>
+        </div>
+      </div>
+
+      <!-- Pronoms et l'impératif -->
+      <div class="ex-card">
+        <div class="ex-title">Pronoms avec l'Impératif</div>
+        <div class="ex-instr">Comment placer les pronoms : <strong>me, te, le, la, nous, vous, les, lui, leur</strong></div>
+        <div style="background: var(--l2l); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+          <p><strong>Impératif AFFIRMATIF :</strong> Pronom <strong>après</strong> le verbe avec un trait d'union</p>
+          <p class="form-fr" style="margin: 10px 0; padding: 10px; background: white; border-radius: 6px;">
+            "Donne-le-moi!" <button class="btn-mini" onclick="speak('Donne-le-moi')">🔊</button>
+            <br>"Parle-moi!" <button class="btn-mini" onclick="speak('Parle-moi')">🔊</button>
+            <br>"Dis-lui!" <button class="btn-mini" onclick="speak('Dis-lui')">🔊</button>
+          </p>
+        </div>
+        <div style="background: var(--l2l); padding: 15px; border-radius: 8px;">
+          <p><strong>Impératif NÉGATIF :</strong> Pronom <strong>avant</strong> le verbe (pas de trait d'union)</p>
+          <p class="form-fr" style="margin: 10px 0; padding: 10px; background: white; border-radius: 6px;">
+            "Ne me le donne pas!" <button class="btn-mini" onclick="speak('Ne me le donne pas')">🔊</button>
+            <br>"Ne lui dis rien!" <button class="btn-mini" onclick="speak('Ne lui dis rien')">🔊</button>
+            <br>"Ne les appelez pas!" <button class="btn-mini" onclick="speak('Ne les appelez pas')">🔊</button>
+          </p>
+        </div>
+      </div>
+
+      <!-- QCM : Impératif -->
+      <div class="ex-card">
+        <div class="ex-title">🎯 QCM : L'impératif</div>
+        <div id="qcm-l2-score" style="font-size: 13px; margin-bottom: 20px; padding: 8px 12px; background: var(--border); border-radius: 8px; display: inline-block;">Score : <strong>0 / 5</strong></div>
+        <script>const l2State = { score: 0, total: 5 };</script>
+
+        <div class="qcm-item">
+          <div class="q-text">1. Quelle est la forme "tu" de l'impératif pour "parler"?</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-l2-score', l2State)">Parle!</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l2-score', l2State)">Parles!</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l2-score', l2State)">Parlé!</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">2. Conjuguez "finir" à la forme "nous" de l'impératif.</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-l2-score', l2State)">Finissons!</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l2-score', l2State)">Finis!</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l2-score', l2State)">Finissent!</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">3. Quel est l'impératif "tu" du verbe "être"?</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-l2-score', l2State)">Sois!</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l2-score', l2State)">Es!</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l2-score', l2State)">Soyez!</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">4. Comment écrit-on "Donne-le-moi" à la forme négative?</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-l2-score', l2State)">Ne me le donne pas!</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l2-score', l2State)">Donne-moi-ne-le pas!</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l2-score', l2State)">Ne le donne-moi pas!</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">5. Conjuguez "aller" à la forme "vous" de l'impératif.</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l2-score', l2State)">Va!</button>
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-l2-score', l2State)">Allez!</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l2-score', l2State)">Allons!</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+      </div>
+
+      <!-- Remplissage : Conjugaison impératif -->
+      <div class="ex-card">
+        <div class="ex-title">✏️ Remplissez les trous</div>
+        <div class="ex-instr">Conjuguez les verbes à l'impératif :</div>
+        <div id="fill-l2">
+          <div class="fill-item">
+            <div class="fill-sentence">(Reposer-toi) ___ bien! (tu)</div>
+            <input type="text" class="fill-input" data-answer="Repose-toi">
+            <div class="fill-hint">Indice : verbe "reposer" à l'impératif tu</div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">(Prendre) ___ le thermomètre! (vous)</div>
+            <input type="text" class="fill-input" data-answer="Prenez">
+            <div class="fill-hint">Indice : verbe "prendre" à l'impératif vous</div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">(Boire) ___ beaucoup d'eau! (nous)</div>
+            <input type="text" class="fill-input" data-answer="Buvons">
+            <div class="fill-hint">Indice : verbe "boire" à l'impératif nous</div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">(Aller) ___ à la pharmacie! (tu)</div>
+            <input type="text" class="fill-input" data-answer="Va">
+            <div class="fill-hint">Indice : verbe "aller" à l'impératif tu</div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">(Avoir) ___ confiance! (vous)</div>
+            <input type="text" class="fill-input" data-answer="Ayez">
+            <div class="fill-hint">Indice : verbe "avoir" à l'impératif vous</div>
+          </div>
+        </div>
+        <button class="btn-check" onclick="checkFill('fill-l2')">Vérifier</button>
+      </div>
+
+      <!-- Match : Infinitif et impératif -->
+      <div class="ex-card">
+        <div class="ex-title">🔀 Infinitif → Impératif (tu)</div>
+        <div class="ex-instr">Associez les infinitifs à leur forme impérative "tu" :</div>
+        <div id="match-l2" class="match-zone"></div>
+        <script>
+          buildMatch('match-l2', [
+            ['Parler', 'Parle!'],
+            ['Finir', 'Finis!'],
+            ['Attendre', 'Attends!'],
+            ['Être', 'Sois!'],
+            ['Avoir', 'Aie!'],
+            ['Aller', 'Va!'],
+            ['Savoir', 'Sache!']
+          ]);
+        </script>
+      </div>
+    </section>
+
+    <!-- LEÇON 3: À la pharmacie -->
+    <section class="lesson-panel" style="display: none;">
+      <div class="lesson-header">
+        <div class="lesson-icon-big">💊</div>
+        <div class="lesson-meta">
+          <span class="lesson-tag" style="background: var(--l3);">Leçon 3</span>
+          <h1 class="lesson-title">À la pharmacie</h1>
+          <p class="lesson-desc">Apprenez le vocabulaire de la pharmacie et comment acheter des médicaments.</p>
+        </div>
+      </div>
+
+      <!-- Vocabulaire : La pharmacie -->
+      <div class="ex-card">
+        <div class="ex-title">Vocabulaire de la Pharmacie</div>
+        <div class="ex-instr">Mots importants à la pharmacie :</div>
+        <table class="form-table">
+          <tr>
+            <th style="color: var(--l3);">Français</th>
+            <th>English / Español</th>
+            <th>Exemple</th>
+          </tr>
+          <tr>
+            <td class="form-fr">le pharmacien / la pharmacienne <button class="btn-mini" onclick="speak('le pharmacien')">🔊</button></td>
+            <td>pharmacist / el farmacéutico</td>
+            <td><em>La pharmacienne m'aide.</em> <button class="btn-mini" onclick="speak('La pharmacienne m\'aide')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">une ordonnance <button class="btn-mini" onclick="speak('une ordonnance')">🔊</button></td>
+            <td>prescription / una receta</td>
+            <td><em>Voici mon ordonnance du docteur.</em> <button class="btn-mini" onclick="speak('Voici mon ordonnance du docteur')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">le comptoir <button class="btn-mini" onclick="speak('le comptoir')">🔊</button></td>
+            <td>counter / el mostrador</td>
+            <td><em>Je vais au comptoir.</em> <button class="btn-mini" onclick="speak('Je vais au comptoir')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">le sirop <button class="btn-mini" onclick="speak('le sirop')">🔊</button></td>
+            <td>syrup / el jarabe</td>
+            <td><em>Je prends une cuillère de sirop.</em> <button class="btn-mini" onclick="speak('Je prends une cuillère de sirop')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">un comprimé <button class="btn-mini" onclick="speak('un comprimé')">🔊</button></td>
+            <td>tablet / una pastilla</td>
+            <td><em>Je prends un comprimé le matin.</em> <button class="btn-mini" onclick="speak('Je prends un comprimé le matin')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">une cuillère <button class="btn-mini" onclick="speak('une cuillère')">🔊</button></td>
+            <td>spoon / una cuchara</td>
+            <td><em>Une cuillère de sirop trois fois par jour.</em> <button class="btn-mini" onclick="speak('Une cuillère de sirop trois fois par jour')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">un mouchoir en papier <button class="btn-mini" onclick="speak('un mouchoir en papier')">🔊</button></td>
+            <td>tissue / un pañuelo</td>
+            <td><em>J'utilise un mouchoir en papier.</em> <button class="btn-mini" onclick="speak('J\'utilise un mouchoir en papier')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">c'est cadeau <button class="btn-mini" onclick="speak('c\'est cadeau')">🔊</button></td>
+            <td>it's free / es de regalo</td>
+            <td><em>Les pastilles, c'est cadeau!</em> <button class="btn-mini" onclick="speak('Les pastilles, c\'est cadeau')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">bon rétablissement <button class="btn-mini" onclick="speak('bon rétablissement')">🔊</button></td>
+            <td>get well soon / que te mejores</td>
+            <td><em>Bon rétablissement, Paul!</em> <button class="btn-mini" onclick="speak('Bon rétablissement, Paul')">🔊</button></td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Verbes importants -->
+      <div class="ex-card">
+        <div class="ex-title">Verbes Importants à la Pharmacie</div>
+        <div class="ex-instr">Actions à la pharmacie :</div>
+        <table class="form-table">
+          <tr>
+            <th style="color: var(--l3);">Verbe</th>
+            <th>Meaning</th>
+            <th>Exemple</th>
+          </tr>
+          <tr>
+            <td class="form-fr">accueillir <button class="btn-mini" onclick="speak('accueillir')">🔊</button></td>
+            <td>to welcome</td>
+            <td><em>La pharmacienne m'accueille.</em> <button class="btn-mini" onclick="speak('La pharmacienne m\'accueille')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">ranger <button class="btn-mini" onclick="speak('ranger')">🔊</button></td>
+            <td>to put away / organize</td>
+            <td><em>Les médicaments sont rangés sur les étagères.</em> <button class="btn-mini" onclick="speak('Les médicaments sont rangés sur les étagères')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">s'approcher <button class="btn-mini" onclick="speak('s\'approcher')">🔊</button></td>
+            <td>to approach</td>
+            <td><em>Paul s'approche du comptoir.</em> <button class="btn-mini" onclick="speak('Paul s\'approche du comptoir')">🔊</button></td>
+          </tr>
+          <tr>
+            <td class="form-fr">lire <button class="btn-mini" onclick="speak('lire')">🔊</button></td>
+            <td>to read</td>
+            <td><em>La pharmacienne lit l'ordonnance.</em> <button class="btn-mini" onclick="speak('La pharmacienne lit l\'ordonnance')">🔊</button></td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Expressions utiles -->
+      <div class="ex-card">
+        <div class="ex-title">Expressions Utiles à la Pharmacie</div>
+        <div class="ex-instr">Dialogue à la pharmacie :</div>
+        <table class="form-table">
+          <tr>
+            <th style="color: var(--l3);">Français</th>
+            <th>English / Español</th>
+          </tr>
+          <tr>
+            <td class="form-fr">Que puis-je faire pour vous? <button class="btn-mini" onclick="speak('Que puis-je faire pour vous')">🔊</button></td>
+            <td>What can I do for you? / ¿Qué puedo hacer por usted?</td>
+          </tr>
+          <tr>
+            <td class="form-fr">Voici mon ordonnance. <button class="btn-mini" onclick="speak('Voici mon ordonnance')">🔊</button></td>
+            <td>Here's my prescription. / Aquí está mi receta.</td>
+          </tr>
+          <tr>
+            <td class="form-fr">Combien je vous dois? <button class="btn-mini" onclick="speak('Combien je vous dois')">🔊</button></td>
+            <td>How much do I owe you? / ¿Cuánto le debo?</td>
+          </tr>
+          <tr>
+            <td class="form-fr">C'est 14 euros. <button class="btn-mini" onclick="speak('C\'est 14 euros')">🔊</button></td>
+            <td>It's 14 euros. / Son 14 euros.</td>
+          </tr>
+          <tr>
+            <td class="form-fr">Bonne journée et bon rétablissement! <button class="btn-mini" onclick="speak('Bonne journée et bon rétablissement')">🔊</button></td>
+            <td>Have a good day and get well! / ¡Que tengas un buen día!</td>
+          </tr>
+          <tr>
+            <td class="form-fr">Vous allez mieux? <button class="btn-mini" onclick="speak('Vous allez mieux')">🔊</button></td>
+            <td>Are you feeling better? / ¿Te encuentras mejor?</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Lecture : Dialogue à la pharmacie -->
+      <div class="ex-card">
+        <div class="ex-title">📖 Lecture : Paul à la pharmacie</div>
+        <div class="ex-instr">Lisez le dialogue entre Paul et la pharmacienne :</div>
+        <div style="background: var(--l3l); padding: 20px; border-radius: 12px; line-height: 1.8; margin-bottom: 15px;">
+          <p style="margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--border);">
+            <strong>La pharmacienne :</strong> "Bonjour! Que puis-je faire pour vous?"
+            <button class="btn-mini" onclick="speak('Bonjour! Que puis-je faire pour vous')">🔊</button>
+          </p>
+          <p style="margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--border);">
+            <strong>Paul :</strong> "Bonjour, voici mon ordonnance du docteur. J'ai la grippe."
+            <button class="btn-mini" onclick="speak('Bonjour, voici mon ordonnance du docteur. J\'ai la grippe')">🔊</button>
+          </p>
+          <p style="margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--border);">
+            <strong>La pharmacienne :</strong> "Parfait. [Elle lit l'ordonnance] Je vous donne du paracétamol pour la fièvre et du sirop pour la toux. Voici également des pastilles pour la gorge."
+            <button class="btn-mini" onclick="speak('Je vous donne du paracétamol pour la fièvre et du sirop pour la toux. Voici également des pastilles pour la gorge')">🔊</button>
+          </p>
+          <p style="margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--border);">
+            <strong>Paul :</strong> "Merci! Comment je dois les prendre?"
+            <button class="btn-mini" onclick="speak('Merci! Comment je dois les prendre')">🔊</button>
+          </p>
+          <p style="margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--border);">
+            <strong>La pharmacienne :</strong> "Un comprimé matin et soir avec de l'eau. Et une cuillère de sirop trois fois par jour, de préférence après les repas. Les pastilles, c'est cadeau!"
+            <button class="btn-mini" onclick="speak('Un comprimé matin et soir avec de l\'eau. Et une cuillère de sirop trois fois par jour, de préférence après les repas. Les pastilles, c\'est cadeau')">🔊</button>
+          </p>
+          <p style="margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--border);">
+            <strong>Paul :</strong> "C'est gentil! Combien je vous dois?"
+            <button class="btn-mini" onclick="speak('C\'est gentil! Combien je vous dois')">🔊</button>
+          </p>
+          <p style="margin-bottom: 0;">
+            <strong>La pharmacienne :</strong> "C'est 14 euros. Allez vite vous reposer. Bonne journée et bon rétablissement!"
+            <button class="btn-mini" onclick="speak('C\'est 14 euros. Allez vite vous reposer. Bonne journée et bon rétablissement')">🔊</button>
+          </p>
+        </div>
+      </div>
+
+      <!-- QCM : Compréhension dialogue -->
+      <div class="ex-card">
+        <div class="ex-title">🎯 QCM : Compréhension</div>
+        <div id="qcm-l3-score" style="font-size: 13px; margin-bottom: 20px; padding: 8px 12px; background: var(--border); border-radius: 8px; display: inline-block;">Score : <strong>0 / 5</strong></div>
+        <script>const l3State = { score: 0, total: 5 };</script>
+
+        <div class="qcm-item">
+          <div class="q-text">1. Que demande la pharmacienne à Paul?</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-l3-score', l3State)">Que puis-je faire pour vous?</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l3-score', l3State)">Comment allez-vous?</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l3-score', l3State)">Avez-vous besoin de repos?</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">2. Qu'est-ce que la pharmacienne donne à Paul?</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l3-score', l3State)">Des injections</button>
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-l3-score', l3State)">Paracétamol, sirop et pastilles</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l3-score', l3State)">Des vitamines</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">3. Comment Paul doit-il prendre le comprimé?</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-l3-score', l3State)">Matin et soir avec de l'eau</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l3-score', l3State)">Quatre fois par jour</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l3-score', l3State)">Avec les repas</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">4. Quand doit-il prendre le sirop?</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l3-score', l3State)">Une fois par jour</button>
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-l3-score', l3State)">Trois fois par jour, de préférence après les repas</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l3-score', l3State)">Deux fois par jour</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">5. Quel est le prix total?</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l3-score', l3State)">10 euros</button>
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-l3-score', l3State)">14 euros</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-l3-score', l3State)">20 euros</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+      </div>
+
+      <!-- Remplissage : Vocabulaire pharmacie -->
+      <div class="ex-card">
+        <div class="ex-title">✏️ Remplissez les trous</div>
+        <div class="ex-instr">Complétez les phrases avec le vocabulaire de la pharmacie :</div>
+        <div id="fill-l3">
+          <div class="fill-item">
+            <div class="fill-sentence">Je vais à la pharmacie avec mon ___ du docteur.</div>
+            <input type="text" class="fill-input" data-answer="ordonnance">
+            <div class="fill-hint">Indice : document du médecin</div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">La ___ m'accueille au comptoir.</div>
+            <input type="text" class="fill-input" data-answer="pharmacienne">
+            <div class="fill-hint">Indice : femme qui vend les médicaments</div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Je prends un ___ matin et soir.</div>
+            <input type="text" class="fill-input" data-answer="comprimé">
+            <div class="fill-hint">Indice : petit rond blanc</div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Une ___ de sirop trois fois par jour.</div>
+            <input type="text" class="fill-input" data-answer="cuillère">
+            <div class="fill-hint">Indice : ustensile pour le sirop</div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Les pastilles pour la gorge, c'est ___!</div>
+            <input type="text" class="fill-input" data-answer="cadeau">
+            <div class="fill-hint">Indice : gratuit, sans payer</div>
+          </div>
+        </div>
+        <button class="btn-check" onclick="checkFill('fill-l3')">Vérifier</button>
+      </div>
+
+      <!-- Match : Expressions et traductions -->
+      <div class="ex-card">
+        <div class="ex-title">🔀 Associez les expressions</div>
+        <div class="ex-instr">Reliez les expressions françaises à leur signification :</div>
+        <div id="match-l3" class="match-zone"></div>
+        <script>
+          buildMatch('match-l3', [
+            ['Que puis-je faire pour vous?', 'How can I help?'],
+            ['Combien je vous dois?', 'How much do I owe?'],
+            ['Voici mon ordonnance', 'Here\'s my prescription'],
+            ['Bon rétablissement!', 'Get well soon!'],
+            ['C\'est cadeau', 'It\'s free'],
+            ['Une cuillère de sirop', 'A spoonful of syrup']
+          ]);
+        </script>
+      </div>
+
+      <!-- Dialogue interactif -->
+      <div class="ex-card">
+        <div class="ex-title">💬 Activité : Dialogue à la pharmacie</div>
+        <div class="ex-instr">Situations de rôle - Que dites-vous?</div>
+        <div style="background: var(--l3l); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+          <p style="margin-bottom: 12px; font-weight: 600;">Situation 1 : Vous entrez à la pharmacie</p>
+          <p style="color: var(--muted);">La pharmacienne dit : "Que puis-je faire pour vous?"</p>
+          <p style="padding: 10px; background: white; border-radius: 6px; margin-top: 8px; font-style: italic;">
+            Réponse suggérée : "Bonjour, j'ai une ordonnance du docteur."
+            <button class="btn-mini" onclick="speak('Bonjour, j\'ai une ordonnance du docteur')">🔊</button>
+          </p>
+        </div>
+        <div style="background: var(--l3l); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+          <p style="margin-bottom: 12px; font-weight: 600;">Situation 2 : La pharmacienne vous demande les instructions</p>
+          <p style="color: var(--muted);">La pharmacienne dit : "Comment vous devez le prendre?"</p>
+          <p style="padding: 10px; background: white; border-radius: 6px; margin-top: 8px; font-style: italic;">
+            Réponse suggérée : "Un comprimé matin et soir avec de l'eau, s'il vous plaît."
+            <button class="btn-mini" onclick="speak('Un comprimé matin et soir avec de l\'eau, s\'il vous plaît')">🔊</button>
+          </p>
+        </div>
+        <div style="background: var(--l3l); padding: 15px; border-radius: 8px;">
+          <p style="margin-bottom: 12px; font-weight: 600;">Situation 3 : À la fin du dialogue</p>
+          <p style="color: var(--muted);">La pharmacienne dit : "C'est 14 euros. Bon rétablissement!"</p>
+          <p style="padding: 10px; background: white; border-radius: 6px; margin-top: 8px; font-style: italic;">
+            Réponse suggérée : "Merci beaucoup! Au revoir et bonne journée!"
+            <button class="btn-mini" onclick="speak('Merci beaucoup! Au revoir et bonne journée')">🔊</button>
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+</body>
+</html>

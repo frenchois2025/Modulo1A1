@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Français A2 · Module 3 · Expression et Communication</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="moteur.js"></script>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="sidebar-logo">Module 3 · <span>A2</span></div>
+    <button class="nav-btn active" data-lesson="0" onclick="showLesson(0, this)">
+      <span class="nav-icon">💬</span><span>Exprimer son opinion</span>
+    </button>
+    <button class="nav-btn" data-lesson="1" onclick="showLesson(1, this)">
+      <span class="nav-icon">⚖️</span><span>Comparer</span>
+    </button>
+    <button class="nav-btn" data-lesson="2" onclick="showLesson(2, this)">
+      <span class="nav-icon">🎨</span><span>Goûts et loisirs</span>
+    </button>
+  </aside>
+  <main class="main">
+    <!-- LESSON 0: Exprimer son opinion -->
+    <div class="lesson-panel" data-lesson="0">
+      <div class="lesson-header">
+        <div class="lesson-icon-big">💬</div>
+        <div class="lesson-meta">
+          <span class="lesson-tag" style="background: var(--l0l); color: var(--l0d);">Leçon 1/3</span>
+        </div>
+        <h1 class="lesson-title">Exprimer son opinion</h1>
+        <p class="lesson-desc">Apprenez à partager votre point de vue en français et à réagir aux opinions des autres.</p>
+      </div>
+
+      <!-- Expressions avec "je" -->
+      <div class="ex-card">
+        <div class="ex-title">Expressions avec "je" (opinion personnelle)</div>
+        <div class="ex-instr">Expressions pour partager votre avis personnel</div>
+        <table class="form-table">
+          <tr>
+            <td class="form-fr">Je pense que… <button class="btn-speak btn-mini" onclick="speak('Je pense que')">🔊</button></td>
+            <td class="form-es">Pienso que…</td>
+          </tr>
+          <tr>
+            <td class="form-fr">Je crois que… <button class="btn-speak btn-mini" onclick="speak('Je crois que')">🔊</button></td>
+            <td class="form-es">Creo que…</td>
+          </tr>
+          <tr>
+            <td class="form-fr">Je trouve que… <button class="btn-speak btn-mini" onclick="speak('Je trouve que')">🔊</button></td>
+            <td class="form-es">Me parece que…</td>
+          </tr>
+          <tr>
+            <td class="form-fr">À mon avis… <button class="btn-speak btn-mini" onclick="speak('À mon avis')">🔊</button></td>
+            <td class="form-es">En mi opinión…</td>
+          </tr>
+          <tr>
+            <td class="form-fr">Pour moi… <button class="btn-speak btn-mini" onclick="speak('Pour moi')">🔊</button></td>
+            <td class="form-es">Para mí…</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Formes impersonnelles -->
+      <div class="ex-card">
+        <div class="ex-title">Formes impersonnelles (plus formales)</div>
+        <div class="ex-instr">Expressions pour exprimer une opinion neutre ou formelle</div>
+        <table class="form-table">
+          <tr>
+            <td class="form-fr">Il me semble que… <button class="btn-speak btn-mini" onclick="speak('Il me semble que')">🔊</button></td>
+            <td class="form-es">Me parece que…</td>
+          </tr>
+          <tr>
+            <td class="form-fr">Il est clair que… <button class="btn-speak btn-mini" onclick="speak('Il est clair que')">🔊</button></td>
+            <td class="form-es">Está claro que…</td>
+          </tr>
+          <tr>
+            <td class="form-fr">Il est certain que… <button class="btn-speak btn-mini" onclick="speak('Il est certain que')">🔊</button></td>
+            <td class="form-es">Es cierto que…</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Autres expressions -->
+      <div class="ex-card">
+        <div class="ex-title">Autres expressions utiles</div>
+        <div class="ex-instr">Expressions supplémentaires pour la conversation</div>
+        <table class="form-table">
+          <tr>
+            <td class="form-fr">Point de vue <button class="btn-speak btn-mini" onclick="speak('Point de vue')">🔊</button></td>
+            <td class="form-es">Punto de vista</td>
+          </tr>
+          <tr>
+            <td class="form-fr">Je vois ce que tu veux dire <button class="btn-speak btn-mini" onclick="speak('Je vois ce que tu veux dire')">🔊</button></td>
+            <td class="form-es">Veo lo que quieres decir</td>
+          </tr>
+          <tr>
+            <td class="form-fr">J'entends ce que tu veux me dire <button class="btn-speak btn-mini" onclick="speak('J'entends ce que tu veux me dire')">🔊</button></td>
+            <td class="form-es">Entiendo lo que me quieres decir</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Demander l'opinion -->
+      <div class="ex-card">
+        <div class="ex-title">Demander l'opinion</div>
+        <div class="ex-instr">Comment demander l'avis de quelqu'un</div>
+        <table class="form-table">
+          <tr>
+            <td class="form-fr">Qu'en penses-tu ? <button class="btn-speak btn-mini" onclick="speak('Qu'en penses-tu')">🔊</button></td>
+            <td class="form-es">¿Qué opinas tú?</td>
+          </tr>
+          <tr>
+            <td class="form-fr">Et toi, qu'est-ce que tu en penses ? <button class="btn-speak btn-mini" onclick="speak('Et toi, qu'est-ce que tu en penses')">🔊</button></td>
+            <td class="form-es">¿Y tú, qué opinas?</td>
+          </tr>
+          <tr>
+            <td class="form-fr">Tu es d'accord ? <button class="btn-speak btn-mini" onclick="speak('Tu es d'accord')">🔊</button></td>
+            <td class="form-es">¿Estás de acuerdo?</td>
+          </tr>
+          <tr>
+            <td class="form-fr">Quel est ton avis ? <button class="btn-speak btn-mini" onclick="speak('Quel est ton avis')">🔊</button></td>
+            <td class="form-es">¿Cuál es tu opinión?</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Accord -->
+      <div class="ex-card">
+        <div class="ex-title">Accord ✅</div>
+        <div class="ex-instr">Comment montrer que vous êtes d'accord</div>
+        <table class="form-table">
+          <tr>
+            <td class="form-fr">Je suis d'accord (avec toi). <button class="btn-speak btn-mini" onclick="speak('Je suis d'accord')">🔊</button></td>
+            <td class="form-es">Estoy de acuerdo (contigo).</td>
+          </tr>
+          <tr>
+            <td class="form-fr">Tout à fait. <button class="btn-speak btn-mini" onclick="speak('Tout à fait')">🔊</button></td>
+            <td class="form-es">Totalmente. / Por supuesto.</td>
+          </tr>
+          <tr>
+            <td class="form-fr">Exactement. <button class="btn-speak btn-mini" onclick="speak('Exactement')">🔊</button></td>
+            <td class="form-es">Exactamente.</td>
+          </tr>
+          <tr>
+            <td class="form-fr">Effectivement <button class="btn-speak btn-mini" onclick="speak('Effectivement')">🔊</button></td>
+            <td class="form-es">En efecto.</td>
+          </tr>
+          <tr>
+            <td class="form-fr">J'adhère <button class="btn-speak btn-mini" onclick="speak('J'adhère')">🔊</button></td>
+            <td class="form-es">Estoy de acuerdo.</td>
+          </tr>
+          <tr>
+            <td class="form-fr">Tu as raison <button class="btn-speak btn-mini" onclick="speak('Tu as raison')">🔊</button></td>
+            <td class="form-es">Tienes razón.</td>
+          </tr>
+          <tr>
+            <td class="form-fr">Tu m'as convaincu <button class="btn-speak btn-mini" onclick="speak('Tu m'as convaincu')">🔊</button></td>
+            <td class="form-es">Me has convencido.</td>
+          </tr>
+          <tr>
+            <td class="form-fr">Tu m'as persuadé <button class="btn-speak btn-mini" onclick="speak('Tu m'as persuadé')">🔊</button></td>
+            <td class="form-es">Me has persuadido.</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Désaccord -->
+      <div class="ex-card">
+        <div class="ex-title">Désaccord ❌</div>
+        <div class="ex-instr">Comment montrer que vous n'êtes pas d'accord</div>
+        <table class="form-table">
+          <tr>
+            <td class="form-fr">Je ne suis pas d'accord. <button class="btn-speak btn-mini" onclick="speak('Je ne suis pas d'accord')">🔊</button></td>
+            <td class="form-es">No estoy de acuerdo.</td>
+          </tr>
+          <tr>
+            <td class="form-fr">Pas du tout. <button class="btn-speak btn-mini" onclick="speak('Pas du tout')">🔊</button></td>
+            <td class="form-es">Para nada. / En absoluto.</td>
+          </tr>
+          <tr>
+            <td class="form-fr">Je ne crois pas. <button class="btn-speak btn-mini" onclick="speak('Je ne crois pas')">🔊</button></td>
+            <td class="form-es">No lo creo.</td>
+          </tr>
+          <tr>
+            <td class="form-fr">Ce n'est pas vrai <button class="btn-speak btn-mini" onclick="speak('Ce n'est pas vrai')">🔊</button></td>
+            <td class="form-es">Eso no es verdad.</td>
+          </tr>
+          <tr>
+            <td class="form-fr">C'est faux <button class="btn-speak btn-mini" onclick="speak('C'est faux')">🔊</button></td>
+            <td class="form-es">Eso es falso.</td>
+          </tr>
+          <tr>
+            <td class="form-fr">Tu dis n'importe quoi <button class="btn-speak btn-mini" onclick="speak('Tu dis n'importe quoi')">🔊</button></td>
+            <td class="form-es">Dices cualquier cosa.</td>
+          </tr>
+          <tr>
+            <td class="form-fr">Ce que tu dis n'a pas de sens <button class="btn-speak btn-mini" onclick="speak('Ce que tu dis n'a pas de sens')">🔊</button></td>
+            <td class="form-es">Lo que dices no tiene sentido.</td>
+          </tr>
+          <tr>
+            <td class="form-fr">Tu as tort <button class="btn-speak btn-mini" onclick="speak('Tu as tort')">🔊</button></td>
+            <td class="form-es">Te equivocas. / Estás equivocado.</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Exemples -->
+      <div class="ex-card">
+        <div class="ex-title">Exemples en dialogue</div>
+        <div class="ex-instr">Voir ces expressions en contexte</div>
+        <p style="margin-bottom: 12px;">
+          <strong>À mon avis, Paris est plus beau au printemps.</strong> <button class="btn-speak btn-mini" onclick="speak('À mon avis, Paris est plus beau au printemps')">🔊</button>
+          <br><em>En mi opinión, París es más hermoso en primavera.</em>
+        </p>
+        <p style="margin-bottom: 12px;">
+          <strong>– Oui, je suis d'accord.</strong> <button class="btn-speak btn-mini" onclick="speak('Oui, je suis d'accord')">🔊</button>
+          <br><em>– Sí, estoy de acuerdo.</em>
+        </p>
+        <p style="margin-bottom: 12px;">
+          <strong>Je trouve que ce livre est ennuyeux.</strong> <button class="btn-speak btn-mini" onclick="speak('Je trouve que ce livre est ennuyeux')">🔊</button>
+          <br><em>Me parece que este libro es aburrido.</em>
+        </p>
+        <p style="margin-bottom: 12px;">
+          <strong>– Pas du tout ! Moi, je pense qu'il est passionnant.</strong> <button class="btn-speak btn-mini" onclick="speak('Pas du tout ! Moi, je pense qu'il est passionnant')">🔊</button>
+          <br><em>– ¡Para nada! Yo creo que es apasionante.</em>
+        </p>
+        <p>
+          <strong>Pour moi, c'est un bon restaurant.</strong> <button class="btn-speak btn-mini" onclick="speak('Pour moi, c'est un bon restaurant')">🔊</button>
+          <br><em>Para mí, es un buen restaurante.</em>
+        </p>
+        <p>
+          <strong>– Oui, mais je trouve que les prix sont un peu élevés.</strong> <button class="btn-speak btn-mini" onclick="speak('Oui, mais je trouve que les prix sont un peu élevés')">🔊</button>
+          <br><em>– Sí, pero me parece que los precios son un poco altos.</em>
+        </p>
+      </div>
+
+      <!-- Exercise 1: QCM -->
+      <div class="ex-card">
+        <div class="ex-title">Exercice 1 : Questions à choix multiples</div>
+        <div class="ex-instr">Choisissez la bonne réponse</div>
+        <div id="qcm-opinion-score" style="font-size: 13px; margin-bottom: 20px; padding: 8px 12px; background: var(--border); border-radius: 8px; display: inline-block;">Score : <strong>0 / 5</strong></div>
+        <script>const opinionState = { score: 0, total: 5 };</script>
+
+        <div class="qcm-item">
+          <div class="q-text">1. Quelle expression utilisez-vous pour exprimer une opinion personnelle ?</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-opinion-score', opinionState)">Je pense que…</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-opinion-score', opinionState)">Il faut que…</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-opinion-score', opinionState)">Je dois que…</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">2. Comment demandez-vous l'opinion de quelqu'un de manière formelle ?</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-opinion-score', opinionState)">Quel est ton avis ?</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-opinion-score', opinionState)">Tu aimes quoi ?</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-opinion-score', opinionState)">C'est quoi ?</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">3. Quelle expression montre l'accord ?</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-opinion-score', opinionState)">Je ne crois pas.</button>
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-opinion-score', opinionState)">Tu as raison.</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-opinion-score', opinionState)">C'est faux.</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">4. Quand utiliseriez-vous « Il me semble que… » plutôt que « Je pense que… » ?</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-opinion-score', opinionState)">Pour une opinion plus formelle ou neutre</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-opinion-score', opinionState)">Pour une opinion plus personnelle</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-opinion-score', opinionState)">Elles sont identiques</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">5. Comment répondez-vous fortement en désaccord ?</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-opinion-score', opinionState)">Pas du tout !</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-opinion-score', opinionState)">Oui, bien sûr.</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-opinion-score', opinionState)">D'accord.</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+      </div>
+
+      <!-- Exercise 2: Fill-in -->
+      <div class="ex-card">
+        <div class="ex-title">Exercice 2 : Complétez les phrases</div>
+        <div class="ex-instr">Remplissez les blancs avec l'expression appropriée</div>
+        <div id="fill-opinion">
+          <div class="fill-item">
+            <div class="fill-sentence">___, ce film est excellent.</div>
+            <input type="text" class="fill-input" data-answer="À mon avis|à mon avis">
+            <div class="fill-hint">Expression d'opinion personnelle (formelle)</div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Qu'___ ___ ?</div>
+            <input type="text" class="fill-input" data-answer="en penses-tu|en penses tu">
+            <div class="fill-hint">Demander l'opinion de quelqu'un</div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">___, je ne suis pas d'accord avec vous.</div>
+            <input type="text" class="fill-input" data-answer="Je crois|je crois">
+            <div class="fill-hint">Expression pour exprimer le désaccord</div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">___ ce que tu dis, tu as raison.</div>
+            <input type="text" class="fill-input" data-answer="Je vois|je vois">
+            <div class="fill-hint">Expression pour montrer qu'on comprend</div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">C'___ ___, ce ne sont pas des faits.</div>
+            <input type="text" class="fill-input" data-answer="est faux|est faux">
+            <div class="fill-hint">Expression pour montrer le désaccord</div>
+          </div>
+        </div>
+        <button class="btn-check" onclick="checkFill('fill-opinion')">Vérifier</button>
+      </div>
+
+      <!-- Exercise 3: Match -->
+      <div class="ex-card">
+        <div class="ex-title">Exercice 3 : Appariement</div>
+        <div class="ex-instr">Reliez l'expression française à sa traduction en espagnol</div>
+        <div id="match-opinion" class="match-zone"></div>
+        <script>buildMatch('match-opinion', [
+          ['Je pense que…', 'Pienso que…'],
+          ['Je trouve que…', 'Me parece que…'],
+          ['À mon avis…', 'En mi opinión…'],
+          ['Je suis d\'accord', 'Estoy de acuerdo'],
+          ['Pas du tout !', '¡Para nada!'],
+          ['Tu as raison', 'Tienes razón']
+        ]);</script>
+      </div>
+    </div>
+
+    <!-- LESSON 1: Comparer -->
+    <div class="lesson-panel" data-lesson="1" style="display: none;">
+      <div class="lesson-header">
+        <div class="lesson-icon-big">⚖️</div>
+        <div class="lesson-meta">
+          <span class="lesson-tag" style="background: var(--l1l); color: var(--l1d);">Leçon 2/3</span>
+        </div>
+        <h1 class="lesson-title">Comparer des éléments</h1>
+        <p class="lesson-desc">Maîtrisez les structures de comparaison en français pour adjectifs, noms et verbes.</p>
+      </div>
+
+      <!-- Comparer des adjectifs -->
+      <div class="ex-card">
+        <div class="ex-title">Comparer des adjectifs</div>
+        <div class="ex-instr">Expressions pour comparer les qualités</div>
+        <table class="form-table">
+          <tr>
+            <td class="form-fr"><strong>Supériorité:</strong> plus + adj + que <button class="btn-speak btn-mini" onclick="speak('plus grand que')">🔊</button></td>
+            <td class="form-es"><strong>Superioridad:</strong> más + adj + que</td>
+          </tr>
+          <tr>
+            <td class="form-fr" style="padding-top: 0;">Marie est plus grande que Paul. <button class="btn-speak btn-mini" onclick="speak('Marie est plus grande que Paul')">🔊</button></td>
+            <td class="form-es" style="padding-top: 0;">Marie es más alta que Paul.</td>
+          </tr>
+          <tr>
+            <td class="form-fr"><strong>Infériorité:</strong> moins + adj + que <button class="btn-speak btn-mini" onclick="speak('moins intéressant que')">🔊</button></td>
+            <td class="form-es"><strong>Inferioridad:</strong> menos + adj + que</td>
+          </tr>
+          <tr>
+            <td class="form-fr" style="padding-top: 0;">Ce film est moins intéressant que l'autre. <button class="btn-speak btn-mini" onclick="speak('Ce film est moins intéressant que l'autre')">🔊</button></td>
+            <td class="form-es" style="padding-top: 0;">Esta película es menos interesante que la otra.</td>
+          </tr>
+          <tr>
+            <td class="form-fr"><strong>Égalité:</strong> aussi + adj + que <button class="btn-speak btn-mini" onclick="speak('aussi grand que')">🔊</button></td>
+            <td class="form-es"><strong>Igualdad:</strong> tan + adj + como</td>
+          </tr>
+          <tr>
+            <td class="form-fr" style="padding-top: 0;">Mon appartement est aussi grand que le tien. <button class="btn-speak btn-mini" onclick="speak('Mon appartement est aussi grand que le tien')">🔊</button></td>
+            <td class="form-es" style="padding-top: 0;">Mi apartamento es tan grande como el tuyo.</td>
+          </tr>
+        </table>
+        <p style="font-size: 13px; color: var(--muted); margin-top: 12px; font-style: italic;">Note: L'adjectif s'accorde en genre et nombre avec le nom. Le 's' de 'plus' est muet dans les comparaisons.</p>
+      </div>
+
+      <!-- Comparer des noms -->
+      <div class="ex-card">
+        <div class="ex-title">Comparer des noms (quantité)</div>
+        <div class="ex-instr">Expressions pour comparer la quantité</div>
+        <table class="form-table">
+          <tr>
+            <td class="form-fr"><strong>Supériorité:</strong> plus de + nom + que <button class="btn-speak btn-mini" onclick="speak('plus de travail que')">🔊</button></td>
+            <td class="form-es"><strong>Superioridad:</strong> más + nom + que</td>
+          </tr>
+          <tr>
+            <td class="form-fr" style="padding-top: 0;">J'ai plus de travail que toi. <button class="btn-speak btn-mini" onclick="speak('J'ai plus de travail que toi')">🔊</button></td>
+            <td class="form-es" style="padding-top: 0;">Tengo más trabajo que tú.</td>
+          </tr>
+          <tr>
+            <td class="form-fr"><strong>Infériorité:</strong> moins de + nom + que <button class="btn-speak btn-mini" onclick="speak('moins de livres que')">🔊</button></td>
+            <td class="form-es"><strong>Inferioridad:</strong> menos + nom + que</td>
+          </tr>
+          <tr>
+            <td class="form-fr" style="padding-top: 0;">Elle a moins de livres que moi. <button class="btn-speak btn-mini" onclick="speak('Elle a moins de livres que moi')">🔊</button></td>
+            <td class="form-es" style="padding-top: 0;">Ella tiene menos libros que yo.</td>
+          </tr>
+          <tr>
+            <td class="form-fr"><strong>Égalité:</strong> autant de + nom + que <button class="btn-speak btn-mini" onclick="speak('autant d'amis que')">🔊</button></td>
+            <td class="form-es"><strong>Igualdad:</strong> tantos/as + nom + como</td>
+          </tr>
+          <tr>
+            <td class="form-fr" style="padding-top: 0;">Nous avons autant d'amis que vous. <button class="btn-speak btn-mini" onclick="speak('Nous avons autant d'amis que vous')">🔊</button></td>
+            <td class="form-es" style="padding-top: 0;">Tenemos tantos amigos como ustedes.</td>
+          </tr>
+        </table>
+        <p style="font-size: 13px; color: var(--muted); margin-top: 12px; font-style: italic;">Note: Le 's' de 'plus' se prononce avant 'de'.</p>
+      </div>
+
+      <!-- Comparer des verbes -->
+      <div class="ex-card">
+        <div class="ex-title">Comparer des verbes</div>
+        <div class="ex-instr">Expressions pour comparer les actions</div>
+        <table class="form-table">
+          <tr>
+            <td class="form-fr"><strong>Supériorité:</strong> verbe + plus que <button class="btn-speak btn-mini" onclick="speak('travaille plus que')">🔊</button></td>
+            <td class="form-es"><strong>Superioridad:</strong> verbo + más que</td>
+          </tr>
+          <tr>
+            <td class="form-fr" style="padding-top: 0;">Il travaille plus que moi. <button class="btn-speak btn-mini" onclick="speak('Il travaille plus que moi')">🔊</button></td>
+            <td class="form-es" style="padding-top: 0;">Él trabaja más que yo.</td>
+          </tr>
+          <tr>
+            <td class="form-fr"><strong>Infériorité:</strong> verbe + moins que <button class="btn-speak btn-mini" onclick="speak('sors moins que')">🔊</button></td>
+            <td class="form-es"><strong>Inferioridad:</strong> verbo + menos que</td>
+          </tr>
+          <tr>
+            <td class="form-fr" style="padding-top: 0;">Je sors moins que toi. <button class="btn-speak btn-mini" onclick="speak('Je sors moins que toi')">🔊</button></td>
+            <td class="form-es" style="padding-top: 0;">Salgo menos que tú.</td>
+          </tr>
+          <tr>
+            <td class="form-fr"><strong>Égalité:</strong> verbe + autant que <button class="btn-speak btn-mini" onclick="speak('voyage autant que')">🔊</button></td>
+            <td class="form-es"><strong>Igualdad:</strong> verbo + tanto como</td>
+          </tr>
+          <tr>
+            <td class="form-fr" style="padding-top: 0;">Elle voyage autant que lui. <button class="btn-speak btn-mini" onclick="speak('Elle voyage autant que lui')">🔊</button></td>
+            <td class="form-es" style="padding-top: 0;">Ella viaja tanto como él.</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Autres comparaisons avec "comme" -->
+      <div class="ex-card">
+        <div class="ex-title">Autres comparaisons avec « comme »</div>
+        <div class="ex-instr">Structures alternatives pour comparer</div>
+        <table class="form-table">
+          <tr>
+            <td class="form-fr">comme <button class="btn-speak btn-mini" onclick="speak('comme')">🔊</button></td>
+            <td class="form-es">como (comparación)</td>
+          </tr>
+          <tr>
+            <td class="form-fr" style="padding-top: 0;">Il est beau comme toi. <button class="btn-speak btn-mini" onclick="speak('Il est beau comme toi')">🔊</button></td>
+            <td class="form-es" style="padding-top: 0;">Es guapo como tú.</td>
+          </tr>
+          <tr>
+            <td class="form-fr">tel(le)(s) / semblable à / pareil à <button class="btn-speak btn-mini" onclick="speak('pareil à')">🔊</button></td>
+            <td class="form-es">igual a / semejante a</td>
+          </tr>
+          <tr>
+            <td class="form-fr" style="padding-top: 0;">Elle porte une robe pareille à la mienne. <button class="btn-speak btn-mini" onclick="speak('Elle porte une robe pareille à la mienne')">🔊</button></td>
+            <td class="form-es" style="padding-top: 0;">Ella lleva un vestido igual al mío.</td>
+          </tr>
+          <tr>
+            <td class="form-fr">identique à / similaire à <button class="btn-speak btn-mini" onclick="speak('identique à')">🔊</button></td>
+            <td class="form-es">idéntico a / similar a</td>
+          </tr>
+          <tr>
+            <td class="form-fr" style="padding-top: 0;">Ces deux livres sont identiques. <button class="btn-speak btn-mini" onclick="speak('Ces deux livres sont identiques')">🔊</button></td>
+            <td class="form-es" style="padding-top: 0;">Estos dos libros son idénticos.</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Exemples en contexte -->
+      <div class="ex-card">
+        <div class="ex-title">Exemples en contexte</div>
+        <div class="ex-instr">Voir les comparaisons en pratique</div>
+        <p style="margin-bottom: 12px;">
+          <strong>Adjectif:</strong> Sarah est plus intelligente que son frère. <button class="btn-speak btn-mini" onclick="speak('Sarah est plus intelligente que son frère')">🔊</button>
+          <br><em>Sarah es más inteligente que su hermano.</em>
+        </p>
+        <p style="margin-bottom: 12px;">
+          <strong>Nom:</strong> Tu as moins de responsabilités que moi. <button class="btn-speak btn-mini" onclick="speak('Tu as moins de responsabilités que moi')">🔊</button>
+          <br><em>Tienes menos responsabilidades que yo.</em>
+        </p>
+        <p style="margin-bottom: 12px;">
+          <strong>Verbe:</strong> Je fais du sport aussi souvent que toi. <button class="btn-speak btn-mini" onclick="speak('Je fais du sport aussi souvent que toi')">🔊</button>
+          <br><em>Hago deporte tan seguido como tú.</em>
+        </p>
+        <p>
+          <strong>Avec « comme »:</strong> Ce gâteau est délicieux comme celui de ma grand-mère. <button class="btn-speak btn-mini" onclick="speak('Ce gâteau est délicieux comme celui de ma grand-mère')">🔊</button>
+          <br><em>Este pastel es delicioso como el de mi abuela.</em>
+        </p>
+      </div>
+
+      <!-- Exercise 1: QCM -->
+      <div class="ex-card">
+        <div class="ex-title">Exercice 1 : Questions à choix multiples</div>
+        <div class="ex-instr">Choisissez la structure correcte</div>
+        <div id="qcm-compare-score" style="font-size: 13px; margin-bottom: 20px; padding: 8px 12px; background: var(--border); border-radius: 8px; display: inline-block;">Score : <strong>0 / 5</strong></div>
+        <script>const compareState = { score: 0, total: 5 };</script>
+
+        <div class="qcm-item">
+          <div class="q-text">1. Complétez : « Mon appartement est ___ grand ___ le tien. »</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-compare-score', compareState)">aussi / que</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-compare-score', compareState)">plus / de</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-compare-score', compareState)">moins / comme</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">2. Choisissez la phrase correcte pour la supériorité avec un nom:</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-compare-score', compareState)">J'ai plus de livres que toi.</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-compare-score', compareState)">J'ai plus livres que toi.</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-compare-score', compareState)">J'ai plus livres de toi.</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">3. Complétez : « Il travaille ___ ___ moi. »</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-compare-score', compareState)">plus que</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-compare-score', compareState)">plus de</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-compare-score', compareState)">aussi comme</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">4. Quelle est la traduction de « Nous avons autant d'amis que vous » ?</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-compare-score', compareState)">Tenemos tantos amigos como ustedes.</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-compare-score', compareState)">Tenemos menos amigos que ustedes.</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-compare-score', compareState)">Tenemos más amigos que ustedes.</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">5. Complétez avec « comme » : « Elle est intelligente ___ toi. »</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-compare-score', compareState)">comme</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-compare-score', compareState)">que</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-compare-score', compareState)">de</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+      </div>
+
+      <!-- Exercise 2: Fill-in -->
+      <div class="ex-card">
+        <div class="ex-title">Exercice 2 : Complétez les phrases</div>
+        <div class="ex-instr">Remplissez les blancs avec la structure correcte</div>
+        <div id="fill-compare">
+          <div class="fill-item">
+            <div class="fill-sentence">Ce film est ___ intéressant ___ l'autre.</div>
+            <input type="text" class="fill-input" data-answer="moins que|moins que">
+            <div class="fill-hint">Structure pour l'infériorité avec adjectif</div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Elle a ___ ___ livres ___ moi.</div>
+            <input type="text" class="fill-input" data-answer="plus de livres que|plus de livres que">
+            <div class="fill-hint">Structure pour la supériorité avec nom</div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Vous voyagez ___ ___ nous.</div>
+            <input type="text" class="fill-input" data-answer="autant que|autant que">
+            <div class="fill-hint">Égalité avec verbe</div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Tom est grand ___ Pierre.</div>
+            <input type="text" class="fill-input" data-answer="comme|comme">
+            <div class="fill-hint">Comparaison avec « comme »</div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Nous avons ___ ___ ___ que vous.</div>
+            <input type="text" class="fill-input" data-answer="autant de travail|autant de travail">
+            <div class="fill-hint">Égalité avec nom</div>
+          </div>
+        </div>
+        <button class="btn-check" onclick="checkFill('fill-compare')">Vérifier</button>
+      </div>
+
+      <!-- Exercise 3: Match -->
+      <div class="ex-card">
+        <div class="ex-title">Exercice 3 : Appariement</div>
+        <div class="ex-instr">Reliez la phrase française à sa traduction en espagnol</div>
+        <div id="match-compare" class="match-zone"></div>
+        <script>buildMatch('match-compare', [
+          ['plus grand que', 'más grande que'],
+          ['moins intelligent que', 'menos inteligente que'],
+          ['aussi rapide que', 'tan rápido como'],
+          ['plus de temps que', 'más tiempo que'],
+          ['moins de travail que', 'menos trabajo que'],
+          ['autant d\'amis que', 'tantos amigos como']
+        ]);</script>
+      </div>
+    </div>
+
+    <!-- LESSON 2: Goûts et loisirs -->
+    <div class="lesson-panel" data-lesson="2" style="display: none;">
+      <div class="lesson-header">
+        <div class="lesson-icon-big">🎨</div>
+        <div class="lesson-meta">
+          <span class="lesson-tag" style="background: var(--l2l); color: var(--l2d);">Leçon 3/3</span>
+        </div>
+        <h1 class="lesson-title">Goûts et loisirs</h1>
+        <p class="lesson-desc">Apprenez à parler de vos préférences et activités de loisir en français.</p>
+      </div>
+
+      <!-- Verbes pour exprimer les goûts -->
+      <div class="ex-card">
+        <div class="ex-title">Verbes pour exprimer les goûts</div>
+        <div class="ex-instr">Les verbes principaux pour parler de vos préférences</div>
+        <table class="form-table">
+          <tr>
+            <td class="form-fr"><strong>aimer</strong> <button class="btn-speak btn-mini" onclick="speak('aimer')">🔊</button></td>
+            <td class="form-es"><strong>Me gusta / Querer</strong></td>
+          </tr>
+          <tr>
+            <td class="form-fr" style="padding-top: 0;">J'aime lire. <button class="btn-speak btn-mini" onclick="speak('J'aime lire')">🔊</button></td>
+            <td class="form-es" style="padding-top: 0;">Me gusta leer.</td>
+          </tr>
+          <tr>
+            <td class="form-fr"><strong>adorer</strong> <button class="btn-speak btn-mini" onclick="speak('adorer')">🔊</button></td>
+            <td class="form-es"><strong>Me encanta</strong></td>
+          </tr>
+          <tr>
+            <td class="form-fr" style="padding-top: 0;">J'adore la musique. <button class="btn-speak btn-mini" onclick="speak('J'adore la musique')">🔊</button></td>
+            <td class="form-es" style="padding-top: 0;">Me encanta la música.</td>
+          </tr>
+          <tr>
+            <td class="form-fr"><strong>préférer</strong> <button class="btn-speak btn-mini" onclick="speak('préférer')">🔊</button></td>
+            <td class="form-es"><strong>Preferir</strong></td>
+          </tr>
+          <tr>
+            <td class="form-fr" style="padding-top: 0;">Je préfère le sport. <button class="btn-speak btn-mini" onclick="speak('Je préfère le sport')">🔊</button></td>
+            <td class="form-es" style="padding-top: 0;">Prefiero el deporte.</td>
+          </tr>
+          <tr>
+            <td class="form-fr"><strong>détester</strong> <button class="btn-speak btn-mini" onclick="speak('détester')">🔊</button></td>
+            <td class="form-es"><strong>Odiar</strong></td>
+          </tr>
+          <tr>
+            <td class="form-fr" style="padding-top: 0;">Je déteste cuisiner. <button class="btn-speak btn-mini" onclick="speak('Je déteste cuisiner')">🔊</button></td>
+            <td class="form-es" style="padding-top: 0;">Odio cocinar.</td>
+          </tr>
+        </table>
+        <p style="font-size: 13px; color: var(--muted); margin-top: 12px; font-style: italic;">Note: Verbes du 1er groupe. Exception: préférer change d'accent (je préfère). Suivis de nom ou infinitif.</p>
+      </div>
+
+      <!-- Questions sur les goûts -->
+      <div class="ex-card">
+        <div class="ex-title">Questions sur les goûts et loisirs</div>
+        <div class="ex-instr">Comment poser des questions sur les loisirs</div>
+        <table class="form-table">
+          <tr>
+            <td class="form-fr">Qu'est-ce que tu aimes faire pendant ton temps libre ? <button class="btn-speak btn-mini" onclick="speak('Qu'est-ce que tu aimes faire pendant ton temps libre')">🔊</button></td>
+            <td class="form-es">¿Qué es lo que te gusta hacer cuando tienes tiempo libre?</td>
+          </tr>
+          <tr>
+            <td class="form-fr">Tu préfères lire ou regarder la télé ? <button class="btn-speak btn-mini" onclick="speak('Tu préfères lire ou regarder la télé')">🔊</button></td>
+            <td class="form-es">¿Prefieres leer o ver la televisión?</td>
+          </tr>
+          <tr>
+            <td class="form-fr">Est-ce que tu détestes une activité ? Laquelle ? <button class="btn-speak btn-mini" onclick="speak('Est-ce que tu détestes une activité')">🔊</button></td>
+            <td class="form-es">¿Odias alguna actividad? ¿Cuál?</td>
+          </tr>
+          <tr>
+            <td class="form-fr">Tu adores la musique ? Quel genre ? <button class="btn-speak btn-mini" onclick="speak('Tu adores la musique')">🔊</button></td>
+            <td class="form-es">¿Te encanta la música? ¿Qué tipo?</td>
+          </tr>
+          <tr>
+            <td class="form-fr">Pratiquez-vous une activité physique ? <button class="btn-speak btn-mini" onclick="speak('Pratiquez-vous une activité physique')">🔊</button></td>
+            <td class="form-es">¿Usted practica alguna actividad física?</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Vocabulaire activités -->
+      <div class="ex-card">
+        <div class="ex-title">Vocabulaire : Activités de loisir</div>
+        <div class="ex-instr">Les activités et loisirs courants</div>
+        <table class="form-table">
+          <tr>
+            <td class="form-fr">faire du sport <button class="btn-speak btn-mini" onclick="speak('faire du sport')">🔊</button></td>
+            <td class="form-es">hacer deporte</td>
+          </tr>
+          <tr>
+            <td class="form-fr">faire du vélo / cyclisme <button class="btn-speak btn-mini" onclick="speak('faire du vélo')">🔊</button></td>
+            <td class="form-es">andar en bicicleta / ciclismo</td>
+          </tr>
+          <tr>
+            <td class="form-fr">nager / faire de la natation <button class="btn-speak btn-mini" onclick="speak('nager')">🔊</button></td>
+            <td class="form-es">nadar / hacer natación</td>
+          </tr>
+          <tr>
+            <td class="form-fr">jouer au foot <button class="btn-speak btn-mini" onclick="speak('jouer au foot')">🔊</button></td>
+            <td class="form-es">jugar al fútbol</td>
+          </tr>
+          <tr>
+            <td class="form-fr">jouer aux jeux vidéo <button class="btn-speak btn-mini" onclick="speak('jouer aux jeux vidéo')">🔊</button></td>
+            <td class="form-es">jugar videojuegos</td>
+          </tr>
+          <tr>
+            <td class="form-fr">regarder des films / séries <button class="btn-speak btn-mini" onclick="speak('regarder des films')">🔊</button></td>
+            <td class="form-es">ver películas / series</td>
+          </tr>
+          <tr>
+            <td class="form-fr">écouter de la musique <button class="btn-speak btn-mini" onclick="speak('écouter de la musique')">🔊</button></td>
+            <td class="form-es">escuchar música</td>
+          </tr>
+          <tr>
+            <td class="form-fr">lire un livre <button class="btn-speak btn-mini" onclick="speak('lire un livre')">🔊</button></td>
+            <td class="form-es">leer un libro</td>
+          </tr>
+          <tr>
+            <td class="form-fr">aller au cinéma <button class="btn-speak btn-mini" onclick="speak('aller au cinéma')">🔊</button></td>
+            <td class="form-es">ir al cine</td>
+          </tr>
+          <tr>
+            <td class="form-fr">sortir avec des amis <button class="btn-speak btn-mini" onclick="speak('sortir avec des amis')">🔊</button></td>
+            <td class="form-es">salir con amigos</td>
+          </tr>
+          <tr>
+            <td class="form-fr">cuisiner <button class="btn-speak btn-mini" onclick="speak('cuisiner')">🔊</button></td>
+            <td class="form-es">cocinar</td>
+          </tr>
+          <tr>
+            <td class="form-fr">dessiner <button class="btn-speak btn-mini" onclick="speak('dessiner')">🔊</button></td>
+            <td class="form-es">dibujar</td>
+          </tr>
+          <tr>
+            <td class="form-fr">se promener <button class="btn-speak btn-mini" onclick="speak('se promener')">🔊</button></td>
+            <td class="form-es">pasear</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Dialogue exemple -->
+      <div class="ex-card">
+        <div class="ex-title">Dialogue exemple</div>
+        <div class="ex-instr">Conversation sur les loisirs</div>
+        <p style="margin-bottom: 12px;">
+          <strong>Dylan :</strong> Qu'est-ce que tu aimes faire pendant ton temps libre ? <button class="btn-speak btn-mini" onclick="speak('Qu'est-ce que tu aimes faire pendant ton temps libre')">🔊</button>
+        </p>
+        <p style="margin-bottom: 12px;">
+          <strong>Quentin :</strong> J'aime regarder des séries. Et toi ? <button class="btn-speak btn-mini" onclick="speak('J'aime regarder des séries. Et toi')">🔊</button>
+        </p>
+        <p style="margin-bottom: 12px;">
+          <strong>Dylan :</strong> Moi aussi j'adore regarder des séries. Cependant, je préfère cuisiner. <button class="btn-speak btn-mini" onclick="speak('Moi aussi j'adore regarder des séries. Cependant, je préfère cuisiner')">🔊</button>
+        </p>
+        <p style="margin-bottom: 12px;">
+          <strong>Quentin :</strong> Je déteste cuisiner. Tu préfères faire du sport ou écouter de la musique ? <button class="btn-speak btn-mini" onclick="speak('Je déteste cuisiner. Tu préfères faire du sport ou écouter de la musique')">🔊</button>
+        </p>
+        <p style="margin-bottom: 12px;">
+          <strong>Dylan :</strong> J'aime faire les deux en même temps. Est-ce que tu pratiques une activité physique ? <button class="btn-speak btn-mini" onclick="speak('J'aime faire les deux en même temps. Est-ce que tu pratiques une activité physique')">🔊</button>
+        </p>
+        <p>
+          <strong>Quentin :</strong> Oui, je fais du cyclisme. <button class="btn-speak btn-mini" onclick="speak('Oui, je fais du cyclisme')">🔊</button>
+        </p>
+      </div>
+
+      <!-- Exercise 1: QCM -->
+      <div class="ex-card">
+        <div class="ex-title">Exercice 1 : Questions à choix multiples</div>
+        <div class="ex-instr">Choisissez le verbe correct pour chaque situation</div>
+        <div id="qcm-hobbies-score" style="font-size: 13px; margin-bottom: 20px; padding: 8px 12px; background: var(--border); border-radius: 8px; display: inline-block;">Score : <strong>0 / 5</strong></div>
+        <script>const hobbiesState = { score: 0, total: 5 };</script>
+
+        <div class="qcm-item">
+          <div class="q-text">1. Quel verbe utilisez-vous pour exprimer une très forte préférence ?</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-hobbies-score', hobbiesState)">adorer</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-hobbies-score', hobbiesState)">détester</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-hobbies-score', hobbiesState)">préférer</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">2. Complétez : « Je ___ la musique classique. »</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-hobbies-score', hobbiesState)">déteste</button>
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-hobbies-score', hobbiesState)">aime</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-hobbies-score', hobbiesState)">préfère le sport</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">3. Quel verbe exprime le désaccord avec une activité ?</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-hobbies-score', hobbiesState)">détester</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-hobbies-score', hobbiesState)">aimer</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-hobbies-score', hobbiesState)">préférer</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">4. Quel verbe change l'accent au présent (je) ?</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-hobbies-score', hobbiesState)">préférer (je préfère)</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-hobbies-score', hobbiesState)">aimer</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-hobbies-score', hobbiesState)">adorer</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="q-text">5. Comment demandez-vous « Qu'est-ce que tu aimes faire ? » formellement ?</div>
+          <div class="opts">
+            <button class="opt" onclick="checkQCM(this, true, 'qcm-hobbies-score', hobbiesState)">Qu'est-ce que vous aimez faire ?</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-hobbies-score', hobbiesState)">C'est quoi que tu aimes ?</button>
+            <button class="opt" onclick="checkQCM(this, false, 'qcm-hobbies-score', hobbiesState)">Tu aimes quoi faire ?</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+      </div>
+
+      <!-- Exercise 2: Fill-in -->
+      <div class="ex-card">
+        <div class="ex-title">Exercice 2 : Complétez les phrases</div>
+        <div class="ex-instr">Remplissez les blancs avec le verbe approprié</div>
+        <div id="fill-hobbies">
+          <div class="fill-item">
+            <div class="fill-sentence">Je ___ lire des livres le soir.</div>
+            <input type="text" class="fill-input" data-answer="aime|aime">
+            <div class="fill-hint">Verbe pour exprimer une préférence normale</div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Ma sœur ___ la musique rock.</div>
+            <input type="text" class="fill-input" data-answer="adore|adore">
+            <div class="fill-hint">Verbe pour exprimer une très forte préférence</div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Ils ___ le football au basketball.</div>
+            <input type="text" class="fill-input" data-answer="préfèrent|prefèrent">
+            <div class="fill-hint">Verbe pour exprimer une préférence entre deux choses</div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Tu ___ cuisiner, n'est-ce pas ?</div>
+            <input type="text" class="fill-input" data-answer="détestes|detestes">
+            <div class="fill-hint">Verbe pour exprimer le dégoût</div>
+          </div>
+          <div class="fill-item">
+            <div class="fill-sentence">Vous ___ les jeux vidéo ?</div>
+            <input type="text" class="fill-input" data-answer="aimez|aimez">
+            <div class="fill-hint">Forme formelle du verbe « aimer »</div>
+          </div>
+        </div>
+        <button class="btn-check" onclick="checkFill('fill-hobbies')">Vérifier</button>
+      </div>
+
+      <!-- Exercise 3: Match -->
+      <div class="ex-card">
+        <div class="ex-title">Exercice 3 : Appariement</div>
+        <div class="ex-instr">Reliez l'activité française à sa traduction en espagnol</div>
+        <div id="match-hobbies" class="match-zone"></div>
+        <script>buildMatch('match-hobbies', [
+          ['faire du sport', 'hacer deporte'],
+          ['faire du vélo', 'andar en bicicleta'],
+          ['nager', 'nadar'],
+          ['jouer au foot', 'jugar al fútbol'],
+          ['regarder des films', 'ver películas'],
+          ['écouter de la musique', 'escuchar música'],
+          ['lire un livre', 'leer un libro'],
+          ['aller au cinéma', 'ir al cine'],
+          ['sortir avec des amis', 'salir con amigos'],
+          ['cuisiner', 'cocinar']
+        ]);</script>
+      </div>
+    </div>
+  </main>
+</div>
+</body>
+</html>
