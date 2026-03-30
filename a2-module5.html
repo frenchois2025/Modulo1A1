@@ -6,7 +6,29 @@
   <title>Français A2 · Module 5 · Santé et Bien-être</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="auth.js"></script>
   <script src="moteur.js"></script>
+
+<style>
+.dial-box{display:flex;flex-direction:column;gap:10px;margin:14px 0 18px}
+.dial-line{display:flex;align-items:flex-start;gap:10px}
+.dial-m{flex-direction:row-reverse}
+.dial-av{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;margin-top:2px}
+.dial-av-f{background:var(--l0);color:#fff}
+.dial-av-m{background:#555;color:#fff}
+.dial-bubble{border-radius:14px;padding:10px 14px;max-width:76%;display:flex;flex-direction:column;gap:3px}
+.dial-bubble-f{background:var(--bubble-f,#eef2ff)}
+.dial-bubble-m{background:#f0f0f0}
+.dial-name{font-size:11px;font-weight:800;color:var(--bubble-fd,#4338ca);margin-bottom:2px}
+.dial-name-m{color:#555}
+.dial-text{font-size:14px;line-height:1.5}
+.dial-trad{font-size:12px;color:var(--muted);font-style:italic;margin-top:2px}
+.dial-audio{border:none;background:transparent;cursor:pointer;font-size:16px;padding:2px 4px;border-radius:6px;flex-shrink:0;margin-top:4px;align-self:center}
+.dial-audio:hover{background:rgba(0,0,0,.06)}
+.dial-play-btn{display:flex;align-items:center;gap:8px;border:none;border-radius:12px;padding:10px 20px;font-size:14px;font-weight:800;cursor:pointer;font-family:"Nunito",sans-serif;color:white;margin-bottom:4px}
+.dial-section-label{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1px;margin:14px 0 8px}
+</style>
 </head>
 <body>
 <div class="app">
@@ -16,16 +38,16 @@
     <div class="sidebar-logo">Module 5 · <span style="color:var(--a2);">A2</span></div>
 
     <button class="nav-btn active" data-lesson="0" onclick="showLesson(0,this)">
-      <span class="nav-icon">🦴</span>Le corps et les douleurs<span class="nav-badge">4 ex.</span>
+      <span class="nav-icon">🦴</span>Le corps et les douleurs<span class="nav-badge">5 ex.</span>
     </button>
     <button class="nav-btn" data-lesson="1" onclick="showLesson(1,this)">
-      <span class="nav-icon">🩺</span>Chez le médecin<span class="nav-badge">4 ex.</span>
+      <span class="nav-icon">🩺</span>Chez le médecin<span class="nav-badge">5 ex.</span>
     </button>
     <button class="nav-btn" data-lesson="2" onclick="showLesson(2,this)">
-      <span class="nav-icon">📣</span>L'impératif présent<span class="nav-badge">5 ex.</span>
+      <span class="nav-icon">📣</span>L'impératif présent<span class="nav-badge">6 ex.</span>
     </button>
     <button class="nav-btn" data-lesson="3" onclick="showLesson(3,this)">
-      <span class="nav-icon">💊</span>À la pharmacie<span class="nav-badge">4 ex.</span>
+      <span class="nav-icon">💊</span>À la pharmacie<span class="nav-badge">5 ex.</span>
     </button>
   </aside>
 
@@ -43,7 +65,7 @@
         <div class="ex-instr">Selecciona la parte del cuerpo correcta para completar cada frase.</div>
 
         <div class="qcm-item">
-          <div class="qcm-q">1. On entend avec les ___. <button class="btn-mini" onclick="speak('On entend avec les oreilles.')">🔊</button></div>
+          <div class="qcm-q">1. On entend avec les ___. <button class="btn-mini" onclick="speakEL('On entend avec les oreilles.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="oreilles" onclick="checkQCM(this,false,null,st0)">yeux</button>
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">oreilles</button>
@@ -53,7 +75,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">2. On respire avec les ___. <button class="btn-mini" onclick="speak('On respire avec les poumons.')">🔊</button></div>
+          <div class="qcm-q">2. On respire avec les ___. <button class="btn-mini" onclick="speakEL('On respire avec les poumons.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="poumons" onclick="checkQCM(this,false,null,st0)">reins</button>
             <button class="opt" data-correct="false" data-correction="poumons" onclick="checkQCM(this,false,null,st0)">genoux</button>
@@ -63,7 +85,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">3. J'ai mal à la ___. (dolor de cabeza) <button class="btn-mini" onclick="speak('J\'ai mal à la tête.')">🔊</button></div>
+          <div class="qcm-q">3. J'ai mal à la ___. (dolor de cabeza) <button class="btn-mini" onclick="speakEL('J\'ai mal à la tête.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="tête" onclick="checkQCM(this,false,null,st0)">gorge</button>
             <button class="opt" data-correct="false" data-correction="tête" onclick="checkQCM(this,false,null,st0)">main</button>
@@ -73,7 +95,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">4. Il s'est cassé le ___ en tombant. <button class="btn-mini" onclick="speak('Il s\'est cassé le bras en tombant.')">🔊</button></div>
+          <div class="qcm-q">4. Il s'est cassé le ___ en tombant. <button class="btn-mini" onclick="speakEL('Il s\'est cassé le bras en tombant.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">bras</button>
             <button class="opt" data-correct="false" data-correction="bras" onclick="checkQCM(this,false,null,st0)">nez</button>
@@ -93,7 +115,7 @@
           <p>3. Elle a mal à la ___ <input class="fill-input" data-answer="gorge" placeholder="?"> depuis hier soir. <span class="fill-hint"></span></p>
           <p>4. J'ai mal au ___ <input class="fill-input" data-answer="ventre" placeholder="?"> après avoir trop mangé. <span class="fill-hint"></span></p>
         </div>
-        <button class="check-btn" onclick="checkFill('fill0a',null)">Verificar ✓</button>
+        <button class="check-btn" onclick="checkFill('fill0a','sc0')">Verificar ✓</button>
       </div>
 
       <!-- Exercice 3 · Match partie du corps → fonction -->
@@ -109,7 +131,7 @@
         <div class="ex-instr"><em>Avoir mal</em> = sentir dolor. <em>Faire mal</em> = causar dolor. Elige la correcta.</div>
 
         <div class="qcm-item">
-          <div class="qcm-q">5. Cette chaussure me ___ au pied. <button class="btn-mini" onclick="speak('Cette chaussure me fait mal au pied.')">🔊</button></div>
+          <div class="qcm-q">5. Cette chaussure me ___ au pied. <button class="btn-mini" onclick="speakEL('Cette chaussure me fait mal au pied.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="fait mal" onclick="checkQCM(this,false,null,st0)">ai mal</button>
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">fait mal</button>
@@ -119,7 +141,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">6. J'___ aux yeux à cause de la lumière. <button class="btn-mini" onclick="speak('J\'ai mal aux yeux à cause de la lumière.')">🔊</button></div>
+          <div class="qcm-q">6. J'___ aux yeux à cause de la lumière. <button class="btn-mini" onclick="speakEL('J\'ai mal aux yeux à cause de la lumière.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">ai mal</button>
             <button class="opt" data-correct="false" data-correction="ai mal" onclick="checkQCM(this,false,null,st0)">fais mal</button>
@@ -132,6 +154,81 @@
       </div>
 
       <div class="score-box" id="sc0"></div>
+
+      <!-- ── Exercice Comprensión oral (dialogue) ── -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l0d);">Comprensión oral — J'ai mal partout !</div>
+        <div class="ex-instr">Haz clic en 🔊 para escuchar cada línea del diálogo, luego responde las preguntas <em>sin ver el texto</em>.</div>
+
+        <div class="dial-box">
+
+    <div class="dial-line dial-f">
+      <div class="dial-av dial-av-f">👩</div>
+      <div class="dial-bubble" style="background:var(--l0l)">
+        <span class="dial-name" style="color:var(--l0d)">Charlotte</span>
+        <span class="dial-text">Ça va ? Tu as l'air fatigué.</span>
+        <span class="dial-trad">¿Estás bien? Pareces cansado.</span>
+      </div>
+      <button class="dial-audio" onclick="speakEL('Ça va ? Tu as l\'air fatigué.','f')" title="Écouter">🔊</button>
+    </div>
+    <div class="dial-line dial-m">
+      <button class="dial-audio" onclick="speakEL('Non, j\'ai mal à la tête depuis ce matin. Et j\'ai aussi mal au dos.','m')" title="Écouter">🔊</button>
+      <div class="dial-bubble dial-bubble-m" style="background:#f0f0f0">
+        <span class="dial-name" style="color:#555">Lucas</span>
+        <span class="dial-text">Non, j'ai mal à la tête depuis ce matin. Et j'ai aussi mal au dos.</span>
+        <span class="dial-trad">No, me duele la cabeza desde esta mañana. Y también me duele la espalda.</span>
+      </div>
+      <div class="dial-av dial-av-m">👨</div>
+    </div>
+    <div class="dial-line dial-f">
+      <div class="dial-av dial-av-f">👩</div>
+      <div class="dial-bubble" style="background:var(--l0l)">
+        <span class="dial-name" style="color:var(--l0d)">Charlotte</span>
+        <span class="dial-text">Tu as pris quelque chose ?</span>
+        <span class="dial-trad">¿Has tomado algo?</span>
+      </div>
+      <button class="dial-audio" onclick="speakEL('Tu as pris quelque chose ?','f')" title="Écouter">🔊</button>
+    </div>
+    <div class="dial-line dial-m">
+      <button class="dial-audio" onclick="speakEL('Oui, j\'ai pris de l\'aspirine mais ça ne fait pas d\'effet.','m')" title="Écouter">🔊</button>
+      <div class="dial-bubble dial-bubble-m" style="background:#f0f0f0">
+        <span class="dial-name" style="color:#555">Lucas</span>
+        <span class="dial-text">Oui, j'ai pris de l'aspirine mais ça ne fait pas d'effet.</span>
+        <span class="dial-trad">Sí, tomé aspirina pero no hace efecto.</span>
+      </div>
+      <div class="dial-av dial-av-m">👨</div>
+    </div>
+    <div class="dial-line dial-f">
+      <div class="dial-av dial-av-f">👩</div>
+      <div class="dial-bubble" style="background:var(--l0l)">
+        <span class="dial-name" style="color:var(--l0d)">Charlotte</span>
+        <span class="dial-text">Tu devrais te reposer. Si tu as encore mal demain, va voir un médecin.</span>
+        <span class="dial-trad">Deberías descansar. Si todavía te duele mañana, ve al médico.</span>
+      </div>
+      <button class="dial-audio" onclick="speakEL('Tu devrais te reposer. Si tu as encore mal demain, va voir un médecin.','f')" title="Écouter">🔊</button>
+    </div>
+        </div>
+
+        <button id="dial5l0_btn" class="dial-play-btn" style="background:var(--l0);" onclick="playDial([['Ça va ? Tu as l\'air fatigué.', 'f'], ['Non, j\'ai mal à la tête depuis ce matin. Et j\'ai aussi mal au dos.', 'm'], ['Tu as pris quelque chose ?', 'f'], ['Oui, j\'ai pris de l\'aspirine mais ça ne fait pas d\'effet.', 'm'], ['Tu devrais te reposer. Si tu as encore mal demain, va voir un médecin.', 'f']], 'dial5l0_btn')">▶ Écouter le dialogue</button>
+
+        <div class="dial-section-label" style="color:var(--l0d);">🧠 Comprensión — responde sin ver el texto</div>
+
+      <div class="qcm-item">
+        <div class="qcm-q">1. ¿Dónde le duele a Lucas?</div>
+        <div class="opts"><button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc0',st0)">Cabeza y espalda</button><button class="opt" data-correct="false" data-correction="Cabeza y espalda" onclick="checkQCM(this,false,'sc0',st0)">Estómago</button><button class="opt" data-correct="false" data-correction="Cabeza y espalda" onclick="checkQCM(this,false,'sc0',st0)">Piernas</button></div>
+        <div class="fb"></div>
+      </div>
+      <div class="qcm-item">
+        <div class="qcm-q">2. ¿Qué tomó contra el dolor?</div>
+        <div class="opts"><button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc0',st0)">Aspirina</button><button class="opt" data-correct="false" data-correction="Aspirina" onclick="checkQCM(this,false,'sc0',st0)">Paracetamol</button><button class="opt" data-correct="false" data-correction="Aspirina" onclick="checkQCM(this,false,'sc0',st0)">Nada</button></div>
+        <div class="fb"></div>
+      </div>
+      <div class="qcm-item">
+        <div class="qcm-q">3. ¿Qué le aconseja Charlotte?</div>
+        <div class="opts"><button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc0',st0)">Descansar y ver al médico</button><button class="opt" data-correct="false" data-correction="Descansar y ver al médico" onclick="checkQCM(this,false,'sc0',st0)">Seguir trabajando</button><button class="opt" data-correct="false" data-correction="Descansar y ver al médico" onclick="checkQCM(this,false,'sc0',st0)">Tomar más aspirina</button></div>
+        <div class="fb"></div>
+      </div>
+      </div>
     </div><!-- /lesson 0 -->
 
 
@@ -147,7 +244,7 @@
         <div class="ex-instr">Selecciona la respuesta correcta en la consulta médica.</div>
 
         <div class="qcm-item">
-          <div class="qcm-q">1. Le médecin demande : "Qu'est-ce qui ne va pas ?" → Le patient répond : <button class="btn-mini" onclick="speak('J\'ai de la fièvre et mal à la gorge.')">🔊</button></div>
+          <div class="qcm-q">1. Le médecin demande : "Qu'est-ce qui ne va pas ?" → Le patient répond : <button class="btn-mini" onclick="speakEL('J\'ai de la fièvre et mal à la gorge.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st1)">J'ai de la fièvre et mal à la gorge.</button>
             <button class="opt" data-correct="false" data-correction="J'ai de la fièvre et mal à la gorge." onclick="checkQCM(this,false,null,st1)">Je suis médecin.</button>
@@ -157,7 +254,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">2. Le médecin dit : "Je vais vous ___ des antibiotiques." <button class="btn-mini" onclick="speak('Je vais vous prescrire des antibiotiques.')">🔊</button></div>
+          <div class="qcm-q">2. Le médecin dit : "Je vais vous ___ des antibiotiques." <button class="btn-mini" onclick="speakEL('Je vais vous prescrire des antibiotiques.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="prescrire" onclick="checkQCM(this,false,null,st1)">donner à manger</button>
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st1)">prescrire</button>
@@ -167,7 +264,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">3. Pour prendre rendez-vous chez le médecin, on dit : <button class="btn-mini" onclick="speak('Je voudrais prendre rendez-vous, s\'il vous plaît.')">🔊</button></div>
+          <div class="qcm-q">3. Pour prendre rendez-vous chez le médecin, on dit : <button class="btn-mini" onclick="speakEL('Je voudrais prendre rendez-vous, s\'il vous plaît.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="Je voudrais prendre rendez-vous." onclick="checkQCM(this,false,null,st1)">Je voudrais une pizza.</button>
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st1)">Je voudrais prendre rendez-vous.</button>
@@ -177,7 +274,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">4. La ___ dit combien de médicaments prendre et quand. <button class="btn-mini" onclick="speak('L\'ordonnance dit combien de médicaments prendre et quand.')">🔊</button></div>
+          <div class="qcm-q">4. La ___ dit combien de médicaments prendre et quand. <button class="btn-mini" onclick="speakEL('L\'ordonnance dit combien de médicaments prendre et quand.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="ordonnance" onclick="checkQCM(this,false,null,st1)">température</button>
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st1)">ordonnance</button>
@@ -197,7 +294,7 @@
           <p>3. J'ai le nez qui coule et les yeux qui piquent — c'est un <input class="fill-input" data-answer="rhume" placeholder="?">. <span class="fill-hint"></span></p>
           <p>4. Tous les muscles me font mal et j'ai 40° de fièvre — c'est la <input class="fill-input" data-answer="grippe" placeholder="?">. <span class="fill-hint"></span></p>
         </div>
-        <button class="check-btn" onclick="checkFill('fill1a',null)">Verificar ✓</button>
+        <button class="check-btn" onclick="checkFill('fill1a','sc1')">Verificar ✓</button>
       </div>
 
       <!-- Exercice 3 · Match symptôme → maladie -->
@@ -217,10 +314,94 @@
           <p>— J'ai mal à la gorge et je tousse beaucoup. J'ai aussi de la <input class="fill-input" data-answer="fièvre / fievre" placeholder="?">. <span class="fill-hint"></span></p>
           <p>— Je vais vous faire une <input class="fill-input" data-answer="ordonnance" placeholder="?"> pour des antibiotiques. <span class="fill-hint"></span></p>
         </div>
-        <button class="check-btn" onclick="checkFill('fill1b',null); showScore(document.getElementById('sc1'), st1.score, st1.total)">Ver resultado 📊</button>
+        <button class="check-btn" onclick="checkFill('fill1b','sc1'); showScore(document.getElementById('sc1'), st1.score, st1.total)">Ver resultado 📊</button>
       </div>
 
       <div class="score-box" id="sc1"></div>
+
+      <!-- ── Exercice Comprensión oral (dialogue) ── -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l1d);">Comprensión oral — Chez le docteur</div>
+        <div class="ex-instr">Haz clic en 🔊 para escuchar cada línea del diálogo, luego responde las preguntas <em>sin ver el texto</em>.</div>
+
+        <div class="dial-box">
+
+    <div class="dial-line dial-f">
+      <div class="dial-av dial-av-f">👩</div>
+      <div class="dial-bubble" style="background:var(--l1l)">
+        <span class="dial-name" style="color:var(--l1d)">Charlotte</span>
+        <span class="dial-text">Bonjour docteur. J'ai de la fièvre depuis deux jours.</span>
+        <span class="dial-trad">Buenos días, doctor. Tengo fiebre desde hace dos días.</span>
+      </div>
+      <button class="dial-audio" onclick="speakEL('Bonjour docteur. J\'ai de la fièvre depuis deux jours.','f')" title="Écouter">🔊</button>
+    </div>
+    <div class="dial-line dial-m">
+      <button class="dial-audio" onclick="speakEL('Bonjour. Quelle est votre température ?','m')" title="Écouter">🔊</button>
+      <div class="dial-bubble dial-bubble-m" style="background:#f0f0f0">
+        <span class="dial-name" style="color:#555">Lucas</span>
+        <span class="dial-text">Bonjour. Quelle est votre température ?</span>
+        <span class="dial-trad">Buenos días. ¿Cuál es su temperatura?</span>
+      </div>
+      <div class="dial-av dial-av-m">👨</div>
+    </div>
+    <div class="dial-line dial-f">
+      <div class="dial-av dial-av-f">👩</div>
+      <div class="dial-bubble" style="background:var(--l1l)">
+        <span class="dial-name" style="color:var(--l1d)">Charlotte</span>
+        <span class="dial-text">38,5 degrés. J'ai aussi mal à la gorge.</span>
+        <span class="dial-trad">38,5 grados. También me duele la garganta.</span>
+      </div>
+      <button class="dial-audio" onclick="speakEL('38,5 degrés. J\'ai aussi mal à la gorge.','f')" title="Écouter">🔊</button>
+    </div>
+    <div class="dial-line dial-m">
+      <button class="dial-audio" onclick="speakEL('Je vais vous examiner. Ouvrez la bouche, s\'il vous plaît.','m')" title="Écouter">🔊</button>
+      <div class="dial-bubble dial-bubble-m" style="background:#f0f0f0">
+        <span class="dial-name" style="color:#555">Lucas</span>
+        <span class="dial-text">Je vais vous examiner. Ouvrez la bouche, s'il vous plaît.</span>
+        <span class="dial-trad">Voy a examinarle. Abra la boca, por favor.</span>
+      </div>
+      <div class="dial-av dial-av-m">👨</div>
+    </div>
+    <div class="dial-line dial-f">
+      <div class="dial-av dial-av-f">👩</div>
+      <div class="dial-bubble" style="background:var(--l1l)">
+        <span class="dial-name" style="color:var(--l1d)">Charlotte</span>
+        <span class="dial-text">Est-ce que c'est grave ?</span>
+        <span class="dial-trad">¿Es grave?</span>
+      </div>
+      <button class="dial-audio" onclick="speakEL('Est-ce que c\'est grave ?','f')" title="Écouter">🔊</button>
+    </div>
+    <div class="dial-line dial-m">
+      <button class="dial-audio" onclick="speakEL('Non, c\'est une angine. Je vais vous prescrire des antibiotiques.','m')" title="Écouter">🔊</button>
+      <div class="dial-bubble dial-bubble-m" style="background:#f0f0f0">
+        <span class="dial-name" style="color:#555">Lucas</span>
+        <span class="dial-text">Non, c'est une angine. Je vais vous prescrire des antibiotiques.</span>
+        <span class="dial-trad">No, es una angina. Voy a recetarle antibióticos.</span>
+      </div>
+      <div class="dial-av dial-av-m">👨</div>
+    </div>
+        </div>
+
+        <button id="dial5l1_btn" class="dial-play-btn" style="background:var(--l1);" onclick="playDial([['Bonjour docteur. J\'ai de la fièvre depuis deux jours.', 'f'], ['Bonjour. Quelle est votre température ?', 'm'], ['38,5 degrés. J\'ai aussi mal à la gorge.', 'f'], ['Je vais vous examiner. Ouvrez la bouche, s\'il vous plaît.', 'm'], ['Est-ce que c\'est grave ?', 'f'], ['Non, c\'est une angine. Je vais vous prescrire des antibiotiques.', 'm']], 'dial5l1_btn')">▶ Écouter le dialogue</button>
+
+        <div class="dial-section-label" style="color:var(--l1d);">🧠 Comprensión — responde sin ver el texto</div>
+
+      <div class="qcm-item">
+        <div class="qcm-q">1. ¿Desde cuándo tiene Charlotte fiebre?</div>
+        <div class="opts"><button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc1',st1)">Dos días</button><button class="opt" data-correct="false" data-correction="Dos días" onclick="checkQCM(this,false,'sc1',st1)">Una semana</button><button class="opt" data-correct="false" data-correction="Dos días" onclick="checkQCM(this,false,'sc1',st1)">Un día</button></div>
+        <div class="fb"></div>
+      </div>
+      <div class="qcm-item">
+        <div class="qcm-q">2. ¿Cuál es su temperatura?</div>
+        <div class="opts"><button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc1',st1)">38,5°</button><button class="opt" data-correct="false" data-correction="38,5°" onclick="checkQCM(this,false,'sc1',st1)">39°</button><button class="opt" data-correct="false" data-correction="38,5°" onclick="checkQCM(this,false,'sc1',st1)">37,5°</button></div>
+        <div class="fb"></div>
+      </div>
+      <div class="qcm-item">
+        <div class="qcm-q">3. ¿Cuál es el diagnóstico?</div>
+        <div class="opts"><button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc1',st1)">Una angina</button><button class="opt" data-correct="false" data-correction="Una angina" onclick="checkQCM(this,false,'sc1',st1)">Un resfriado</button><button class="opt" data-correct="false" data-correction="Una angina" onclick="checkQCM(this,false,'sc1',st1)">La gripe</button></div>
+        <div class="fb"></div>
+      </div>
+      </div>
     </div><!-- /lesson 1 -->
 
 
@@ -236,7 +417,7 @@
         <div class="ex-instr">El imperativo no usa pronombre sujeto. Selecciona la forma correcta.</div>
 
         <div class="qcm-item">
-          <div class="qcm-q">1. ___ tes devoirs ! (tu → faire) <button class="btn-mini" onclick="speak('Fais tes devoirs !')">🔊</button></div>
+          <div class="qcm-q">1. ___ tes devoirs ! (tu → faire) <button class="btn-mini" onclick="speakEL('Fais tes devoirs !','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="Fais" onclick="checkQCM(this,false,null,st2)">Tu fais</button>
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st2)">Fais</button>
@@ -246,7 +427,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">2. ___ à vos places ! (vous → s'asseoir) <button class="btn-mini" onclick="speak('Asseyez-vous à vos places !')">🔊</button></div>
+          <div class="qcm-q">2. ___ à vos places ! (vous → s'asseoir) <button class="btn-mini" onclick="speakEL('Asseyez-vous à vos places !','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="Asseyez-vous" onclick="checkQCM(this,false,null,st2)">Vous asseyez</button>
             <button class="opt" data-correct="false" data-correction="Asseyez-vous" onclick="checkQCM(this,false,null,st2)">Assis-vous</button>
@@ -256,7 +437,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">3. ___ ensemble ! (nous → chanter) <button class="btn-mini" onclick="speak('Chantons ensemble !')">🔊</button></div>
+          <div class="qcm-q">3. ___ ensemble ! (nous → chanter) <button class="btn-mini" onclick="speakEL('Chantons ensemble !','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="Chantons" onclick="checkQCM(this,false,null,st2)">Chantez</button>
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st2)">Chantons</button>
@@ -266,7 +447,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">4. ___ ici, s'il te plaît. (tu → venir) <button class="btn-mini" onclick="speak('Viens ici, s\'il te plaît.')">🔊</button></div>
+          <div class="qcm-q">4. ___ ici, s'il te plaît. (tu → venir) <button class="btn-mini" onclick="speakEL('Viens ici, s\'il te plaît.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="Viens" onclick="checkQCM(this,false,null,st2)">Venez</button>
             <button class="opt" data-correct="false" data-correction="Viens" onclick="checkQCM(this,false,null,st2)">Vient</button>
@@ -286,7 +467,7 @@
           <p>3. (être / nous) → <input class="fill-input" data-answer="Soyons" placeholder="?"> ponctuels ! <span class="fill-hint"></span></p>
           <p>4. (prendre / tu) → <input class="fill-input" data-answer="Prends" placeholder="?"> ce médicament deux fois par jour. <span class="fill-hint"></span></p>
         </div>
-        <button class="check-btn" onclick="checkFill('fill2a',null)">Verificar ✓</button>
+        <button class="check-btn" onclick="checkFill('fill2a','sc2')">Verificar ✓</button>
       </div>
 
       <!-- Exercice 3 · Match conseil santé -->
@@ -306,7 +487,7 @@
           <p>3. Buvez de l'alcool → Ne <input class="fill-input" data-answer="buvez" placeholder="?"> pas d'alcool. <span class="fill-hint"></span></p>
           <p>4. Oublie tes médicaments → N'<input class="fill-input" data-answer="oublie" placeholder="?"> pas tes médicaments. <span class="fill-hint"></span></p>
         </div>
-        <button class="check-btn" onclick="checkFill('fill2b',null)">Verificar ✓</button>
+        <button class="check-btn" onclick="checkFill('fill2b','sc2')">Verificar ✓</button>
       </div>
 
       <!-- Exercice 5 · QCM nuances impératif -->
@@ -315,7 +496,7 @@
         <div class="ex-instr">Selecciona el uso correcto del imperativo.</div>
 
         <div class="qcm-item">
-          <div class="qcm-q">5. Pour donner un conseil médical : <button class="btn-mini" onclick="speak('Reposez-vous et buvez beaucoup d\'eau.')">🔊</button></div>
+          <div class="qcm-q">5. Pour donner un conseil médical : <button class="btn-mini" onclick="speakEL('Reposez-vous et buvez beaucoup d\'eau.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st2)">Reposez-vous et buvez beaucoup d'eau.</button>
             <button class="opt" data-correct="false" data-correction="Reposez-vous et buvez beaucoup d'eau." onclick="checkQCM(this,false,null,st2)">Vous reposez et vous buvez.</button>
@@ -325,7 +506,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">6. À l'impératif, les verbes en -ER (tu) perdent le -s : <button class="btn-mini" onclick="speak('Mange tes légumes !')">🔊</button></div>
+          <div class="qcm-q">6. À l'impératif, les verbes en -ER (tu) perdent le -s : <button class="btn-mini" onclick="speakEL('Mange tes légumes !','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="Mange (sans -s)" onclick="checkQCM(this,false,null,st2)">Manges tes légumes !</button>
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st2)">Mange tes légumes !</button>
@@ -338,6 +519,90 @@
       </div>
 
       <div class="score-box" id="sc2"></div>
+
+      <!-- ── Exercice Comprensión oral (dialogue) ── -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l2d);">Comprensión oral — Conseils de santé</div>
+        <div class="ex-instr">Haz clic en 🔊 para escuchar cada línea del diálogo, luego responde las preguntas <em>sin ver el texto</em>.</div>
+
+        <div class="dial-box">
+
+    <div class="dial-line dial-f">
+      <div class="dial-av dial-av-f">👩</div>
+      <div class="dial-bubble" style="background:var(--l2l)">
+        <span class="dial-name" style="color:var(--l2d)">Charlotte</span>
+        <span class="dial-text">Je suis enrhumée. Qu'est-ce que je dois faire ?</span>
+        <span class="dial-trad">Tengo un resfriado. ¿Qué debo hacer?</span>
+      </div>
+      <button class="dial-audio" onclick="speakEL('Je suis enrhumée. Qu\'est-ce que je dois faire ?','f')" title="Écouter">🔊</button>
+    </div>
+    <div class="dial-line dial-m">
+      <button class="dial-audio" onclick="speakEL('Mange bien, bois beaucoup d\'eau et repose-toi.','m')" title="Écouter">🔊</button>
+      <div class="dial-bubble dial-bubble-m" style="background:#f0f0f0">
+        <span class="dial-name" style="color:#555">Lucas</span>
+        <span class="dial-text">Mange bien, bois beaucoup d'eau et repose-toi.</span>
+        <span class="dial-trad">Come bien, bebe mucha agua y descansa.</span>
+      </div>
+      <div class="dial-av dial-av-m">👨</div>
+    </div>
+    <div class="dial-line dial-f">
+      <div class="dial-av dial-av-f">👩</div>
+      <div class="dial-bubble" style="background:var(--l2l)">
+        <span class="dial-name" style="color:var(--l2d)">Charlotte</span>
+        <span class="dial-text">Je dois sortir pour les courses...</span>
+        <span class="dial-trad">Tengo que salir a hacer la compra...</span>
+      </div>
+      <button class="dial-audio" onclick="speakEL('Je dois sortir pour les courses...','f')" title="Écouter">🔊</button>
+    </div>
+    <div class="dial-line dial-m">
+      <button class="dial-audio" onclick="speakEL('Non, reste chez toi ! Ne sors pas dans le froid. Prends des vitamines aussi.','m')" title="Écouter">🔊</button>
+      <div class="dial-bubble dial-bubble-m" style="background:#f0f0f0">
+        <span class="dial-name" style="color:#555">Lucas</span>
+        <span class="dial-text">Non, reste chez toi ! Ne sors pas dans le froid. Prends des vitamines aussi.</span>
+        <span class="dial-trad">No, ¡quédate en casa! No salgas al frío. Toma vitaminas también.</span>
+      </div>
+      <div class="dial-av dial-av-m">👨</div>
+    </div>
+    <div class="dial-line dial-f">
+      <div class="dial-av dial-av-f">👩</div>
+      <div class="dial-bubble" style="background:var(--l2l)">
+        <span class="dial-name" style="color:var(--l2d)">Charlotte</span>
+        <span class="dial-text">Et si ça empire ?</span>
+        <span class="dial-trad">¿Y si empeora?</span>
+      </div>
+      <button class="dial-audio" onclick="speakEL('Et si ça empire ?','f')" title="Écouter">🔊</button>
+    </div>
+    <div class="dial-line dial-m">
+      <button class="dial-audio" onclick="speakEL('Appelle le médecin et ne prends pas de médicaments sans ordonnance.','m')" title="Écouter">🔊</button>
+      <div class="dial-bubble dial-bubble-m" style="background:#f0f0f0">
+        <span class="dial-name" style="color:#555">Lucas</span>
+        <span class="dial-text">Appelle le médecin et ne prends pas de médicaments sans ordonnance.</span>
+        <span class="dial-trad">Llama al médico y no tomes medicamentos sin receta.</span>
+      </div>
+      <div class="dial-av dial-av-m">👨</div>
+    </div>
+        </div>
+
+        <button id="dial5l2_btn" class="dial-play-btn" style="background:var(--l2);" onclick="playDial([['Je suis enrhumée. Qu\'est-ce que je dois faire ?', 'f'], ['Mange bien, bois beaucoup d\'eau et repose-toi.', 'm'], ['Je dois sortir pour les courses...', 'f'], ['Non, reste chez toi ! Ne sors pas dans le froid. Prends des vitamines aussi.', 'm'], ['Et si ça empire ?', 'f'], ['Appelle le médecin et ne prends pas de médicaments sans ordonnance.', 'm']], 'dial5l2_btn')">▶ Écouter le dialogue</button>
+
+        <div class="dial-section-label" style="color:var(--l2d);">🧠 Comprensión — responde sin ver el texto</div>
+
+      <div class="qcm-item">
+        <div class="qcm-q">1. ¿Qué debe hacer Charlotte según Lucas?</div>
+        <div class="opts"><button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc2',st2)">Comer, beber y descansar</button><button class="opt" data-correct="false" data-correction="Comer, beber y descansar" onclick="checkQCM(this,false,'sc2',st2)">Trabajar</button><button class="opt" data-correct="false" data-correction="Comer, beber y descansar" onclick="checkQCM(this,false,'sc2',st2)">Salir a hacer la compra</button></div>
+        <div class="fb"></div>
+      </div>
+      <div class="qcm-item">
+        <div class="qcm-q">2. ¿Qué debe evitar?</div>
+        <div class="opts"><button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc2',st2)">Salir al frío</button><button class="opt" data-correct="false" data-correction="Salir al frío" onclick="checkQCM(this,false,'sc2',st2)">Beber agua</button><button class="opt" data-correct="false" data-correction="Salir al frío" onclick="checkQCM(this,false,'sc2',st2)">Descansar</button></div>
+        <div class="fb"></div>
+      </div>
+      <div class="qcm-item">
+        <div class="qcm-q">3. ¿Qué hacer si empeora?</div>
+        <div class="opts"><button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc2',st2)">Llamar al médico</button><button class="opt" data-correct="false" data-correction="Llamar al médico" onclick="checkQCM(this,false,'sc2',st2)">Tomar medicamentos sin receta</button><button class="opt" data-correct="false" data-correction="Llamar al médico" onclick="checkQCM(this,false,'sc2',st2)">Salir</button></div>
+        <div class="fb"></div>
+      </div>
+      </div>
     </div><!-- /lesson 2 -->
 
 
@@ -353,7 +618,7 @@
         <div class="ex-instr">Selecciona el medicamento o remedio adecuado para cada situación.</div>
 
         <div class="qcm-item">
-          <div class="qcm-q">1. Pour la fièvre et les douleurs, on prend ___. <button class="btn-mini" onclick="speak('Pour la fièvre et les douleurs, on prend du paracétamol.')">🔊</button></div>
+          <div class="qcm-q">1. Pour la fièvre et les douleurs, on prend ___. <button class="btn-mini" onclick="speakEL('Pour la fièvre et les douleurs, on prend du paracétamol.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="du paracétamol" onclick="checkQCM(this,false,null,st3)">du sirop pour la toux</button>
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st3)">du paracétamol</button>
@@ -363,7 +628,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">2. Pour une blessure légère, on met ___. <button class="btn-mini" onclick="speak('Pour une blessure légère, on met un pansement.')">🔊</button></div>
+          <div class="qcm-q">2. Pour une blessure légère, on met ___. <button class="btn-mini" onclick="speakEL('Pour une blessure légère, on met un pansement.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="un pansement" onclick="checkQCM(this,false,null,st3)">des antibiotiques</button>
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st3)">un pansement</button>
@@ -373,7 +638,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">3. Le pharmacien demande : "Avez-vous une ___ ?" pour les médicaments sur ordonnance. <button class="btn-mini" onclick="speak('Avez-vous une ordonnance ?')">🔊</button></div>
+          <div class="qcm-q">3. Le pharmacien demande : "Avez-vous une ___ ?" pour les médicaments sur ordonnance. <button class="btn-mini" onclick="speakEL('Avez-vous une ordonnance ?','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st3)">ordonnance</button>
             <button class="opt" data-correct="false" data-correction="ordonnance" onclick="checkQCM(this,false,null,st3)">valise</button>
@@ -383,7 +648,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">4. On ___ les médicaments avec de l'eau. <button class="btn-mini" onclick="speak('On avale les médicaments avec de l\'eau.')">🔊</button></div>
+          <div class="qcm-q">4. On ___ les médicaments avec de l'eau. <button class="btn-mini" onclick="speakEL('On avale les médicaments avec de l\'eau.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="avale" onclick="checkQCM(this,false,null,st3)">boit</button>
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st3)">avale</button>
@@ -403,7 +668,7 @@
           <p>— Non, c'est pour un <input class="fill-input" data-answer="rhume / problème bénin" placeholder="?"> bénin. <span class="fill-hint"></span></p>
           <p>— Je vous recommande ce <input class="fill-input" data-answer="sirop / médicament / spray" placeholder="?"> à prendre trois fois par jour. <span class="fill-hint"></span></p>
         </div>
-        <button class="check-btn" onclick="checkFill('fill3a',null)">Verificar ✓</button>
+        <button class="check-btn" onclick="checkFill('fill3a','sc3')">Verificar ✓</button>
       </div>
 
       <!-- Exercice 3 · Match médicament → usage -->
@@ -419,7 +684,7 @@
         <div class="ex-instr">Selecciona el consejo correcto del farmacéutico.</div>
 
         <div class="qcm-item">
-          <div class="qcm-q">5. "Prenez ce médicament ___ les repas." (avec de la nourriture) <button class="btn-mini" onclick="speak('Prenez ce médicament pendant les repas.')">🔊</button></div>
+          <div class="qcm-q">5. "Prenez ce médicament ___ les repas." (avec de la nourriture) <button class="btn-mini" onclick="speakEL('Prenez ce médicament pendant les repas.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="pendant" onclick="checkQCM(this,false,null,st3)">avant</button>
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st3)">pendant</button>
@@ -429,7 +694,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">6. "Ne dépassez pas ___ comprimés par jour." <button class="btn-mini" onclick="speak('Ne dépassez pas deux comprimés par jour.')">🔊</button></div>
+          <div class="qcm-q">6. "Ne dépassez pas ___ comprimés par jour." <button class="btn-mini" onclick="speakEL('Ne dépassez pas deux comprimés par jour.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="deux" onclick="checkQCM(this,false,null,st3)">dix</button>
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st3)">deux</button>
@@ -442,17 +707,114 @@
       </div>
 
       <div class="score-box" id="sc3"></div>
+
+      <!-- ── Exercice Comprensión oral (dialogue) ── -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l3d);">Comprensión oral — À la pharmacie</div>
+        <div class="ex-instr">Haz clic en 🔊 para escuchar cada línea del diálogo, luego responde las preguntas <em>sin ver el texto</em>.</div>
+
+        <div class="dial-box">
+
+    <div class="dial-line dial-f">
+      <div class="dial-av dial-av-f">👩</div>
+      <div class="dial-bubble" style="background:var(--l3l)">
+        <span class="dial-name" style="color:var(--l3d)">Charlotte</span>
+        <span class="dial-text">Bonjour, j'ai une ordonnance de mon médecin.</span>
+        <span class="dial-trad">Buenos días, tengo una receta de mi médico.</span>
+      </div>
+      <button class="dial-audio" onclick="speakEL('Bonjour, j\'ai une ordonnance de mon médecin.','f')" title="Écouter">🔊</button>
+    </div>
+    <div class="dial-line dial-m">
+      <button class="dial-audio" onclick="speakEL('Bonjour. Voyons... Des antibiotiques et du sirop pour la toux.','m')" title="Écouter">🔊</button>
+      <div class="dial-bubble dial-bubble-m" style="background:#f0f0f0">
+        <span class="dial-name" style="color:#555">Lucas</span>
+        <span class="dial-text">Bonjour. Voyons... Des antibiotiques et du sirop pour la toux.</span>
+        <span class="dial-trad">Buenos días. Veamos... Antibióticos y jarabe para la tos.</span>
+      </div>
+      <div class="dial-av dial-av-m">👨</div>
+    </div>
+    <div class="dial-line dial-f">
+      <div class="dial-av dial-av-f">👩</div>
+      <div class="dial-bubble" style="background:var(--l3l)">
+        <span class="dial-name" style="color:var(--l3d)">Charlotte</span>
+        <span class="dial-text">Combien ça coûte avec la mutuelle ?</span>
+        <span class="dial-trad">¿Cuánto cuesta con el seguro médico?</span>
+      </div>
+      <button class="dial-audio" onclick="speakEL('Combien ça coûte avec la mutuelle ?','f')" title="Écouter">🔊</button>
+    </div>
+    <div class="dial-line dial-m">
+      <button class="dial-audio" onclick="speakEL('Avec votre carte vitale, vous payez seulement 5 euros.','m')" title="Écouter">🔊</button>
+      <div class="dial-bubble dial-bubble-m" style="background:#f0f0f0">
+        <span class="dial-name" style="color:#555">Lucas</span>
+        <span class="dial-text">Avec votre carte vitale, vous payez seulement 5 euros.</span>
+        <span class="dial-trad">Con su tarjeta de seguro, solo paga 5 euros.</span>
+      </div>
+      <div class="dial-av dial-av-m">👨</div>
+    </div>
+    <div class="dial-line dial-f">
+      <div class="dial-av dial-av-f">👩</div>
+      <div class="dial-bubble" style="background:var(--l3l)">
+        <span class="dial-name" style="color:var(--l3d)">Charlotte</span>
+        <span class="dial-text">Et les antibiotiques, je les prends comment ?</span>
+        <span class="dial-trad">¿Y los antibióticos, cómo los tomo?</span>
+      </div>
+      <button class="dial-audio" onclick="speakEL('Et les antibiotiques, je les prends comment ?','f')" title="Écouter">🔊</button>
+    </div>
+    <div class="dial-line dial-m">
+      <button class="dial-audio" onclick="speakEL('Prenez-en un comprimé matin et soir pendant sept jours. Ne les prenez pas à jeun.','m')" title="Écouter">🔊</button>
+      <div class="dial-bubble dial-bubble-m" style="background:#f0f0f0">
+        <span class="dial-name" style="color:#555">Lucas</span>
+        <span class="dial-text">Prenez-en un comprimé matin et soir pendant sept jours. Ne les prenez pas à jeun.</span>
+        <span class="dial-trad">Tome un comprimido mañana y noche durante siete días. No los tome en ayunas.</span>
+      </div>
+      <div class="dial-av dial-av-m">👨</div>
+    </div>
+        </div>
+
+        <button id="dial5l3_btn" class="dial-play-btn" style="background:var(--l3);" onclick="playDial([['Bonjour, j\'ai une ordonnance de mon médecin.', 'f'], ['Bonjour. Voyons... Des antibiotiques et du sirop pour la toux.', 'm'], ['Combien ça coûte avec la mutuelle ?', 'f'], ['Avec votre carte vitale, vous payez seulement 5 euros.', 'm'], ['Et les antibiotiques, je les prends comment ?', 'f'], ['Prenez-en un comprimé matin et soir pendant sept jours. Ne les prenez pas à jeun.', 'm']], 'dial5l3_btn')">▶ Écouter le dialogue</button>
+
+        <div class="dial-section-label" style="color:var(--l3d);">🧠 Comprensión — responde sin ver el texto</div>
+
+      <div class="qcm-item">
+        <div class="qcm-q">1. ¿Qué contiene la receta?</div>
+        <div class="opts"><button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc3',st3)">Antibióticos y jarabe</button><button class="opt" data-correct="false" data-correction="Antibióticos y jarabe" onclick="checkQCM(this,false,'sc3',st3)">Solo antibióticos</button><button class="opt" data-correct="false" data-correction="Antibióticos y jarabe" onclick="checkQCM(this,false,'sc3',st3)">Vitaminas</button></div>
+        <div class="fb"></div>
+      </div>
+      <div class="qcm-item">
+        <div class="qcm-q">2. ¿Cuánto paga Charlotte?</div>
+        <div class="opts"><button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc3',st3)">5 euros</button><button class="opt" data-correct="false" data-correction="5 euros" onclick="checkQCM(this,false,'sc3',st3)">10 euros</button><button class="opt" data-correct="false" data-correction="5 euros" onclick="checkQCM(this,false,'sc3',st3)">Nada</button></div>
+        <div class="fb"></div>
+      </div>
+      <div class="qcm-item">
+        <div class="qcm-q">3. ¿Cuándo debe tomar los antibióticos?</div>
+        <div class="opts"><button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc3',st3)">Mañana y noche durante 7 días</button><button class="opt" data-correct="false" data-correction="Mañana y noche durante 7 días" onclick="checkQCM(this,false,'sc3',st3)">Una vez al día</button><button class="opt" data-correct="false" data-correction="Mañana y noche durante 7 días" onclick="checkQCM(this,false,'sc3',st3)">Solo por la noche</button></div>
+        <div class="fb"></div>
+      </div>
+      </div>
     </div><!-- /lesson 3 -->
 
   </main>
 </div><!-- /.app -->
 
 <script>
+
+/* ── Lecture séquentielle du dialogue ── */
+async function playDial(lines, btnId) {
+  const btn = document.getElementById(btnId);
+  if (btn) { btn.disabled = true; btn.textContent = '⏸ En cours…'; }
+  for (const [text, gender] of lines) {
+    const audio = await speakEL(text, gender);
+    if (audio) await new Promise(r => { audio.onended = r; setTimeout(r, 8000); });
+    await new Promise(r => setTimeout(r, 350));
+  }
+  if (btn) { btn.disabled = false; btn.textContent = '▶ Écouter le dialogue'; }
+}
+
 /* ── États QCM par section ── */
-const st0 = { score: 0, total: 6 };  // 4 + 2 QCM
-const st1 = { score: 0, total: 4 };
-const st2 = { score: 0, total: 6 };  // 4 + 2 QCM
-const st3 = { score: 0, total: 6 };  // 4 + 2 QCM
+const st0 = { score: 0, total: 9 };  // 4 + 2 QCM
+const st1 = { score: 0, total: 7 };
+const st2 = { score: 0, total: 9 };  // 4 + 2 QCM
+const st3 = { score: 0, total: 9 };  // 4 + 2 QCM
 
 window.addEventListener('DOMContentLoaded', function () {
   buildELModal();

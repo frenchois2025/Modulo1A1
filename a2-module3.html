@@ -6,7 +6,29 @@
   <title>Français A2 · Module 3 · Expression et Communication</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="auth.js"></script>
   <script src="moteur.js"></script>
+
+<style>
+.dial-box{display:flex;flex-direction:column;gap:10px;margin:14px 0 18px}
+.dial-line{display:flex;align-items:flex-start;gap:10px}
+.dial-m{flex-direction:row-reverse}
+.dial-av{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;margin-top:2px}
+.dial-av-f{background:var(--l0);color:#fff}
+.dial-av-m{background:#555;color:#fff}
+.dial-bubble{border-radius:14px;padding:10px 14px;max-width:76%;display:flex;flex-direction:column;gap:3px}
+.dial-bubble-f{background:var(--bubble-f,#eef2ff)}
+.dial-bubble-m{background:#f0f0f0}
+.dial-name{font-size:11px;font-weight:800;color:var(--bubble-fd,#4338ca);margin-bottom:2px}
+.dial-name-m{color:#555}
+.dial-text{font-size:14px;line-height:1.5}
+.dial-trad{font-size:12px;color:var(--muted);font-style:italic;margin-top:2px}
+.dial-audio{border:none;background:transparent;cursor:pointer;font-size:16px;padding:2px 4px;border-radius:6px;flex-shrink:0;margin-top:4px;align-self:center}
+.dial-audio:hover{background:rgba(0,0,0,.06)}
+.dial-play-btn{display:flex;align-items:center;gap:8px;border:none;border-radius:12px;padding:10px 20px;font-size:14px;font-weight:800;cursor:pointer;font-family:"Nunito",sans-serif;color:white;margin-bottom:4px}
+.dial-section-label{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1px;margin:14px 0 8px}
+</style>
 </head>
 <body>
 <div class="app">
@@ -16,13 +38,13 @@
     <div class="sidebar-logo">Module 3 · <span style="color:var(--a2);">A2</span></div>
 
     <button class="nav-btn active" data-lesson="0" onclick="showLesson(0,this)">
-      <span class="nav-icon">💬</span>Exprimer son opinion<span class="nav-badge">4 ex.</span>
+      <span class="nav-icon">💬</span>Exprimer son opinion<span class="nav-badge">5 ex.</span>
     </button>
     <button class="nav-btn" data-lesson="1" onclick="showLesson(1,this)">
-      <span class="nav-icon">⚖️</span>Comparer<span class="nav-badge">4 ex.</span>
+      <span class="nav-icon">⚖️</span>Comparer<span class="nav-badge">5 ex.</span>
     </button>
     <button class="nav-btn" data-lesson="2" onclick="showLesson(2,this)">
-      <span class="nav-icon">🎨</span>Goûts et loisirs<span class="nav-badge">5 ex.</span>
+      <span class="nav-icon">🎨</span>Goûts et loisirs<span class="nav-badge">6 ex.</span>
     </button>
   </aside>
 
@@ -40,7 +62,7 @@
         <div class="ex-instr">Selecciona la expresión correcta para dar tu punto de vista.</div>
 
         <div class="qcm-item">
-          <div class="qcm-q">1. ___ les réseaux sociaux sont utiles. (creo que) <button class="btn-mini" onclick="speak('Je crois que les réseaux sociaux sont utiles.')">🔊</button></div>
+          <div class="qcm-q">1. ___ les réseaux sociaux sont utiles. (creo que) <button class="btn-mini" onclick="speakEL('Je crois que les réseaux sociaux sont utiles.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="Je crois que" onclick="checkQCM(this,false,null,st0)">À mon sens,</button>
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">Je crois que</button>
@@ -50,7 +72,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">2. ___ c'est une bonne idée ! (en mi opinión) <button class="btn-mini" onclick="speak('À mon avis, c\'est une bonne idée !')">🔊</button></div>
+          <div class="qcm-q">2. ___ c'est une bonne idée ! (en mi opinión) <button class="btn-mini" onclick="speakEL('À mon avis, c\'est une bonne idée !','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">À mon avis,</button>
             <button class="opt" data-correct="false" data-correction="À mon avis," onclick="checkQCM(this,false,null,st0)">Je pense que</button>
@@ -60,7 +82,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">3. Je ___ pas d'accord avec toi. <button class="btn-mini" onclick="speak('Je ne suis pas d\'accord avec toi.')">🔊</button></div>
+          <div class="qcm-q">3. Je ___ pas d'accord avec toi. <button class="btn-mini" onclick="speakEL('Je ne suis pas d\'accord avec toi.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="ne suis" onclick="checkQCM(this,false,null,st0)">crois</button>
             <button class="opt" data-correct="false" data-correction="ne suis" onclick="checkQCM(this,false,null,st0)">pense</button>
@@ -70,7 +92,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">4. Tu ___ raison ! Le film était excellent. <button class="btn-mini" onclick="speak('Tu as raison ! Le film était excellent.')">🔊</button></div>
+          <div class="qcm-q">4. Tu ___ raison ! Le film était excellent. <button class="btn-mini" onclick="speakEL('Tu as raison ! Le film était excellent.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">as</button>
             <button class="opt" data-correct="false" data-correction="as" onclick="checkQCM(this,false,null,st0)">est</button>
@@ -90,7 +112,7 @@
           <p>3. Je suis tout à fait <input class="fill-input" data-answer="d'accord" placeholder="?"> avec toi. <span class="fill-hint"></span></p>
           <p>4. Selon <input class="fill-input" data-answer="moi" placeholder="?"> , voyager est la meilleure éducation. <span class="fill-hint"></span></p>
         </div>
-        <button class="check-btn" onclick="checkFill('fill0a',null)">Verificar ✓</button>
+        <button class="check-btn" onclick="checkFill('fill0a','sc0')">Verificar ✓</button>
       </div>
 
       <!-- Exercice 3 · Match opinion → contexte -->
@@ -106,7 +128,7 @@
         <div class="ex-instr">Selecciona la expresión que introduce una matización o duda.</div>
 
         <div class="qcm-item">
-          <div class="qcm-q">5. ___ , ce n'est pas si simple. (sin embargo) <button class="btn-mini" onclick="speak('Cependant, ce n\'est pas si simple.')">🔊</button></div>
+          <div class="qcm-q">5. ___ , ce n'est pas si simple. (sin embargo) <button class="btn-mini" onclick="speakEL('Cependant, ce n\'est pas si simple.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="Cependant" onclick="checkQCM(this,false,null,st0)">À mon avis</button>
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">Cependant</button>
@@ -116,7 +138,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">6. ___ , ce film est intéressant ___ un peu long. <button class="btn-mini" onclick="speak('Certes, ce film est intéressant mais un peu long.')">🔊</button></div>
+          <div class="qcm-q">6. ___ , ce film est intéressant ___ un peu long. <button class="btn-mini" onclick="speakEL('Certes, ce film est intéressant mais un peu long.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">Certes… mais</button>
             <button class="opt" data-correct="false" data-correction="Certes… mais" onclick="checkQCM(this,false,null,st0)">À mon avis… donc</button>
@@ -129,6 +151,81 @@
       </div>
 
       <div class="score-box" id="sc0"></div>
+
+      <!-- ── Exercice Comprensión oral (dialogue) ── -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l0d);">Comprensión oral — Critique de film</div>
+        <div class="ex-instr">Haz clic en 🔊 para escuchar cada línea del diálogo, luego responde las preguntas <em>sin ver el texto</em>.</div>
+
+        <div class="dial-box">
+
+    <div class="dial-line dial-f">
+      <div class="dial-av dial-av-f">👩</div>
+      <div class="dial-bubble" style="background:var(--l0l)">
+        <span class="dial-name" style="color:var(--l0d)">Charlotte</span>
+        <span class="dial-text">Qu'est-ce que tu penses du nouveau film de Spielberg ?</span>
+        <span class="dial-trad">¿Qué piensas de la nueva película de Spielberg?</span>
+      </div>
+      <button class="dial-audio" onclick="speakEL('Qu\'est-ce que tu penses du nouveau film de Spielberg ?','f')" title="Écouter">🔊</button>
+    </div>
+    <div class="dial-line dial-m">
+      <button class="dial-audio" onclick="speakEL('À mon avis, c\'est un chef-d\'œuvre. Je trouve que les images sont magnifiques.','m')" title="Écouter">🔊</button>
+      <div class="dial-bubble dial-bubble-m" style="background:#f0f0f0">
+        <span class="dial-name" style="color:#555">Lucas</span>
+        <span class="dial-text">À mon avis, c'est un chef-d'œuvre. Je trouve que les images sont magnifiques.</span>
+        <span class="dial-trad">En mi opinión, es una obra maestra. Me parece que las imágenes son preciosas.</span>
+      </div>
+      <div class="dial-av dial-av-m">👨</div>
+    </div>
+    <div class="dial-line dial-f">
+      <div class="dial-av dial-av-f">👩</div>
+      <div class="dial-bubble" style="background:var(--l0l)">
+        <span class="dial-name" style="color:var(--l0d)">Charlotte</span>
+        <span class="dial-text">Moi, je ne suis pas d'accord. Il me semble que l'histoire est trop longue.</span>
+        <span class="dial-trad">Yo no estoy de acuerdo. Me parece que la historia es demasiado larga.</span>
+      </div>
+      <button class="dial-audio" onclick="speakEL('Moi, je ne suis pas d\'accord. Il me semble que l\'histoire est trop longue.','f')" title="Écouter">🔊</button>
+    </div>
+    <div class="dial-line dial-m">
+      <button class="dial-audio" onclick="speakEL('C\'est possible. Mais selon moi, la fin est extraordinaire.','m')" title="Écouter">🔊</button>
+      <div class="dial-bubble dial-bubble-m" style="background:#f0f0f0">
+        <span class="dial-name" style="color:#555">Lucas</span>
+        <span class="dial-text">C'est possible. Mais selon moi, la fin est extraordinaire.</span>
+        <span class="dial-trad">Es posible. Pero según yo, el final es extraordinario.</span>
+      </div>
+      <div class="dial-av dial-av-m">👨</div>
+    </div>
+    <div class="dial-line dial-f">
+      <div class="dial-av dial-av-f">👩</div>
+      <div class="dial-bubble" style="background:var(--l0l)">
+        <span class="dial-name" style="color:var(--l0d)">Charlotte</span>
+        <span class="dial-text">J'ai l'impression que nous n'avons pas vu le même film !</span>
+        <span class="dial-trad">¡Tengo la impresión de que no vimos la misma película!</span>
+      </div>
+      <button class="dial-audio" onclick="speakEL('J\'ai l\'impression que nous n\'avons pas vu le même film !','f')" title="Écouter">🔊</button>
+    </div>
+        </div>
+
+        <button id="dial3l0_btn" class="dial-play-btn" style="background:var(--l0);" onclick="playDial([['Qu\'est-ce que tu penses du nouveau film de Spielberg ?', 'f'], ['À mon avis, c\'est un chef-d\'œuvre. Je trouve que les images sont magnifiques.', 'm'], ['Moi, je ne suis pas d\'accord. Il me semble que l\'histoire est trop longue.', 'f'], ['C\'est possible. Mais selon moi, la fin est extraordinaire.', 'm'], ['J\'ai l\'impression que nous n\'avons pas vu le même film !', 'f']], 'dial3l0_btn')">▶ Écouter le dialogue</button>
+
+        <div class="dial-section-label" style="color:var(--l0d);">🧠 Comprensión — responde sin ver el texto</div>
+
+      <div class="qcm-item">
+        <div class="qcm-q">1. ¿Qué opina Lucas sobre la película?</div>
+        <div class="opts"><button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc0',st0)">Es una obra maestra</button><button class="opt" data-correct="false" data-correction="Es una obra maestra" onclick="checkQCM(this,false,'sc0',st0)">No le gusta</button><button class="opt" data-correct="false" data-correction="Es una obra maestra" onclick="checkQCM(this,false,'sc0',st0)">Es neutral</button></div>
+        <div class="fb"></div>
+      </div>
+      <div class="qcm-item">
+        <div class="qcm-q">2. ¿Qué piensa Charlotte sobre la historia?</div>
+        <div class="opts"><button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc0',st0)">Es demasiado larga</button><button class="opt" data-correct="false" data-correction="Es demasiado larga" onclick="checkQCM(this,false,'sc0',st0)">Es perfecta</button><button class="opt" data-correct="false" data-correction="Es demasiado larga" onclick="checkQCM(this,false,'sc0',st0)">Es corta</button></div>
+        <div class="fb"></div>
+      </div>
+      <div class="qcm-item">
+        <div class="qcm-q">3. ¿Están de acuerdo?</div>
+        <div class="opts"><button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc0',st0)">No</button><button class="opt" data-correct="false" data-correction="No" onclick="checkQCM(this,false,'sc0',st0)">Sí</button><button class="opt" data-correct="false" data-correction="No" onclick="checkQCM(this,false,'sc0',st0)">Parcialmente</button></div>
+        <div class="fb"></div>
+      </div>
+      </div>
     </div><!-- /lesson 0 -->
 
 
@@ -144,7 +241,7 @@
         <div class="ex-instr">Selecciona la forma comparativa correcta (plus, moins, aussi).</div>
 
         <div class="qcm-item">
-          <div class="qcm-q">1. Paul est ___ grand que Marc. (Paul es más alto) <button class="btn-mini" onclick="speak('Paul est plus grand que Marc.')">🔊</button></div>
+          <div class="qcm-q">1. Paul est ___ grand que Marc. (Paul es más alto) <button class="btn-mini" onclick="speakEL('Paul est plus grand que Marc.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st1)">plus</button>
             <button class="opt" data-correct="false" data-correction="plus" onclick="checkQCM(this,false,null,st1)">moins</button>
@@ -154,7 +251,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">2. Cette voiture est ___ chère que l'autre. (menos cara) <button class="btn-mini" onclick="speak('Cette voiture est moins chère que l\'autre.')">🔊</button></div>
+          <div class="qcm-q">2. Cette voiture est ___ chère que l'autre. (menos cara) <button class="btn-mini" onclick="speakEL('Cette voiture est moins chère que l\'autre.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="moins" onclick="checkQCM(this,false,null,st1)">plus</button>
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st1)">moins</button>
@@ -164,7 +261,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">3. Elle parle ___ bien le français que moi. (igual de bien) <button class="btn-mini" onclick="speak('Elle parle aussi bien le français que moi.')">🔊</button></div>
+          <div class="qcm-q">3. Elle parle ___ bien le français que moi. (igual de bien) <button class="btn-mini" onclick="speakEL('Elle parle aussi bien le français que moi.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="aussi" onclick="checkQCM(this,false,null,st1)">plus</button>
             <button class="opt" data-correct="false" data-correction="aussi" onclick="checkQCM(this,false,null,st1)">moins</button>
@@ -174,7 +271,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">4. Le bus est ___ pratique que le taxi. (más práctico) <button class="btn-mini" onclick="speak('Le bus est plus pratique que le taxi.')">🔊</button></div>
+          <div class="qcm-q">4. Le bus est ___ pratique que le taxi. (más práctico) <button class="btn-mini" onclick="speakEL('Le bus est plus pratique que le taxi.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st1)">plus</button>
             <button class="opt" data-correct="false" data-correction="plus" onclick="checkQCM(this,false,null,st1)">aussi</button>
@@ -194,7 +291,7 @@
           <p>3. Ce sont <input class="fill-input" data-answer="les meilleurs" placeholder="?"> gâteaux du monde ! (los mejores) <span class="fill-hint"></span></p>
           <p>4. C'est <input class="fill-input" data-answer="le pire / le plus mauvais" placeholder="?"> film que j'ai vu. (el peor) <span class="fill-hint"></span></p>
         </div>
-        <button class="check-btn" onclick="checkFill('fill1a',null)">Verificar ✓</button>
+        <button class="check-btn" onclick="checkFill('fill1a','sc1')">Verificar ✓</button>
       </div>
 
       <!-- Exercice 3 · Match comparaison -->
@@ -210,7 +307,7 @@
         <div class="ex-instr">Bon y mauvais tienen formas comparativas irregulares. Elige la correcta.</div>
 
         <div class="qcm-item">
-          <div class="qcm-q">5. Ce restaurant est ___ que l'autre. (mejor) <button class="btn-mini" onclick="speak('Ce restaurant est meilleur que l\'autre.')">🔊</button></div>
+          <div class="qcm-q">5. Ce restaurant est ___ que l'autre. (mejor) <button class="btn-mini" onclick="speakEL('Ce restaurant est meilleur que l\'autre.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="meilleur" onclick="checkQCM(this,false,null,st1)">plus bon</button>
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st1)">meilleur</button>
@@ -220,7 +317,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">6. Cette note est ___ que la dernière fois. (peor) <button class="btn-mini" onclick="speak('Cette note est pire que la dernière fois.')">🔊</button></div>
+          <div class="qcm-q">6. Cette note est ___ que la dernière fois. (peor) <button class="btn-mini" onclick="speakEL('Cette note est pire que la dernière fois.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="pire" onclick="checkQCM(this,false,null,st1)">moins bonne</button>
             <button class="opt" data-correct="false" data-correction="pire" onclick="checkQCM(this,false,null,st1)">plus mauvaise</button>
@@ -233,6 +330,81 @@
       </div>
 
       <div class="score-box" id="sc1"></div>
+
+      <!-- ── Exercice Comprensión oral (dialogue) ── -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l1d);">Comprensión oral — Paris ou Lyon ?</div>
+        <div class="ex-instr">Haz clic en 🔊 para escuchar cada línea del diálogo, luego responde las preguntas <em>sin ver el texto</em>.</div>
+
+        <div class="dial-box">
+
+    <div class="dial-line dial-f">
+      <div class="dial-av dial-av-f">👩</div>
+      <div class="dial-bubble" style="background:var(--l1l)">
+        <span class="dial-name" style="color:var(--l1d)">Charlotte</span>
+        <span class="dial-text">Paris ou Lyon, quelle ville préfères-tu ?</span>
+        <span class="dial-trad">¿París o Lyon, qué ciudad prefieres?</span>
+      </div>
+      <button class="dial-audio" onclick="speakEL('Paris ou Lyon, quelle ville préfères-tu ?','f')" title="Écouter">🔊</button>
+    </div>
+    <div class="dial-line dial-m">
+      <button class="dial-audio" onclick="speakEL('Lyon est moins grande que Paris, mais elle est plus conviviale selon moi.','m')" title="Écouter">🔊</button>
+      <div class="dial-bubble dial-bubble-m" style="background:#f0f0f0">
+        <span class="dial-name" style="color:#555">Lucas</span>
+        <span class="dial-text">Lyon est moins grande que Paris, mais elle est plus conviviale selon moi.</span>
+        <span class="dial-trad">Lyon es menos grande que París, pero es más acogedora según yo.</span>
+      </div>
+      <div class="dial-av dial-av-m">👨</div>
+    </div>
+    <div class="dial-line dial-f">
+      <div class="dial-av dial-av-f">👩</div>
+      <div class="dial-bubble" style="background:var(--l1l)">
+        <span class="dial-name" style="color:var(--l1d)">Charlotte</span>
+        <span class="dial-text">Je suis d'accord. Paris est la plus belle, mais elle est aussi la plus chère.</span>
+        <span class="dial-trad">Estoy de acuerdo. París es la más bella, pero también la más cara.</span>
+      </div>
+      <button class="dial-audio" onclick="speakEL('Je suis d\'accord. Paris est la plus belle, mais elle est aussi la plus chère.','f')" title="Écouter">🔊</button>
+    </div>
+    <div class="dial-line dial-m">
+      <button class="dial-audio" onclick="speakEL('Et la cuisine lyonnaise est meilleure que la cuisine parisienne !','m')" title="Écouter">🔊</button>
+      <div class="dial-bubble dial-bubble-m" style="background:#f0f0f0">
+        <span class="dial-name" style="color:#555">Lucas</span>
+        <span class="dial-text">Et la cuisine lyonnaise est meilleure que la cuisine parisienne !</span>
+        <span class="dial-trad">¡Y la cocina lionesa es mejor que la parisina!</span>
+      </div>
+      <div class="dial-av dial-av-m">👨</div>
+    </div>
+    <div class="dial-line dial-f">
+      <div class="dial-av dial-av-f">👩</div>
+      <div class="dial-bubble" style="background:var(--l1l)">
+        <span class="dial-name" style="color:var(--l1d)">Charlotte</span>
+        <span class="dial-text">Ah, c'est discutable ! Les deux villes ont d'excellents restaurants.</span>
+        <span class="dial-trad">¡Ah, eso es discutible! Las dos ciudades tienen excelentes restaurantes.</span>
+      </div>
+      <button class="dial-audio" onclick="speakEL('Ah, c\'est discutable ! Les deux villes ont d\'excellents restaurants.','f')" title="Écouter">🔊</button>
+    </div>
+        </div>
+
+        <button id="dial3l1_btn" class="dial-play-btn" style="background:var(--l1);" onclick="playDial([['Paris ou Lyon, quelle ville préfères-tu ?', 'f'], ['Lyon est moins grande que Paris, mais elle est plus conviviale selon moi.', 'm'], ['Je suis d\'accord. Paris est la plus belle, mais elle est aussi la plus chère.', 'f'], ['Et la cuisine lyonnaise est meilleure que la cuisine parisienne !', 'm'], ['Ah, c\'est discutable ! Les deux villes ont d\'excellents restaurants.', 'f']], 'dial3l1_btn')">▶ Écouter le dialogue</button>
+
+        <div class="dial-section-label" style="color:var(--l1d);">🧠 Comprensión — responde sin ver el texto</div>
+
+      <div class="qcm-item">
+        <div class="qcm-q">1. ¿Qué ciudad encuentra Lucas más acogedora?</div>
+        <div class="opts"><button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc1',st1)">Lyon</button><button class="opt" data-correct="false" data-correction="Lyon" onclick="checkQCM(this,false,'sc1',st1)">París</button><button class="opt" data-correct="false" data-correction="Lyon" onclick="checkQCM(this,false,'sc1',st1)">Las dos igual</button></div>
+        <div class="fb"></div>
+      </div>
+      <div class="qcm-item">
+        <div class="qcm-q">2. ¿Cuál es la ciudad más cara según Charlotte?</div>
+        <div class="opts"><button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc1',st1)">París</button><button class="opt" data-correct="false" data-correction="París" onclick="checkQCM(this,false,'sc1',st1)">Lyon</button><button class="opt" data-correct="false" data-correction="París" onclick="checkQCM(this,false,'sc1',st1)">Las dos</button></div>
+        <div class="fb"></div>
+      </div>
+      <div class="qcm-item">
+        <div class="qcm-q">3. ¿Qué cocina prefiere Lucas?</div>
+        <div class="opts"><button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc1',st1)">La lionesa</button><button class="opt" data-correct="false" data-correction="La lionesa" onclick="checkQCM(this,false,'sc1',st1)">La parisina</button><button class="opt" data-correct="false" data-correction="La lionesa" onclick="checkQCM(this,false,'sc1',st1)">Las dos</button></div>
+        <div class="fb"></div>
+      </div>
+      </div>
     </div><!-- /lesson 1 -->
 
 
@@ -248,7 +420,7 @@
         <div class="ex-instr">Selecciona la expresión de gusto correcta según la intensidad indicada.</div>
 
         <div class="qcm-item">
-          <div class="qcm-q">1. J'___ la musique classique. (me encanta) <button class="btn-mini" onclick="speak('J\'adore la musique classique.')">🔊</button></div>
+          <div class="qcm-q">1. J'___ la musique classique. (me encanta) <button class="btn-mini" onclick="speakEL('J\'adore la musique classique.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="adore" onclick="checkQCM(this,false,null,st2)">aime bien</button>
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st2)">adore</button>
@@ -258,7 +430,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">2. Je n'___ pas trop les films d'horreur. (no me gustan mucho) <button class="btn-mini" onclick="speak('Je n\'aime pas trop les films d\'horreur.')">🔊</button></div>
+          <div class="qcm-q">2. Je n'___ pas trop les films d'horreur. (no me gustan mucho) <button class="btn-mini" onclick="speakEL('Je n\'aime pas trop les films d\'horreur.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st2)">aime</button>
             <button class="opt" data-correct="false" data-correction="aime" onclick="checkQCM(this,false,null,st2)">adore</button>
@@ -268,7 +440,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">3. Il ___ faire la cuisine. (le gusta) <button class="btn-mini" onclick="speak('Il aime faire la cuisine.')">🔊</button></div>
+          <div class="qcm-q">3. Il ___ faire la cuisine. (le gusta) <button class="btn-mini" onclick="speakEL('Il aime faire la cuisine.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="aime" onclick="checkQCM(this,false,null,st2)">adore</button>
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st2)">aime</button>
@@ -278,7 +450,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">4. Ça ___ ? Tu veux venir au concert ? <button class="btn-mini" onclick="speak('Ça te dit ? Tu veux venir au concert ?')">🔊</button></div>
+          <div class="qcm-q">4. Ça ___ ? Tu veux venir au concert ? <button class="btn-mini" onclick="speakEL('Ça te dit ? Tu veux venir au concert ?','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="te dit" onclick="checkQCM(this,false,null,st2)">te plait</button>
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st2)">te dit</button>
@@ -298,7 +470,7 @@
           <p>3. Nous <input class="fill-input" data-answer="préférons" placeholder="?"> le cinéma au théâtre. <span class="fill-hint"></span></p>
           <p>4. Ils <input class="fill-input" data-answer="aiment / adorent" placeholder="?"> voyager à l'étranger. <span class="fill-hint"></span></p>
         </div>
-        <button class="check-btn" onclick="checkFill('fill2a',null)">Verificar ✓</button>
+        <button class="check-btn" onclick="checkFill('fill2a','sc2')">Verificar ✓</button>
       </div>
 
       <!-- Exercice 3 · Match loisirs -->
@@ -319,7 +491,7 @@
           <p>— Désolée, je ne <input class="fill-input" data-answer="peux" placeholder="?"> pas, j'ai du travail. <span class="fill-hint"></span></p>
           <p>— Dommage ! On y va <input class="fill-input" data-answer="quand même / sans toi" placeholder="?"> alors. <span class="fill-hint"></span></p>
         </div>
-        <button class="check-btn" onclick="checkFill('fill2b',null)">Verificar ✓</button>
+        <button class="check-btn" onclick="checkFill('fill2b','sc2')">Verificar ✓</button>
       </div>
 
       <!-- Exercice 5 · QCM activités -->
@@ -328,7 +500,7 @@
         <div class="ex-instr">Elige la frase gramaticalmente correcta para hablar de ocio.</div>
 
         <div class="qcm-item">
-          <div class="qcm-q">5. Pour parler d'un loisir régulier, on utilise : <button class="btn-mini" onclick="speak('Je fais du sport tous les jours.')">🔊</button></div>
+          <div class="qcm-q">5. Pour parler d'un loisir régulier, on utilise : <button class="btn-mini" onclick="speakEL('Je fais du sport tous les jours.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st2)">Je fais du sport tous les jours.</button>
             <button class="opt" data-correct="false" data-correction="Je fais du sport tous les jours." onclick="checkQCM(this,false,null,st2)">Je suis fait du sport.</button>
@@ -338,7 +510,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">6. Après "j'aime", on met : <button class="btn-mini" onclick="speak('J\'aime jouer de la guitare.')">🔊</button></div>
+          <div class="qcm-q">6. Après "j'aime", on met : <button class="btn-mini" onclick="speakEL('J\'aime jouer de la guitare.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="l'infinitif" onclick="checkQCM(this,false,null,st2)">le participe passé</button>
             <button class="opt" data-correct="false" data-correction="l'infinitif" onclick="checkQCM(this,false,null,st2)">le subjonctif</button>
@@ -351,16 +523,113 @@
       </div>
 
       <div class="score-box" id="sc2"></div>
+
+      <!-- ── Exercice Comprensión oral (dialogue) ── -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l2d);">Comprensión oral — Le week-end parfait</div>
+        <div class="ex-instr">Haz clic en 🔊 para escuchar cada línea del diálogo, luego responde las preguntas <em>sin ver el texto</em>.</div>
+
+        <div class="dial-box">
+
+    <div class="dial-line dial-f">
+      <div class="dial-av dial-av-f">👩</div>
+      <div class="dial-bubble" style="background:var(--l2l)">
+        <span class="dial-name" style="color:var(--l2d)">Charlotte</span>
+        <span class="dial-text">Qu'est-ce que tu aimes faire le week-end ?</span>
+        <span class="dial-trad">¿Qué te gusta hacer el fin de semana?</span>
+      </div>
+      <button class="dial-audio" onclick="speakEL('Qu\'est-ce que tu aimes faire le week-end ?','f')" title="Écouter">🔊</button>
+    </div>
+    <div class="dial-line dial-m">
+      <button class="dial-audio" onclick="speakEL('J\'adore faire du vélo et lire. Et toi ?','m')" title="Écouter">🔊</button>
+      <div class="dial-bubble dial-bubble-m" style="background:#f0f0f0">
+        <span class="dial-name" style="color:#555">Lucas</span>
+        <span class="dial-text">J'adore faire du vélo et lire. Et toi ?</span>
+        <span class="dial-trad">Me encanta montar en bici y leer. ¿Y tú?</span>
+      </div>
+      <div class="dial-av dial-av-m">👨</div>
+    </div>
+    <div class="dial-line dial-f">
+      <div class="dial-av dial-av-f">👩</div>
+      <div class="dial-bubble" style="background:var(--l2l)">
+        <span class="dial-name" style="color:var(--l2d)">Charlotte</span>
+        <span class="dial-text">Moi, j'aime beaucoup cuisiner et regarder des séries. On pourrait faire quelque chose ensemble samedi ?</span>
+        <span class="dial-trad">A mí me encanta cocinar y ver series. ¿Podríamos hacer algo juntos el sábado?</span>
+      </div>
+      <button class="dial-audio" onclick="speakEL('Moi, j\'aime beaucoup cuisiner et regarder des séries. On pourrait faire quelque chose ensemble samedi ?','f')" title="Écouter">🔊</button>
+    </div>
+    <div class="dial-line dial-m">
+      <button class="dial-audio" onclick="speakEL('Avec plaisir ! On pourrait aller au marché le matin et faire une randonnée l\'après-midi.','m')" title="Écouter">🔊</button>
+      <div class="dial-bubble dial-bubble-m" style="background:#f0f0f0">
+        <span class="dial-name" style="color:#555">Lucas</span>
+        <span class="dial-text">Avec plaisir ! On pourrait aller au marché le matin et faire une randonnée l'après-midi.</span>
+        <span class="dial-trad">¡Con mucho gusto! Podríamos ir al mercado por la mañana y hacer senderismo por la tarde.</span>
+      </div>
+      <div class="dial-av dial-av-m">👨</div>
+    </div>
+    <div class="dial-line dial-f">
+      <div class="dial-av dial-av-f">👩</div>
+      <div class="dial-bubble" style="background:var(--l2l)">
+        <span class="dial-name" style="color:var(--l2d)">Charlotte</span>
+        <span class="dial-text">Super idée ! À quelle heure on se retrouve ?</span>
+        <span class="dial-trad">¡Qué buena idea! ¿A qué hora quedamos?</span>
+      </div>
+      <button class="dial-audio" onclick="speakEL('Super idée ! À quelle heure on se retrouve ?','f')" title="Écouter">🔊</button>
+    </div>
+    <div class="dial-line dial-m">
+      <button class="dial-audio" onclick="speakEL('Vers 9h au marché ?','m')" title="Écouter">🔊</button>
+      <div class="dial-bubble dial-bubble-m" style="background:#f0f0f0">
+        <span class="dial-name" style="color:#555">Lucas</span>
+        <span class="dial-text">Vers 9h au marché ?</span>
+        <span class="dial-trad">¿Hacia las 9h en el mercado?</span>
+      </div>
+      <div class="dial-av dial-av-m">👨</div>
+    </div>
+        </div>
+
+        <button id="dial3l2_btn" class="dial-play-btn" style="background:var(--l2);" onclick="playDial([['Qu\'est-ce que tu aimes faire le week-end ?', 'f'], ['J\'adore faire du vélo et lire. Et toi ?', 'm'], ['Moi, j\'aime beaucoup cuisiner et regarder des séries. On pourrait faire quelque chose ensemble samedi ?', 'f'], ['Avec plaisir ! On pourrait aller au marché le matin et faire une randonnée l\'après-midi.', 'm'], ['Super idée ! À quelle heure on se retrouve ?', 'f'], ['Vers 9h au marché ?', 'm']], 'dial3l2_btn')">▶ Écouter le dialogue</button>
+
+        <div class="dial-section-label" style="color:var(--l2d);">🧠 Comprensión — responde sin ver el texto</div>
+
+      <div class="qcm-item">
+        <div class="qcm-q">1. ¿Qué le gusta hacer a Lucas?</div>
+        <div class="opts"><button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc2',st2)">Montar en bici y leer</button><button class="opt" data-correct="false" data-correction="Montar en bici y leer" onclick="checkQCM(this,false,'sc2',st2)">Cocinar</button><button class="opt" data-correct="false" data-correction="Montar en bici y leer" onclick="checkQCM(this,false,'sc2',st2)">Ver series</button></div>
+        <div class="fb"></div>
+      </div>
+      <div class="qcm-item">
+        <div class="qcm-q">2. ¿Qué proponen hacer el sábado por la mañana?</div>
+        <div class="opts"><button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc2',st2)">Ir al mercado</button><button class="opt" data-correct="false" data-correction="Ir al mercado" onclick="checkQCM(this,false,'sc2',st2)">Montar en bici</button><button class="opt" data-correct="false" data-correction="Ir al mercado" onclick="checkQCM(this,false,'sc2',st2)">Cocinar</button></div>
+        <div class="fb"></div>
+      </div>
+      <div class="qcm-item">
+        <div class="qcm-q">3. ¿A qué hora quedan?</div>
+        <div class="opts"><button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc2',st2)">Hacia las 9h</button><button class="opt" data-correct="false" data-correction="Hacia las 9h" onclick="checkQCM(this,false,'sc2',st2)">A las 10h</button><button class="opt" data-correct="false" data-correction="Hacia las 9h" onclick="checkQCM(this,false,'sc2',st2)">A las 8h</button></div>
+        <div class="fb"></div>
+      </div>
+      </div>
     </div><!-- /lesson 2 -->
 
   </main>
 </div><!-- /.app -->
 
 <script>
+
+/* ── Lecture séquentielle du dialogue ── */
+async function playDial(lines, btnId) {
+  const btn = document.getElementById(btnId);
+  if (btn) { btn.disabled = true; btn.textContent = '⏸ En cours…'; }
+  for (const [text, gender] of lines) {
+    const audio = await speakEL(text, gender);
+    if (audio) await new Promise(r => { audio.onended = r; setTimeout(r, 8000); });
+    await new Promise(r => setTimeout(r, 350));
+  }
+  if (btn) { btn.disabled = false; btn.textContent = '▶ Écouter le dialogue'; }
+}
+
 /* ── États QCM par section ── */
-const st0 = { score: 0, total: 6 };  // 4 + 2 QCM
-const st1 = { score: 0, total: 6 };  // 4 + 2 QCM
-const st2 = { score: 0, total: 6 };  // 4 + 2 QCM
+const st0 = { score: 0, total: 9 };  // 4 + 2 QCM
+const st1 = { score: 0, total: 9 };  // 4 + 2 QCM
+const st2 = { score: 0, total: 9 };  // 4 + 2 QCM
 
 window.addEventListener('DOMContentLoaded', function () {
   buildELModal();

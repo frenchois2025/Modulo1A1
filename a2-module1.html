@@ -6,7 +6,29 @@
   <title>Français A2 · Module 1 · Le Récit et les Pronoms</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="auth.js"></script>
   <script src="moteur.js"></script>
+
+<style>
+.dial-box{display:flex;flex-direction:column;gap:10px;margin:14px 0 18px}
+.dial-line{display:flex;align-items:flex-start;gap:10px}
+.dial-m{flex-direction:row-reverse}
+.dial-av{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;margin-top:2px}
+.dial-av-f{background:var(--l0);color:#fff}
+.dial-av-m{background:#555;color:#fff}
+.dial-bubble{border-radius:14px;padding:10px 14px;max-width:76%;display:flex;flex-direction:column;gap:3px}
+.dial-bubble-f{background:var(--bubble-f,#eef2ff)}
+.dial-bubble-m{background:#f0f0f0}
+.dial-name{font-size:11px;font-weight:800;color:var(--bubble-fd,#4338ca);margin-bottom:2px}
+.dial-name-m{color:#555}
+.dial-text{font-size:14px;line-height:1.5}
+.dial-trad{font-size:12px;color:var(--muted);font-style:italic;margin-top:2px}
+.dial-audio{border:none;background:transparent;cursor:pointer;font-size:16px;padding:2px 4px;border-radius:6px;flex-shrink:0;margin-top:4px;align-self:center}
+.dial-audio:hover{background:rgba(0,0,0,.06)}
+.dial-play-btn{display:flex;align-items:center;gap:8px;border:none;border-radius:12px;padding:10px 20px;font-size:14px;font-weight:800;cursor:pointer;font-family:"Nunito",sans-serif;color:white;margin-bottom:4px}
+.dial-section-label{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1px;margin:14px 0 8px}
+</style>
 </head>
 <body>
 <div class="app">
@@ -16,19 +38,19 @@
     <div class="sidebar-logo">Module 1 · <span style="color:var(--a2);">A2</span></div>
 
     <button class="nav-btn active" data-lesson="0" onclick="showLesson(0,this)">
-      <span class="nav-icon">🗓️</span>Raconter une journée<span class="nav-badge">4 ex.</span>
+      <span class="nav-icon">🗓️</span>Raconter une journée<span class="nav-badge">5 ex.</span>
     </button>
     <button class="nav-btn" data-lesson="1" onclick="showLesson(1,this)">
-      <span class="nav-icon">⚖️</span>Obligations &amp; interdictions<span class="nav-badge">4 ex.</span>
+      <span class="nav-icon">⚖️</span>Obligations &amp; interdictions<span class="nav-badge">5 ex.</span>
     </button>
     <button class="nav-btn" data-lesson="2" onclick="showLesson(2,this)">
-      <span class="nav-icon">🚫</span>La négation amplifiée<span class="nav-badge">4 ex.</span>
+      <span class="nav-icon">🚫</span>La négation amplifiée<span class="nav-badge">5 ex.</span>
     </button>
     <button class="nav-btn" data-lesson="3" onclick="showLesson(3,this)">
-      <span class="nav-icon">💪</span>Les pronoms toniques<span class="nav-badge">4 ex.</span>
+      <span class="nav-icon">💪</span>Les pronoms toniques<span class="nav-badge">5 ex.</span>
     </button>
     <button class="nav-btn" data-lesson="4" onclick="showLesson(4,this)">
-      <span class="nav-icon">👑</span>Les pronoms possessifs<span class="nav-badge">4 ex.</span>
+      <span class="nav-icon">👑</span>Les pronoms possessifs<span class="nav-badge">5 ex.</span>
     </button>
   </aside>
 
@@ -46,7 +68,7 @@
         <div class="ex-instr">Selecciona <em>avoir</em> o <em>être</em> para formar el passé composé.</div>
 
         <div class="qcm-item">
-          <div class="qcm-q">1. Hier, j'___ mangé une pizza. <button class="btn-mini" onclick="speak('Hier, j\'ai mangé une pizza.')">🔊</button></div>
+          <div class="qcm-q">1. Hier, j'___ mangé une pizza. <button class="btn-mini" onclick="speakEL('Hier, j\'ai mangé une pizza.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">ai</button>
             <button class="opt" data-correct="false" data-correction="ai" onclick="checkQCM(this,false,null,st0)">suis</button>
@@ -56,7 +78,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">2. Elle ___ arrivée à 8h. <button class="btn-mini" onclick="speak('Elle est arrivée à huit heures.')">🔊</button></div>
+          <div class="qcm-q">2. Elle ___ arrivée à 8h. <button class="btn-mini" onclick="speakEL('Elle est arrivée à huit heures.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="est" onclick="checkQCM(this,false,null,st0)">a</button>
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">est</button>
@@ -66,7 +88,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">3. Nous ___ fini le travail. <button class="btn-mini" onclick="speak('Nous avons fini le travail.')">🔊</button></div>
+          <div class="qcm-q">3. Nous ___ fini le travail. <button class="btn-mini" onclick="speakEL('Nous avons fini le travail.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="avons" onclick="checkQCM(this,false,null,st0)">sommes</button>
             <button class="opt" data-correct="false" data-correction="avons" onclick="checkQCM(this,false,null,st0)">êtes</button>
@@ -76,7 +98,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">4. Ils ___ partis tôt. <button class="btn-mini" onclick="speak('Ils sont partis tôt.')">🔊</button></div>
+          <div class="qcm-q">4. Ils ___ partis tôt. <button class="btn-mini" onclick="speakEL('Ils sont partis tôt.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="sont" onclick="checkQCM(this,false,null,st0)">ont</button>
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">sont</button>
@@ -96,7 +118,7 @@
           <p>3. Nous avons <input class="fill-input" data-answer="choisi" placeholder="choisir"> un restaurant. <span class="fill-hint"></span></p>
           <p>4. Ils ont <input class="fill-input" data-answer="fait" placeholder="faire"> la vaisselle. <span class="fill-hint"></span></p>
         </div>
-        <button class="check-btn" onclick="checkFill('fill0a',null)">Verificar ✓</button>
+        <button class="check-btn" onclick="checkFill('fill0a','sc0')">Verificar ✓</button>
       </div>
 
       <!-- Exercice 3 · Association infinitif / participe passé -->
@@ -112,7 +134,7 @@
         <div class="ex-instr">Elige el conector correcto para ordenar el relato.</div>
 
         <div class="qcm-item">
-          <div class="qcm-q">5. ___ j'ai pris mon café, puis je suis sorti. <button class="btn-mini" onclick="speak('D\'abord j\'ai pris mon café, puis je suis sorti.')">🔊</button></div>
+          <div class="qcm-q">5. ___ j'ai pris mon café, puis je suis sorti. <button class="btn-mini" onclick="speakEL('D\'abord j\'ai pris mon café, puis je suis sorti.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="D'abord" onclick="checkQCM(this,false,null,st0)">Enfin</button>
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">D'abord</button>
@@ -122,7 +144,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">6. J'ai travaillé toute la journée, ___ j'ai dîné. <button class="btn-mini" onclick="speak('J\'ai travaillé toute la journée, ensuite j\'ai dîné.')">🔊</button></div>
+          <div class="qcm-q">6. J'ai travaillé toute la journée, ___ j'ai dîné. <button class="btn-mini" onclick="speakEL('J\'ai travaillé toute la journée, ensuite j\'ai dîné.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">ensuite</button>
             <button class="opt" data-correct="false" data-correction="ensuite" onclick="checkQCM(this,false,null,st0)">d'abord</button>
@@ -132,7 +154,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">7. J'ai lu un livre, ___ je me suis couché. <button class="btn-mini" onclick="speak('J\'ai lu un livre, enfin je me suis couché.')">🔊</button></div>
+          <div class="qcm-q">7. J'ai lu un livre, ___ je me suis couché. <button class="btn-mini" onclick="speakEL('J\'ai lu un livre, enfin je me suis couché.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="enfin" onclick="checkQCM(this,false,null,st0)">puis</button>
             <button class="opt" data-correct="false" data-correction="enfin" onclick="checkQCM(this,false,null,st0)">d'abord</button>
@@ -145,6 +167,81 @@
       </div>
 
       <div class="score-box" id="sc0"></div>
+
+      <!-- ── Exercice Comprensión oral (dialogue) ── -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l0d);">Comprensión oral — Une journée bien remplie</div>
+        <div class="ex-instr">Haz clic en 🔊 para escuchar cada línea del diálogo, luego responde las preguntas <em>sin ver el texto</em>.</div>
+
+        <div class="dial-box">
+
+    <div class="dial-line dial-f">
+      <div class="dial-av dial-av-f">👩</div>
+      <div class="dial-bubble" style="background:var(--l0l)">
+        <span class="dial-name" style="color:var(--l0d)">Charlotte</span>
+        <span class="dial-text">Tu as passé une bonne journée hier ?</span>
+        <span class="dial-trad">¿Tuviste un buen día ayer?</span>
+      </div>
+      <button class="dial-audio" onclick="speakEL('Tu as passé une bonne journée hier ?','f')" title="Écouter">🔊</button>
+    </div>
+    <div class="dial-line dial-m">
+      <button class="dial-audio" onclick="speakEL('Je me suis levé tôt, j\'ai travaillé le matin et j\'ai déjeuné avec ma sœur.','m')" title="Écouter">🔊</button>
+      <div class="dial-bubble dial-bubble-m" style="background:#f0f0f0">
+        <span class="dial-name" style="color:#555">Lucas</span>
+        <span class="dial-text">Je me suis levé tôt, j'ai travaillé le matin et j'ai déjeuné avec ma sœur.</span>
+        <span class="dial-trad">Me levanté temprano, trabajé por la mañana y almorcé con mi hermana.</span>
+      </div>
+      <div class="dial-av dial-av-m">👨</div>
+    </div>
+    <div class="dial-line dial-f">
+      <div class="dial-av dial-av-f">👩</div>
+      <div class="dial-bubble" style="background:var(--l0l)">
+        <span class="dial-name" style="color:var(--l0d)">Charlotte</span>
+        <span class="dial-text">Super ! Et l'après-midi ?</span>
+        <span class="dial-trad">¿Y por la tarde?</span>
+      </div>
+      <button class="dial-audio" onclick="speakEL('Super ! Et l\'après-midi ?','f')" title="Écouter">🔊</button>
+    </div>
+    <div class="dial-line dial-m">
+      <button class="dial-audio" onclick="speakEL('Je suis allé à la salle de sport, puis je suis rentré chez moi.','m')" title="Écouter">🔊</button>
+      <div class="dial-bubble dial-bubble-m" style="background:#f0f0f0">
+        <span class="dial-name" style="color:#555">Lucas</span>
+        <span class="dial-text">Je suis allé à la salle de sport, puis je suis rentré chez moi.</span>
+        <span class="dial-trad">Fui al gimnasio y luego volví a casa.</span>
+      </div>
+      <div class="dial-av dial-av-m">👨</div>
+    </div>
+    <div class="dial-line dial-f">
+      <div class="dial-av dial-av-f">👩</div>
+      <div class="dial-bubble" style="background:var(--l0l)">
+        <span class="dial-name" style="color:var(--l0d)">Charlotte</span>
+        <span class="dial-text">Et moi, j'ai regardé un film et j'ai cuisiné une quiche !</span>
+        <span class="dial-trad">¡Y yo vi una película y cociné una quiche!</span>
+      </div>
+      <button class="dial-audio" onclick="speakEL('Et moi, j\'ai regardé un film et j\'ai cuisiné une quiche !','f')" title="Écouter">🔊</button>
+    </div>
+        </div>
+
+        <button id="dial1l0_btn" class="dial-play-btn" style="background:var(--l0);" onclick="playDial([['Tu as passé une bonne journée hier ?', 'f'], ['Je me suis levé tôt, j\'ai travaillé le matin et j\'ai déjeuné avec ma sœur.', 'm'], ['Super ! Et l\'après-midi ?', 'f'], ['Je suis allé à la salle de sport, puis je suis rentré chez moi.', 'm'], ['Et moi, j\'ai regardé un film et j\'ai cuisiné une quiche !', 'f']], 'dial1l0_btn')">▶ Écouter le dialogue</button>
+
+        <div class="dial-section-label" style="color:var(--l0d);">🧠 Comprensión — responde sin ver el texto</div>
+
+      <div class="qcm-item">
+        <div class="qcm-q">1. ¿Con quién almorzó Lucas?</div>
+        <div class="opts"><button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc0',st0)">Con su hermana</button><button class="opt" data-correct="false" data-correction="Con su hermana" onclick="checkQCM(this,false,'sc0',st0)">Con su madre</button><button class="opt" data-correct="false" data-correction="Con su hermana" onclick="checkQCM(this,false,'sc0',st0)">Con sus amigos</button></div>
+        <div class="fb"></div>
+      </div>
+      <div class="qcm-item">
+        <div class="qcm-q">2. ¿Adónde fue Lucas por la tarde?</div>
+        <div class="opts"><button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc0',st0)">Al gimnasio</button><button class="opt" data-correct="false" data-correction="Al gimnasio" onclick="checkQCM(this,false,'sc0',st0)">Al cine</button><button class="opt" data-correct="false" data-correction="Al gimnasio" onclick="checkQCM(this,false,'sc0',st0)">Al parque</button></div>
+        <div class="fb"></div>
+      </div>
+      <div class="qcm-item">
+        <div class="qcm-q">3. ¿Qué hizo Charlotte?</div>
+        <div class="opts"><button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc0',st0)">Vio una película y cocinó</button><button class="opt" data-correct="false" data-correction="Vio una película y cocinó" onclick="checkQCM(this,false,'sc0',st0)">Salió a correr</button><button class="opt" data-correct="false" data-correction="Vio una película y cocinó" onclick="checkQCM(this,false,'sc0',st0)">Trabajó</button></div>
+        <div class="fb"></div>
+      </div>
+      </div>
     </div><!-- /lesson 0 -->
 
 
@@ -160,7 +257,7 @@
         <div class="ex-instr">Selecciona la expresión de obligación correcta.</div>
 
         <div class="qcm-item">
-          <div class="qcm-q">1. Pour entrer, ___ montrer un passeport. <button class="btn-mini" onclick="speak('Pour entrer, il faut montrer un passeport.')">🔊</button></div>
+          <div class="qcm-q">1. Pour entrer, ___ montrer un passeport. <button class="btn-mini" onclick="speakEL('Pour entrer, il faut montrer un passeport.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st1)">il faut</button>
             <button class="opt" data-correct="false" data-correction="il faut" onclick="checkQCM(this,false,null,st1)">je dois</button>
@@ -170,7 +267,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">2. Tu ___ travailler plus sérieusement. <button class="btn-mini" onclick="speak('Tu dois travailler plus sérieusement.')">🔊</button></div>
+          <div class="qcm-q">2. Tu ___ travailler plus sérieusement. <button class="btn-mini" onclick="speakEL('Tu dois travailler plus sérieusement.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="dois" onclick="checkQCM(this,false,null,st1)">faut</button>
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st1)">dois</button>
@@ -180,7 +277,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">3. Il est ___ de fumer ici. <button class="btn-mini" onclick="speak('Il est interdit de fumer ici.')">🔊</button></div>
+          <div class="qcm-q">3. Il est ___ de fumer ici. <button class="btn-mini" onclick="speakEL('Il est interdit de fumer ici.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="interdit" onclick="checkQCM(this,false,null,st1)">obligatoire</button>
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st1)">interdit</button>
@@ -190,7 +287,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">4. Nous ___ partir avant midi. <button class="btn-mini" onclick="speak('Nous devons partir avant midi.')">🔊</button></div>
+          <div class="qcm-q">4. Nous ___ partir avant midi. <button class="btn-mini" onclick="speakEL('Nous devons partir avant midi.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st1)">devons</button>
             <button class="opt" data-correct="false" data-correction="devons" onclick="checkQCM(this,false,null,st1)">faut</button>
@@ -210,7 +307,7 @@
           <p>3. Vous <input class="fill-input" data-answer="devez" placeholder="devoir"> arriver à l'heure. <span class="fill-hint"></span></p>
           <p>4. Elles <input class="fill-input" data-answer="doivent" placeholder="devoir"> prendre le train. <span class="fill-hint"></span></p>
         </div>
-        <button class="check-btn" onclick="checkFill('fill1a',null)">Verificar ✓</button>
+        <button class="check-btn" onclick="checkFill('fill1a','sc1')">Verificar ✓</button>
       </div>
 
       <!-- Exercice 3 · Match -->
@@ -229,10 +326,85 @@
           <p>2. Pour conduire en France, il faut <input class="fill-input" data-answer="avoir" placeholder="avoir…"> un permis. <span class="fill-hint"></span></p>
           <p>3. Il ne faut pas <input class="fill-input" data-answer="courir" placeholder="courir / marcher…"> dans les couloirs. <span class="fill-hint"></span></p>
         </div>
-        <button class="check-btn" onclick="checkFill('fill1b',null); showScore(document.getElementById('sc1'), st1.score, st1.total)">Ver resultado 📊</button>
+        <button class="check-btn" onclick="checkFill('fill1b','sc1'); showScore(document.getElementById('sc1'), st1.score, st1.total)">Ver resultado 📊</button>
       </div>
 
       <div class="score-box" id="sc1"></div>
+
+      <!-- ── Exercice Comprensión oral (dialogue) ── -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l1d);">Comprensión oral — Obligations au travail</div>
+        <div class="ex-instr">Haz clic en 🔊 para escuchar cada línea del diálogo, luego responde las preguntas <em>sin ver el texto</em>.</div>
+
+        <div class="dial-box">
+
+    <div class="dial-line dial-f">
+      <div class="dial-av dial-av-f">👩</div>
+      <div class="dial-bubble" style="background:var(--l1l)">
+        <span class="dial-name" style="color:var(--l1d)">Charlotte</span>
+        <span class="dial-text">Tu dois finir ton rapport pour quand ?</span>
+        <span class="dial-trad">¿Cuándo tienes que entregar tu informe?</span>
+      </div>
+      <button class="dial-audio" onclick="speakEL('Tu dois finir ton rapport pour quand ?','f')" title="Écouter">🔊</button>
+    </div>
+    <div class="dial-line dial-m">
+      <button class="dial-audio" onclick="speakEL('Il faut que je le rende demain matin. Je dois travailler ce soir.','m')" title="Écouter">🔊</button>
+      <div class="dial-bubble dial-bubble-m" style="background:#f0f0f0">
+        <span class="dial-name" style="color:#555">Lucas</span>
+        <span class="dial-text">Il faut que je le rende demain matin. Je dois travailler ce soir.</span>
+        <span class="dial-trad">Tengo que entregarlo mañana. Debo trabajar esta noche.</span>
+      </div>
+      <div class="dial-av dial-av-m">👨</div>
+    </div>
+    <div class="dial-line dial-f">
+      <div class="dial-av dial-av-f">👩</div>
+      <div class="dial-bubble" style="background:var(--l1l)">
+        <span class="dial-name" style="color:var(--l1d)">Charlotte</span>
+        <span class="dial-text">Tu ne peux pas sortir alors ?</span>
+        <span class="dial-trad">¿No puedes salir entonces?</span>
+      </div>
+      <button class="dial-audio" onclick="speakEL('Tu ne peux pas sortir alors ?','f')" title="Écouter">🔊</button>
+    </div>
+    <div class="dial-line dial-m">
+      <button class="dial-audio" onclick="speakEL('Non, il m\'est interdit de partir avant d\'avoir terminé.','m')" title="Écouter">🔊</button>
+      <div class="dial-bubble dial-bubble-m" style="background:#f0f0f0">
+        <span class="dial-name" style="color:#555">Lucas</span>
+        <span class="dial-text">Non, il m'est interdit de partir avant d'avoir terminé.</span>
+        <span class="dial-trad">No, no me está permitido irme antes de terminar.</span>
+      </div>
+      <div class="dial-av dial-av-m">👨</div>
+    </div>
+    <div class="dial-line dial-f">
+      <div class="dial-av dial-av-f">👩</div>
+      <div class="dial-bubble" style="background:var(--l1l)">
+        <span class="dial-name" style="color:var(--l1d)">Charlotte</span>
+        <span class="dial-text">Courage ! Il faut parfois sacrifier sa soirée.</span>
+        <span class="dial-trad">¡Ánimo! A veces hay que sacrificar la noche.</span>
+      </div>
+      <button class="dial-audio" onclick="speakEL('Courage ! Il faut parfois sacrifier sa soirée.','f')" title="Écouter">🔊</button>
+    </div>
+        </div>
+
+        <button id="dial1l1_btn" class="dial-play-btn" style="background:var(--l1);" onclick="playDial([['Tu dois finir ton rapport pour quand ?', 'f'], ['Il faut que je le rende demain matin. Je dois travailler ce soir.', 'm'], ['Tu ne peux pas sortir alors ?', 'f'], ['Non, il m\'est interdit de partir avant d\'avoir terminé.', 'm'], ['Courage ! Il faut parfois sacrifier sa soirée.', 'f']], 'dial1l1_btn')">▶ Écouter le dialogue</button>
+
+        <div class="dial-section-label" style="color:var(--l1d);">🧠 Comprensión — responde sin ver el texto</div>
+
+      <div class="qcm-item">
+        <div class="qcm-q">1. ¿Cuándo debe entregar Lucas su informe?</div>
+        <div class="opts"><button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc1',st1)">Mañana por la mañana</button><button class="opt" data-correct="false" data-correction="Mañana por la mañana" onclick="checkQCM(this,false,'sc1',st1)">Esta noche</button><button class="opt" data-correct="false" data-correction="Mañana por la mañana" onclick="checkQCM(this,false,'sc1',st1)">La semana que viene</button></div>
+        <div class="fb"></div>
+      </div>
+      <div class="qcm-item">
+        <div class="qcm-q">2. ¿Puede Lucas salir esta noche?</div>
+        <div class="opts"><button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc1',st1)">No</button><button class="opt" data-correct="false" data-correction="No" onclick="checkQCM(this,false,'sc1',st1)">Sí</button><button class="opt" data-correct="false" data-correction="No" onclick="checkQCM(this,false,'sc1',st1)">Tal vez</button></div>
+        <div class="fb"></div>
+      </div>
+      <div class="qcm-item">
+        <div class="qcm-q">3. ¿Qué debe hacer Lucas esta noche?</div>
+        <div class="opts"><button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc1',st1)">Trabajar</button><button class="opt" data-correct="false" data-correction="Trabajar" onclick="checkQCM(this,false,'sc1',st1)">Cocinar</button><button class="opt" data-correct="false" data-correction="Trabajar" onclick="checkQCM(this,false,'sc1',st1)">Descansar</button></div>
+        <div class="fb"></div>
+      </div>
+      </div>
     </div><!-- /lesson 1 -->
 
 
@@ -248,7 +420,7 @@
         <div class="ex-instr">Selecciona <em>ne…jamais</em>, <em>ne…rien</em>, <em>ne…personne</em> o <em>ne…plus</em>.</div>
 
         <div class="qcm-item">
-          <div class="qcm-q">1. Je ne mange ___ le matin. (nunca) <button class="btn-mini" onclick="speak('Je ne mange jamais le matin.')">🔊</button></div>
+          <div class="qcm-q">1. Je ne mange ___ le matin. (nunca) <button class="btn-mini" onclick="speakEL('Je ne mange jamais le matin.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st2)">jamais</button>
             <button class="opt" data-correct="false" data-correction="jamais" onclick="checkQCM(this,false,null,st2)">rien</button>
@@ -258,7 +430,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">2. Il n'a vu ___ dans la rue. (nadie) <button class="btn-mini" onclick="speak('Il n\'a vu personne dans la rue.')">🔊</button></div>
+          <div class="qcm-q">2. Il n'a vu ___ dans la rue. (nadie) <button class="btn-mini" onclick="speakEL('Il n\'a vu personne dans la rue.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="personne" onclick="checkQCM(this,false,null,st2)">rien</button>
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st2)">personne</button>
@@ -268,7 +440,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">3. Elle n'habite ___ à Paris. (ya no) <button class="btn-mini" onclick="speak('Elle n\'habite plus à Paris.')">🔊</button></div>
+          <div class="qcm-q">3. Elle n'habite ___ à Paris. (ya no) <button class="btn-mini" onclick="speakEL('Elle n\'habite plus à Paris.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="plus" onclick="checkQCM(this,false,null,st2)">jamais</button>
             <button class="opt" data-correct="false" data-correction="plus" onclick="checkQCM(this,false,null,st2)">rien</button>
@@ -278,7 +450,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">4. Je n'ai ___ compris. (nada) <button class="btn-mini" onclick="speak('Je n\'ai rien compris.')">🔊</button></div>
+          <div class="qcm-q">4. Je n'ai ___ compris. (nada) <button class="btn-mini" onclick="speakEL('Je n\'ai rien compris.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="rien" onclick="checkQCM(this,false,null,st2)">jamais</button>
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st2)">rien</button>
@@ -298,7 +470,7 @@
           <p>3. Je ne connais <input class="fill-input" data-answer="personne" placeholder="?"> ici. <span class="fill-hint"></span></p>
           <p>4. Elle ne fait <input class="fill-input" data-answer="plus" placeholder="?"> de sport. <span class="fill-hint"></span></p>
         </div>
-        <button class="check-btn" onclick="checkFill('fill2a',null)">Verificar ✓</button>
+        <button class="check-btn" onclick="checkFill('fill2a','sc2')">Verificar ✓</button>
       </div>
 
       <!-- Exercice 3 · Match affirmation / négation -->
@@ -314,7 +486,7 @@
         <div class="ex-instr">Selecciona la frase negativa correcta.</div>
 
         <div class="qcm-item">
-          <div class="qcm-q">5. La forme correcte de "toujours" en négatif : <button class="btn-mini" onclick="speak('Il ne fait jamais ça.')">🔊</button></div>
+          <div class="qcm-q">5. La forme correcte de "toujours" en négatif : <button class="btn-mini" onclick="speakEL('Il ne fait jamais ça.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="ne...jamais" onclick="checkQCM(this,false,null,st2)">ne…rien</button>
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st2)">ne…jamais</button>
@@ -324,7 +496,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">6. "Quelqu'un" en négatif devient : <button class="btn-mini" onclick="speak('Je ne vois personne.')">🔊</button></div>
+          <div class="qcm-q">6. "Quelqu'un" en négatif devient : <button class="btn-mini" onclick="speakEL('Je ne vois personne.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="ne...personne" onclick="checkQCM(this,false,null,st2)">ne…rien</button>
             <button class="opt" data-correct="false" data-correction="ne...personne" onclick="checkQCM(this,false,null,st2)">ne…jamais</button>
@@ -337,6 +509,81 @@
       </div>
 
       <div class="score-box" id="sc2"></div>
+
+      <!-- ── Exercice Comprensión oral (dialogue) ── -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l2d);">Comprensión oral — Soirée télé</div>
+        <div class="ex-instr">Haz clic en 🔊 para escuchar cada línea del diálogo, luego responde las preguntas <em>sin ver el texto</em>.</div>
+
+        <div class="dial-box">
+
+    <div class="dial-line dial-f">
+      <div class="dial-av dial-av-f">👩</div>
+      <div class="dial-bubble" style="background:var(--l2l)">
+        <span class="dial-name" style="color:var(--l2d)">Charlotte</span>
+        <span class="dial-text">Tu as vu quelque chose d'intéressant à la télé ?</span>
+        <span class="dial-trad">¿Viste algo interesante en la tele?</span>
+      </div>
+      <button class="dial-audio" onclick="speakEL('Tu as vu quelque chose d\'intéressant à la télé ?','f')" title="Écouter">🔊</button>
+    </div>
+    <div class="dial-line dial-m">
+      <button class="dial-audio" onclick="speakEL('Non, je n\'ai rien vu d\'intéressant. Il n\'y avait personne de célèbre non plus.','m')" title="Écouter">🔊</button>
+      <div class="dial-bubble dial-bubble-m" style="background:#f0f0f0">
+        <span class="dial-name" style="color:#555">Lucas</span>
+        <span class="dial-text">Non, je n'ai rien vu d'intéressant. Il n'y avait personne de célèbre non plus.</span>
+        <span class="dial-trad">No, no vi nada interesante. Tampoco había nadie famoso.</span>
+      </div>
+      <div class="dial-av dial-av-m">👨</div>
+    </div>
+    <div class="dial-line dial-f">
+      <div class="dial-av dial-av-f">👩</div>
+      <div class="dial-bubble" style="background:var(--l2l)">
+        <span class="dial-name" style="color:var(--l2d)">Charlotte</span>
+        <span class="dial-text">Tu regardes encore les émissions de cuisine ?</span>
+        <span class="dial-trad">¿Todavía ves programas de cocina?</span>
+      </div>
+      <button class="dial-audio" onclick="speakEL('Tu regardes encore les émissions de cuisine ?','f')" title="Écouter">🔊</button>
+    </div>
+    <div class="dial-line dial-m">
+      <button class="dial-audio" onclick="speakEL('Non, je ne regarde plus ça. Je n\'ai jamais aimé la télé-réalité non plus.','m')" title="Écouter">🔊</button>
+      <div class="dial-bubble dial-bubble-m" style="background:#f0f0f0">
+        <span class="dial-name" style="color:#555">Lucas</span>
+        <span class="dial-text">Non, je ne regarde plus ça. Je n'ai jamais aimé la télé-réalité non plus.</span>
+        <span class="dial-trad">No, ya no veo eso. Tampoco me ha gustado nunca el reality.</span>
+      </div>
+      <div class="dial-av dial-av-m">👨</div>
+    </div>
+    <div class="dial-line dial-f">
+      <div class="dial-av dial-av-f">👩</div>
+      <div class="dial-bubble" style="background:var(--l2l)">
+        <span class="dial-name" style="color:var(--l2d)">Charlotte</span>
+        <span class="dial-text">Moi non plus. Je ne regarde presque plus la télé.</span>
+        <span class="dial-trad">Yo tampoco. Casi ya no veo la tele.</span>
+      </div>
+      <button class="dial-audio" onclick="speakEL('Moi non plus. Je ne regarde presque plus la télé.','f')" title="Écouter">🔊</button>
+    </div>
+        </div>
+
+        <button id="dial1l2_btn" class="dial-play-btn" style="background:var(--l2);" onclick="playDial([['Tu as vu quelque chose d\'intéressant à la télé ?', 'f'], ['Non, je n\'ai rien vu d\'intéressant. Il n\'y avait personne de célèbre non plus.', 'm'], ['Tu regardes encore les émissions de cuisine ?', 'f'], ['Non, je ne regarde plus ça. Je n\'ai jamais aimé la télé-réalité non plus.', 'm'], ['Moi non plus. Je ne regarde presque plus la télé.', 'f']], 'dial1l2_btn')">▶ Écouter le dialogue</button>
+
+        <div class="dial-section-label" style="color:var(--l2d);">🧠 Comprensión — responde sin ver el texto</div>
+
+      <div class="qcm-item">
+        <div class="qcm-q">1. ¿Vio Lucas algo interesante?</div>
+        <div class="opts"><button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc2',st2)">No, nada</button><button class="opt" data-correct="false" data-correction="No, nada" onclick="checkQCM(this,false,'sc2',st2)">Sí, una película</button><button class="opt" data-correct="false" data-correction="No, nada" onclick="checkQCM(this,false,'sc2',st2)">Sí, un programa</button></div>
+        <div class="fb"></div>
+      </div>
+      <div class="qcm-item">
+        <div class="qcm-q">2. ¿Ve Lucas todavía programas de cocina?</div>
+        <div class="opts"><button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc2',st2)">No, ya no</button><button class="opt" data-correct="false" data-correction="No, ya no" onclick="checkQCM(this,false,'sc2',st2)">Sí, siempre</button><button class="opt" data-correct="false" data-correction="No, ya no" onclick="checkQCM(this,false,'sc2',st2)">A veces</button></div>
+        <div class="fb"></div>
+      </div>
+      <div class="qcm-item">
+        <div class="qcm-q">3. ¿Cuánto ve Charlotte la tele?</div>
+        <div class="opts"><button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc2',st2)">Casi nada</button><button class="opt" data-correct="false" data-correction="Casi nada" onclick="checkQCM(this,false,'sc2',st2)">Mucho</button><button class="opt" data-correct="false" data-correction="Casi nada" onclick="checkQCM(this,false,'sc2',st2)">Todos los días</button></div>
+        <div class="fb"></div>
+      </div>
+      </div>
     </div><!-- /lesson 2 -->
 
 
@@ -352,7 +599,7 @@
         <div class="ex-instr">Selecciona el pronombre tónico correcto (moi, toi, lui, elle, nous, vous, eux, elles).</div>
 
         <div class="qcm-item">
-          <div class="qcm-q">1. C'est ___, Marie ! (sujet elle) <button class="btn-mini" onclick="speak('C\'est elle, Marie !')">🔊</button></div>
+          <div class="qcm-q">1. C'est ___, Marie ! (sujet elle) <button class="btn-mini" onclick="speakEL('C\'est elle, Marie !','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="elle" onclick="checkQCM(this,false,null,st3)">lui</button>
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st3)">elle</button>
@@ -362,7 +609,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">2. Je travaille avec ___. (tu) <button class="btn-mini" onclick="speak('Je travaille avec toi.')">🔊</button></div>
+          <div class="qcm-q">2. Je travaille avec ___. (tu) <button class="btn-mini" onclick="speakEL('Je travaille avec toi.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="toi" onclick="checkQCM(this,false,null,st3)">vous</button>
             <button class="opt" data-correct="false" data-correction="toi" onclick="checkQCM(this,false,null,st3)">moi</button>
@@ -372,7 +619,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">3. ___, nous adorons le cinéma ! (nous emphatique) <button class="btn-mini" onclick="speak('Nous, nous adorons le cinéma !')">🔊</button></div>
+          <div class="qcm-q">3. ___, nous adorons le cinéma ! (nous emphatique) <button class="btn-mini" onclick="speakEL('Nous, nous adorons le cinéma !','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st3)">Nous</button>
             <button class="opt" data-correct="false" data-correction="Nous" onclick="checkQCM(this,false,null,st3)">Eux</button>
@@ -382,7 +629,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">4. Ce livre est à ___. (il) <button class="btn-mini" onclick="speak('Ce livre est à lui.')">🔊</button></div>
+          <div class="qcm-q">4. Ce livre est à ___. (il) <button class="btn-mini" onclick="speakEL('Ce livre est à lui.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="lui" onclick="checkQCM(this,false,null,st3)">elle</button>
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st3)">lui</button>
@@ -402,7 +649,7 @@
           <p>3. Il part sans <input class="fill-input" data-answer="nous" placeholder="?"> ! <span class="fill-hint"></span></p>
           <p>4. C'est <input class="fill-input" data-answer="toi" placeholder="?"> qui as mangé le gâteau ? <span class="fill-hint"></span></p>
         </div>
-        <button class="check-btn" onclick="checkFill('fill3a',null)">Verificar ✓</button>
+        <button class="check-btn" onclick="checkFill('fill3a','sc3')">Verificar ✓</button>
       </div>
 
       <!-- Exercice 3 · Match sujet / pronom tonique -->
@@ -418,7 +665,7 @@
         <div class="ex-instr">Selecciona el pronombre tónico correcto después de la preposición.</div>
 
         <div class="qcm-item">
-          <div class="qcm-q">5. Elle vient chez ___. (vous) <button class="btn-mini" onclick="speak('Elle vient chez vous.')">🔊</button></div>
+          <div class="qcm-q">5. Elle vient chez ___. (vous) <button class="btn-mini" onclick="speakEL('Elle vient chez vous.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st3)">vous</button>
             <button class="opt" data-correct="false" data-correction="vous" onclick="checkQCM(this,false,null,st3)">elles</button>
@@ -428,7 +675,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">6. Ils parlent de ___. (elles) <button class="btn-mini" onclick="speak('Ils parlent d\'elles.')">🔊</button></div>
+          <div class="qcm-q">6. Ils parlent de ___. (elles) <button class="btn-mini" onclick="speakEL('Ils parlent d\'elles.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="elles" onclick="checkQCM(this,false,null,st3)">eux</button>
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st3)">elles</button>
@@ -441,6 +688,81 @@
       </div>
 
       <div class="score-box" id="sc3"></div>
+
+      <!-- ── Exercice Comprensión oral (dialogue) ── -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l3d);">Comprensión oral — Organisation de soirée</div>
+        <div class="ex-instr">Haz clic en 🔊 para escuchar cada línea del diálogo, luego responde las preguntas <em>sin ver el texto</em>.</div>
+
+        <div class="dial-box">
+
+    <div class="dial-line dial-f">
+      <div class="dial-av dial-av-f">👩</div>
+      <div class="dial-bubble" style="background:var(--l3l)">
+        <span class="dial-name" style="color:var(--l3d)">Charlotte</span>
+        <span class="dial-text">C'est toi qui as réservé la table ?</span>
+        <span class="dial-trad">¿Eres tú quien reservó la mesa?</span>
+      </div>
+      <button class="dial-audio" onclick="speakEL('C\'est toi qui as réservé la table ?','f')" title="Écouter">🔊</button>
+    </div>
+    <div class="dial-line dial-m">
+      <button class="dial-audio" onclick="speakEL('Oui, c\'est moi. Et c\'est Emma qui a choisi le restaurant !','m')" title="Écouter">🔊</button>
+      <div class="dial-bubble dial-bubble-m" style="background:#f0f0f0">
+        <span class="dial-name" style="color:#555">Lucas</span>
+        <span class="dial-text">Oui, c'est moi. Et c'est Emma qui a choisi le restaurant !</span>
+        <span class="dial-trad">Sí, soy yo. ¡Y fue Emma quien eligió el restaurante!</span>
+      </div>
+      <div class="dial-av dial-av-m">👨</div>
+    </div>
+    <div class="dial-line dial-f">
+      <div class="dial-av dial-av-f">👩</div>
+      <div class="dial-bubble" style="background:var(--l3l)">
+        <span class="dial-name" style="color:var(--l3d)">Charlotte</span>
+        <span class="dial-text">Ah, et les autres viennent aussi ?</span>
+        <span class="dial-trad">¿Y los demás también vienen?</span>
+      </div>
+      <button class="dial-audio" onclick="speakEL('Ah, et les autres viennent aussi ?','f')" title="Écouter">🔊</button>
+    </div>
+    <div class="dial-line dial-m">
+      <button class="dial-audio" onclick="speakEL('Oui, eux aussi viennent. Mais lui, Thomas, ne peut pas.','m')" title="Écouter">🔊</button>
+      <div class="dial-bubble dial-bubble-m" style="background:#f0f0f0">
+        <span class="dial-name" style="color:#555">Lucas</span>
+        <span class="dial-text">Oui, eux aussi viennent. Mais lui, Thomas, ne peut pas.</span>
+        <span class="dial-trad">Sí, ellos también vienen. Pero él, Thomas, no puede.</span>
+      </div>
+      <div class="dial-av dial-av-m">👨</div>
+    </div>
+    <div class="dial-line dial-f">
+      <div class="dial-av dial-av-f">👩</div>
+      <div class="dial-bubble" style="background:var(--l3l)">
+        <span class="dial-name" style="color:var(--l3d)">Charlotte</span>
+        <span class="dial-text">Dommage ! On y va sans lui alors.</span>
+        <span class="dial-trad">¡Qué pena! Vamos sin él entonces.</span>
+      </div>
+      <button class="dial-audio" onclick="speakEL('Dommage ! On y va sans lui alors.','f')" title="Écouter">🔊</button>
+    </div>
+        </div>
+
+        <button id="dial1l3_btn" class="dial-play-btn" style="background:var(--l3);" onclick="playDial([['C\'est toi qui as réservé la table ?', 'f'], ['Oui, c\'est moi. Et c\'est Emma qui a choisi le restaurant !', 'm'], ['Ah, et les autres viennent aussi ?', 'f'], ['Oui, eux aussi viennent. Mais lui, Thomas, ne peut pas.', 'm'], ['Dommage ! On y va sans lui alors.', 'f']], 'dial1l3_btn')">▶ Écouter le dialogue</button>
+
+        <div class="dial-section-label" style="color:var(--l3d);">🧠 Comprensión — responde sin ver el texto</div>
+
+      <div class="qcm-item">
+        <div class="qcm-q">1. ¿Quién reservó la mesa?</div>
+        <div class="opts"><button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc3',st3)">Lucas</button><button class="opt" data-correct="false" data-correction="Lucas" onclick="checkQCM(this,false,'sc3',st3)">Charlotte</button><button class="opt" data-correct="false" data-correction="Lucas" onclick="checkQCM(this,false,'sc3',st3)">Emma</button></div>
+        <div class="fb"></div>
+      </div>
+      <div class="qcm-item">
+        <div class="qcm-q">2. ¿Quién eligió el restaurante?</div>
+        <div class="opts"><button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc3',st3)">Emma</button><button class="opt" data-correct="false" data-correction="Emma" onclick="checkQCM(this,false,'sc3',st3)">Lucas</button><button class="opt" data-correct="false" data-correction="Emma" onclick="checkQCM(this,false,'sc3',st3)">Thomas</button></div>
+        <div class="fb"></div>
+      </div>
+      <div class="qcm-item">
+        <div class="qcm-q">3. ¿Quién no puede venir?</div>
+        <div class="opts"><button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc3',st3)">Thomas</button><button class="opt" data-correct="false" data-correction="Thomas" onclick="checkQCM(this,false,'sc3',st3)">Emma</button><button class="opt" data-correct="false" data-correction="Thomas" onclick="checkQCM(this,false,'sc3',st3)">Charlotte</button></div>
+        <div class="fb"></div>
+      </div>
+      </div>
     </div><!-- /lesson 3 -->
 
 
@@ -456,7 +778,7 @@
         <div class="ex-instr">Reemplaza el grupo nominal subrayado por el pronombre posesivo correcto.</div>
 
         <div class="qcm-item">
-          <div class="qcm-q">1. C'est mon livre. → C'est ___. <button class="btn-mini" onclick="speak('C\'est le mien.')">🔊</button></div>
+          <div class="qcm-q">1. C'est mon livre. → C'est ___. <button class="btn-mini" onclick="speakEL('C\'est le mien.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st4)">le mien</button>
             <button class="opt" data-correct="false" data-correction="le mien" onclick="checkQCM(this,false,null,st4)">la mienne</button>
@@ -466,7 +788,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">2. C'est ta voiture. → C'est ___. <button class="btn-mini" onclick="speak('C\'est la tienne.')">🔊</button></div>
+          <div class="qcm-q">2. C'est ta voiture. → C'est ___. <button class="btn-mini" onclick="speakEL('C\'est la tienne.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="la tienne" onclick="checkQCM(this,false,null,st4)">le tien</button>
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st4)">la tienne</button>
@@ -476,7 +798,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">3. Ce sont ses amis. → Ce sont ___. <button class="btn-mini" onclick="speak('Ce sont les siens.')">🔊</button></div>
+          <div class="qcm-q">3. Ce sont ses amis. → Ce sont ___. <button class="btn-mini" onclick="speakEL('Ce sont les siens.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="les siens" onclick="checkQCM(this,false,null,st4)">le sien</button>
             <button class="opt" data-correct="false" data-correction="les siens" onclick="checkQCM(this,false,null,st4)">la sienne</button>
@@ -486,7 +808,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">4. C'est notre maison. → C'est ___. <button class="btn-mini" onclick="speak('C\'est la nôtre.')">🔊</button></div>
+          <div class="qcm-q">4. C'est notre maison. → C'est ___. <button class="btn-mini" onclick="speakEL('C\'est la nôtre.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="la nôtre" onclick="checkQCM(this,false,null,st4)">le nôtre</button>
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st4)">la nôtre</button>
@@ -506,7 +828,7 @@
           <p>3. Vos valises sont là, mais <input class="fill-input" data-answer="les nôtres" placeholder="?"> sont perdues. <span class="fill-hint"></span></p>
           <p>4. Leur maison est grande. <input class="fill-input" data-answer="La leur" placeholder="?"> est grande. <span class="fill-hint"></span></p>
         </div>
-        <button class="check-btn" onclick="checkFill('fill4a',null)">Verificar ✓</button>
+        <button class="check-btn" onclick="checkFill('fill4a','sc4')">Verificar ✓</button>
       </div>
 
       <!-- Exercice 3 · Match -->
@@ -522,7 +844,7 @@
         <div class="ex-instr">Elige el pronombre posesivo con el acuerdo correcto.</div>
 
         <div class="qcm-item">
-          <div class="qcm-q">5. Ce sont leurs enfants. → Ce sont ___. <button class="btn-mini" onclick="speak('Ce sont les leurs.')">🔊</button></div>
+          <div class="qcm-q">5. Ce sont leurs enfants. → Ce sont ___. <button class="btn-mini" onclick="speakEL('Ce sont les leurs.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="false" data-correction="les leurs" onclick="checkQCM(this,false,null,st4)">la leur</button>
             <button class="opt" data-correct="false" data-correction="les leurs" onclick="checkQCM(this,false,null,st4)">le leur</button>
@@ -532,7 +854,7 @@
         </div>
 
         <div class="qcm-item">
-          <div class="qcm-q">6. C'est votre idée. → C'est ___. <button class="btn-mini" onclick="speak('C\'est la vôtre.')">🔊</button></div>
+          <div class="qcm-q">6. C'est votre idée. → C'est ___. <button class="btn-mini" onclick="speakEL('C\'est la vôtre.','f')">🔊</button></div>
           <div class="opts">
             <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st4)">la vôtre</button>
             <button class="opt" data-correct="false" data-correction="la vôtre" onclick="checkQCM(this,false,null,st4)">le vôtre</button>
@@ -545,18 +867,106 @@
       </div>
 
       <div class="score-box" id="sc4"></div>
+
+      <!-- ── Exercice Comprensión oral (dialogue) ── -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l4d);">Comprensión oral — On a perdu quelque chose</div>
+        <div class="ex-instr">Haz clic en 🔊 para escuchar cada línea del diálogo, luego responde las preguntas <em>sin ver el texto</em>.</div>
+
+        <div class="dial-box">
+
+    <div class="dial-line dial-f">
+      <div class="dial-av dial-av-f">👩</div>
+      <div class="dial-bubble" style="background:var(--l4l)">
+        <span class="dial-name" style="color:var(--l4d)">Charlotte</span>
+        <span class="dial-text">C'est ton sac ou le mien sur la chaise ?</span>
+        <span class="dial-trad">¿Es tu bolso o el mío el que está en la silla?</span>
+      </div>
+      <button class="dial-audio" onclick="speakEL('C\'est ton sac ou le mien sur la chaise ?','f')" title="Écouter">🔊</button>
+    </div>
+    <div class="dial-line dial-m">
+      <button class="dial-audio" onclick="speakEL('C\'est le tien ! Le mien est sous la table.','m')" title="Écouter">🔊</button>
+      <div class="dial-bubble dial-bubble-m" style="background:#f0f0f0">
+        <span class="dial-name" style="color:#555">Lucas</span>
+        <span class="dial-text">C'est le tien ! Le mien est sous la table.</span>
+        <span class="dial-trad">¡Es el tuyo! El mío está debajo de la mesa.</span>
+      </div>
+      <div class="dial-av dial-av-m">👨</div>
+    </div>
+    <div class="dial-line dial-f">
+      <div class="dial-av dial-av-f">👩</div>
+      <div class="dial-bubble" style="background:var(--l4l)">
+        <span class="dial-name" style="color:var(--l4d)">Charlotte</span>
+        <span class="dial-text">Et ces clés, ce sont les tiennes ?</span>
+        <span class="dial-trad">¿Y estas llaves, son las tuyas?</span>
+      </div>
+      <button class="dial-audio" onclick="speakEL('Et ces clés, ce sont les tiennes ?','f')" title="Écouter">🔊</button>
+    </div>
+    <div class="dial-line dial-m">
+      <button class="dial-audio" onclick="speakEL('Non, les miennes sont dans ma poche. Ce sont peut-être les siennes — celles d\'Emma.','m')" title="Écouter">🔊</button>
+      <div class="dial-bubble dial-bubble-m" style="background:#f0f0f0">
+        <span class="dial-name" style="color:#555">Lucas</span>
+        <span class="dial-text">Non, les miennes sont dans ma poche. Ce sont peut-être les siennes — celles d'Emma.</span>
+        <span class="dial-trad">No, las mías están en mi bolsillo. Tal vez son las de ella — las de Emma.</span>
+      </div>
+      <div class="dial-av dial-av-m">👨</div>
+    </div>
+    <div class="dial-line dial-f">
+      <div class="dial-av dial-av-f">👩</div>
+      <div class="dial-bubble" style="background:var(--l4l)">
+        <span class="dial-name" style="color:var(--l4d)">Charlotte</span>
+        <span class="dial-text">Je les lui donne alors.</span>
+        <span class="dial-trad">Se las doy entonces.</span>
+      </div>
+      <button class="dial-audio" onclick="speakEL('Je les lui donne alors.','f')" title="Écouter">🔊</button>
+    </div>
+        </div>
+
+        <button id="dial1l4_btn" class="dial-play-btn" style="background:var(--l4);" onclick="playDial([['C\'est ton sac ou le mien sur la chaise ?', 'f'], ['C\'est le tien ! Le mien est sous la table.', 'm'], ['Et ces clés, ce sont les tiennes ?', 'f'], ['Non, les miennes sont dans ma poche. Ce sont peut-être les siennes — celles d\'Emma.', 'm'], ['Je les lui donne alors.', 'f']], 'dial1l4_btn')">▶ Écouter le dialogue</button>
+
+        <div class="dial-section-label" style="color:var(--l4d);">🧠 Comprensión — responde sin ver el texto</div>
+
+      <div class="qcm-item">
+        <div class="qcm-q">1. ¿Dónde está el bolso de Lucas?</div>
+        <div class="opts"><button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc4',st4)">Bajo la mesa</button><button class="opt" data-correct="false" data-correction="Bajo la mesa" onclick="checkQCM(this,false,'sc4',st4)">En la silla</button><button class="opt" data-correct="false" data-correction="Bajo la mesa" onclick="checkQCM(this,false,'sc4',st4)">En su bolsillo</button></div>
+        <div class="fb"></div>
+      </div>
+      <div class="qcm-item">
+        <div class="qcm-q">2. ¿De quién son probablemente las llaves encontradas?</div>
+        <div class="opts"><button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc4',st4)">De Emma</button><button class="opt" data-correct="false" data-correction="De Emma" onclick="checkQCM(this,false,'sc4',st4)">De Charlotte</button><button class="opt" data-correct="false" data-correction="De Emma" onclick="checkQCM(this,false,'sc4',st4)">De Lucas</button></div>
+        <div class="fb"></div>
+      </div>
+      <div class="qcm-item">
+        <div class="qcm-q">3. ¿Dónde están las llaves de Lucas?</div>
+        <div class="opts"><button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc4',st4)">En su bolsillo</button><button class="opt" data-correct="false" data-correction="En su bolsillo" onclick="checkQCM(this,false,'sc4',st4)">En su bolso</button><button class="opt" data-correct="false" data-correction="En su bolsillo" onclick="checkQCM(this,false,'sc4',st4)">En la mesa</button></div>
+        <div class="fb"></div>
+      </div>
+      </div>
     </div><!-- /lesson 4 -->
 
   </main>
 </div><!-- /.app -->
 
 <script>
+
+/* ── Lecture séquentielle du dialogue ── */
+async function playDial(lines, btnId) {
+  const btn = document.getElementById(btnId);
+  if (btn) { btn.disabled = true; btn.textContent = '⏸ En cours…'; }
+  for (const [text, gender] of lines) {
+    const audio = await speakEL(text, gender);
+    if (audio) await new Promise(r => { audio.onended = r; setTimeout(r, 8000); });
+    await new Promise(r => setTimeout(r, 350));
+  }
+  if (btn) { btn.disabled = false; btn.textContent = '▶ Écouter le dialogue'; }
+}
+
 /* ── États QCM par section ── */
-const st0 = { score: 0, total: 7 };  // 4 + 3 QCM
-const st1 = { score: 0, total: 4 };
-const st2 = { score: 0, total: 6 };  // 4 + 2 QCM
-const st3 = { score: 0, total: 6 };  // 4 + 2 QCM
-const st4 = { score: 0, total: 6 };  // 4 + 2 QCM
+const st0 = { score: 0, total: 10 };  // 4 + 3 QCM
+const st1 = { score: 0, total: 7 };
+const st2 = { score: 0, total: 9 };  // 4 + 2 QCM
+const st3 = { score: 0, total: 9 };  // 4 + 2 QCM
+const st4 = { score: 0, total: 9 };  // 4 + 2 QCM
 
 window.addEventListener('DOMContentLoaded', function () {
   buildELModal();
