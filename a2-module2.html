@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Français A2 · Module 2 · Les Temps du Passé et les Pronoms</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="moteur.js"></script>
+</head>
+<body>
+<div class="app">
+
+  <aside class="sidebar">
+    <a class="sidebar-back" href="index.html">← Volver al inicio</a>
+    <div class="sidebar-logo">Module 2 · <span style="color:var(--a2);">A2</span></div>
+
+    <button class="nav-btn active" data-lesson="0" onclick="showLesson(0,this)">
+      <span class="nav-icon">📘</span>Le Passé Composé<span class="nav-badge">4 ex.</span>
+    </button>
+    <button class="nav-btn" data-lesson="1" onclick="showLesson(1,this)">
+      <span class="nav-icon">🪞</span>Verbes Pronominaux<span class="nav-badge">4 ex.</span>
+    </button>
+    <button class="nav-btn" data-lesson="2" onclick="showLesson(2,this)">
+      <span class="nav-icon">📖</span>L'Imparfait<span class="nav-badge">4 ex.</span>
+    </button>
+    <button class="nav-btn" data-lesson="3" onclick="showLesson(3,this)">
+      <span class="nav-icon">⚔️</span>Imparfait + P.C.<span class="nav-badge">4 ex.</span>
+    </button>
+    <button class="nav-btn" data-lesson="4" onclick="showLesson(4,this)">
+      <span class="nav-icon">🎯</span>Pronoms COD<span class="nav-badge">4 ex.</span>
+    </button>
+    <button class="nav-btn" data-lesson="5" onclick="showLesson(5,this)">
+      <span class="nav-icon">📬</span>COI, EN, Y<span class="nav-badge">4 ex.</span>
+    </button>
+  </aside>
+
+  <main class="main">
+
+    <!-- ══════════════════════════════════════════════════════════
+         LEÇON 0 — Le Passé Composé
+         ══════════════════════════════════════════════════════════ -->
+    <div class="lesson-panel active" data-lesson="0">
+      <h2 class="lesson-title" style="color:var(--l0);">📘 Le Passé Composé</h2>
+
+      <!-- Exercice 1 · QCM auxiliaire -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l0d);">Ejercicio 1 · Auxiliar: avoir o être</div>
+        <div class="ex-instr">Selecciona el auxiliar correcto para el passé composé.</div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">1. Ils ___ sortis à minuit. <button class="btn-mini" onclick="speak('Ils sont sortis à minuit.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="sont" onclick="checkQCM(this,false,null,st0)">ont</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">sont</button>
+            <button class="opt" data-correct="false" data-correction="sont" onclick="checkQCM(this,false,null,st0)">avons</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">2. Vous ___ vu ce film hier ? <button class="btn-mini" onclick="speak('Vous avez vu ce film hier ?')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">avez</button>
+            <button class="opt" data-correct="false" data-correction="avez" onclick="checkQCM(this,false,null,st0)">êtes</button>
+            <button class="opt" data-correct="false" data-correction="avez" onclick="checkQCM(this,false,null,st0)">ont</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">3. Elle ___ née en 1995. <button class="btn-mini" onclick="speak('Elle est née en mille neuf cent quatre-vingt-quinze.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="est" onclick="checkQCM(this,false,null,st0)">a</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">est</button>
+            <button class="opt" data-correct="false" data-correction="est" onclick="checkQCM(this,false,null,st0)">avons</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">4. Tu ___ compris la leçon ? <button class="btn-mini" onclick="speak('Tu as compris la leçon ?')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="as" onclick="checkQCM(this,false,null,st0)">es</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">as</button>
+            <button class="opt" data-correct="false" data-correction="as" onclick="checkQCM(this,false,null,st0)">ont</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+      </div>
+
+      <!-- Exercice 2 · Fill: former le PC -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l0d);">Ejercicio 2 · Forma el passé composé</div>
+        <div class="ex-instr">Escribe el passé composé completo del verbo entre paréntesis.</div>
+        <div id="fill0a">
+          <p>1. Hier, je (partir) → <input class="fill-input" data-answer="je suis parti / je suis partie" placeholder="je…"> tôt. <span class="fill-hint"></span></p>
+          <p>2. Nous (finir) → <input class="fill-input" data-answer="nous avons fini" placeholder="nous…"> les exercices. <span class="fill-hint"></span></p>
+          <p>3. Il (tomber) → <input class="fill-input" data-answer="il est tombé" placeholder="il…"> dans l'escalier. <span class="fill-hint"></span></p>
+          <p>4. Elles (écrire) → <input class="fill-input" data-answer="elles ont écrit" placeholder="elles…"> une lettre. <span class="fill-hint"></span></p>
+        </div>
+        <button class="check-btn" onclick="checkFill('fill0a',null)">Verificar ✓</button>
+      </div>
+
+      <!-- Exercice 3 · Match verbe → PC -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l0d);">Ejercicio 3 · Verbo → Passé composé (il)</div>
+        <div class="ex-instr">Une cada infinitivo con su forma en passé composé (sujeto: il).</div>
+        <div id="match0a"></div>
+      </div>
+
+      <!-- Exercice 4 · QCM accord du participe -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l0d);">Ejercicio 4 · Acuerdo del participio</div>
+        <div class="ex-instr">Con <em>être</em>, el participio concuerda con el sujeto. Elige la forma correcta.</div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">5. Les filles sont ___ à 10h. <button class="btn-mini" onclick="speak('Les filles sont arrivées à dix heures.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="arrivées" onclick="checkQCM(this,false,null,st0)">arrivé</button>
+            <button class="opt" data-correct="false" data-correction="arrivées" onclick="checkQCM(this,false,null,st0)">arrivés</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">arrivées</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">6. Mon frère est ___ en voiture. <button class="btn-mini" onclick="speak('Mon frère est venu en voiture.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">venu</button>
+            <button class="opt" data-correct="false" data-correction="venu" onclick="checkQCM(this,false,null,st0)">venue</button>
+            <button class="opt" data-correct="false" data-correction="venu" onclick="checkQCM(this,false,null,st0)">venus</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <button class="check-btn" onclick="showScore(document.getElementById('sc0'), st0.score, st0.total)">Ver resultado 📊</button>
+      </div>
+
+      <div class="score-box" id="sc0"></div>
+    </div><!-- /lesson 0 -->
+
+
+    <!-- ══════════════════════════════════════════════════════════
+         LEÇON 1 — Verbes Pronominaux
+         ══════════════════════════════════════════════════════════ -->
+    <div class="lesson-panel" data-lesson="1">
+      <h2 class="lesson-title" style="color:var(--l1);">🪞 Verbes Pronominaux</h2>
+
+      <!-- Exercice 1 · QCM -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l1d);">Ejercicio 1 · Elige el pronombre reflexivo</div>
+        <div class="ex-instr">Selecciona el pronombre reflexivo correcto.</div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">1. Je ___ lève à 7h chaque matin. <button class="btn-mini" onclick="speak('Je me lève à sept heures chaque matin.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st1)">me</button>
+            <button class="opt" data-correct="false" data-correction="me" onclick="checkQCM(this,false,null,st1)">te</button>
+            <button class="opt" data-correct="false" data-correction="me" onclick="checkQCM(this,false,null,st1)">se</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">2. Vous ___ appelez comment ? <button class="btn-mini" onclick="speak('Vous vous appelez comment ?')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="vous" onclick="checkQCM(this,false,null,st1)">se</button>
+            <button class="opt" data-correct="false" data-correction="vous" onclick="checkQCM(this,false,null,st1)">nous</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st1)">vous</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">3. Ils ___ parlent en espagnol. <button class="btn-mini" onclick="speak('Ils se parlent en espagnol.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="se" onclick="checkQCM(this,false,null,st1)">me</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st1)">se</button>
+            <button class="opt" data-correct="false" data-correction="se" onclick="checkQCM(this,false,null,st1)">te</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">4. Nous ___ reposons le week-end. <button class="btn-mini" onclick="speak('Nous nous reposons le week-end.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="nous" onclick="checkQCM(this,false,null,st1)">se</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st1)">nous</button>
+            <button class="opt" data-correct="false" data-correction="nous" onclick="checkQCM(this,false,null,st1)">vous</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+      </div>
+
+      <!-- Exercice 2 · Fill: conjuguer au présent -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l1d);">Ejercicio 2 · Conjuga en presente</div>
+        <div class="ex-instr">Escribe la forma correcta del verbo pronominal.</div>
+        <div id="fill1a">
+          <p>1. Elle (se coucher) → <input class="fill-input" data-answer="se couche" placeholder="?"> à 22h. <span class="fill-hint"></span></p>
+          <p>2. Tu (se dépêcher) → <input class="fill-input" data-answer="te dépêches" placeholder="?"> toujours ! <span class="fill-hint"></span></p>
+          <p>3. Ils (se réveiller) → <input class="fill-input" data-answer="se réveillent / se reveillent" placeholder="?"> tôt. <span class="fill-hint"></span></p>
+          <p>4. Nous (s'asseoir) → <input class="fill-input" data-answer="nous asseyons / nous assoyons" placeholder="?"> ici. <span class="fill-hint"></span></p>
+        </div>
+        <button class="check-btn" onclick="checkFill('fill1a',null)">Verificar ✓</button>
+      </div>
+
+      <!-- Exercice 3 · Match: routine matinale -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l1d);">Ejercicio 3 · Rutina matinal</div>
+        <div class="ex-instr">Asocia el verbo pronominal con su significado en español.</div>
+        <div id="match1a"></div>
+      </div>
+
+      <!-- Exercice 4 · Fill: passé composé pronominal -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l1d);">Ejercicio 4 · PC de verbos pronominales</div>
+        <div class="ex-instr">Los verbos pronominales se conjugan con <em>être</em>. Completa.</div>
+        <div id="fill1b">
+          <p>1. Elle (se lever) → <input class="fill-input" data-answer="s'est levée" placeholder="?"> à 6h. <span class="fill-hint"></span></p>
+          <p>2. Ils (se marier) → <input class="fill-input" data-answer="se sont mariés" placeholder="?"> en juin. <span class="fill-hint"></span></p>
+          <p>3. Tu (se tromper) → <input class="fill-input" data-answer="t'es trompé / t'es trompée" placeholder="?"> de route. <span class="fill-hint"></span></p>
+        </div>
+        <button class="check-btn" onclick="checkFill('fill1b',null); showScore(document.getElementById('sc1'), st1.score, st1.total)">Ver resultado 📊</button>
+      </div>
+
+      <div class="score-box" id="sc1"></div>
+    </div><!-- /lesson 1 -->
+
+
+    <!-- ══════════════════════════════════════════════════════════
+         LEÇON 2 — L'Imparfait
+         ══════════════════════════════════════════════════════════ -->
+    <div class="lesson-panel" data-lesson="2">
+      <h2 class="lesson-title" style="color:var(--l2);">📖 L'Imparfait</h2>
+
+      <!-- Exercice 1 · QCM terminaisons -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l2d);">Ejercicio 1 · Terminaciones del imparfait</div>
+        <div class="ex-instr">Selecciona la terminación correcta del imparfait.</div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">1. Quand j'étais enfant, je jou___ au foot. <button class="btn-mini" onclick="speak('Quand j\'étais enfant, je jouais au foot.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="ais" onclick="checkQCM(this,false,null,st2)">ait</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st2)">ais</button>
+            <button class="opt" data-correct="false" data-correction="ais" onclick="checkQCM(this,false,null,st2)">ions</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">2. Nous all___ à la plage chaque été. <button class="btn-mini" onclick="speak('Nous allions à la plage chaque été.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="ions" onclick="checkQCM(this,false,null,st2)">ais</button>
+            <button class="opt" data-correct="false" data-correction="ions" onclick="checkQCM(this,false,null,st2)">aient</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st2)">ions</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">3. Ils habit___ à Lyon avant. <button class="btn-mini" onclick="speak('Ils habitaient à Lyon avant.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st2)">aient</button>
+            <button class="opt" data-correct="false" data-correction="aient" onclick="checkQCM(this,false,null,st2)">ait</button>
+            <button class="opt" data-correct="false" data-correction="aient" onclick="checkQCM(this,false,null,st2)">ez</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">4. Tu dorm___ 10 heures par nuit. <button class="btn-mini" onclick="speak('Tu dormais dix heures par nuit.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st2)">ais</button>
+            <button class="opt" data-correct="false" data-correction="ais" onclick="checkQCM(this,false,null,st2)">ait</button>
+            <button class="opt" data-correct="false" data-correction="ais" onclick="checkQCM(this,false,null,st2)">ions</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+      </div>
+
+      <!-- Exercice 2 · Fill: conjuguer à l'imparfait -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l2d);">Ejercicio 2 · Conjuga en imparfait</div>
+        <div class="ex-instr">Escribe el imparfait del verbo entre paréntesis.</div>
+        <div id="fill2a">
+          <p>1. Elle (faire) <input class="fill-input" data-answer="faisait" placeholder="?"> de la danse. <span class="fill-hint"></span></p>
+          <p>2. Vous (être) <input class="fill-input" data-answer="étiez / etiez" placeholder="?"> très sportifs. <span class="fill-hint"></span></p>
+          <p>3. Nous (avoir) <input class="fill-input" data-answer="avions" placeholder="?"> un chien. <span class="fill-hint"></span></p>
+          <p>4. Je (regarder) <input class="fill-input" data-answer="regardais" placeholder="?"> la télé le soir. <span class="fill-hint"></span></p>
+        </div>
+        <button class="check-btn" onclick="checkFill('fill2a',null)">Verificar ✓</button>
+      </div>
+
+      <!-- Exercice 3 · Match: expressions de l'imparfait -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l2d);">Ejercicio 3 · Expresiones habituales</div>
+        <div class="ex-instr">Asocia la expresión francesa con su equivalente en español.</div>
+        <div id="match2a"></div>
+      </div>
+
+      <!-- Exercice 4 · Fill: description au passé -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l2d);">Ejercicio 4 · Descripción en el pasado</div>
+        <div class="ex-instr">Completa la descripción de la infancia con el imparfait.</div>
+        <div id="fill2b">
+          <p>Quand j'(avoir) <input class="fill-input" data-answer="avais" placeholder="?"> dix ans, je (vivre) <input class="fill-input" data-answer="vivais" placeholder="?"> à la campagne. <span class="fill-hint"></span></p>
+          <p>Ma famille (manger) <input class="fill-input" data-answer="mangeait" placeholder="?"> ensemble chaque soir. <span class="fill-hint"></span></p>
+          <p>Les voisins nous (rendre) <input class="fill-input" data-answer="rendaient" placeholder="?"> souvent visite. <span class="fill-hint"></span></p>
+        </div>
+        <button class="check-btn" onclick="checkFill('fill2b',null); showScore(document.getElementById('sc2'), st2.score, st2.total)">Ver resultado 📊</button>
+      </div>
+
+      <div class="score-box" id="sc2"></div>
+    </div><!-- /lesson 2 -->
+
+
+    <!-- ══════════════════════════════════════════════════════════
+         LEÇON 3 — Imparfait + Passé Composé
+         ══════════════════════════════════════════════════════════ -->
+    <div class="lesson-panel" data-lesson="3">
+      <h2 class="lesson-title" style="color:var(--l3);">⚔️ Imparfait + Passé Composé</h2>
+
+      <!-- Exercice 1 · QCM choisir le temps -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l3d);">Ejercicio 1 · ¿Imparfait o Passé composé?</div>
+        <div class="ex-instr">El imparfait = acción de fondo / hábito. El P.C. = acción puntual. Elige el correcto.</div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">1. Je (lire) ___ quand le téléphone (sonner) ___. <button class="btn-mini" onclick="speak('Je lisais quand le téléphone a sonné.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="lisais / a sonné" onclick="checkQCM(this,false,null,st3)">j'ai lu / sonnait</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st3)">je lisais / a sonné</button>
+            <button class="opt" data-correct="false" data-correction="lisais / a sonné" onclick="checkQCM(this,false,null,st3)">je lisais / sonnait</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">2. Il (neiger) ___ quand nous (partir) ___. <button class="btn-mini" onclick="speak('Il neigeait quand nous sommes partis.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st3)">il neigeait / nous sommes partis</button>
+            <button class="opt" data-correct="false" data-correction="neigeait / sommes partis" onclick="checkQCM(this,false,null,st3)">il a neigé / nous partions</button>
+            <button class="opt" data-correct="false" data-correction="neigeait / sommes partis" onclick="checkQCM(this,false,null,st3)">il neigeait / nous partions</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">3. Chaque matin, elle ___ (prendre) le bus. <button class="btn-mini" onclick="speak('Chaque matin, elle prenait le bus.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="prenait" onclick="checkQCM(this,false,null,st3)">a pris</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st3)">prenait</button>
+            <button class="opt" data-correct="false" data-correction="prenait" onclick="checkQCM(this,false,null,st3)">prend</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">4. Soudain, un chien ___ (courir) dans la rue. <button class="btn-mini" onclick="speak('Soudain, un chien a couru dans la rue.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st3)">a couru</button>
+            <button class="opt" data-correct="false" data-correction="a couru" onclick="checkQCM(this,false,null,st3)">courait</button>
+            <button class="opt" data-correct="false" data-correction="a couru" onclick="checkQCM(this,false,null,st3)">court</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+      </div>
+
+      <!-- Exercice 2 · Fill: récit mixte -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l3d);">Ejercicio 2 · Relato en el pasado</div>
+        <div class="ex-instr">Completa con imparfait o passé composé según el contexto.</div>
+        <div id="fill3a">
+          <p>Ce soir-là, il (pleuvoir) <input class="fill-input" data-answer="pleuvait" placeholder="?"> et Marie (attendre) <input class="fill-input" data-answer="attendait" placeholder="?"> le bus. <span class="fill-hint"></span></p>
+          <p>Soudain, un taxi (s'arrêter) <input class="fill-input" data-answer="s'est arrêté / s'est arrete" placeholder="?"> devant elle. <span class="fill-hint"></span></p>
+          <p>Elle (monter) <input class="fill-input" data-answer="est montée / est monte" placeholder="?"> et elle (arriver) <input class="fill-input" data-answer="est arrivée / est arrivee" placeholder="?"> chez elle à 21h. <span class="fill-hint"></span></p>
+        </div>
+        <button class="check-btn" onclick="checkFill('fill3a',null)">Verificar ✓</button>
+      </div>
+
+      <!-- Exercice 3 · Match marqueurs temporels -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l3d);">Ejercicio 3 · Marcadores temporales</div>
+        <div class="ex-instr">Asocia cada marcador con el tiempo que suele acompañar.</div>
+        <div id="match3a"></div>
+      </div>
+
+      <!-- Exercice 4 · QCM scène de roman -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l3d);">Ejercicio 4 · Escena literaria</div>
+        <div class="ex-instr">Identifica el tiempo verbal correcto para cada oración.</div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">5. Il ___ très fatigué quand il a fini. (estado) <button class="btn-mini" onclick="speak('Il était très fatigué quand il a fini.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="était" onclick="checkQCM(this,false,null,st3)">a été</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st3)">était</button>
+            <button class="opt" data-correct="false" data-correction="était" onclick="checkQCM(this,false,null,st3)">est</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">6. Tout à coup, la porte ___. (acción puntual) <button class="btn-mini" onclick="speak('Tout à coup, la porte a claqué.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="a claqué" onclick="checkQCM(this,false,null,st3)">claquait</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st3)">a claqué</button>
+            <button class="opt" data-correct="false" data-correction="a claqué" onclick="checkQCM(this,false,null,st3)">claque</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <button class="check-btn" onclick="showScore(document.getElementById('sc3'), st3.score, st3.total)">Ver resultado 📊</button>
+      </div>
+
+      <div class="score-box" id="sc3"></div>
+    </div><!-- /lesson 3 -->
+
+
+    <!-- ══════════════════════════════════════════════════════════
+         LEÇON 4 — Pronoms COD
+         ══════════════════════════════════════════════════════════ -->
+    <div class="lesson-panel" data-lesson="4">
+      <h2 class="lesson-title" style="color:var(--l4);">🎯 Pronoms COD</h2>
+
+      <!-- Exercice 1 · QCM -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l4d);">Ejercicio 1 · Elige el pronombre COD</div>
+        <div class="ex-instr">Los pronombres COD (le, la, les, me, te, nous, vous) reemplazan el complemento directo.</div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">1. Tu aimes le chocolat ? → Oui, je ___ adore ! <button class="btn-mini" onclick="speak('Oui, je l\'adore !')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="l'" onclick="checkQCM(this,false,null,st4)">la</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st4)">l'</button>
+            <button class="opt" data-correct="false" data-correction="l'" onclick="checkQCM(this,false,null,st4)">les</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">2. Il connaît Marie. → Il ___ connaît. <button class="btn-mini" onclick="speak('Il la connaît.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="la" onclick="checkQCM(this,false,null,st4)">le</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st4)">la</button>
+            <button class="opt" data-correct="false" data-correction="la" onclick="checkQCM(this,false,null,st4)">les</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">3. Elle regarde les films. → Elle ___ regarde. <button class="btn-mini" onclick="speak('Elle les regarde.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="les" onclick="checkQCM(this,false,null,st4)">le</button>
+            <button class="opt" data-correct="false" data-correction="les" onclick="checkQCM(this,false,null,st4)">la</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st4)">les</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">4. Il nous attend. → Il ___ attend. <button class="btn-mini" onclick="speak('Il nous attend.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="nous" onclick="checkQCM(this,false,null,st4)">les</button>
+            <button class="opt" data-correct="false" data-correction="nous" onclick="checkQCM(this,false,null,st4)">vous</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st4)">nous</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+      </div>
+
+      <!-- Exercice 2 · Fill: remplacer le COD -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l4d);">Ejercicio 2 · Reemplaza el COD</div>
+        <div class="ex-instr">Escribe la oración con el pronombre COD en lugar del grupo nominal.</div>
+        <div id="fill4a">
+          <p>1. Il prend le train → Il <input class="fill-input" data-answer="le" placeholder="?"> prend. <span class="fill-hint"></span></p>
+          <p>2. Elle appelle ses parents → Elle <input class="fill-input" data-answer="les" placeholder="?"> appelle. <span class="fill-hint"></span></p>
+          <p>3. Tu vois ma sœur → Tu <input class="fill-input" data-answer="la" placeholder="?"> vois. <span class="fill-hint"></span></p>
+          <p>4. Vous aidez Paul → Vous <input class="fill-input" data-answer="l'" placeholder="?"> aidez. <span class="fill-hint"></span></p>
+        </div>
+        <button class="check-btn" onclick="checkFill('fill4a',null)">Verificar ✓</button>
+      </div>
+
+      <!-- Exercice 3 · Match COD → pronom -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l4d);">Ejercicio 3 · Complemento → pronombre COD</div>
+        <div class="ex-instr">Asocia el complemento directo con el pronombre COD correcto.</div>
+        <div id="match4a"></div>
+      </div>
+
+      <!-- Exercice 4 · Fill: PC avec accord COD -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l4d);">Ejercicio 4 · PC : acuerdo con el COD</div>
+        <div class="ex-instr">Con avoir, el participio concuerda con el COD antepuesto. Completa.</div>
+        <div id="fill4b">
+          <p>1. Ces lettres ? Je les ai <input class="fill-input" data-answer="envoyées" placeholder="?"> hier. <span class="fill-hint"></span></p>
+          <p>2. Ce gâteau ? Il l'a <input class="fill-input" data-answer="mangé" placeholder="?"> entier. <span class="fill-hint"></span></p>
+          <p>3. Cette chanson ? Nous l'avons <input class="fill-input" data-answer="écoutée / ecoutee" placeholder="?"> trois fois. <span class="fill-hint"></span></p>
+        </div>
+        <button class="check-btn" onclick="checkFill('fill4b',null); showScore(document.getElementById('sc4'), st4.score, st4.total)">Ver resultado 📊</button>
+      </div>
+
+      <div class="score-box" id="sc4"></div>
+    </div><!-- /lesson 4 -->
+
+
+    <!-- ══════════════════════════════════════════════════════════
+         LEÇON 5 — COI, EN, Y
+         ══════════════════════════════════════════════════════════ -->
+    <div class="lesson-panel" data-lesson="5">
+      <h2 class="lesson-title" style="color:var(--l5);">📬 COI, EN, Y</h2>
+
+      <!-- Exercice 1 · QCM COI -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l5d);">Ejercicio 1 · Pronombres COI (lui, leur)</div>
+        <div class="ex-instr">Los COI (lui, leur) reemplazan "à + persona". Elige el correcto.</div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">1. Je parle à Marie. → Je ___ parle. <button class="btn-mini" onclick="speak('Je lui parle.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st5)">lui</button>
+            <button class="opt" data-correct="false" data-correction="lui" onclick="checkQCM(this,false,null,st5)">leur</button>
+            <button class="opt" data-correct="false" data-correction="lui" onclick="checkQCM(this,false,null,st5)">y</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">2. Il écrit à ses parents. → Il ___ écrit. <button class="btn-mini" onclick="speak('Il leur écrit.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="leur" onclick="checkQCM(this,false,null,st5)">lui</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st5)">leur</button>
+            <button class="opt" data-correct="false" data-correction="leur" onclick="checkQCM(this,false,null,st5)">les</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">3. Tu vas à Paris ? → Oui, j'___ vais demain. <button class="btn-mini" onclick="speak('Oui, j\'y vais demain.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="y" onclick="checkQCM(this,false,null,st5)">lui</button>
+            <button class="opt" data-correct="false" data-correction="y" onclick="checkQCM(this,false,null,st5)">en</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st5)">y</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">4. Tu veux du café ? → Non merci, je n'___ veux pas. <button class="btn-mini" onclick="speak('Non merci, je n\'en veux pas.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="en" onclick="checkQCM(this,false,null,st5)">y</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st5)">en</button>
+            <button class="opt" data-correct="false" data-correction="en" onclick="checkQCM(this,false,null,st5)">lui</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+      </div>
+
+      <!-- Exercice 2 · Fill: en ou y -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l5d);">Ejercicio 2 · EN o Y</div>
+        <div class="ex-instr"><em>EN</em> reemplaza "de + cosa/cantidad". <em>Y</em> reemplaza "à/dans + lugar".</div>
+        <div id="fill5a">
+          <p>1. Tu viens de la boulangerie ? → Oui, j'<input class="fill-input" data-answer="en" placeholder="en/y"> viens. <span class="fill-hint"></span></p>
+          <p>2. Elle pense à son voyage ? → Oui, elle <input class="fill-input" data-answer="y" placeholder="en/y"> pense souvent. <span class="fill-hint"></span></p>
+          <p>3. Il mange des fruits ? → Oui, il <input class="fill-input" data-answer="en" placeholder="en/y"> mange beaucoup. <span class="fill-hint"></span></p>
+          <p>4. Vous habitez à Rome ? → Non, nous n'<input class="fill-input" data-answer="y" placeholder="en/y"> habitons plus. <span class="fill-hint"></span></p>
+        </div>
+        <button class="check-btn" onclick="checkFill('fill5a',null)">Verificar ✓</button>
+      </div>
+
+      <!-- Exercice 3 · Match -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l5d);">Ejercicio 3 · Qué reemplaza cada pronombre</div>
+        <div class="ex-instr">Asocia el pronombre con lo que puede reemplazar.</div>
+        <div id="match5a"></div>
+      </div>
+
+      <!-- Exercice 4 · Fill: réponses à des questions -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l5d);">Ejercicio 4 · Responde con el pronombre correcto</div>
+        <div class="ex-instr">Escribe el pronombre (lui, leur, y, en) para completar la respuesta.</div>
+        <div id="fill5b">
+          <p>1. Tu téléphones à ta mère ? → Oui, je <input class="fill-input" data-answer="lui" placeholder="?"> téléphone. <span class="fill-hint"></span></p>
+          <p>2. Il a besoin d'argent ? → Oui, il <input class="fill-input" data-answer="en" placeholder="?"> a besoin. <span class="fill-hint"></span></p>
+          <p>3. Tu obéis à tes parents ? → Oui, je <input class="fill-input" data-answer="leur" placeholder="?"> obéis toujours. <span class="fill-hint"></span></p>
+        </div>
+        <button class="check-btn" onclick="checkFill('fill5b',null); showScore(document.getElementById('sc5'), st5.score, st5.total)">Ver resultado 📊</button>
+      </div>
+
+      <div class="score-box" id="sc5"></div>
+    </div><!-- /lesson 5 -->
+
+  </main>
+</div><!-- /.app -->
+
+<script>
+/* ── États QCM par section ── */
+const st0 = { score: 0, total: 6 };  // 4 + 2 QCM
+const st1 = { score: 0, total: 4 };
+const st2 = { score: 0, total: 4 };
+const st3 = { score: 0, total: 6 };  // 4 + 2 QCM
+const st4 = { score: 0, total: 4 };
+const st5 = { score: 0, total: 4 };
+
+window.addEventListener('DOMContentLoaded', function () {
+  buildELModal();
+
+  /* Match 0 : infinitif → PC (sujet il) */
+  buildMatch('match0a', [
+    ['aller',   'il est allé'],
+    ['finir',   'il a fini'],
+    ['tomber',  'il est tombé'],
+    ['voir',    'il a vu'],
+    ['venir',   'il est venu'],
+  ]);
+
+  /* Match 1 : verbe pronominal → signification */
+  buildMatch('match1a', [
+    ['se lever',    'levantarse'],
+    ['se laver',    'lavarse'],
+    ['s\'habiller', 'vestirse'],
+    ['se coucher',  'acostarse'],
+    ['se réveiller','despertarse'],
+  ]);
+
+  /* Match 2 : marqueur → temps */
+  buildMatch('match2a', [
+    ['toujours',     'imparfait (habitude)'],
+    ['soudain',      'passé composé (action)'],
+    ['chaque jour',  'imparfait (habitude)'],
+    ['tout à coup',  'passé composé (action)'],
+  ]);
+
+  /* Match 3 : marqueur → temps (PC vs IMP) */
+  buildMatch('match3a', [
+    ['pendant que',  'imparfait'],
+    ['tout à coup',  'passé composé'],
+    ['d\'habitude',  'imparfait'],
+    ['un jour',      'passé composé'],
+  ]);
+
+  /* Match 4 : COD → pronom */
+  buildMatch('match4a', [
+    ['le livre (masc. sg.)',   'le'],
+    ['la voiture (fém. sg.)', 'la'],
+    ['les clés (pluriel)',    'les'],
+    ['Paul ou Marie',         'l\''],
+  ]);
+
+  /* Match 5 : pronoms → ce qu'ils remplacent */
+  buildMatch('match5a', [
+    ['lui',  'à + personne (sg.)'],
+    ['leur', 'à + personne (pl.)'],
+    ['y',    'à / dans + lieu / chose'],
+    ['en',   'de + chose / quantité'],
+  ]);
+});
+</script>
+</body>
+</html>

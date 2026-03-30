@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Français A2 · Module 1 · Le Récit et les Pronoms</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="moteur.js"></script>
+</head>
+<body>
+<div class="app">
+
+  <aside class="sidebar">
+    <a class="sidebar-back" href="index.html">← Volver al inicio</a>
+    <div class="sidebar-logo">Module 1 · <span style="color:var(--a2);">A2</span></div>
+
+    <button class="nav-btn active" data-lesson="0" onclick="showLesson(0,this)">
+      <span class="nav-icon">🗓️</span>Raconter une journée<span class="nav-badge">4 ex.</span>
+    </button>
+    <button class="nav-btn" data-lesson="1" onclick="showLesson(1,this)">
+      <span class="nav-icon">⚖️</span>Obligations &amp; interdictions<span class="nav-badge">4 ex.</span>
+    </button>
+    <button class="nav-btn" data-lesson="2" onclick="showLesson(2,this)">
+      <span class="nav-icon">🚫</span>La négation amplifiée<span class="nav-badge">4 ex.</span>
+    </button>
+    <button class="nav-btn" data-lesson="3" onclick="showLesson(3,this)">
+      <span class="nav-icon">💪</span>Les pronoms toniques<span class="nav-badge">4 ex.</span>
+    </button>
+    <button class="nav-btn" data-lesson="4" onclick="showLesson(4,this)">
+      <span class="nav-icon">👑</span>Les pronoms possessifs<span class="nav-badge">4 ex.</span>
+    </button>
+  </aside>
+
+  <main class="main">
+
+    <!-- ══════════════════════════════════════════════════════════
+         LEÇON 0 — Raconter une journée
+         ══════════════════════════════════════════════════════════ -->
+    <div class="lesson-panel active" data-lesson="0">
+      <h2 class="lesson-title" style="color:var(--l0);">🗓️ Raconter une journée</h2>
+
+      <!-- Exercice 1 · QCM auxiliaire passé composé -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l0d);">Ejercicio 1 · Elige el auxiliar correcto</div>
+        <div class="ex-instr">Selecciona <em>avoir</em> o <em>être</em> para formar el passé composé.</div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">1. Hier, j'___ mangé une pizza. <button class="btn-mini" onclick="speak('Hier, j\'ai mangé une pizza.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">ai</button>
+            <button class="opt" data-correct="false" data-correction="ai" onclick="checkQCM(this,false,null,st0)">suis</button>
+            <button class="opt" data-correct="false" data-correction="ai" onclick="checkQCM(this,false,null,st0)">est</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">2. Elle ___ arrivée à 8h. <button class="btn-mini" onclick="speak('Elle est arrivée à huit heures.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="est" onclick="checkQCM(this,false,null,st0)">a</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">est</button>
+            <button class="opt" data-correct="false" data-correction="est" onclick="checkQCM(this,false,null,st0)">avons</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">3. Nous ___ fini le travail. <button class="btn-mini" onclick="speak('Nous avons fini le travail.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="avons" onclick="checkQCM(this,false,null,st0)">sommes</button>
+            <button class="opt" data-correct="false" data-correction="avons" onclick="checkQCM(this,false,null,st0)">êtes</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">avons</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">4. Ils ___ partis tôt. <button class="btn-mini" onclick="speak('Ils sont partis tôt.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="sont" onclick="checkQCM(this,false,null,st0)">ont</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">sont</button>
+            <button class="opt" data-correct="false" data-correction="sont" onclick="checkQCM(this,false,null,st0)">avez</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+      </div>
+
+      <!-- Exercice 2 · Participes passés -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l0d);">Ejercicio 2 · El participio pasado</div>
+        <div class="ex-instr">Completa con el participio pasado correcto.</div>
+        <div id="fill0a">
+          <p>1. J'ai <input class="fill-input" data-answer="pris" placeholder="prendre"> le bus ce matin. <span class="fill-hint"></span></p>
+          <p>2. Elle a <input class="fill-input" data-answer="vendu" placeholder="vendre"> sa voiture. <span class="fill-hint"></span></p>
+          <p>3. Nous avons <input class="fill-input" data-answer="choisi" placeholder="choisir"> un restaurant. <span class="fill-hint"></span></p>
+          <p>4. Ils ont <input class="fill-input" data-answer="fait" placeholder="faire"> la vaisselle. <span class="fill-hint"></span></p>
+        </div>
+        <button class="check-btn" onclick="checkFill('fill0a',null)">Verificar ✓</button>
+      </div>
+
+      <!-- Exercice 3 · Association infinitif / participe passé -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l0d);">Ejercicio 3 · Asocia infinitivo y participio</div>
+        <div class="ex-instr">Une cada verbo con su participio pasado.</div>
+        <div id="match0a"></div>
+      </div>
+
+      <!-- Exercice 4 · QCM mots de liaison temporels -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l0d);">Ejercicio 4 · Conectores temporales</div>
+        <div class="ex-instr">Elige el conector correcto para ordenar el relato.</div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">5. ___ j'ai pris mon café, puis je suis sorti. <button class="btn-mini" onclick="speak('D\'abord j\'ai pris mon café, puis je suis sorti.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="D'abord" onclick="checkQCM(this,false,null,st0)">Enfin</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">D'abord</button>
+            <button class="opt" data-correct="false" data-correction="D'abord" onclick="checkQCM(this,false,null,st0)">Ensuite</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">6. J'ai travaillé toute la journée, ___ j'ai dîné. <button class="btn-mini" onclick="speak('J\'ai travaillé toute la journée, ensuite j\'ai dîné.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">ensuite</button>
+            <button class="opt" data-correct="false" data-correction="ensuite" onclick="checkQCM(this,false,null,st0)">d'abord</button>
+            <button class="opt" data-correct="false" data-correction="ensuite" onclick="checkQCM(this,false,null,st0)">hier</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">7. J'ai lu un livre, ___ je me suis couché. <button class="btn-mini" onclick="speak('J\'ai lu un livre, enfin je me suis couché.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="enfin" onclick="checkQCM(this,false,null,st0)">puis</button>
+            <button class="opt" data-correct="false" data-correction="enfin" onclick="checkQCM(this,false,null,st0)">d'abord</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">enfin</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <button class="check-btn" onclick="showScore(document.getElementById('sc0'), st0.score, st0.total)">Ver resultado 📊</button>
+      </div>
+
+      <div class="score-box" id="sc0"></div>
+    </div><!-- /lesson 0 -->
+
+
+    <!-- ══════════════════════════════════════════════════════════
+         LEÇON 1 — Obligations et interdictions
+         ══════════════════════════════════════════════════════════ -->
+    <div class="lesson-panel" data-lesson="1">
+      <h2 class="lesson-title" style="color:var(--l1);">⚖️ Obligations et interdictions</h2>
+
+      <!-- Exercice 1 · QCM devoir / il faut -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l1d);">Ejercicio 1 · ¿Devoir o il faut?</div>
+        <div class="ex-instr">Selecciona la expresión de obligación correcta.</div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">1. Pour entrer, ___ montrer un passeport. <button class="btn-mini" onclick="speak('Pour entrer, il faut montrer un passeport.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st1)">il faut</button>
+            <button class="opt" data-correct="false" data-correction="il faut" onclick="checkQCM(this,false,null,st1)">je dois</button>
+            <button class="opt" data-correct="false" data-correction="il faut" onclick="checkQCM(this,false,null,st1)">il est</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">2. Tu ___ travailler plus sérieusement. <button class="btn-mini" onclick="speak('Tu dois travailler plus sérieusement.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="dois" onclick="checkQCM(this,false,null,st1)">faut</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st1)">dois</button>
+            <button class="opt" data-correct="false" data-correction="dois" onclick="checkQCM(this,false,null,st1)">es</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">3. Il est ___ de fumer ici. <button class="btn-mini" onclick="speak('Il est interdit de fumer ici.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="interdit" onclick="checkQCM(this,false,null,st1)">obligatoire</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st1)">interdit</button>
+            <button class="opt" data-correct="false" data-correction="interdit" onclick="checkQCM(this,false,null,st1)">possible</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">4. Nous ___ partir avant midi. <button class="btn-mini" onclick="speak('Nous devons partir avant midi.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st1)">devons</button>
+            <button class="opt" data-correct="false" data-correction="devons" onclick="checkQCM(this,false,null,st1)">faut</button>
+            <button class="opt" data-correct="false" data-correction="devons" onclick="checkQCM(this,false,null,st1)">pouvons</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+      </div>
+
+      <!-- Exercice 2 · Fill: conjuguer devoir -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l1d);">Ejercicio 2 · Conjuga <em>devoir</em></div>
+        <div class="ex-instr">Escribe la forma correcta de <em>devoir</em> en presente.</div>
+        <div id="fill1a">
+          <p>1. Je <input class="fill-input" data-answer="dois" placeholder="devoir"> finir ce rapport. <span class="fill-hint"></span></p>
+          <p>2. Il <input class="fill-input" data-answer="doit" placeholder="devoir"> appeler sa mère. <span class="fill-hint"></span></p>
+          <p>3. Vous <input class="fill-input" data-answer="devez" placeholder="devoir"> arriver à l'heure. <span class="fill-hint"></span></p>
+          <p>4. Elles <input class="fill-input" data-answer="doivent" placeholder="devoir"> prendre le train. <span class="fill-hint"></span></p>
+        </div>
+        <button class="check-btn" onclick="checkFill('fill1a',null)">Verificar ✓</button>
+      </div>
+
+      <!-- Exercice 3 · Match -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l1d);">Ejercicio 3 · Asocia situación y obligación</div>
+        <div class="ex-instr">Une cada situación con la expresión correcta.</div>
+        <div id="match1a"></div>
+      </div>
+
+      <!-- Exercice 4 · Fill: il faut + infinitif -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l1d);">Ejercicio 4 · Il faut + infinitivo</div>
+        <div class="ex-instr">Completa con el verbo en infinitivo.</div>
+        <div id="fill1b">
+          <p>1. Pour être en bonne santé, il faut <input class="fill-input" data-answer="manger / dormir / faire" placeholder="manger, dormir…"> bien. <span class="fill-hint"></span></p>
+          <p>2. Pour conduire en France, il faut <input class="fill-input" data-answer="avoir" placeholder="avoir…"> un permis. <span class="fill-hint"></span></p>
+          <p>3. Il ne faut pas <input class="fill-input" data-answer="courir" placeholder="courir / marcher…"> dans les couloirs. <span class="fill-hint"></span></p>
+        </div>
+        <button class="check-btn" onclick="checkFill('fill1b',null); showScore(document.getElementById('sc1'), st1.score, st1.total)">Ver resultado 📊</button>
+      </div>
+
+      <div class="score-box" id="sc1"></div>
+    </div><!-- /lesson 1 -->
+
+
+    <!-- ══════════════════════════════════════════════════════════
+         LEÇON 2 — La négation amplifiée
+         ══════════════════════════════════════════════════════════ -->
+    <div class="lesson-panel" data-lesson="2">
+      <h2 class="lesson-title" style="color:var(--l2);">🚫 La négation amplifiée</h2>
+
+      <!-- Exercice 1 · QCM -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l2d);">Ejercicio 1 · Elige la negación correcta</div>
+        <div class="ex-instr">Selecciona <em>ne…jamais</em>, <em>ne…rien</em>, <em>ne…personne</em> o <em>ne…plus</em>.</div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">1. Je ne mange ___ le matin. (nunca) <button class="btn-mini" onclick="speak('Je ne mange jamais le matin.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st2)">jamais</button>
+            <button class="opt" data-correct="false" data-correction="jamais" onclick="checkQCM(this,false,null,st2)">rien</button>
+            <button class="opt" data-correct="false" data-correction="jamais" onclick="checkQCM(this,false,null,st2)">personne</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">2. Il n'a vu ___ dans la rue. (nadie) <button class="btn-mini" onclick="speak('Il n\'a vu personne dans la rue.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="personne" onclick="checkQCM(this,false,null,st2)">rien</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st2)">personne</button>
+            <button class="opt" data-correct="false" data-correction="personne" onclick="checkQCM(this,false,null,st2)">plus</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">3. Elle n'habite ___ à Paris. (ya no) <button class="btn-mini" onclick="speak('Elle n\'habite plus à Paris.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="plus" onclick="checkQCM(this,false,null,st2)">jamais</button>
+            <button class="opt" data-correct="false" data-correction="plus" onclick="checkQCM(this,false,null,st2)">rien</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st2)">plus</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">4. Je n'ai ___ compris. (nada) <button class="btn-mini" onclick="speak('Je n\'ai rien compris.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="rien" onclick="checkQCM(this,false,null,st2)">jamais</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st2)">rien</button>
+            <button class="opt" data-correct="false" data-correction="rien" onclick="checkQCM(this,false,null,st2)">personne</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+      </div>
+
+      <!-- Exercice 2 · Fill: compléter la négation -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l2d);">Ejercicio 2 · Completa la negación</div>
+        <div class="ex-instr">Escribe la palabra negativa correcta.</div>
+        <div id="fill2a">
+          <p>1. Nous ne travaillons <input class="fill-input" data-answer="jamais" placeholder="?"> le dimanche. <span class="fill-hint"></span></p>
+          <p>2. Il n'a mangé <input class="fill-input" data-answer="rien" placeholder="?"> depuis ce matin. <span class="fill-hint"></span></p>
+          <p>3. Je ne connais <input class="fill-input" data-answer="personne" placeholder="?"> ici. <span class="fill-hint"></span></p>
+          <p>4. Elle ne fait <input class="fill-input" data-answer="plus" placeholder="?"> de sport. <span class="fill-hint"></span></p>
+        </div>
+        <button class="check-btn" onclick="checkFill('fill2a',null)">Verificar ✓</button>
+      </div>
+
+      <!-- Exercice 3 · Match affirmation / négation -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l2d);">Ejercicio 3 · Afirmación → Negación</div>
+        <div class="ex-instr">Asocia cada frase positiva con su versión negativa.</div>
+        <div id="match2a"></div>
+      </div>
+
+      <!-- Exercice 4 · QCM avancé -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l2d);">Ejercicio 4 · Frases con doble negación</div>
+        <div class="ex-instr">Selecciona la frase negativa correcta.</div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">5. La forme correcte de "toujours" en négatif : <button class="btn-mini" onclick="speak('Il ne fait jamais ça.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="ne...jamais" onclick="checkQCM(this,false,null,st2)">ne…rien</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st2)">ne…jamais</button>
+            <button class="opt" data-correct="false" data-correction="ne...jamais" onclick="checkQCM(this,false,null,st2)">ne…plus</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">6. "Quelqu'un" en négatif devient : <button class="btn-mini" onclick="speak('Je ne vois personne.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="ne...personne" onclick="checkQCM(this,false,null,st2)">ne…rien</button>
+            <button class="opt" data-correct="false" data-correction="ne...personne" onclick="checkQCM(this,false,null,st2)">ne…jamais</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st2)">ne…personne</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <button class="check-btn" onclick="showScore(document.getElementById('sc2'), st2.score, st2.total)">Ver resultado 📊</button>
+      </div>
+
+      <div class="score-box" id="sc2"></div>
+    </div><!-- /lesson 2 -->
+
+
+    <!-- ══════════════════════════════════════════════════════════
+         LEÇON 3 — Les pronoms toniques
+         ══════════════════════════════════════════════════════════ -->
+    <div class="lesson-panel" data-lesson="3">
+      <h2 class="lesson-title" style="color:var(--l3);">💪 Les pronoms toniques</h2>
+
+      <!-- Exercice 1 · QCM -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l3d);">Ejercicio 1 · Elige el pronombre tónico</div>
+        <div class="ex-instr">Selecciona el pronombre tónico correcto (moi, toi, lui, elle, nous, vous, eux, elles).</div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">1. C'est ___, Marie ! (sujet elle) <button class="btn-mini" onclick="speak('C\'est elle, Marie !')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="elle" onclick="checkQCM(this,false,null,st3)">lui</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st3)">elle</button>
+            <button class="opt" data-correct="false" data-correction="elle" onclick="checkQCM(this,false,null,st3)">eux</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">2. Je travaille avec ___. (tu) <button class="btn-mini" onclick="speak('Je travaille avec toi.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="toi" onclick="checkQCM(this,false,null,st3)">vous</button>
+            <button class="opt" data-correct="false" data-correction="toi" onclick="checkQCM(this,false,null,st3)">moi</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st3)">toi</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">3. ___, nous adorons le cinéma ! (nous emphatique) <button class="btn-mini" onclick="speak('Nous, nous adorons le cinéma !')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st3)">Nous</button>
+            <button class="opt" data-correct="false" data-correction="Nous" onclick="checkQCM(this,false,null,st3)">Eux</button>
+            <button class="opt" data-correct="false" data-correction="Nous" onclick="checkQCM(this,false,null,st3)">Moi</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">4. Ce livre est à ___. (il) <button class="btn-mini" onclick="speak('Ce livre est à lui.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="lui" onclick="checkQCM(this,false,null,st3)">elle</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st3)">lui</button>
+            <button class="opt" data-correct="false" data-correction="lui" onclick="checkQCM(this,false,null,st3)">eux</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+      </div>
+
+      <!-- Exercice 2 · Fill -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l3d);">Ejercicio 2 · Completa con el pronombre tónico</div>
+        <div class="ex-instr">Escribe el pronombre tónico correspondiente al sujeto entre paréntesis.</div>
+        <div id="fill3a">
+          <p>1. Mes parents? Je pense souvent à <input class="fill-input" data-answer="eux" placeholder="?">. <span class="fill-hint"></span></p>
+          <p>2. Ma sœur et <input class="fill-input" data-answer="moi" placeholder="?"> habitons ensemble. <span class="fill-hint"></span></p>
+          <p>3. Il part sans <input class="fill-input" data-answer="nous" placeholder="?"> ! <span class="fill-hint"></span></p>
+          <p>4. C'est <input class="fill-input" data-answer="toi" placeholder="?"> qui as mangé le gâteau ? <span class="fill-hint"></span></p>
+        </div>
+        <button class="check-btn" onclick="checkFill('fill3a',null)">Verificar ✓</button>
+      </div>
+
+      <!-- Exercice 3 · Match sujet / pronom tonique -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l3d);">Ejercicio 3 · Pronombre sujeto → tónico</div>
+        <div class="ex-instr">Asocia cada pronombre sujeto con su pronombre tónico.</div>
+        <div id="match3a"></div>
+      </div>
+
+      <!-- Exercice 4 · QCM après préposition -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l3d);">Ejercicio 4 · Después de una preposición</div>
+        <div class="ex-instr">Selecciona el pronombre tónico correcto después de la preposición.</div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">5. Elle vient chez ___. (vous) <button class="btn-mini" onclick="speak('Elle vient chez vous.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st3)">vous</button>
+            <button class="opt" data-correct="false" data-correction="vous" onclick="checkQCM(this,false,null,st3)">elles</button>
+            <button class="opt" data-correct="false" data-correction="vous" onclick="checkQCM(this,false,null,st3)">lui</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">6. Ils parlent de ___. (elles) <button class="btn-mini" onclick="speak('Ils parlent d\'elles.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="elles" onclick="checkQCM(this,false,null,st3)">eux</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st3)">elles</button>
+            <button class="opt" data-correct="false" data-correction="elles" onclick="checkQCM(this,false,null,st3)">lui</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <button class="check-btn" onclick="showScore(document.getElementById('sc3'), st3.score, st3.total)">Ver resultado 📊</button>
+      </div>
+
+      <div class="score-box" id="sc3"></div>
+    </div><!-- /lesson 3 -->
+
+
+    <!-- ══════════════════════════════════════════════════════════
+         LEÇON 4 — Les pronoms possessifs
+         ══════════════════════════════════════════════════════════ -->
+    <div class="lesson-panel" data-lesson="4">
+      <h2 class="lesson-title" style="color:var(--l4);">👑 Les pronoms possessifs</h2>
+
+      <!-- Exercice 1 · QCM -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l4d);">Ejercicio 1 · Elige el pronombre posesivo</div>
+        <div class="ex-instr">Reemplaza el grupo nominal subrayado por el pronombre posesivo correcto.</div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">1. C'est mon livre. → C'est ___. <button class="btn-mini" onclick="speak('C\'est le mien.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st4)">le mien</button>
+            <button class="opt" data-correct="false" data-correction="le mien" onclick="checkQCM(this,false,null,st4)">la mienne</button>
+            <button class="opt" data-correct="false" data-correction="le mien" onclick="checkQCM(this,false,null,st4)">les miens</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">2. C'est ta voiture. → C'est ___. <button class="btn-mini" onclick="speak('C\'est la tienne.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="la tienne" onclick="checkQCM(this,false,null,st4)">le tien</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st4)">la tienne</button>
+            <button class="opt" data-correct="false" data-correction="la tienne" onclick="checkQCM(this,false,null,st4)">les tiennes</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">3. Ce sont ses amis. → Ce sont ___. <button class="btn-mini" onclick="speak('Ce sont les siens.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="les siens" onclick="checkQCM(this,false,null,st4)">le sien</button>
+            <button class="opt" data-correct="false" data-correction="les siens" onclick="checkQCM(this,false,null,st4)">la sienne</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st4)">les siens</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">4. C'est notre maison. → C'est ___. <button class="btn-mini" onclick="speak('C\'est la nôtre.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="la nôtre" onclick="checkQCM(this,false,null,st4)">le nôtre</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st4)">la nôtre</button>
+            <button class="opt" data-correct="false" data-correction="la nôtre" onclick="checkQCM(this,false,null,st4)">les nôtres</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+      </div>
+
+      <!-- Exercice 2 · Fill -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l4d);">Ejercicio 2 · Completa con el pronombre posesivo</div>
+        <div class="ex-instr">Escribe el pronombre posesivo que corresponde.</div>
+        <div id="fill4a">
+          <p>1. J'ai mon téléphone. Et toi, tu as <input class="fill-input" data-answer="le tien" placeholder="?"> ? <span class="fill-hint"></span></p>
+          <p>2. C'est sa clé, pas <input class="fill-input" data-answer="la mienne" placeholder="?"> (la mía). <span class="fill-hint"></span></p>
+          <p>3. Vos valises sont là, mais <input class="fill-input" data-answer="les nôtres" placeholder="?"> sont perdues. <span class="fill-hint"></span></p>
+          <p>4. Leur maison est grande. <input class="fill-input" data-answer="La leur" placeholder="?"> est grande. <span class="fill-hint"></span></p>
+        </div>
+        <button class="check-btn" onclick="checkFill('fill4a',null)">Verificar ✓</button>
+      </div>
+
+      <!-- Exercice 3 · Match -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l4d);">Ejercicio 3 · Adjetivo → Pronombre posesivo</div>
+        <div class="ex-instr">Asocia el adjetivo posesivo masculino singular con su pronombre posesivo.</div>
+        <div id="match4a"></div>
+      </div>
+
+      <!-- Exercice 4 · QCM accord genre/nombre -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l4d);">Ejercicio 4 · Concordancia género y número</div>
+        <div class="ex-instr">Elige el pronombre posesivo con el acuerdo correcto.</div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">5. Ce sont leurs enfants. → Ce sont ___. <button class="btn-mini" onclick="speak('Ce sont les leurs.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="les leurs" onclick="checkQCM(this,false,null,st4)">la leur</button>
+            <button class="opt" data-correct="false" data-correction="les leurs" onclick="checkQCM(this,false,null,st4)">le leur</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st4)">les leurs</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">6. C'est votre idée. → C'est ___. <button class="btn-mini" onclick="speak('C\'est la vôtre.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st4)">la vôtre</button>
+            <button class="opt" data-correct="false" data-correction="la vôtre" onclick="checkQCM(this,false,null,st4)">le vôtre</button>
+            <button class="opt" data-correct="false" data-correction="la vôtre" onclick="checkQCM(this,false,null,st4)">les vôtres</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <button class="check-btn" onclick="showScore(document.getElementById('sc4'), st4.score, st4.total)">Ver resultado 📊</button>
+      </div>
+
+      <div class="score-box" id="sc4"></div>
+    </div><!-- /lesson 4 -->
+
+  </main>
+</div><!-- /.app -->
+
+<script>
+/* ── États QCM par section ── */
+const st0 = { score: 0, total: 7 };  // 4 + 3 QCM
+const st1 = { score: 0, total: 4 };
+const st2 = { score: 0, total: 6 };  // 4 + 2 QCM
+const st3 = { score: 0, total: 6 };  // 4 + 2 QCM
+const st4 = { score: 0, total: 6 };  // 4 + 2 QCM
+
+window.addEventListener('DOMContentLoaded', function () {
+  buildELModal();
+
+  /* Match 0 : infinitif → participe passé */
+  buildMatch('match0a', [
+    ['aller',   'allé'],
+    ['venir',   'venu'],
+    ['voir',    'vu'],
+    ['mettre',  'mis'],
+    ['savoir',  'su'],
+  ]);
+
+  /* Match 1 : situation → expression */
+  buildMatch('match1a', [
+    ['À table !',            'il faut manger'],
+    ['Pas de téléphone ici', 'il est interdit de téléphoner'],
+    ['Tu es en retard',      'tu dois te dépêcher'],
+    ['Permis de conduire',   'il faut avoir 18 ans'],
+  ]);
+
+  /* Match 2 : affirmatif → négatif */
+  buildMatch('match2a', [
+    ['Je mange quelque chose',   'Je ne mange rien'],
+    ['Il voit quelqu\'un',       'Il ne voit personne'],
+    ['Elle travaille encore',    'Elle ne travaille plus'],
+    ['Tu viens toujours',        'Tu ne viens jamais'],
+  ]);
+
+  /* Match 3 : pronom sujet → pronom tonique */
+  buildMatch('match3a', [
+    ['je',   'moi'],
+    ['tu',   'toi'],
+    ['il',   'lui'],
+    ['ils',  'eux'],
+    ['elles','elles'],
+  ]);
+
+  /* Match 4 : adjectif possessif → pronom possessif */
+  buildMatch('match4a', [
+    ['mon',  'le mien'],
+    ['ton',  'le tien'],
+    ['son',  'le sien'],
+    ['notre','le nôtre'],
+    ['leur', 'le leur'],
+  ]);
+});
+</script>
+</body>
+</html>

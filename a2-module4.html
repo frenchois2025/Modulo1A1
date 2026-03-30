@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Français A2 · Module 4 · L'Avenir et les Voyages</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="moteur.js"></script>
+</head>
+<body>
+<div class="app">
+
+  <aside class="sidebar">
+    <a class="sidebar-back" href="index.html">← Volver al inicio</a>
+    <div class="sidebar-logo">Module 4 · <span style="color:var(--a2);">A2</span></div>
+
+    <button class="nav-btn active" data-lesson="0" onclick="showLesson(0,this)">
+      <span class="nav-icon">🔮</span>Le Futur simple<span class="nav-badge">5 ex.</span>
+    </button>
+    <button class="nav-btn" data-lesson="1" onclick="showLesson(1,this)">
+      <span class="nav-icon">✈️</span>Préparer un voyage<span class="nav-badge">5 ex.</span>
+    </button>
+  </aside>
+
+  <main class="main">
+
+    <!-- ══════════════════════════════════════════════════════════
+         LEÇON 0 — Le Futur simple
+         ══════════════════════════════════════════════════════════ -->
+    <div class="lesson-panel active" data-lesson="0">
+      <h2 class="lesson-title" style="color:var(--l0);">🔮 Le Futur simple</h2>
+
+      <!-- Exercice 1 · QCM terminaisons -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l0d);">Ejercicio 1 · Terminaciones del futur simple</div>
+        <div class="ex-instr">Las terminaciones del futur simple son: -ai, -as, -a, -ons, -ez, -ont. Elige la correcta.</div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">1. Demain, je travaill___. <button class="btn-mini" onclick="speak('Demain, je travaillerai.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">erai</button>
+            <button class="opt" data-correct="false" data-correction="erai" onclick="checkQCM(this,false,null,st0)">era</button>
+            <button class="opt" data-correct="false" data-correction="erai" onclick="checkQCM(this,false,null,st0)">ions</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">2. Nous part___ en vacances la semaine prochaine. <button class="btn-mini" onclick="speak('Nous partirons en vacances la semaine prochaine.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="irons" onclick="checkQCM(this,false,null,st0)">ons</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">irons</button>
+            <button class="opt" data-correct="false" data-correction="irons" onclick="checkQCM(this,false,null,st0)">ez</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">3. Il fin___ ses études en juin. <button class="btn-mini" onclick="speak('Il finira ses études en juin.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="ira" onclick="checkQCM(this,false,null,st0)">it</button>
+            <button class="opt" data-correct="false" data-correction="ira" onclick="checkQCM(this,false,null,st0)">issait</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">ira</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">4. Laquelle est correcte pour "avoir" au futur (vous) ? <button class="btn-mini" onclick="speak('Vous aurez besoin de votre passeport.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="vous aurez" onclick="checkQCM(this,false,null,st0)">vous avez</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">vous aurez</button>
+            <button class="opt" data-correct="false" data-correction="vous aurez" onclick="checkQCM(this,false,null,st0)">vous avrez</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+      </div>
+
+      <!-- Exercice 2 · Fill: conjuguer au futur -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l0d);">Ejercicio 2 · Conjuga en futur simple</div>
+        <div class="ex-instr">Escribe el futur simple del verbo entre paréntesis.</div>
+        <div id="fill0a">
+          <p>1. L'année prochaine, il (aller) <input class="fill-input" data-answer="ira" placeholder="?"> à Paris. <span class="fill-hint"></span></p>
+          <p>2. Nous (être) <input class="fill-input" data-answer="serons" placeholder="?"> en retard si tu ne te dépêches pas. <span class="fill-hint"></span></p>
+          <p>3. Tu (avoir) <input class="fill-input" data-answer="auras" placeholder="?"> le temps de finir. <span class="fill-hint"></span></p>
+          <p>4. Elles (venir) <input class="fill-input" data-answer="viendront" placeholder="?"> nous rendre visite. <span class="fill-hint"></span></p>
+        </div>
+        <button class="check-btn" onclick="checkFill('fill0a',null)">Verificar ✓</button>
+      </div>
+
+      <!-- Exercice 3 · Match futur irrégulier -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l0d);">Ejercicio 3 · Raíces irregulares del futur</div>
+        <div class="ex-instr">Asocia el infinitivo con su raíz irregular en futur simple.</div>
+        <div id="match0a"></div>
+      </div>
+
+      <!-- Exercice 4 · Fill: futur vs présent -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l0d);">Ejercicio 4 · ¿Présent o Futur simple?</div>
+        <div class="ex-instr">Si hay un marcador de futuro (demain, l'année prochaine...), usa el futur simple.</div>
+        <div id="fill0b">
+          <p>1. Maintenant je (travailler) <input class="fill-input" data-answer="travaille" placeholder="?"> ici. <span class="fill-hint"></span></p>
+          <p>2. Dans dix ans, je (vivre) <input class="fill-input" data-answer="vivrai" placeholder="?"> à l'étranger. <span class="fill-hint"></span></p>
+          <p>3. Ce soir, nous (dîner) <input class="fill-input" data-answer="dînerons / dinerons" placeholder="?"> au restaurant. <span class="fill-hint"></span></p>
+          <p>4. En ce moment, il (faire) <input class="fill-input" data-answer="fait" placeholder="?"> beau. <span class="fill-hint"></span></p>
+        </div>
+        <button class="check-btn" onclick="checkFill('fill0b',null)">Verificar ✓</button>
+      </div>
+
+      <!-- Exercice 5 · QCM promesses et prédictions -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l0d);">Ejercicio 5 · Promesas y predicciones</div>
+        <div class="ex-instr">Selecciona la forma de futur simple correcta.</div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">5. Promesse : Je te ___ la vérité. <button class="btn-mini" onclick="speak('Je te dirai la vérité.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="dirai" onclick="checkQCM(this,false,null,st0)">dis</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">dirai</button>
+            <button class="opt" data-correct="false" data-correction="dirai" onclick="checkQCM(this,false,null,st0)">disais</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">6. Dans 50 ans, les robots ___ nos tâches. <button class="btn-mini" onclick="speak('Dans cinquante ans, les robots feront nos tâches.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="feront" onclick="checkQCM(this,false,null,st0)">font</button>
+            <button class="opt" data-correct="false" data-correction="feront" onclick="checkQCM(this,false,null,st0)">faisaient</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">feront</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <button class="check-btn" onclick="showScore(document.getElementById('sc0'), st0.score, st0.total)">Ver resultado 📊</button>
+      </div>
+
+      <div class="score-box" id="sc0"></div>
+    </div><!-- /lesson 0 -->
+
+
+    <!-- ══════════════════════════════════════════════════════════
+         LEÇON 1 — Préparer un voyage
+         ══════════════════════════════════════════════════════════ -->
+    <div class="lesson-panel" data-lesson="1">
+      <h2 class="lesson-title" style="color:var(--l1);">✈️ Préparer un voyage</h2>
+
+      <!-- Exercice 1 · QCM vocabulaire -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l1d);">Ejercicio 1 · Vocabulario del viaje</div>
+        <div class="ex-instr">Selecciona la palabra correcta para completar cada frase.</div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">1. On achète un ___ pour prendre l'avion. <button class="btn-mini" onclick="speak('On achète un billet pour prendre l\'avion.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="billet" onclick="checkQCM(this,false,null,st1)">passeport</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st1)">billet</button>
+            <button class="opt" data-correct="false" data-correction="billet" onclick="checkQCM(this,false,null,st1)">valise</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">2. Pour dormir à l'étranger, on réserve un ___. <button class="btn-mini" onclick="speak('Pour dormir à l\'étranger, on réserve un hôtel.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="hôtel" onclick="checkQCM(this,false,null,st1)">billet</button>
+            <button class="opt" data-correct="false" data-correction="hôtel" onclick="checkQCM(this,false,null,st1)">restaurant</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st1)">hôtel</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">3. À la ___, on contrôle les passeports. <button class="btn-mini" onclick="speak('À la douane, on contrôle les passeports.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="douane" onclick="checkQCM(this,false,null,st1)">gare</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st1)">douane</button>
+            <button class="opt" data-correct="false" data-correction="douane" onclick="checkQCM(this,false,null,st1)">plage</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">4. Pour échanger des euros, on va au ___. <button class="btn-mini" onclick="speak('Pour échanger des euros, on va au bureau de change.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="bureau de change" onclick="checkQCM(this,false,null,st1)">musée</button>
+            <button class="opt" data-correct="false" data-correction="bureau de change" onclick="checkQCM(this,false,null,st1)">supermarché</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st1)">bureau de change</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+      </div>
+
+      <!-- Exercice 2 · Fill: planifier au futur -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l1d);">Ejercicio 2 · Planificar el viaje (futur simple)</div>
+        <div class="ex-instr">Completa la lista de tareas para el viaje usando el futur simple.</div>
+        <div id="fill1a">
+          <p>1. Je (réserver) <input class="fill-input" data-answer="réserverai" placeholder="?"> un vol la semaine prochaine. <span class="fill-hint"></span></p>
+          <p>2. Nous (faire) <input class="fill-input" data-answer="ferons" placeholder="?"> nos valises la veille. <span class="fill-hint"></span></p>
+          <p>3. Tu (prendre) <input class="fill-input" data-answer="prendras" placeholder="?"> une assurance voyage. <span class="fill-hint"></span></p>
+          <p>4. Ils (apporter) <input class="fill-input" data-answer="apporteront" placeholder="?"> leurs documents. <span class="fill-hint"></span></p>
+        </div>
+        <button class="check-btn" onclick="checkFill('fill1a',null)">Verificar ✓</button>
+      </div>
+
+      <!-- Exercice 3 · Match vocab voyage -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l1d);">Ejercicio 3 · Vocabulaire voyage FR → ES</div>
+        <div class="ex-instr">Asocia cada palabra con su equivalente en español.</div>
+        <div id="match1a"></div>
+      </div>
+
+      <!-- Exercice 4 · Fill: dialogue à l'aéroport -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l1d);">Ejercicio 4 · Diálogo en el aeropuerto</div>
+        <div class="ex-instr">Completa el diálogo en el mostrador del aeropuerto.</div>
+        <div id="fill1b">
+          <p>— Bonjour, votre <input class="fill-input" data-answer="billet / passeport / carte d'embarquement" placeholder="?"> s'il vous plaît. <span class="fill-hint"></span></p>
+          <p>— Voici mon passeport. Je voudrais une place côté <input class="fill-input" data-answer="fenêtre / hublot" placeholder="?"> si possible. <span class="fill-hint"></span></p>
+          <p>— Avez-vous des <input class="fill-input" data-answer="bagages" placeholder="?"> à enregistrer ? <span class="fill-hint"></span></p>
+          <p>— Oui, une valise. L'embarquement est à quelle <input class="fill-input" data-answer="porte / heure" placeholder="?"> ? <span class="fill-hint"></span></p>
+        </div>
+        <button class="check-btn" onclick="checkFill('fill1b',null)">Verificar ✓</button>
+      </div>
+
+      <!-- Exercice 5 · QCM situations de voyage -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l1d);">Ejercicio 5 · Situaciones prácticas de viaje</div>
+        <div class="ex-instr">Selecciona la respuesta más apropiada en cada situación.</div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">5. Pour demander le chemin : <button class="btn-mini" onclick="speak('Excusez-moi, où se trouve la gare ?')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st1)">Excusez-moi, où se trouve la gare ?</button>
+            <button class="opt" data-correct="false" data-correction="Excusez-moi, où se trouve la gare ?" onclick="checkQCM(this,false,null,st1)">Je voudrais une baguette.</button>
+            <button class="opt" data-correct="false" data-correction="Excusez-moi, où se trouve la gare ?" onclick="checkQCM(this,false,null,st1)">Je n'ai pas de passeport.</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">6. À l'hôtel, pour se présenter à la réception : <button class="btn-mini" onclick="speak('J\'ai une réservation au nom de Martin.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="J'ai une réservation au nom de Martin." onclick="checkQCM(this,false,null,st1)">Je veux dormir ici.</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st1)">J'ai une réservation au nom de Martin.</button>
+            <button class="opt" data-correct="false" data-correction="J'ai une réservation au nom de Martin." onclick="checkQCM(this,false,null,st1)">Où est la plage ?</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <button class="check-btn" onclick="showScore(document.getElementById('sc1'), st1.score, st1.total)">Ver resultado 📊</button>
+      </div>
+
+      <div class="score-box" id="sc1"></div>
+    </div><!-- /lesson 1 -->
+
+  </main>
+</div><!-- /.app -->
+
+<script>
+/* ── États QCM par section ── */
+const st0 = { score: 0, total: 6 };  // 4 + 2 QCM
+const st1 = { score: 0, total: 6 };  // 4 + 2 QCM
+
+window.addEventListener('DOMContentLoaded', function () {
+  buildELModal();
+
+  /* Match 0 : infinitif → radical futur irrégulier */
+  buildMatch('match0a', [
+    ['être',    'ser-'],
+    ['avoir',   'aur-'],
+    ['aller',   'ir-'],
+    ['faire',   'fer-'],
+    ['venir',   'viendr-'],
+    ['pouvoir', 'pourr-'],
+  ]);
+
+  /* Match 1 : vocabulaire voyage FR → ES */
+  buildMatch('match1a', [
+    ['le vol',       'el vuelo'],
+    ['la valise',    'la maleta'],
+    ['l\'aéroport',  'el aeropuerto'],
+    ['le passeport', 'el pasaporte'],
+    ['l\'escale',    'la escala'],
+  ]);
+});
+</script>
+</body>
+</html>

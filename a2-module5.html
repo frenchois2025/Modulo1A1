@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Français A2 · Module 5 · Santé et Bien-être</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="moteur.js"></script>
+</head>
+<body>
+<div class="app">
+
+  <aside class="sidebar">
+    <a class="sidebar-back" href="index.html">← Volver al inicio</a>
+    <div class="sidebar-logo">Module 5 · <span style="color:var(--a2);">A2</span></div>
+
+    <button class="nav-btn active" data-lesson="0" onclick="showLesson(0,this)">
+      <span class="nav-icon">🦴</span>Le corps et les douleurs<span class="nav-badge">4 ex.</span>
+    </button>
+    <button class="nav-btn" data-lesson="1" onclick="showLesson(1,this)">
+      <span class="nav-icon">🩺</span>Chez le médecin<span class="nav-badge">4 ex.</span>
+    </button>
+    <button class="nav-btn" data-lesson="2" onclick="showLesson(2,this)">
+      <span class="nav-icon">📣</span>L'impératif présent<span class="nav-badge">5 ex.</span>
+    </button>
+    <button class="nav-btn" data-lesson="3" onclick="showLesson(3,this)">
+      <span class="nav-icon">💊</span>À la pharmacie<span class="nav-badge">4 ex.</span>
+    </button>
+  </aside>
+
+  <main class="main">
+
+    <!-- ══════════════════════════════════════════════════════════
+         LEÇON 0 — Le corps et les douleurs
+         ══════════════════════════════════════════════════════════ -->
+    <div class="lesson-panel active" data-lesson="0">
+      <h2 class="lesson-title" style="color:var(--l0);">🦴 Le corps et les douleurs</h2>
+
+      <!-- Exercice 1 · QCM parties du corps -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l0d);">Ejercicio 1 · Partes del cuerpo</div>
+        <div class="ex-instr">Selecciona la parte del cuerpo correcta para completar cada frase.</div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">1. On entend avec les ___. <button class="btn-mini" onclick="speak('On entend avec les oreilles.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="oreilles" onclick="checkQCM(this,false,null,st0)">yeux</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">oreilles</button>
+            <button class="opt" data-correct="false" data-correction="oreilles" onclick="checkQCM(this,false,null,st0)">mains</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">2. On respire avec les ___. <button class="btn-mini" onclick="speak('On respire avec les poumons.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="poumons" onclick="checkQCM(this,false,null,st0)">reins</button>
+            <button class="opt" data-correct="false" data-correction="poumons" onclick="checkQCM(this,false,null,st0)">genoux</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">poumons</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">3. J'ai mal à la ___. (dolor de cabeza) <button class="btn-mini" onclick="speak('J\'ai mal à la tête.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="tête" onclick="checkQCM(this,false,null,st0)">gorge</button>
+            <button class="opt" data-correct="false" data-correction="tête" onclick="checkQCM(this,false,null,st0)">main</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">tête</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">4. Il s'est cassé le ___ en tombant. <button class="btn-mini" onclick="speak('Il s\'est cassé le bras en tombant.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">bras</button>
+            <button class="opt" data-correct="false" data-correction="bras" onclick="checkQCM(this,false,null,st0)">nez</button>
+            <button class="opt" data-correct="false" data-correction="bras" onclick="checkQCM(this,false,null,st0)">œil</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+      </div>
+
+      <!-- Exercice 2 · Fill: exprimer la douleur -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l0d);">Ejercicio 2 · Expresar el dolor</div>
+        <div class="ex-instr">Completa con la parte del cuerpo correcta (gorge, ventre, dos, dents).</div>
+        <div id="fill0a">
+          <p>1. J'ai mal au ___ <input class="fill-input" data-answer="dos" placeholder="?"> après cette journée de travail. <span class="fill-hint"></span></p>
+          <p>2. Mon enfant a mal aux ___ <input class="fill-input" data-answer="dents" placeholder="?">, il faut aller chez le dentiste. <span class="fill-hint"></span></p>
+          <p>3. Elle a mal à la ___ <input class="fill-input" data-answer="gorge" placeholder="?"> depuis hier soir. <span class="fill-hint"></span></p>
+          <p>4. J'ai mal au ___ <input class="fill-input" data-answer="ventre" placeholder="?"> après avoir trop mangé. <span class="fill-hint"></span></p>
+        </div>
+        <button class="check-btn" onclick="checkFill('fill0a',null)">Verificar ✓</button>
+      </div>
+
+      <!-- Exercice 3 · Match partie du corps → fonction -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l0d);">Ejercicio 3 · Parte del cuerpo → función</div>
+        <div class="ex-instr">Asocia cada parte del cuerpo con lo que hacemos con ella.</div>
+        <div id="match0a"></div>
+      </div>
+
+      <!-- Exercice 4 · QCM avoir mal / faire mal -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l0d);">Ejercicio 4 · Avoir mal vs faire mal</div>
+        <div class="ex-instr"><em>Avoir mal</em> = sentir dolor. <em>Faire mal</em> = causar dolor. Elige la correcta.</div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">5. Cette chaussure me ___ au pied. <button class="btn-mini" onclick="speak('Cette chaussure me fait mal au pied.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="fait mal" onclick="checkQCM(this,false,null,st0)">ai mal</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">fait mal</button>
+            <button class="opt" data-correct="false" data-correction="fait mal" onclick="checkQCM(this,false,null,st0)">a mal</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">6. J'___ aux yeux à cause de la lumière. <button class="btn-mini" onclick="speak('J\'ai mal aux yeux à cause de la lumière.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">ai mal</button>
+            <button class="opt" data-correct="false" data-correction="ai mal" onclick="checkQCM(this,false,null,st0)">fais mal</button>
+            <button class="opt" data-correct="false" data-correction="ai mal" onclick="checkQCM(this,false,null,st0)">fait mal</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <button class="check-btn" onclick="showScore(document.getElementById('sc0'), st0.score, st0.total)">Ver resultado 📊</button>
+      </div>
+
+      <div class="score-box" id="sc0"></div>
+    </div><!-- /lesson 0 -->
+
+
+    <!-- ══════════════════════════════════════════════════════════
+         LEÇON 1 — Chez le médecin
+         ══════════════════════════════════════════════════════════ -->
+    <div class="lesson-panel" data-lesson="1">
+      <h2 class="lesson-title" style="color:var(--l1);">🩺 Chez le médecin</h2>
+
+      <!-- Exercice 1 · QCM dialogue médecin -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l1d);">Ejercicio 1 · En la consulta del médico</div>
+        <div class="ex-instr">Selecciona la respuesta correcta en la consulta médica.</div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">1. Le médecin demande : "Qu'est-ce qui ne va pas ?" → Le patient répond : <button class="btn-mini" onclick="speak('J\'ai de la fièvre et mal à la gorge.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st1)">J'ai de la fièvre et mal à la gorge.</button>
+            <button class="opt" data-correct="false" data-correction="J'ai de la fièvre et mal à la gorge." onclick="checkQCM(this,false,null,st1)">Je suis médecin.</button>
+            <button class="opt" data-correct="false" data-correction="J'ai de la fièvre et mal à la gorge." onclick="checkQCM(this,false,null,st1)">J'aime les médicaments.</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">2. Le médecin dit : "Je vais vous ___ des antibiotiques." <button class="btn-mini" onclick="speak('Je vais vous prescrire des antibiotiques.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="prescrire" onclick="checkQCM(this,false,null,st1)">donner à manger</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st1)">prescrire</button>
+            <button class="opt" data-correct="false" data-correction="prescrire" onclick="checkQCM(this,false,null,st1)">vendre</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">3. Pour prendre rendez-vous chez le médecin, on dit : <button class="btn-mini" onclick="speak('Je voudrais prendre rendez-vous, s\'il vous plaît.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="Je voudrais prendre rendez-vous." onclick="checkQCM(this,false,null,st1)">Je voudrais une pizza.</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st1)">Je voudrais prendre rendez-vous.</button>
+            <button class="opt" data-correct="false" data-correction="Je voudrais prendre rendez-vous." onclick="checkQCM(this,false,null,st1)">Je veux partir en vacances.</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">4. La ___ dit combien de médicaments prendre et quand. <button class="btn-mini" onclick="speak('L\'ordonnance dit combien de médicaments prendre et quand.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="ordonnance" onclick="checkQCM(this,false,null,st1)">température</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st1)">ordonnance</button>
+            <button class="opt" data-correct="false" data-correction="ordonnance" onclick="checkQCM(this,false,null,st1)">radiographie</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+      </div>
+
+      <!-- Exercice 2 · Fill: décrire ses symptômes -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l1d);">Ejercicio 2 · Describir síntomas</div>
+        <div class="ex-instr">Completa con la palabra correcta (fièvre, toux, rhume, grippe).</div>
+        <div id="fill1a">
+          <p>1. J'ai une <input class="fill-input" data-answer="toux" placeholder="?"> qui ne s'arrête pas depuis une semaine. <span class="fill-hint"></span></p>
+          <p>2. Ma température est à 39°C — j'ai de la <input class="fill-input" data-answer="fièvre" placeholder="?">. <span class="fill-hint"></span></p>
+          <p>3. J'ai le nez qui coule et les yeux qui piquent — c'est un <input class="fill-input" data-answer="rhume" placeholder="?">. <span class="fill-hint"></span></p>
+          <p>4. Tous les muscles me font mal et j'ai 40° de fièvre — c'est la <input class="fill-input" data-answer="grippe" placeholder="?">. <span class="fill-hint"></span></p>
+        </div>
+        <button class="check-btn" onclick="checkFill('fill1a',null)">Verificar ✓</button>
+      </div>
+
+      <!-- Exercice 3 · Match symptôme → maladie -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l1d);">Ejercicio 3 · Síntoma → Vocabulario médico</div>
+        <div class="ex-instr">Asocia cada término médico con su equivalente en español.</div>
+        <div id="match1a"></div>
+      </div>
+
+      <!-- Exercice 4 · Fill: dialogue à la consultation -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l1d);">Ejercicio 4 · Diálogo médico-paciente</div>
+        <div class="ex-instr">Completa el diálogo con las palabras del recuadro.</div>
+        <div id="fill1b">
+          <p>— Bonjour docteur, je ne me sens pas <input class="fill-input" data-answer="bien" placeholder="?"> depuis hier. <span class="fill-hint"></span></p>
+          <p>— Quels sont vos <input class="fill-input" data-answer="symptômes / symptomes" placeholder="?"> ? <span class="fill-hint"></span></p>
+          <p>— J'ai mal à la gorge et je tousse beaucoup. J'ai aussi de la <input class="fill-input" data-answer="fièvre / fievre" placeholder="?">. <span class="fill-hint"></span></p>
+          <p>— Je vais vous faire une <input class="fill-input" data-answer="ordonnance" placeholder="?"> pour des antibiotiques. <span class="fill-hint"></span></p>
+        </div>
+        <button class="check-btn" onclick="checkFill('fill1b',null); showScore(document.getElementById('sc1'), st1.score, st1.total)">Ver resultado 📊</button>
+      </div>
+
+      <div class="score-box" id="sc1"></div>
+    </div><!-- /lesson 1 -->
+
+
+    <!-- ══════════════════════════════════════════════════════════
+         LEÇON 2 — L'impératif présent
+         ══════════════════════════════════════════════════════════ -->
+    <div class="lesson-panel" data-lesson="2">
+      <h2 class="lesson-title" style="color:var(--l2);">📣 L'impératif présent</h2>
+
+      <!-- Exercice 1 · QCM formation -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l2d);">Ejercicio 1 · Formación del impératif</div>
+        <div class="ex-instr">El imperativo no usa pronombre sujeto. Selecciona la forma correcta.</div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">1. ___ tes devoirs ! (tu → faire) <button class="btn-mini" onclick="speak('Fais tes devoirs !')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="Fais" onclick="checkQCM(this,false,null,st2)">Tu fais</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st2)">Fais</button>
+            <button class="opt" data-correct="false" data-correction="Fais" onclick="checkQCM(this,false,null,st2)">Fait</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">2. ___ à vos places ! (vous → s'asseoir) <button class="btn-mini" onclick="speak('Asseyez-vous à vos places !')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="Asseyez-vous" onclick="checkQCM(this,false,null,st2)">Vous asseyez</button>
+            <button class="opt" data-correct="false" data-correction="Asseyez-vous" onclick="checkQCM(this,false,null,st2)">Assis-vous</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st2)">Asseyez-vous</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">3. ___ ensemble ! (nous → chanter) <button class="btn-mini" onclick="speak('Chantons ensemble !')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="Chantons" onclick="checkQCM(this,false,null,st2)">Chantez</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st2)">Chantons</button>
+            <button class="opt" data-correct="false" data-correction="Chantons" onclick="checkQCM(this,false,null,st2)">Chantes</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">4. ___ ici, s'il te plaît. (tu → venir) <button class="btn-mini" onclick="speak('Viens ici, s\'il te plaît.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="Viens" onclick="checkQCM(this,false,null,st2)">Venez</button>
+            <button class="opt" data-correct="false" data-correction="Viens" onclick="checkQCM(this,false,null,st2)">Vient</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st2)">Viens</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+      </div>
+
+      <!-- Exercice 2 · Fill: conjuguer à l'impératif -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l2d);">Ejercicio 2 · Conjuga en impératif</div>
+        <div class="ex-instr">Escribe la forma imperativa del verbo indicado.</div>
+        <div id="fill2a">
+          <p>1. (écouter / tu) → <input class="fill-input" data-answer="Écoute / Ecoute" placeholder="?"> bien le professeur ! <span class="fill-hint"></span></p>
+          <p>2. (finir / vous) → <input class="fill-input" data-answer="Finissez" placeholder="?"> vos exercices avant midi. <span class="fill-hint"></span></p>
+          <p>3. (être / nous) → <input class="fill-input" data-answer="Soyons" placeholder="?"> ponctuels ! <span class="fill-hint"></span></p>
+          <p>4. (prendre / tu) → <input class="fill-input" data-answer="Prends" placeholder="?"> ce médicament deux fois par jour. <span class="fill-hint"></span></p>
+        </div>
+        <button class="check-btn" onclick="checkFill('fill2a',null)">Verificar ✓</button>
+      </div>
+
+      <!-- Exercice 3 · Match conseil santé -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l2d);">Ejercicio 3 · Consejos de salud</div>
+        <div class="ex-instr">Asocia el consejo en imperativo con la situación adecuada.</div>
+        <div id="match2a"></div>
+      </div>
+
+      <!-- Exercice 4 · Fill: impératif négatif -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l2d);">Ejercicio 4 · Imperativo negativo</div>
+        <div class="ex-instr">El imperativo negativo = ne + verbo + pas. Transforma las frases.</div>
+        <div id="fill2b">
+          <p>1. Mange des sucreries → Ne <input class="fill-input" data-answer="mange" placeholder="?"> pas de sucreries. <span class="fill-hint"></span></p>
+          <p>2. Courez dans le couloir → Ne <input class="fill-input" data-answer="courez" placeholder="?"> pas dans le couloir. <span class="fill-hint"></span></p>
+          <p>3. Buvez de l'alcool → Ne <input class="fill-input" data-answer="buvez" placeholder="?"> pas d'alcool. <span class="fill-hint"></span></p>
+          <p>4. Oublie tes médicaments → N'<input class="fill-input" data-answer="oublie" placeholder="?"> pas tes médicaments. <span class="fill-hint"></span></p>
+        </div>
+        <button class="check-btn" onclick="checkFill('fill2b',null)">Verificar ✓</button>
+      </div>
+
+      <!-- Exercice 5 · QCM nuances impératif -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l2d);">Ejercicio 5 · Usos del imperativo</div>
+        <div class="ex-instr">Selecciona el uso correcto del imperativo.</div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">5. Pour donner un conseil médical : <button class="btn-mini" onclick="speak('Reposez-vous et buvez beaucoup d\'eau.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st2)">Reposez-vous et buvez beaucoup d'eau.</button>
+            <button class="opt" data-correct="false" data-correction="Reposez-vous et buvez beaucoup d'eau." onclick="checkQCM(this,false,null,st2)">Vous reposez et vous buvez.</button>
+            <button class="opt" data-correct="false" data-correction="Reposez-vous et buvez beaucoup d'eau." onclick="checkQCM(this,false,null,st2)">Il faut vous reposez.</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">6. À l'impératif, les verbes en -ER (tu) perdent le -s : <button class="btn-mini" onclick="speak('Mange tes légumes !')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="Mange (sans -s)" onclick="checkQCM(this,false,null,st2)">Manges tes légumes !</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st2)">Mange tes légumes !</button>
+            <button class="opt" data-correct="false" data-correction="Mange (sans -s)" onclick="checkQCM(this,false,null,st2)">Tu mange tes légumes !</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <button class="check-btn" onclick="showScore(document.getElementById('sc2'), st2.score, st2.total)">Ver resultado 📊</button>
+      </div>
+
+      <div class="score-box" id="sc2"></div>
+    </div><!-- /lesson 2 -->
+
+
+    <!-- ══════════════════════════════════════════════════════════
+         LEÇON 3 — À la pharmacie
+         ══════════════════════════════════════════════════════════ -->
+    <div class="lesson-panel" data-lesson="3">
+      <h2 class="lesson-title" style="color:var(--l3);">💊 À la pharmacie</h2>
+
+      <!-- Exercice 1 · QCM médicaments -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l3d);">Ejercicio 1 · Medicamentos y remedios</div>
+        <div class="ex-instr">Selecciona el medicamento o remedio adecuado para cada situación.</div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">1. Pour la fièvre et les douleurs, on prend ___. <button class="btn-mini" onclick="speak('Pour la fièvre et les douleurs, on prend du paracétamol.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="du paracétamol" onclick="checkQCM(this,false,null,st3)">du sirop pour la toux</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st3)">du paracétamol</button>
+            <button class="opt" data-correct="false" data-correction="du paracétamol" onclick="checkQCM(this,false,null,st3)">une crème</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">2. Pour une blessure légère, on met ___. <button class="btn-mini" onclick="speak('Pour une blessure légère, on met un pansement.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="un pansement" onclick="checkQCM(this,false,null,st3)">des antibiotiques</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st3)">un pansement</button>
+            <button class="opt" data-correct="false" data-correction="un pansement" onclick="checkQCM(this,false,null,st3)">des vitamines</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">3. Le pharmacien demande : "Avez-vous une ___ ?" pour les médicaments sur ordonnance. <button class="btn-mini" onclick="speak('Avez-vous une ordonnance ?')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st3)">ordonnance</button>
+            <button class="opt" data-correct="false" data-correction="ordonnance" onclick="checkQCM(this,false,null,st3)">valise</button>
+            <button class="opt" data-correct="false" data-correction="ordonnance" onclick="checkQCM(this,false,null,st3)">facture</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">4. On ___ les médicaments avec de l'eau. <button class="btn-mini" onclick="speak('On avale les médicaments avec de l\'eau.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="avale" onclick="checkQCM(this,false,null,st3)">boit</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st3)">avale</button>
+            <button class="opt" data-correct="false" data-correction="avale" onclick="checkQCM(this,false,null,st3)">mange</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+      </div>
+
+      <!-- Exercice 2 · Fill: dialogue à la pharmacie -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l3d);">Ejercicio 2 · Diálogo en la farmacia</div>
+        <div class="ex-instr">Completa el diálogo con las palabras correctas.</div>
+        <div id="fill3a">
+          <p>— Bonjour, je cherche quelque chose pour le <input class="fill-input" data-answer="mal de tête / mal de gorge / rhume" placeholder="?">. <span class="fill-hint"></span></p>
+          <p>— Avez-vous une <input class="fill-input" data-answer="ordonnance" placeholder="?"> du médecin ? <span class="fill-hint"></span></p>
+          <p>— Non, c'est pour un <input class="fill-input" data-answer="rhume / problème bénin" placeholder="?"> bénin. <span class="fill-hint"></span></p>
+          <p>— Je vous recommande ce <input class="fill-input" data-answer="sirop / médicament / spray" placeholder="?"> à prendre trois fois par jour. <span class="fill-hint"></span></p>
+        </div>
+        <button class="check-btn" onclick="checkFill('fill3a',null)">Verificar ✓</button>
+      </div>
+
+      <!-- Exercice 3 · Match médicament → usage -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l3d);">Ejercicio 3 · Médicament → Usage</div>
+        <div class="ex-instr">Asocia cada medicamento o producto con su uso principal.</div>
+        <div id="match3a"></div>
+      </div>
+
+      <!-- Exercice 4 · QCM conseils du pharmacien -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l3d);">Ejercicio 4 · Consejos del farmacéutico</div>
+        <div class="ex-instr">Selecciona el consejo correcto del farmacéutico.</div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">5. "Prenez ce médicament ___ les repas." (avec de la nourriture) <button class="btn-mini" onclick="speak('Prenez ce médicament pendant les repas.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="pendant" onclick="checkQCM(this,false,null,st3)">avant</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st3)">pendant</button>
+            <button class="opt" data-correct="false" data-correction="pendant" onclick="checkQCM(this,false,null,st3)">sans</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">6. "Ne dépassez pas ___ comprimés par jour." <button class="btn-mini" onclick="speak('Ne dépassez pas deux comprimés par jour.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="deux" onclick="checkQCM(this,false,null,st3)">dix</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st3)">deux</button>
+            <button class="opt" data-correct="false" data-correction="deux" onclick="checkQCM(this,false,null,st3)">zéro</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <button class="check-btn" onclick="showScore(document.getElementById('sc3'), st3.score, st3.total)">Ver resultado 📊</button>
+      </div>
+
+      <div class="score-box" id="sc3"></div>
+    </div><!-- /lesson 3 -->
+
+  </main>
+</div><!-- /.app -->
+
+<script>
+/* ── États QCM par section ── */
+const st0 = { score: 0, total: 6 };  // 4 + 2 QCM
+const st1 = { score: 0, total: 4 };
+const st2 = { score: 0, total: 6 };  // 4 + 2 QCM
+const st3 = { score: 0, total: 6 };  // 4 + 2 QCM
+
+window.addEventListener('DOMContentLoaded', function () {
+  buildELModal();
+
+  /* Match 0 : partie du corps → fonction */
+  buildMatch('match0a', [
+    ['les yeux',    'voir'],
+    ['les oreilles','entendre'],
+    ['le nez',      'sentir'],
+    ['les mains',   'toucher'],
+    ['la bouche',   'parler et manger'],
+  ]);
+
+  /* Match 1 : terme médical → signification */
+  buildMatch('match1a', [
+    ['une ordonnance',    'la receta médica'],
+    ['la fièvre',         'la fiebre'],
+    ['une radiographie',  'una radiografía'],
+    ['les antibiotiques', 'los antibióticos'],
+    ['une consultation',  'una consulta médica'],
+  ]);
+
+  /* Match 2 : conseil (impératif) → situation */
+  buildMatch('match2a', [
+    ['Reposez-vous !',           'vous êtes fatigué'],
+    ['Ne fumez pas !',           'vous avez mal à la gorge'],
+    ['Buvez beaucoup d\'eau !',  'vous avez de la fièvre'],
+    ['Prenez ce comprimé !',     'vous avez mal à la tête'],
+  ]);
+
+  /* Match 3 : médicament → usage */
+  buildMatch('match3a', [
+    ['le paracétamol',     'contre la fièvre et la douleur'],
+    ['les antibiotiques',  'contre une infection bactérienne'],
+    ['le sirop',           'contre la toux'],
+    ['le pansement',       'pour couvrir une blessure'],
+    ['la crème solaire',   'pour protéger la peau du soleil'],
+  ]);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Français A2 · Module 3 · Expression et Communication</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="moteur.js"></script>
+</head>
+<body>
+<div class="app">
+
+  <aside class="sidebar">
+    <a class="sidebar-back" href="index.html">← Volver al inicio</a>
+    <div class="sidebar-logo">Module 3 · <span style="color:var(--a2);">A2</span></div>
+
+    <button class="nav-btn active" data-lesson="0" onclick="showLesson(0,this)">
+      <span class="nav-icon">💬</span>Exprimer son opinion<span class="nav-badge">4 ex.</span>
+    </button>
+    <button class="nav-btn" data-lesson="1" onclick="showLesson(1,this)">
+      <span class="nav-icon">⚖️</span>Comparer<span class="nav-badge">4 ex.</span>
+    </button>
+    <button class="nav-btn" data-lesson="2" onclick="showLesson(2,this)">
+      <span class="nav-icon">🎨</span>Goûts et loisirs<span class="nav-badge">5 ex.</span>
+    </button>
+  </aside>
+
+  <main class="main">
+
+    <!-- ══════════════════════════════════════════════════════════
+         LEÇON 0 — Exprimer son opinion
+         ══════════════════════════════════════════════════════════ -->
+    <div class="lesson-panel active" data-lesson="0">
+      <h2 class="lesson-title" style="color:var(--l0);">💬 Exprimer son opinion</h2>
+
+      <!-- Exercice 1 · QCM expression d'opinion -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l0d);">Ejercicio 1 · ¿Cómo expresar tu opinión?</div>
+        <div class="ex-instr">Selecciona la expresión correcta para dar tu punto de vista.</div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">1. ___ les réseaux sociaux sont utiles. (creo que) <button class="btn-mini" onclick="speak('Je crois que les réseaux sociaux sont utiles.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="Je crois que" onclick="checkQCM(this,false,null,st0)">À mon sens,</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">Je crois que</button>
+            <button class="opt" data-correct="false" data-correction="Je crois que" onclick="checkQCM(this,false,null,st0)">Je ne suis pas sûr que</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">2. ___ c'est une bonne idée ! (en mi opinión) <button class="btn-mini" onclick="speak('À mon avis, c\'est une bonne idée !')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">À mon avis,</button>
+            <button class="opt" data-correct="false" data-correction="À mon avis," onclick="checkQCM(this,false,null,st0)">Je pense que</button>
+            <button class="opt" data-correct="false" data-correction="À mon avis," onclick="checkQCM(this,false,null,st0)">Selon moi,</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">3. Je ___ pas d'accord avec toi. <button class="btn-mini" onclick="speak('Je ne suis pas d\'accord avec toi.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="ne suis" onclick="checkQCM(this,false,null,st0)">crois</button>
+            <button class="opt" data-correct="false" data-correction="ne suis" onclick="checkQCM(this,false,null,st0)">pense</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">ne suis</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">4. Tu ___ raison ! Le film était excellent. <button class="btn-mini" onclick="speak('Tu as raison ! Le film était excellent.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">as</button>
+            <button class="opt" data-correct="false" data-correction="as" onclick="checkQCM(this,false,null,st0)">est</button>
+            <button class="opt" data-correct="false" data-correction="as" onclick="checkQCM(this,false,null,st0)">pense</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+      </div>
+
+      <!-- Exercice 2 · Fill: compléter une opinion -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l0d);">Ejercicio 2 · Completa las expresiones de opinión</div>
+        <div class="ex-instr">Escribe la palabra que falta para expresar una opinión.</div>
+        <div id="fill0a">
+          <p>1. Je <input class="fill-input" data-answer="pense" placeholder="?"> que la nature est importante. <span class="fill-hint"></span></p>
+          <p>2. À mon <input class="fill-input" data-answer="avis" placeholder="?"> , il faut plus de musique à l'école. <span class="fill-hint"></span></p>
+          <p>3. Je suis tout à fait <input class="fill-input" data-answer="d'accord" placeholder="?"> avec toi. <span class="fill-hint"></span></p>
+          <p>4. Selon <input class="fill-input" data-answer="moi" placeholder="?"> , voyager est la meilleure éducation. <span class="fill-hint"></span></p>
+        </div>
+        <button class="check-btn" onclick="checkFill('fill0a',null)">Verificar ✓</button>
+      </div>
+
+      <!-- Exercice 3 · Match opinion → contexte -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l0d);">Ejercicio 3 · Expresión → Significado</div>
+        <div class="ex-instr">Asocia cada expresión con su equivalente en español.</div>
+        <div id="match0a"></div>
+      </div>
+
+      <!-- Exercice 4 · QCM nuancer une opinion -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l0d);">Ejercicio 4 · Matizar tu opinión</div>
+        <div class="ex-instr">Selecciona la expresión que introduce una matización o duda.</div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">5. ___ , ce n'est pas si simple. (sin embargo) <button class="btn-mini" onclick="speak('Cependant, ce n\'est pas si simple.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="Cependant" onclick="checkQCM(this,false,null,st0)">À mon avis</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">Cependant</button>
+            <button class="opt" data-correct="false" data-correction="Cependant" onclick="checkQCM(this,false,null,st0)">Je crois</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">6. ___ , ce film est intéressant ___ un peu long. <button class="btn-mini" onclick="speak('Certes, ce film est intéressant mais un peu long.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st0)">Certes… mais</button>
+            <button class="opt" data-correct="false" data-correction="Certes… mais" onclick="checkQCM(this,false,null,st0)">À mon avis… donc</button>
+            <button class="opt" data-correct="false" data-correction="Certes… mais" onclick="checkQCM(this,false,null,st0)">Je pense… car</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <button class="check-btn" onclick="showScore(document.getElementById('sc0'), st0.score, st0.total)">Ver resultado 📊</button>
+      </div>
+
+      <div class="score-box" id="sc0"></div>
+    </div><!-- /lesson 0 -->
+
+
+    <!-- ══════════════════════════════════════════════════════════
+         LEÇON 1 — Comparer
+         ══════════════════════════════════════════════════════════ -->
+    <div class="lesson-panel" data-lesson="1">
+      <h2 class="lesson-title" style="color:var(--l1);">⚖️ Comparer</h2>
+
+      <!-- Exercice 1 · QCM comparatif -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l1d);">Ejercicio 1 · Más / menos / tan…</div>
+        <div class="ex-instr">Selecciona la forma comparativa correcta (plus, moins, aussi).</div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">1. Paul est ___ grand que Marc. (Paul es más alto) <button class="btn-mini" onclick="speak('Paul est plus grand que Marc.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st1)">plus</button>
+            <button class="opt" data-correct="false" data-correction="plus" onclick="checkQCM(this,false,null,st1)">moins</button>
+            <button class="opt" data-correct="false" data-correction="plus" onclick="checkQCM(this,false,null,st1)">aussi</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">2. Cette voiture est ___ chère que l'autre. (menos cara) <button class="btn-mini" onclick="speak('Cette voiture est moins chère que l\'autre.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="moins" onclick="checkQCM(this,false,null,st1)">plus</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st1)">moins</button>
+            <button class="opt" data-correct="false" data-correction="moins" onclick="checkQCM(this,false,null,st1)">aussi</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">3. Elle parle ___ bien le français que moi. (igual de bien) <button class="btn-mini" onclick="speak('Elle parle aussi bien le français que moi.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="aussi" onclick="checkQCM(this,false,null,st1)">plus</button>
+            <button class="opt" data-correct="false" data-correction="aussi" onclick="checkQCM(this,false,null,st1)">moins</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st1)">aussi</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">4. Le bus est ___ pratique que le taxi. (más práctico) <button class="btn-mini" onclick="speak('Le bus est plus pratique que le taxi.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st1)">plus</button>
+            <button class="opt" data-correct="false" data-correction="plus" onclick="checkQCM(this,false,null,st1)">aussi</button>
+            <button class="opt" data-correct="false" data-correction="plus" onclick="checkQCM(this,false,null,st1)">moins</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+      </div>
+
+      <!-- Exercice 2 · Fill: superlatif -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l1d);">Ejercicio 2 · El superlativo</div>
+        <div class="ex-instr">Completa con el superlativo (le plus, la plus, les plus, le moins…).</div>
+        <div id="fill1a">
+          <p>1. C'est <input class="fill-input" data-answer="le plus grand" placeholder="?"> musée de la ville. (el más grande) <span class="fill-hint"></span></p>
+          <p>2. Elle est <input class="fill-input" data-answer="la moins chère" placeholder="?"> de toutes les options. (la menos cara) <span class="fill-hint"></span></p>
+          <p>3. Ce sont <input class="fill-input" data-answer="les meilleurs" placeholder="?"> gâteaux du monde ! (los mejores) <span class="fill-hint"></span></p>
+          <p>4. C'est <input class="fill-input" data-answer="le pire / le plus mauvais" placeholder="?"> film que j'ai vu. (el peor) <span class="fill-hint"></span></p>
+        </div>
+        <button class="check-btn" onclick="checkFill('fill1a',null)">Verificar ✓</button>
+      </div>
+
+      <!-- Exercice 3 · Match comparaison -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l1d);">Ejercicio 3 · Estructura comparativa</div>
+        <div class="ex-instr">Asocia la estructura francesa con su equivalente en español.</div>
+        <div id="match1a"></div>
+      </div>
+
+      <!-- Exercice 4 · QCM bon / mauvais -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l1d);">Ejercicio 4 · Bon et mauvais (irregulares)</div>
+        <div class="ex-instr">Bon y mauvais tienen formas comparativas irregulares. Elige la correcta.</div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">5. Ce restaurant est ___ que l'autre. (mejor) <button class="btn-mini" onclick="speak('Ce restaurant est meilleur que l\'autre.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="meilleur" onclick="checkQCM(this,false,null,st1)">plus bon</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st1)">meilleur</button>
+            <button class="opt" data-correct="false" data-correction="meilleur" onclick="checkQCM(this,false,null,st1)">aussi bon</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">6. Cette note est ___ que la dernière fois. (peor) <button class="btn-mini" onclick="speak('Cette note est pire que la dernière fois.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="pire" onclick="checkQCM(this,false,null,st1)">moins bonne</button>
+            <button class="opt" data-correct="false" data-correction="pire" onclick="checkQCM(this,false,null,st1)">plus mauvaise</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st1)">pire</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <button class="check-btn" onclick="showScore(document.getElementById('sc1'), st1.score, st1.total)">Ver resultado 📊</button>
+      </div>
+
+      <div class="score-box" id="sc1"></div>
+    </div><!-- /lesson 1 -->
+
+
+    <!-- ══════════════════════════════════════════════════════════
+         LEÇON 2 — Goûts et loisirs
+         ══════════════════════════════════════════════════════════ -->
+    <div class="lesson-panel" data-lesson="2">
+      <h2 class="lesson-title" style="color:var(--l2);">🎨 Goûts et loisirs</h2>
+
+      <!-- Exercice 1 · QCM exprimer les goûts -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l2d);">Ejercicio 1 · Expresar gustos</div>
+        <div class="ex-instr">Selecciona la expresión de gusto correcta según la intensidad indicada.</div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">1. J'___ la musique classique. (me encanta) <button class="btn-mini" onclick="speak('J\'adore la musique classique.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="adore" onclick="checkQCM(this,false,null,st2)">aime bien</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st2)">adore</button>
+            <button class="opt" data-correct="false" data-correction="adore" onclick="checkQCM(this,false,null,st2)">déteste</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">2. Je n'___ pas trop les films d'horreur. (no me gustan mucho) <button class="btn-mini" onclick="speak('Je n\'aime pas trop les films d\'horreur.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st2)">aime</button>
+            <button class="opt" data-correct="false" data-correction="aime" onclick="checkQCM(this,false,null,st2)">adore</button>
+            <button class="opt" data-correct="false" data-correction="aime" onclick="checkQCM(this,false,null,st2)">déteste</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">3. Il ___ faire la cuisine. (le gusta) <button class="btn-mini" onclick="speak('Il aime faire la cuisine.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="aime" onclick="checkQCM(this,false,null,st2)">adore</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st2)">aime</button>
+            <button class="opt" data-correct="false" data-correction="aime" onclick="checkQCM(this,false,null,st2)">déteste</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">4. Ça ___ ? Tu veux venir au concert ? <button class="btn-mini" onclick="speak('Ça te dit ? Tu veux venir au concert ?')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="te dit" onclick="checkQCM(this,false,null,st2)">te plait</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st2)">te dit</button>
+            <button class="opt" data-correct="false" data-correction="te dit" onclick="checkQCM(this,false,null,st2)">t'intéresse</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+      </div>
+
+      <!-- Exercice 2 · Fill: aimer + infinitif -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l2d);">Ejercicio 2 · Aimer + infinitivo</div>
+        <div class="ex-instr">Completa con el verbo de gusto correcto (aimer, adorer, détester, préférer).</div>
+        <div id="fill2a">
+          <p>1. Elle <input class="fill-input" data-answer="adore / aime" placeholder="?"> lire des romans policiers. <span class="fill-hint"></span></p>
+          <p>2. Je <input class="fill-input" data-answer="déteste / n'aime pas" placeholder="?"> me lever tôt le matin. <span class="fill-hint"></span></p>
+          <p>3. Nous <input class="fill-input" data-answer="préférons" placeholder="?"> le cinéma au théâtre. <span class="fill-hint"></span></p>
+          <p>4. Ils <input class="fill-input" data-answer="aiment / adorent" placeholder="?"> voyager à l'étranger. <span class="fill-hint"></span></p>
+        </div>
+        <button class="check-btn" onclick="checkFill('fill2a',null)">Verificar ✓</button>
+      </div>
+
+      <!-- Exercice 3 · Match loisirs -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l2d);">Ejercicio 3 · Actividad de ocio</div>
+        <div class="ex-instr">Asocia cada actividad con la categoría de ocio correspondiente.</div>
+        <div id="match2a"></div>
+      </div>
+
+      <!-- Exercice 4 · Fill: inviter / accepter / refuser -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l2d);">Ejercicio 4 · Invitar, aceptar, rechazar</div>
+        <div class="ex-instr">Completa el diálogo con la respuesta apropiada.</div>
+        <div id="fill2b">
+          <p>— Tu veux venir au cinéma ce soir ?</p>
+          <p>— Oui, avec <input class="fill-input" data-answer="plaisir" placeholder="?"> ! J'adore le cinéma. <span class="fill-hint"></span></p>
+          <p>— Et toi, Marie ?</p>
+          <p>— Désolée, je ne <input class="fill-input" data-answer="peux" placeholder="?"> pas, j'ai du travail. <span class="fill-hint"></span></p>
+          <p>— Dommage ! On y va <input class="fill-input" data-answer="quand même / sans toi" placeholder="?"> alors. <span class="fill-hint"></span></p>
+        </div>
+        <button class="check-btn" onclick="checkFill('fill2b',null)">Verificar ✓</button>
+      </div>
+
+      <!-- Exercice 5 · QCM activités -->
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l2d);">Ejercicio 5 · ¿Qué frase es correcta?</div>
+        <div class="ex-instr">Elige la frase gramaticalmente correcta para hablar de ocio.</div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">5. Pour parler d'un loisir régulier, on utilise : <button class="btn-mini" onclick="speak('Je fais du sport tous les jours.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st2)">Je fais du sport tous les jours.</button>
+            <button class="opt" data-correct="false" data-correction="Je fais du sport tous les jours." onclick="checkQCM(this,false,null,st2)">Je suis fait du sport.</button>
+            <button class="opt" data-correct="false" data-correction="Je fais du sport tous les jours." onclick="checkQCM(this,false,null,st2)">Je fait du sport.</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">6. Après "j'aime", on met : <button class="btn-mini" onclick="speak('J\'aime jouer de la guitare.')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="l'infinitif" onclick="checkQCM(this,false,null,st2)">le participe passé</button>
+            <button class="opt" data-correct="false" data-correction="l'infinitif" onclick="checkQCM(this,false,null,st2)">le subjonctif</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,null,st2)">l'infinitif</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <button class="check-btn" onclick="showScore(document.getElementById('sc2'), st2.score, st2.total)">Ver resultado 📊</button>
+      </div>
+
+      <div class="score-box" id="sc2"></div>
+    </div><!-- /lesson 2 -->
+
+  </main>
+</div><!-- /.app -->
+
+<script>
+/* ── États QCM par section ── */
+const st0 = { score: 0, total: 6 };  // 4 + 2 QCM
+const st1 = { score: 0, total: 6 };  // 4 + 2 QCM
+const st2 = { score: 0, total: 6 };  // 4 + 2 QCM
+
+window.addEventListener('DOMContentLoaded', function () {
+  buildELModal();
+
+  /* Match 0 : expression d'opinion → équivalent ES */
+  buildMatch('match0a', [
+    ['Je pense que…',     'Pienso que…'],
+    ['À mon avis,',       'En mi opinión,'],
+    ['Je suis d\'accord', 'Estoy de acuerdo'],
+    ['Je ne suis pas sûr','No estoy seguro'],
+  ]);
+
+  /* Match 1 : structure comparative → signification */
+  buildMatch('match1a', [
+    ['plus … que',    'más … que'],
+    ['moins … que',   'menos … que'],
+    ['aussi … que',   'tan … como'],
+    ['le / la plus',  'el / la más (superlativo)'],
+  ]);
+
+  /* Match 2 : activité → catégorie */
+  buildMatch('match2a', [
+    ['jouer de la guitare',  'musique'],
+    ['faire du jogging',     'sport'],
+    ['lire un roman',        'lecture'],
+    ['regarder une série',   'cinéma / TV'],
+    ['visiter un musée',     'culture'],
+  ]);
+});
+</script>
+</body>
+</html>
