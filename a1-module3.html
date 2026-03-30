@@ -5,24 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Français A1 · Module 3</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#f7f4ef;--white:#fff;--text:#1c1c2e;--muted:#7a7a8c;--border:#e4ddd4;
---l1:#e63946;--l1l:#fdecea;--l1d:#b02030;
---l2:#2a7dd1;--l2l:#deeeff;--l2d:#1a5fa0;
---l3:#e88c1a;--l3l:#fff3dc;--l3d:#b86a00;
---l4:#2eaa6b;--l4l:#dcf5ea;--l4d:#1d7a4c;
---shadow:0 4px 24px rgba(0,0,0,.08)}
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="auth.js"></script>
+  <script src="moteur.js"></script>
+
+  <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
-.app{display:flex;min-height:100vh}
-.sidebar{width:260px;flex-shrink:0;background:var(--white);border-right:1px solid var(--border);padding:24px 16px;position:sticky;top:0;height:100vh;overflow-y:auto;display:flex;flex-direction:column;gap:6px}
-.sidebar-logo{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;padding:0 8px 18px;border-bottom:1px solid var(--border);margin-bottom:10px;line-height:1.3}
 .sidebar-logo span{color:var(--l1)}
-.sidebar-back{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;border:1.5px solid var(--border);background:var(--bg);color:var(--muted);font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;cursor:pointer;text-decoration:none;margin-bottom:10px;transition:all .15s}
-.sidebar-back:hover{border-color:var(--text);color:var(--text)}
-.nav-btn{display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:12px;border:none;background:transparent;color:var(--muted);font-family:'Nunito',sans-serif;font-size:13px;font-weight:600;cursor:pointer;text-align:left;transition:all .18s}
 .nav-btn .nav-icon{font-size:16px;width:22px;text-align:center}
-.nav-btn .nav-badge{margin-left:auto;font-size:10px;font-weight:800;padding:2px 7px;border-radius:20px;background:rgba(0,0,0,.06)}
 .nav-btn[data-l="1"].active{background:var(--l1);color:white}
 .nav-btn[data-l="2"].active{background:var(--l2);color:white}
 .nav-btn[data-l="3"].active{background:var(--l3);color:white}
@@ -31,22 +22,12 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .nav-btn[data-l="2"]:not(.active):hover{background:var(--l2l);color:var(--l2d)}
 .nav-btn[data-l="3"]:not(.active):hover{background:var(--l3l);color:var(--l3d)}
 .nav-btn[data-l="4"]:not(.active):hover{background:var(--l4l);color:var(--l4d)}
-.main{flex:1;padding:40px 36px;max-width:860px}
 .lesson-panel{display:none}.lesson-panel.active{display:block;animation:fadeIn .3s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.lesson-header{display:flex;align-items:flex-start;gap:20px;margin-bottom:36px}
-.lesson-icon-big{width:64px;height:64px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:30px;flex-shrink:0}
-.lesson-tag{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;border-radius:20px;display:inline-block;margin-bottom:8px}
-.lesson-title{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;line-height:1.2;color:var(--text);margin-bottom:6px}
-.lesson-desc{font-size:14px;color:var(--muted);line-height:1.6}
-.ex-card{background:var(--white);border:1px solid var(--border);border-radius:18px;padding:26px;margin-bottom:20px;box-shadow:var(--shadow)}
-.ex-title{font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
-.ex-instr{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.5}
 .qcm-item{margin-bottom:22px}
 .q-label{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;opacity:.6}
 .q-text{font-size:15px;font-weight:700;color:var(--text);margin-bottom:12px;line-height:1.5}
 .opts{display:flex;flex-direction:column;gap:8px}
-.opt{padding:11px 16px;border-radius:10px;border:1.5px solid var(--border);background:var(--bg);color:var(--text);font-size:14px;font-weight:600;cursor:pointer;text-align:left;font-family:'Nunito',sans-serif;transition:all .15s}
 .opt:hover:not(:disabled){border-color:var(--text);background:var(--white)}
 .opt:disabled{cursor:default}
 .opt.correct{border-color:var(--l4);background:var(--l4l);color:var(--l4d)}
@@ -55,7 +36,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .fb.show{display:block}.fb.ok{background:var(--l4l);color:var(--l4d)}.fb.nope{background:var(--l1l);color:var(--l1d)}
 .fill-item{margin-bottom:16px}
 .fill-sentence{font-size:15px;font-weight:600;color:var(--text);margin-bottom:8px;line-height:1.7}
-.fill-input{border:2px solid var(--border);border-radius:8px;padding:8px 14px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:600;width:100%;background:var(--bg);color:var(--text);outline:none;transition:border-color .15s}
 .fill-input:focus{border-color:var(--l2)}
 .fill-input.ok{border-color:var(--l4);background:var(--l4l);color:var(--l4d)}
 .fill-input.nope{border-color:var(--l1);background:var(--l1l);color:var(--l1d)}
@@ -63,7 +43,6 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .match-wrap{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .match-col-title{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;text-align:center}
 .match-col{display:flex;flex-direction:column;gap:8px}
-.match-item{padding:11px 16px;border-radius:10px;border:1.5px solid var(--border);background:var(--bg);font-size:13px;font-weight:600;cursor:pointer;text-align:center;transition:all .18s;font-family:'Nunito',sans-serif;min-height:44px;display:flex;align-items:center;justify-content:center}
 .match-item.selected{border-color:var(--l2);background:var(--l2l);color:var(--l2d)}
 .match-item.matched-ok{border-color:var(--l4);background:var(--l4l);color:var(--l4d);pointer-events:none}
 .match-item.matched-err{border-color:var(--l1);background:var(--l1l);color:var(--l1d);animation:shake .3s}
@@ -74,9 +53,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .score-emoji{font-size:40px;margin-bottom:8px}
 .score-num{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;margin-bottom:4px}
 .score-msg{font-size:14px;color:var(--muted)}
-.check-btn{margin-top:16px;padding:12px 28px;border-radius:10px;border:none;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;cursor:pointer;transition:all .18s}
 .check-btn:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
-.speak-btn{background:none;border:1.5px solid var(--border);border-radius:8px;padding:6px 12px;cursor:pointer;font-size:15px;transition:all .15s;margin-left:8px}
 .speak-btn:hover{border-color:var(--text)}
 .ra-item{background:var(--bg);border:1.5px solid var(--border);border-radius:14px;padding:18px 20px;margin-bottom:12px}
 .ra-phrase{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--text);margin-bottom:4px;line-height:1.4}
@@ -104,30 +81,21 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
   .match-wrap{grid-template-columns:1fr}
 }
 
-/* ── ElevenLabs Settings Panel ── */
-#el-fab{position:fixed;bottom:22px;right:22px;width:46px;height:46px;border-radius:50%;background:#7c3aed;color:white;border:none;font-size:20px;cursor:pointer;z-index:9999;box-shadow:0 4px 18px rgba(124,58,237,.45);transition:all .2s;display:flex;align-items:center;justify-content:center}
 #el-fab:hover{transform:scale(1.1);background:#6d28d9}
 #el-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:10000;align-items:center;justify-content:center}
 #el-modal.open{display:flex}
 #el-box{background:#fff;border-radius:20px;padding:28px;width:min(480px,94vw);box-shadow:0 20px 60px rgba(0,0,0,.2);font-family:'Nunito',sans-serif}
 #el-box h2{font-family:'Playfair Display',serif;font-size:20px;margin-bottom:4px;color:#1c1c2e}
 #el-box p{font-size:12px;color:#7a7a8c;margin-bottom:20px;line-height:1.5}
-.el-label{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#7a7a8c;margin-bottom:6px;display:block}
 .el-input{width:100%;border:2px solid #e4ddd4;border-radius:10px;padding:10px 14px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:600;outline:none;margin-bottom:14px;transition:border-color .15s}
 .el-input:focus{border-color:#7c3aed}
-.el-select{width:100%;border:2px solid #e4ddd4;border-radius:10px;padding:10px 14px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:600;outline:none;margin-bottom:18px;background:#f7f4ef;cursor:pointer}
 .el-btns{display:flex;gap:8px;flex-wrap:wrap}
-.el-btn{padding:10px 18px;border-radius:10px;border:none;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;transition:all .18s}
 .el-btn:hover{transform:translateY(-1px)}
 .el-status{margin-top:12px;font-size:13px;font-weight:700;min-height:20px;text-align:center}
 .el-chars{font-size:11px;color:#7a7a8c;text-align:center;margin-top:8px}
-/* Loading spinner on speak buttons */
 .speaking{opacity:.65;pointer-events:none}
 @keyframes spin{to{transform:rotate(360deg)}}
-
 </style>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="auth.js"></script>
 </head>
 <body>
 <div class="mob-nav" id="mobNav"></div>
@@ -314,7 +282,8 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 </main>
 </div>
 
-<script>
+<script>function speakWithVoice(t,r,v,el){speak(t,v);}
+
 function showL(n){
   document.querySelectorAll('.lesson-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('[data-l]').forEach(b=>b.classList.remove('active'));
@@ -328,29 +297,12 @@ function showL(n){
 // ══════════════════════════════════════
 // NAVIGATION
 // ══════════════════════════════════════
-function showLesson(n){
-  document.querySelectorAll('.lesson-panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('[data-lesson]').forEach(b=>b.classList.remove('active'));
-  document.getElementById('panel-'+n).classList.add('active');
-  document.querySelectorAll('[data-lesson="'+n+'"]').forEach(b=>b.classList.add('active'));
-  window.scrollTo({top:0,behavior:'instant'});
-}
+
 
 // ══════════════════════════════════════
 // SPEECH — robuste avec retry
 // ══════════════════════════════════════
 // ══ ElevenLabs TTS Engine ══
-const AUDIO_CACHE = new Map();
-const EL_VOICES = [
-  {id:'XB0fDUnXU5powFXDhCwa', name:'Charlotte (féminin — recommandée 🇫🇷)'},
-  {id:'onwK4e9ZLuTAKqWW03F9', name:'Daniel (masculin — clair et naturel)'},
-  {id:'pqHfZKP75CvOlQylNhV4', name:'Bill (masculin — chaleureux)'},
-  {id:'jsCqWAovK2LkecY7zXl4', name:'Lily (féminin — doux)'},
-  {id:'oWAxZDx7w5VEj9dCyTzz', name:'Grace (féminin — expressif)'},
-];
-let EL_KEY = localStorage.getItem('el_api_key') || '';
-let EL_VOICE = localStorage.getItem('el_voice_id') || EL_VOICES[0].id;
-let EL_CHARS_USED = parseInt(localStorage.getItem('el_chars_used')||'0');
 
 function browserSpeak(t,r){r=r||.82;window.speechSynthesis.cancel();function g(){const u=new SpeechSynthesisUtterance(t);u.lang='fr-FR';u.rate=r;const v=window.speechSynthesis.getVoices().find(x=>x.lang&&x.lang.startsWith('fr'));if(v)u.voice=v;window.speechSynthesis.speak(u);}window.speechSynthesis.getVoices().length===0?(window.speechSynthesis.onvoiceschanged=g):g();}
 
@@ -370,131 +322,6 @@ function getVoiceForText(text){
 function speakGendered(text, rate, triggerEl){
   const voice = getVoiceForText(text);
   speakWithVoice(text, rate, triggerEl, voice);
-}
-
-function speakWithVoice(text, rate, voice, triggerEl){
-  rate = rate || 1.0;
-  if(!EL_KEY){ browserSpeak(text, rate * 0.82); return; }
-  const cacheKey = text + '||' + voice;
-  if(AUDIO_CACHE.has(cacheKey)){
-    const audio = new Audio(AUDIO_CACHE.get(cacheKey));
-    audio.playbackRate = rate;
-    audio.play();
-    return;
-  }
-  if(triggerEl) triggerEl.classList.add('speaking');
-  fetch('https://api.elevenlabs.io/v1/text-to-speech/' + voice, {
-    method:'POST',
-    headers:{'xi-api-key': EL_KEY, 'Content-Type':'application/json'},
-    body: JSON.stringify({text: `<speak><s xml:lang="fr-FR">${text}</s></speak>`, model_id:'eleven_multilingual_v2', language_code:'fr',
-      voice_settings:{stability:0.5, similarity_boost:0.75}})
-  }).then(r=>r.blob()).then(blob=>{
-    const url = URL.createObjectURL(blob);
-    AUDIO_CACHE.set(cacheKey, url);
-    const audio = new Audio(url);
-    audio.playbackRate = rate;
-    audio.play();
-    if(triggerEl) triggerEl.classList.remove('speaking');
-  }).catch(()=>{ browserSpeak(text, rate*0.82); if(triggerEl) triggerEl.classList.remove('speaking'); });
-}
-
-async function speak(text, rate, triggerEl){
-  rate = rate || 1.0;
-  if(!EL_KEY){ browserSpeak(text, rate * 0.82); return; }
-  const cacheKey = text + '||' + EL_VOICE;
-  if(AUDIO_CACHE.has(cacheKey)){
-    const audio = new Audio(AUDIO_CACHE.get(cacheKey));
-    audio.playbackRate = rate;
-    audio.play();
-    return;
-  }
-  if(triggerEl) triggerEl.classList.add('speaking');
-  try {
-    const res = await fetch('https://api.elevenlabs.io/v1/text-to-speech/' + EL_VOICE, {
-      method:'POST',
-      headers:{'xi-api-key': EL_KEY, 'Content-Type':'application/json'},
-      body: JSON.stringify({text: `<speak><s xml:lang="fr-FR">${text}</s></speak>`, model_id:'eleven_multilingual_v2', language_code:'fr', voice_settings:{stability:0.50,similarity_boost:0.75,style:0.25,use_speaker_boost:true}})
-    });
-    if(!res.ok){const e=await res.json();throw new Error(e.detail?.message||res.status);}
-    const blob = await res.blob();
-    const url = URL.createObjectURL(blob);
-    AUDIO_CACHE.set(cacheKey, url);
-    EL_CHARS_USED += text.length;
-    localStorage.setItem('el_chars_used', EL_CHARS_USED);
-    updateCharCount();
-    const audio = new Audio(url);
-    audio.playbackRate = rate;
-    audio.play();
-  } catch(err){
-    console.warn('ElevenLabs:', err);
-    browserSpeak(text, rate * 0.82);
-    const s=document.getElementById('el-status');
-    if(s){s.style.color='#e63946';s.textContent='⚠ '+err.message+' → Voz navegador';}
-  } finally {
-    if(triggerEl) setTimeout(()=>triggerEl.classList.remove('speaking'),400);
-  }
-}
-
-function buildELPanel(){
-  const fab=document.createElement("button");fab.id="el-fab";fab.title="Configurar voz ElevenLabs";fab.textContent="🎙";
-  fab.onclick=function(){document.getElementById("el-modal").classList.add("open");};
-  document.body.appendChild(fab);
-  const modal=document.createElement("div");modal.id="el-modal";
-  const box=document.createElement("div");box.id="el-box";
-  box.innerHTML="<h2>🎙️ Voz ElevenLabs</h2>"+
-    "<p>Conecta tu cuenta para obtener una voz francesa ultranatural.<br>"+
-    "<a href=\"https://elevenlabs.io\" target=\"_blank\" style=\"color:#7c3aed;font-weight:800\">→ Crear cuenta gratuita</a></p>"+
-    "<label class=\"el-label\">Clave API</label>"+
-    "<input class=\"el-input\" id=\"el-key-input\" type=\"password\" placeholder=\"sk-...\">"+
-    "<label class=\"el-label\">Voz</label>"+
-    "<select class=\"el-select\" id=\"el-voice-select\"></select>"+
-    "<div class=\"el-btns\">"+
-      "<button class=\"el-btn\" style=\"background:#7c3aed;color:white\" onclick=\"saveEL()\">💾 Guardar</button>"+
-      "<button class=\"el-btn\" style=\"background:#2eaa6b;color:white\" onclick=\"testEL()\">▶ Probar</button>"+
-      "<button class=\"el-btn\" style=\"background:#f7f4ef;border:2px solid #e4ddd4\" id=\"el-close-btn\">✕ Cerrar</button>"+
-    "</div>"+
-    "<div class=\"el-status\" id=\"el-status\"></div>";
-  modal.appendChild(box);
-  modal.onclick=function(e){if(e.target===modal)modal.classList.remove("open");};
-  document.body.appendChild(modal);
-  document.getElementById("el-close-btn").onclick=function(){modal.classList.remove("open");};
-  const sel=document.getElementById("el-voice-select");
-  EL_VOICES.forEach(function(v){const o=document.createElement("option");o.value=v.id;o.textContent=v.name;if(v.id===EL_VOICE)o.selected=true;sel.appendChild(o);});
-  document.getElementById("el-key-input").value=EL_KEY;
-  const st=document.getElementById("el-status");
-  st.style.color=EL_KEY?"#1d7a4c":"#e88c1a";
-  st.textContent=EL_KEY?"✓ Clave guardada — listo":"⚠ Sin clave → voz navegador activa";
-}
-function saveEL(){
-  const key=document.getElementById('el-key-input').value.trim();
-  const voice=document.getElementById('el-voice-select').value;
-  EL_KEY=key;EL_VOICE=voice;
-  localStorage.setItem('el_api_key',key);localStorage.setItem('el_voice_id',voice);
-  AUDIO_CACHE.clear();
-  const st=document.getElementById('el-status');
-  st.style.color=key?'#1d7a4c':'#e88c1a';
-  st.textContent=key?'✓ Guardado — caché limpiado':'⚠ Sin clave → voz navegador';
-}
-async function testEL(){
-  const key=document.getElementById('el-key-input').value.trim();
-  const voice=document.getElementById('el-voice-select').value;
-  const st=document.getElementById('el-status');
-  st.style.color='#7a7a8c';st.textContent='⏳ Probando...';
-  try{
-    const res=await fetch('https://api.elevenlabs.io/v1/text-to-speech/'+voice,{method:'POST',headers:{'xi-api-key':key,'Content-Type':'application/json'},body:JSON.stringify({text:"Bonjour ! Bienvenue dans votre cours de français.",model_id:'eleven_multilingual_v2',language_code:'fr',voice_settings:{stability:0.5,similarity_boost:0.75}})});
-    if(!res.ok){const e=await res.json();throw new Error(e.detail?.message||res.status);}
-    const blob=await res.blob();new Audio(URL.createObjectURL(blob)).play();
-    EL_KEY=key;EL_VOICE=voice;
-    localStorage.setItem('el_api_key',key);localStorage.setItem('el_voice_id',voice);
-    EL_CHARS_USED+=50;localStorage.setItem('el_chars_used',EL_CHARS_USED);updateCharCount();
-    st.style.color='#1d7a4c';st.textContent='✓ ¡Voz perfecta! Cierra y empieza.';
-  }catch(err){st.style.color='#e63946';st.textContent='✗ '+err.message;}
-}
-function updateCharCount(){
-  const el=document.getElementById('el-chars');if(!el)return;
-  const pct=Math.min(100,Math.round(EL_CHARS_USED/10000*100));
-  const color=pct>85?'#e63946':pct>60?'#e88c1a':'#2eaa6b';
-  el.innerHTML='<span style="color:'+color+';font-weight:800">'+EL_CHARS_USED.toLocaleString()+' / 10 000</span> caractères ce mois-ci ('+pct+'%)';
 }
 
 // ══════════════════════════════════════
@@ -951,66 +778,13 @@ function buildFill(containerId, items){
     c.appendChild(div);
   });
 }
-function checkFill(containerId, scoreId){
-  const inputs=document.querySelectorAll('#'+containerId+' .fill-input');
-  let ok=0;
-  inputs.forEach((inp,i)=>{
-    const val=inp.value.trim().toLowerCase();
-    const answers=inp.dataset.answer.split('|').map(a=>a.toLowerCase());
-    const correct=answers.some(a=>val===a||val===a.replace(/-/g,' '));
-    inp.className='fill-input '+(correct?'ok':'nope');
-    const hint=document.getElementById(containerId+'_hint_'+i);
-    const translation=inp.dataset.translation||'';
-    if(!correct){
-      const corrAnswer=inp.dataset.answer.split('|')[0];
-      hint.style.color='var(--l1d)';
-      hint.style.fontStyle='normal';
-      hint.innerHTML=`→ <strong>${corrAnswer}</strong>`
-        +(translation ? `<br><span style="color:var(--muted);font-size:11px;font-style:italic">${translation}</span>` : '');
-    } else {
-      ok++;
-      hint.style.color='var(--l4d)';
-      hint.style.fontStyle='normal';
-      hint.innerHTML=translation
-        ? `<span style="font-size:11px;font-style:italic;color:var(--muted)">${translation}</span>`
-        : '';
-    }
-    inp.disabled=true;
-  });
-  const box=document.getElementById(scoreId);
-  if(!box) return;
-  box.classList.add('show');
-  const pct=ok/inputs.length;
-  document.getElementById(scoreId+'-em').textContent=pct>=.8?'🎉':pct>=.6?'👍':'💪';
-  document.getElementById(scoreId+'-n').textContent=ok+' / '+inputs.length;
-  document.getElementById(scoreId+'-m').textContent=pct>=.8?'¡Excelente!':pct>=.6?'¡Bien! Repasa los errores.':'Inténtalo de nuevo.';
-  box.scrollIntoView({behavior:'smooth',block:'nearest'});
-}
+
 
 // ══════════════════════════════════════
 // MATCH ENGINE
 // ══════════════════════════════════════
 const matchState={};
-function buildMatch(containerId, pairs, scoreId){
-  const shuffled=[...pairs].sort(()=>Math.random()-.5);
-  const wrap=document.createElement('div');
-  wrap.className='match-wrap';
-  wrap.innerHTML=`
-    <div>
-      <div class="match-col-title">Francés</div>
-      <div class="match-col" id="${containerId}_left">
-        ${pairs.map((p,i)=>`<button class="match-item" id="${containerId}_L${i}" onclick="pickMatch('${containerId}','L',${i},'${scoreId}',${pairs.length})">${p.left}</button>`).join('')}
-      </div>
-    </div>
-    <div>
-      <div class="match-col-title">Español</div>
-      <div class="match-col" id="${containerId}_right">
-        ${shuffled.map((p,i)=>`<button class="match-item" id="${containerId}_R${i}" onclick="pickMatch('${containerId}','R',${i},'${scoreId}',${pairs.length})" data-val="${p.left}">${p.right}</button>`).join('')}
-      </div>
-    </div>`;
-  document.getElementById(containerId).appendChild(wrap);
-  matchState[containerId]={selected:null, score:0, total:pairs.length};
-}
+
 function pickMatch(cid, side, idx, scoreId, total){
   const st=matchState[cid];
   const el=document.getElementById(cid+'_'+side+idx);
@@ -1293,7 +1067,7 @@ const ra4=[
 document.addEventListener('DOMContentLoaded',()=>{
   window.speechSynthesis.getVoices();
   if(window.speechSynthesis.onvoiceschanged!==undefined) window.speechSynthesis.onvoiceschanged=()=>window.speechSynthesis.getVoices();
-  buildELPanel();
+  buildELModal();
   buildMatch('ex1a',match1a,'sc1a');
   buildQCM('ex1b',qcm1b,'sc1b');
   buildFill('ex1c',fill1c);
