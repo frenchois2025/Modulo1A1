@@ -13,7 +13,8 @@
 html{scroll-behavior:smooth}
 body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--navy);min-height:100vh}
 
-.hero{background:var(--navy);padding:36px 36px 0;display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:end;border-radius:0 0 28px 28px;max-width:960px;margin:0 auto}
+/* ── HERO ── */
+.hero{background:var(--navy);padding:36px 36px 0;display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:end;border-radius:0 0 28px 28px;max-width:960px;margin:0 auto;position:relative}
 .hero-tag{display:inline-block;background:var(--bordeaux);color:#fff;font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;border-radius:99px;margin-bottom:18px}
 .hero-brand{font-family:'Playfair Display',serif;font-size:52px;font-weight:800;color:#fff;line-height:1;letter-spacing:-1px;margin-bottom:14px}
 .hero-sub{font-size:13px;color:rgba(255,255,255,.6);line-height:1.7;margin-bottom:28px;max-width:280px;font-style:italic}
@@ -22,28 +23,49 @@ body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--navy);m
 .stat-n{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--bordeaux);display:block;line-height:1}
 .stat-l{font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:1px;margin-top:2px;display:block}
 
+/* ── BOUTON ALL ── */
+.all-btn{position:absolute;top:20px;right:20px;display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.25);border-radius:12px;padding:9px 16px;cursor:pointer;color:#fff;font-size:13px;font-weight:800;transition:all .2s;user-select:none}
+.all-btn:hover{background:rgba(255,255,255,.25)}
+.all-btn.open{background:#fff;color:var(--navy);border-color:#fff}
+.burger{display:flex;flex-direction:column;gap:3px;width:16px}
+.burger span{display:block;height:2px;background:currentColor;border-radius:2px}
+
+/* ── PANNEAU ALL ── */
+.all-panel{display:none;max-width:960px;margin:12px auto 0;background:#fff;border-radius:20px;padding:28px;border:1.5px solid var(--border)}
+.all-panel.open{display:block}
+.panel-section{margin-bottom:28px}
+.panel-section:last-child{margin-bottom:0}
+.panel-label{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.panel-dot{width:6px;height:6px;border-radius:50%;display:inline-block;flex-shrink:0}
+.panel-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.panel-card{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:14px;border:1.5px solid var(--border);cursor:pointer;transition:all .18s;text-decoration:none;color:inherit}
+.panel-card:hover{border-color:var(--navy);background:var(--cream)}
+.panel-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.panel-name{font-size:13px;font-weight:700;line-height:1.3}
+.panel-sub{font-size:11px;color:var(--muted);margin-top:2px}
+.panel-card-culture{display:flex;align-items:center;gap:12px;padding:16px 18px;border-radius:14px;border:1.5px solid var(--border);background:var(--cream);position:relative;overflow:hidden;opacity:.75}
+.soon-pill{position:absolute;top:10px;right:12px;font-size:9px;font-weight:800;background:var(--cream-dark);color:var(--muted);padding:3px 9px;border-radius:99px;letter-spacing:.5px}
+
+/* ── NAV TABS ── */
 .nav-col{display:flex;flex-direction:column;gap:10px;padding-bottom:32px}
 .level-tab{display:flex;align-items:center;justify-content:space-between;padding:13px 18px;border-radius:14px;font-size:14px;font-weight:700;cursor:pointer;border:1.5px solid rgba(255,255,255,.15);color:rgba(255,255,255,.55);background:rgba(255,255,255,.07);transition:all .2s;user-select:none}
 .level-tab:hover{background:rgba(255,255,255,.13);color:rgba(255,255,255,.9)}
 .level-tab.active{background:var(--bordeaux);border-color:var(--bordeaux);color:#fff}
 .level-badge{font-size:10px;font-weight:800;padding:3px 10px;border-radius:99px;background:rgba(255,255,255,.2)}
-.tool-tab{display:flex;align-items:center;justify-content:space-between;padding:13px 18px;border-radius:14px;font-size:14px;font-weight:700;cursor:pointer;border:1.5px solid rgba(255,255,255,.3);color:rgba(255,255,255,.8);background:rgba(255,255,255,.12);transition:all .2s;user-select:none;margin-top:4px}
-.tool-tab:hover{background:rgba(255,255,255,.2);color:#fff}
-.tool-tab.active{background:#fff;border-color:#fff;color:var(--navy)}
 
+/* ── CONTENU ── */
 .content{max-width:960px;margin:0 auto;padding:0 0 60px}
 .section-label{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);padding:28px 32px 14px;display:flex;align-items:center;gap:10px}
 .dot{width:8px;height:8px;border-radius:50%;display:inline-block;flex-shrink:0}
 
+/* ── MODULES ── */
 .modules{padding:0 24px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
-
-.module-card{background:var(--white);border-radius:20px;padding:22px;cursor:pointer;transition:all .18s;border:1.5px solid var(--border);text-decoration:none;color:inherit;display:flex;flex-direction:column}
+.module-card{background:var(--white);border-radius:20px;padding:22px;transition:all .18s;border:1.5px solid var(--border);text-decoration:none;color:inherit;display:flex;flex-direction:column}
 .module-card:hover{border-color:var(--navy);transform:translateY(-2px)}
 .module-card.featured .card-num,.module-card.featured .card-meta{color:rgba(255,255,255,.35)}
 .module-card.featured .card-title{color:#fff}
 .module-card.featured .topic{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.1);color:rgba(255,255,255,.55)}
 .module-card.featured .arrow{background:var(--bordeaux);color:#fff}
-
 .card-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px}
 .card-num{font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
 .lvl{font-size:10px;font-weight:800;padding:4px 10px;border-radius:99px}
@@ -56,20 +78,11 @@ body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--navy);m
 .card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:auto}
 .card-meta{font-size:11px;color:var(--muted)}
 .arrow{width:26px;height:26px;border-radius:50%;background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--navy);font-weight:800;flex-shrink:0}
-
 .soon{background:var(--cream-dark);border-radius:20px;padding:22px;border:1.5px dashed var(--border);opacity:.6}
 .soon-lbl{font-size:12px;font-weight:700;color:var(--muted)}
 .soon-title{font-size:13px;color:var(--muted);margin-top:8px;font-family:'Playfair Display',serif}
 
-.tools-grid{padding:0 24px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.tool-card{background:var(--white);border-radius:20px;padding:22px;cursor:pointer;transition:all .18s;border:1.5px solid var(--border);text-decoration:none;color:inherit;display:flex;align-items:flex-start;gap:16px}
-.tool-card:hover{border-color:var(--navy);transform:translateY(-2px)}
-.tool-icon{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
-.tool-body{flex:1}
-.tool-name{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;margin-bottom:6px}
-.tool-desc{font-size:12px;color:var(--muted);line-height:1.55;margin-bottom:14px}
-.tool-cta{font-size:12px;font-weight:800;color:var(--navy)}
-
+/* ── CTA ── */
 .cta-bar{margin:28px 24px 0;background:var(--bordeaux);border-radius:20px;padding:22px 26px;display:flex;align-items:center;justify-content:space-between;gap:20px}
 .cta-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:#fff}
 .cta-sub{font-size:12px;color:rgba(255,255,255,.55);margin-top:3px}
@@ -83,14 +96,17 @@ footer{text-align:center;padding:32px 20px;font-size:12px;color:var(--muted);bor
   .hero-brand{font-size:38px}
   .hero-left{padding-bottom:0}
   .nav-col{padding-bottom:24px}
-  .modules,.tools-grid{grid-template-columns:1fr;padding:0 16px}
+  .modules{grid-template-columns:1fr;padding:0 16px}
+  .panel-grid{grid-template-columns:1fr}
   .cta-bar{flex-direction:column;align-items:flex-start;margin:20px 16px 0}
   .section-label{padding:20px 20px 12px}
+  .all-panel{margin:12px 12px 0;padding:20px}
 }
 </style>
 </head>
 <body>
 
+<!-- HERO -->
 <div class="hero">
   <div class="hero-left" style="padding-bottom:36px">
     <span class="hero-tag">Curso de francés</span>
@@ -103,22 +119,70 @@ footer{text-align:center;padding:32px 20px;font-size:12px;color:var(--muted);bor
     </div>
   </div>
   <div class="nav-col">
-    <div class="level-tab active" id="tab-a1" onclick="setView('a1')">
+    <div class="level-tab active" id="tab-a1" onclick="setLevel('a1')">
       <span>A1 — Débutant</span><span class="level-badge">5 módulos</span>
     </div>
-    <div class="level-tab" id="tab-a2" onclick="setView('a2')">
+    <div class="level-tab" id="tab-a2" onclick="setLevel('a2')">
       <span>A2 — Élémentaire</span><span class="level-badge">5 módulos</span>
     </div>
-    <div class="level-tab" id="tab-b1" onclick="setView('b1')">
+    <div class="level-tab" id="tab-b1" onclick="setLevel('b1')">
       <span>B1 — Intermédiaire</span><span class="level-badge">1 módulo</span>
     </div>
-    <div class="tool-tab" id="tab-tools" onclick="setView('tools')">
-      <span>🛠 Herramientas</span>
-      <span class="level-badge" style="background:rgba(255,255,255,.15)">4</span>
-    </div>
+  </div>
+  <div class="all-btn" id="allBtn" onclick="toggleAll()">
+    <div class="burger"><span></span><span></span><span></span></div>
+    All
   </div>
 </div>
 
+<!-- PANNEAU ALL -->
+<div class="all-panel" id="allPanel">
+
+  <div class="panel-section">
+    <div class="panel-label">
+      <span class="panel-dot" style="background:var(--bordeaux)"></span>Herramientas
+    </div>
+    <div class="panel-grid">
+      <a class="panel-card" href="vocabulaire.html">
+        <div class="panel-icon" style="background:var(--a1l)">📚</div>
+        <div><div class="panel-name">Vocabulaire A1</div><div class="panel-sub">297 mots · ES↔FR · audio</div></div>
+      </a>
+      <a class="panel-card" href="vocabulaire-a2.html">
+        <div class="panel-icon" style="background:var(--a2l)">📘</div>
+        <div><div class="panel-name">Vocabulaire A2</div><div class="panel-sub">280 mots · filtre par module</div></div>
+      </a>
+      <a class="panel-card" href="comprehension.html">
+        <div class="panel-icon" style="background:#f0fdf4">🤖</div>
+        <div><div class="panel-name">Compréhension IA</div><div class="panel-sub">Textes générés A1 · A2 · B1</div></div>
+      </a>
+      <a class="panel-card" href="prononciation.html">
+        <div class="panel-icon" style="background:var(--b1l)">🎙️</div>
+        <div><div class="panel-name">Prononciation</div><div class="panel-sub">9 sections · enregistrement</div></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="panel-section">
+    <div class="panel-label">
+      <span class="panel-dot" style="background:#b86a00"></span>Culture & gastronomie
+    </div>
+    <div class="panel-grid">
+      <div class="panel-card-culture">
+        <div class="panel-icon" style="background:#fff3dc">🥐</div>
+        <div><div class="panel-name">Gastronomie française</div><div class="panel-sub">Recettes, vocabulaire culinaire</div></div>
+        <span class="soon-pill">Prochainement</span>
+      </div>
+      <div class="panel-card-culture">
+        <div class="panel-icon" style="background:#fff3dc">🗼</div>
+        <div><div class="panel-name">Culture & traditions</div><div class="panel-sub">Fêtes, cinéma, expressions</div></div>
+        <span class="soon-pill">Prochainement</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- CONTENU -->
 <div class="content">
 
   <!-- A1 -->
@@ -215,45 +279,6 @@ footer{text-align:center;padding:32px 20px;font-size:12px;color:var(--muted);bor
     </div>
   </div>
 
-  <!-- HERRAMIENTAS -->
-  <div id="sec-tools" style="display:none">
-    <div class="section-label"><span class="dot" style="background:var(--bordeaux)"></span>Herramientas — todos los niveles</div>
-    <div class="tools-grid">
-      <a class="tool-card" href="vocabulaire.html">
-        <div class="tool-icon" style="background:var(--a1l)">📚</div>
-        <div class="tool-body">
-          <div class="tool-name">Vocabulaire A1</div>
-          <div class="tool-desc">297 mots & expressions par thème. Traduction ES↔FR, dictée audio avec Charlotte & Daniel, 15 catégories.</div>
-          <div class="tool-cta">Accéder →</div>
-        </div>
-      </a>
-      <a class="tool-card" href="vocabulaire-a2.html">
-        <div class="tool-icon" style="background:var(--a2l)">📘</div>
-        <div class="tool-body">
-          <div class="tool-name">Vocabulaire A2</div>
-          <div class="tool-desc">280 mots pour consolider ton niveau. Cartes interactives, filtre par module et révision espacée.</div>
-          <div class="tool-cta">Accéder →</div>
-        </div>
-      </a>
-      <a class="tool-card" href="comprehension.html">
-        <div class="tool-icon" style="background:#f0fdf4">🤖</div>
-        <div class="tool-body">
-          <div class="tool-name">Compréhension de texte</div>
-          <div class="tool-desc">Textes générés par IA selon ton niveau A1, A2 ou B1. Questions de compréhension et vocabulaire en contexte.</div>
-          <div class="tool-cta">Accéder →</div>
-        </div>
-      </a>
-      <a class="tool-card" href="prononciation.html">
-        <div class="tool-icon" style="background:var(--b1l)">🎙️</div>
-        <div class="tool-body">
-          <div class="tool-name">Prononciation</div>
-          <div class="tool-desc">Sons difficiles expliqués depuis l'espagnol. 9 sections, alphabet phonétique et enregistrement de voix.</div>
-          <div class="tool-cta">Accéder →</div>
-        </div>
-      </a>
-    </div>
-  </div>
-
   <div class="cta-bar">
     <div>
       <div class="cta-title">¿Quieres empezar con un profesor?</div>
@@ -267,15 +292,28 @@ footer{text-align:center;padding:32px 20px;font-size:12px;color:var(--muted);bor
 <footer>FRENCHOIS · Français pour hispanophones · Todos los derechos reservados</footer>
 
 <script>
-var VIEWS=['a1','a2','b1','tools'];
-function setView(v){
-  VIEWS.forEach(function(x){
-    var tab=document.getElementById('tab-'+x);
-    var sec=document.getElementById('sec-'+x);
-    if(tab) tab.classList.toggle('active',x===v);
-    if(sec) sec.style.display=(x===v)?'block':'none';
+var LEVELS = ['a1','a2','b1'];
+
+function setLevel(l) {
+  LEVELS.forEach(function(x) {
+    document.getElementById('tab-'+x).classList.toggle('active', x===l);
+    document.getElementById('sec-'+x).style.display = (x===l) ? 'block' : 'none';
   });
-  window.scrollTo({top:0,behavior:'smooth'});
+  closeAll();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function toggleAll() {
+  var btn   = document.getElementById('allBtn');
+  var panel = document.getElementById('allPanel');
+  var open  = panel.classList.contains('open');
+  btn.classList.toggle('open', !open);
+  panel.classList.toggle('open', !open);
+}
+
+function closeAll() {
+  document.getElementById('allBtn').classList.remove('open');
+  document.getElementById('allPanel').classList.remove('open');
 }
 </script>
 </body>
