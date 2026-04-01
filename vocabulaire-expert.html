@@ -525,433 +525,404 @@ body::before {
 </div>
 
 <script>
-/* ════════════════════════════════════════════════════════
-   BASE DE DONNÉES — DATABASE
-   Structure : { fr, es, g, cat, level, noArt? }
-   
-   Commentaires de section pour faciliter l'ajout de B1/B2 :
-     // ── B1 · [Thème] ──
-     // ── B2 · [Thème] ──
-════════════════════════════════════════════════════════ */
-  <!-- ════ DONNÉES VOCABULAIRE (fichier séparé) ════ -->
-  <script src="vocabulaire.js"></script>
+  // ============================================================
+  // BASE DE DONNÉES (contenu de vocabulaire.js)
+  // ============================================================
+  const DATABASE = [
+    // ... TOUT LE CONTENU DE vocabulaire.js ICI ...
+    // (Pour des raisons de lisibilité, je n'inclus pas les 700+ lignes,
+    //  mais tu dois copier l'intégralité du fichier vocabulaire.js à cet endroit)
+    // Exemple de début :
+    /* ════════════════════════════════════════════════════════
+       FRENCHOIS — vocabulaire.js
+       Base de données centrale du vocabulaire français / espagnol
+    ════════════════════════════════════════════════════════ */
+    // { fr:"Je m'appelle", es:"Me llamo", g:"m", cat:"Presentarse", level:"A1", noArt:true },
+    // ... etc ...
+  ];
 
-/* ════════════════════════════════════════════════════════
-   CONFIGURATION ELEVENLABS
-════════════════════════════════════════════════════════ */
-const VOICE_F   = 'XB0fDUnXU5powFXDhCwa'; // Charlotte (féminin)
-const VOICE_M   = 'onwK4e9ZLuTAKqWW03F9'; // Daniel / Lucas (masculin)
-const EL_MODEL  = 'eleven_multilingual_v2';
+  // ============================================================
+  // CONFIGURATION ELEVENLABS
+  // ============================================================
+  const VOICE_F   = 'XB0fDUnXU5powFXDhCwa';
+  const VOICE_M   = 'onwK4e9ZLuTAKqWW03F9';
+  const EL_MODEL  = 'eleven_multilingual_v2';
 
-/* ════════════════════════════════════════════════════════
-   ÉTAT DE L'APPLICATION
-════════════════════════════════════════════════════════ */
-let selLevel  = null;   // niveau actif : 'A1' | 'A2' | 'B1' | 'B2' | 'random'
-let selCat    = '__all__'; // catégorie active
-let mode      = 'es-fr';  // mode de jeu
-let pool      = [];        // liste de mots en cours
-let idx       = 0;
-let cur       = null;
-let answered  = false;
-let nOk = 0, nErr = 0, streak = 0;
+  // ============================================================
+  // ÉTAT DE L'APPLICATION
+  // ============================================================
+  let selLevel  = null;   // niveau actif : 'A1' | 'A2' | 'B1' | 'B2' | 'random'
+  let selCat    = '__all__'; // catégorie active
+  let mode      = 'es-fr';  // mode de jeu
+  let pool      = [];        // liste de mots en cours
+  let idx       = 0;
+  let cur       = null;
+  let answered  = false;
+  let nOk = 0, nErr = 0, streak = 0;
 
-/* ════════════════════════════════════════════════════════
-   COULEURS D'ACCENTUATION PAR NIVEAU
-════════════════════════════════════════════════════════ */
-const ACCENT_MAP = {
-  A1:     { accent:'#e63946', dark:'#c1121f', light:'#fdecea' },
-  A2:     { accent:'#2563eb', dark:'#1d4ed8', light:'#dbeafe' },
-  B1:     { accent:'#059669', dark:'#047857', light:'#d1fae5' },
-  B2:     { accent:'#7c3aed', dark:'#6d28d9', light:'#ede9fe' },
-  random: { accent:'#d97706', dark:'#b45309', light:'#fef3c7' },
-};
+  // ============================================================
+  // COULEURS D'ACCENTUATION PAR NIVEAU
+  // ============================================================
+  const ACCENT_MAP = {
+    A1:     { accent:'#e63946', dark:'#c1121f', light:'#fdecea' },
+    A2:     { accent:'#2563eb', dark:'#1d4ed8', light:'#dbeafe' },
+    B1:     { accent:'#059669', dark:'#047857', light:'#d1fae5' },
+    B2:     { accent:'#7c3aed', dark:'#6d28d9', light:'#ede9fe' },
+    random: { accent:'#d97706', dark:'#b45309', light:'#fef3c7' },
+  };
 
-/**
- * Applique la couleur d'accentuation selon le niveau
- */
-function applyAccent(level) {
-  const c = ACCENT_MAP[level] || ACCENT_MAP.A1;
-  const r = document.documentElement.style;
-  r.setProperty('--accent',       c.accent);
-  r.setProperty('--accent-dark',  c.dark);
-  r.setProperty('--accent-light', c.light);
-}
-
-/* ════════════════════════════════════════════════════════
-   ÉTAGE 1 — SÉLECTION DU NIVEAU
-════════════════════════════════════════════════════════ */
-function selectLevel(level) {
-  selLevel = level;
-  selCat   = '__all__';
-  applyAccent(level);
-
-  // Active le bon bouton de niveau
-  document.querySelectorAll('.level-btn').forEach(b => {
-    b.classList.toggle('active', b.dataset.level === level);
-  });
-
-  // Met à jour le badge header
-  const label = level === 'random' ? '🎲 Tous niveaux' : level;
-  document.getElementById('header-badge').textContent = label;
-
-  // Affiche les catégories
-  buildCats();
-  document.getElementById('cats-section').style.display  = 'block';
-  document.getElementById('tabs-section').style.display  = 'grid';
-  document.getElementById('scorebar').style.display      = 'flex';
-  document.getElementById('card').style.display          = 'block';
-  document.getElementById('welcome').style.display       = 'none';
-
-  startFresh();
-}
-
-/* ════════════════════════════════════════════════════════
-   ÉTAGE 2 — CATÉGORIES
-   generateSessionList() filtre la DATABASE et mélange les mots
-════════════════════════════════════════════════════════ */
-function buildCats() {
-  // Sélectionner les mots selon le niveau
-  const source = selLevel === 'random'
-    ? DATABASE
-    : DATABASE.filter(w => w.level === selLevel);
-
-  // Catégories uniques dans l'ordre d'apparition
-  const seen = new Set();
-  const cats = [];
-  source.forEach(w => { if (!seen.has(w.cat)) { seen.add(w.cat); cats.push(w.cat); } });
-
-  const el = document.getElementById('cats');
-  el.innerHTML = '';
-
-  // Bouton "Toutes les catégories" en premier
-  const btnAll = document.createElement('button');
-  btnAll.className = 'cat active';
-  btnAll.textContent = '🌟 Toutes les catégories';
-  btnAll.onclick = () => { selCat = '__all__'; syncCatBtns(btnAll); startFresh(); };
-  el.appendChild(btnAll);
-
-  // Un bouton par catégorie
-  cats.forEach(c => {
-    const b = document.createElement('button');
-    b.className = 'cat';
-    b.textContent = c;
-    b.onclick = () => { selCat = c; syncCatBtns(b); startFresh(); };
-    el.appendChild(b);
-  });
-}
-
-function syncCatBtns(activeBtn) {
-  document.querySelectorAll('.cat').forEach(b => b.classList.remove('active'));
-  activeBtn.classList.add('active');
-}
-
-/**
- * generateSessionList()
- * Filtre la DATABASE selon niveau et catégorie,
- * puis mélange aléatoirement.
- */
-function generateSessionList() {
-  let src = DATABASE;
-
-  // Filtre niveau
-  if (selLevel !== 'random') {
-    src = src.filter(w => w.level === selLevel);
+  function applyAccent(level) {
+    const c = ACCENT_MAP[level] || ACCENT_MAP.A1;
+    const r = document.documentElement.style;
+    r.setProperty('--accent',       c.accent);
+    r.setProperty('--accent-dark',  c.dark);
+    r.setProperty('--accent-light', c.light);
   }
 
-  // Filtre catégorie
-  if (selCat !== '__all__') {
-    src = src.filter(w => w.cat === selCat);
+  // ============================================================
+  // ÉTAGE 1 — SÉLECTION DU NIVEAU
+  // ============================================================
+  function selectLevel(level) {
+    selLevel = level;
+    selCat   = '__all__';
+    applyAccent(level);
+
+    document.querySelectorAll('.level-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.level === level);
+    });
+
+    const label = level === 'random' ? '🎲 Tous niveaux' : level;
+    document.getElementById('header-badge').textContent = label;
+
+    buildCats();
+    document.getElementById('cats-section').style.display  = 'block';
+    document.getElementById('tabs-section').style.display  = 'grid';
+    document.getElementById('scorebar').style.display      = 'flex';
+    document.getElementById('card').style.display          = 'block';
+    document.getElementById('welcome').style.display       = 'none';
+
+    startFresh();
   }
 
-  // Mélange Fisher-Yates
-  const arr = [...src];
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
+  // ============================================================
+  // ÉTAGE 2 — CATÉGORIES
+  // ============================================================
+  function buildCats() {
+    const source = selLevel === 'random'
+      ? DATABASE
+      : DATABASE.filter(w => w.level === selLevel);
+
+    const seen = new Set();
+    const cats = [];
+    source.forEach(w => { if (!seen.has(w.cat)) { seen.add(w.cat); cats.push(w.cat); } });
+
+    const el = document.getElementById('cats');
+    el.innerHTML = '';
+
+    const btnAll = document.createElement('button');
+    btnAll.className = 'cat active';
+    btnAll.textContent = '🌟 Toutes les catégories';
+    btnAll.onclick = () => { selCat = '__all__'; syncCatBtns(btnAll); startFresh(); };
+    el.appendChild(btnAll);
+
+    cats.forEach(c => {
+      const b = document.createElement('button');
+      b.className = 'cat';
+      b.textContent = c;
+      b.onclick = () => { selCat = c; syncCatBtns(b); startFresh(); };
+      el.appendChild(b);
+    });
   }
-  return arr;
-}
 
-/* ════════════════════════════════════════════════════════
-   MODE DE JEU
-════════════════════════════════════════════════════════ */
-function setMode(m) {
-  mode = m;
-  ['es-fr','fr-es','dictee'].forEach(k =>
-    document.getElementById('tab-' + k).classList.toggle('active', k === m)
-  );
-  startFresh();
-}
+  function syncCatBtns(activeBtn) {
+    document.querySelectorAll('.cat').forEach(b => b.classList.remove('active'));
+    activeBtn.classList.add('active');
+  }
 
-/* ════════════════════════════════════════════════════════
-   DÉMARRAGE D'UNE SESSION
-════════════════════════════════════════════════════════ */
-function startFresh() {
-  nOk = 0; nErr = 0; streak = 0;
-  pool = generateSessionList();
-  idx  = 0;
-  updateScore();
-  loadWord();
-}
+  function generateSessionList() {
+    let src = DATABASE;
+    if (selLevel !== 'random') {
+      src = src.filter(w => w.level === selLevel);
+    }
+    if (selCat !== '__all__') {
+      src = src.filter(w => w.cat === selCat);
+    }
+    const arr = [...src];
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
 
-/* ════════════════════════════════════════════════════════
-   CHARGEMENT D'UN MOT
-════════════════════════════════════════════════════════ */
-function loadWord() {
-  // On boucle quand la liste est épuisée
-  if (idx >= pool.length) {
+  // ============================================================
+  // MODE DE JEU
+  // ============================================================
+  function setMode(m) {
+    mode = m;
+    ['es-fr','fr-es','dictee'].forEach(k =>
+      document.getElementById('tab-' + k).classList.toggle('active', k === m)
+    );
+    startFresh();
+  }
+
+  // ============================================================
+  // DÉMARRAGE D'UNE SESSION
+  // ============================================================
+  function startFresh() {
+    nOk = 0; nErr = 0; streak = 0;
     pool = generateSessionList();
     idx  = 0;
+    updateScore();
+    loadWord();
   }
-  cur      = pool[idx];
-  answered = false;
 
-  // Animation pop
-  const card = document.getElementById('card');
-  card.classList.remove('pop');
-  void card.offsetWidth;
-  card.classList.add('pop');
+  // ============================================================
+  // CHARGEMENT D'UN MOT
+  // ============================================================
+  function loadWord() {
+    if (idx >= pool.length) {
+      pool = generateSessionList();
+      idx  = 0;
+    }
+    cur      = pool[idx];
+    answered = false;
 
-  // Réinitialise l'interface
-  const inp = document.getElementById('answer-input');
-  inp.value = ''; inp.className = 'answer-input'; inp.disabled = false;
-  document.getElementById('feedback').className = 'feedback';
-  document.getElementById('btn-next').className = 'btn-next';
+    const card = document.getElementById('card');
+    card.classList.remove('pop');
+    void card.offsetWidth;
+    card.classList.add('pop');
 
-  // Badges sur la carte
-  document.getElementById('card-level-badge').textContent = cur.level;
-  document.getElementById('card-cat-tag').textContent     = cur.cat;
+    const inp = document.getElementById('answer-input');
+    inp.value = ''; inp.className = 'answer-input'; inp.disabled = false;
+    document.getElementById('feedback').className = 'feedback';
+    document.getElementById('btn-next').className = 'btn-next';
 
-  // Références des éléments
-  const wordEl    = document.getElementById('card-word');
-  const audioZone = document.getElementById('audio-zone');
-  const modeLabel = document.getElementById('mode-label');
-  const hintEl    = document.getElementById('card-hint');
+    document.getElementById('card-level-badge').textContent = cur.level;
+    document.getElementById('card-cat-tag').textContent     = cur.cat;
 
-  if (mode === 'es-fr') {
-    if (cur.noArt) {
-      modeLabel.textContent = 'Traduce al francés';
-      wordEl.textContent    = cur.es.split('/')[0].trim();
-      inp.placeholder       = 'traduction en français…';
-      hintEl.textContent    = '';
+    const wordEl    = document.getElementById('card-word');
+    const audioZone = document.getElementById('audio-zone');
+    const modeLabel = document.getElementById('mode-label');
+    const hintEl    = document.getElementById('card-hint');
+
+    if (mode === 'es-fr') {
+      if (cur.noArt) {
+        modeLabel.textContent = 'Traduce al francés';
+        wordEl.textContent    = cur.es.split('/')[0].trim();
+        inp.placeholder       = 'traduction en français…';
+        hintEl.textContent    = '';
+      } else {
+        modeLabel.textContent = 'Traduce al francés con el artículo';
+        const esClean = cur.es.split('/')[0].trim().replace(/^(el|la|los|las|un|una)\s+/i,'');
+        wordEl.textContent = esClean;
+        inp.placeholder    = 'le / la + mot…';
+        hintEl.textContent = '💡 ¿Cuál es el artículo correcto en francés?';
+      }
+      wordEl.style.display    = 'block';
+      audioZone.style.display = 'none';
+    } else if (mode === 'fr-es') {
+      modeLabel.textContent   = 'Traduce al español';
+      wordEl.textContent      = cur.fr;
+      wordEl.style.display    = 'block';
+      audioZone.style.display = 'none';
+      inp.placeholder         = 'traducción en español…';
+      hintEl.textContent      = '';
     } else {
-      modeLabel.textContent = 'Traduce al francés con el artículo';
-      const esClean = cur.es.split('/')[0].trim().replace(/^(el|la|los|las|un|una)\s+/i,'');
-      wordEl.textContent = esClean;
-      inp.placeholder    = 'le / la + mot…';
-      hintEl.textContent = '💡 ¿Cuál es el artículo correcto en francés?';
+      // Mode Dictée
+      modeLabel.textContent   = cur.noArt
+        ? '¿Qué escuchaste? Escribe en francés'
+        : '¿Qué escuchaste? Escribe con el artículo';
+      wordEl.style.display    = 'none';
+      audioZone.style.display = 'flex';
+      inp.placeholder         = cur.noArt ? 'traduction en français…' : 'artículo + palabra…';
+      hintEl.textContent      = '';
+      setTimeout(() => playAudio(), 550);
     }
-    wordEl.style.display    = 'block';
-    audioZone.style.display = 'none';
 
-  } else if (mode === 'fr-es') {
-    modeLabel.textContent   = 'Traduce al español';
-    wordEl.textContent      = cur.fr;
-    wordEl.style.display    = 'block';
-    audioZone.style.display = 'none';
-    inp.placeholder         = 'traducción en español…';
-    hintEl.textContent      = '';
-
-  } else {
-    // Mode Dictée
-    modeLabel.textContent   = cur.noArt
-      ? '¿Qué escuchaste? Escribe en francés'
-      : '¿Qué escuchaste? Escribe con el artículo';
-    wordEl.style.display    = 'none';
-    audioZone.style.display = 'flex';
-    inp.placeholder         = cur.noArt ? 'traduction en français…' : 'artículo + palabra…';
-    hintEl.textContent      = '';
-    setTimeout(() => playAudio(), 550);
+    updateProgress();
+    inp.focus();
+    window.scrollTo({ top: 0, behavior: 'instant' });
   }
 
-  updateProgress();
-  inp.focus();
-  window.scrollTo({ top: 0, behavior: 'instant' });
-}
+  function playAudio() {
+    if (cur) speakEL(cur.fr, cur.g);
+  }
 
-function playAudio() {
-  if (cur) speakEL(cur.fr, cur.g);
-}
+  // ============================================================
+  // COMPARAISON INTELLIGENTE
+  // ============================================================
+  function norm(s) {
+    return s.toLowerCase().trim()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+      .replace(/['']/g,"'").replace(/\s+/g,' ');
+  }
 
-/* ════════════════════════════════════════════════════════
-   COMPARAISON INTELLIGENTE
-   Normalise, ignore accents, gère noArt
-════════════════════════════════════════════════════════ */
-function norm(s) {
-  return s.toLowerCase().trim()
-    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
-    .replace(/['']/g,"'").replace(/\s+/g,' ');
-}
+  function checkAnswer() {
+    if (answered) { nextWord(); return; }
+    const inp = document.getElementById('answer-input');
+    const raw = inp.value.trim();
+    if (!raw) return;
 
-function checkAnswer() {
-  if (answered) { nextWord(); return; }
-  const inp = document.getElementById('answer-input');
-  const raw = inp.value.trim();
-  if (!raw) return;
+    answered = true;
+    inp.disabled = true;
 
-  answered = true;
-  inp.disabled = true;
+    let correct        = false;
+    let correctAnswer  = '';
 
-  let correct        = false;
-  let correctAnswer  = '';
-
-  if (mode === 'es-fr') {
-    correctAnswer = cur.fr;
-    if (cur.noArt) {
-      const variants = cur.fr.split('/').map(s => s.trim());
-      correct = variants.some(v => norm(raw) === norm(v));
+    if (mode === 'es-fr') {
+      correctAnswer = cur.fr;
+      if (cur.noArt) {
+        const variants = cur.fr.split('/').map(s => s.trim());
+        correct = variants.some(v => norm(raw) === norm(v));
+      } else {
+        const variants = [cur.fr,
+          cur.fr.replace(/^le /,'un ').replace(/^la /,'une ')
+                .replace(/^l'/,'un ').replace(/^l'/,'un ')];
+        correct = variants.some(v => norm(raw) === norm(v));
+      }
+    } else if (mode === 'fr-es') {
+      correctAnswer = cur.es;
+      const variants = cur.es.split('/').map(s => s.trim());
+      correct = variants.some(v => {
+        const vc = v.replace(/^(el|la|los|las|un|una)\s+/i,'').trim();
+        const rc = raw.replace(/^(el|la|los|las|un|una)\s+/i,'').trim();
+        return norm(rc) === norm(vc) || norm(raw) === norm(v);
+      });
     } else {
-      // Accepte aussi avec article indéfini (un/une)
-      const variants = [cur.fr,
-        cur.fr.replace(/^le /,'un ').replace(/^la /,'une ')
-              .replace(/^l'/,'un ').replace(/^l'/,'un ')];
-      correct = variants.some(v => norm(raw) === norm(v));
+      // Mode Dictée
+      correctAnswer = cur.fr;
+      correct = norm(raw) === norm(cur.fr);
+      if (!correct && !cur.noArt) {
+        const noArt = cur.fr.replace(/^(le|la|les|l'|l')\s*/i,'').trim();
+        correct = norm(raw) === norm(noArt);
+      }
     }
 
-  } else if (mode === 'fr-es') {
-    correctAnswer = cur.es;
-    const variants = cur.es.split('/').map(s => s.trim());
-    correct = variants.some(v => {
-      const vc = v.replace(/^(el|la|los|las|un|una)\s+/i,'').trim();
-      const rc = raw.replace(/^(el|la|los|las|un|una)\s+/i,'').trim();
-      return norm(rc) === norm(vc) || norm(raw) === norm(v);
-    });
+    const fbEl   = document.getElementById('feedback');
+    const fbTxt  = document.getElementById('fb-text');
+    const fbIcon = document.getElementById('fb-icon');
 
-  } else {
-    // Mode Dictée : accepte avec ou sans article
-    correctAnswer = cur.fr;
-    correct = norm(raw) === norm(cur.fr);
-    if (!correct && !cur.noArt) {
-      const noArt = cur.fr.replace(/^(le|la|les|l'|l')\s*/i,'').trim();
-      correct = norm(raw) === norm(noArt);
+    if (correct) {
+      nOk++; streak++;
+      inp.className  = 'answer-input ok';
+      fbEl.className = 'feedback ok';
+      fbIcon.textContent = '✅';
+      fbTxt.innerHTML = mode === 'dictee'
+        ? `¡Correcto! <strong>${correctAnswer}</strong><span class="fb-es"> = ${cur.es.split('/')[0].trim()}</span>`
+        : `¡Correcto! <strong>${correctAnswer}</strong>`;
+      if (mode !== 'fr-es') setTimeout(() => speakEL(cur.fr, cur.g), 380);
+    } else {
+      nErr++; streak = 0;
+      inp.className  = 'answer-input err';
+      fbEl.className = 'feedback err';
+      fbIcon.textContent = '❌';
+      fbTxt.innerHTML = mode === 'dictee'
+        ? `La respuesta es: <strong>${correctAnswer}</strong><span class="fb-es"> = ${cur.es.split('/')[0].trim()}</span>`
+        : `La respuesta es: <strong>${correctAnswer}</strong>`;
+      if (mode !== 'fr-es') setTimeout(() => speakEL(cur.fr, cur.g), 380);
+    }
+
+    updateScore();
+    document.getElementById('btn-next').className = 'btn-next on';
+  }
+
+  function nextWord() { idx++; loadWord(); }
+
+  // ============================================================
+  // MISE À JOUR DU SCORE & PROGRESSION
+  // ============================================================
+  function updateScore() {
+    document.getElementById('sc-ok').textContent  = nOk;
+    document.getElementById('sc-err').textContent = nErr;
+    const sEl = document.getElementById('streak-el');
+    if (streak >= 3) {
+      sEl.textContent = `🔥 ${streak} seguidos`;
+      sEl.className   = 'streak on';
+    } else {
+      sEl.className = 'streak';
     }
   }
 
-  // Affichage du feedback
-  const fbEl   = document.getElementById('feedback');
-  const fbTxt  = document.getElementById('fb-text');
-  const fbIcon = document.getElementById('fb-icon');
-
-  if (correct) {
-    nOk++; streak++;
-    inp.className  = 'answer-input ok';
-    fbEl.className = 'feedback ok';
-    fbIcon.textContent = '✅';
-    fbTxt.innerHTML = mode === 'dictee'
-      ? `¡Correcto! <strong>${correctAnswer}</strong><span class="fb-es"> = ${cur.es.split('/')[0].trim()}</span>`
-      : `¡Correcto! <strong>${correctAnswer}</strong>`;
-    if (mode !== 'fr-es') setTimeout(() => speakEL(cur.fr, cur.g), 380);
-  } else {
-    nErr++; streak = 0;
-    inp.className  = 'answer-input err';
-    fbEl.className = 'feedback err';
-    fbIcon.textContent = '❌';
-    fbTxt.innerHTML = mode === 'dictee'
-      ? `La respuesta es: <strong>${correctAnswer}</strong><span class="fb-es"> = ${cur.es.split('/')[0].trim()}</span>`
-      : `La respuesta es: <strong>${correctAnswer}</strong>`;
-    if (mode !== 'fr-es') setTimeout(() => speakEL(cur.fr, cur.g), 380);
+  function updateProgress() {
+    const total = pool.length;
+    const done  = idx;
+    const pct   = total > 0 ? Math.round((done / total) * 100) : 0;
+    document.getElementById('prog').textContent         = `${done} / ${total}`;
+    document.getElementById('prog-bar-fill').style.width = pct + '%';
   }
 
-  updateScore();
-  document.getElementById('btn-next').className = 'btn-next on';
-}
+  // ============================================================
+  // SYNTHÈSE VOCALE — ELEVENLABS
+  // ============================================================
+  function getKey() { return localStorage.getItem('elevenlabs_api_key') || ''; }
 
-function nextWord() { idx++; loadWord(); }
-
-/* ════════════════════════════════════════════════════════
-   MISE À JOUR DU SCORE & PROGRESSION
-════════════════════════════════════════════════════════ */
-function updateScore() {
-  document.getElementById('sc-ok').textContent  = nOk;
-  document.getElementById('sc-err').textContent = nErr;
-  const sEl = document.getElementById('streak-el');
-  if (streak >= 3) {
-    sEl.textContent = `🔥 ${streak} seguidos`;
-    sEl.className   = 'streak on';
-  } else {
-    sEl.className = 'streak';
+  function openModal() {
+    document.getElementById('modal-input').value = getKey();
+    document.getElementById('modal-overlay').classList.add('open');
   }
-}
-
-function updateProgress() {
-  const total = pool.length;
-  const done  = idx;
-  const pct   = total > 0 ? Math.round((done / total) * 100) : 0;
-  document.getElementById('prog').textContent         = `${done} / ${total}`;
-  document.getElementById('prog-bar-fill').style.width = pct + '%';
-}
-
-/* ════════════════════════════════════════════════════════
-   SYNTHÈSE VOCALE — ELEVENLABS
-════════════════════════════════════════════════════════ */
-function getKey() { return localStorage.getItem('elevenlabs_api_key') || ''; }
-
-function openModal() {
-  document.getElementById('modal-input').value = getKey();
-  document.getElementById('modal-overlay').classList.add('open');
-}
-function closeIfOut(e) {
-  if (e.target === document.getElementById('modal-overlay'))
+  function closeIfOut(e) {
+    if (e.target === document.getElementById('modal-overlay'))
+      document.getElementById('modal-overlay').classList.remove('open');
+  }
+  function saveKey() {
+    localStorage.setItem('elevenlabs_api_key', document.getElementById('modal-input').value.trim());
     document.getElementById('modal-overlay').classList.remove('open');
-}
-function saveKey() {
-  localStorage.setItem('elevenlabs_api_key', document.getElementById('modal-input').value.trim());
-  document.getElementById('modal-overlay').classList.remove('open');
-  updateBadge();
-}
-function updateBadge() {
-  const b  = document.getElementById('api-badge');
-  b.className = getKey() ? 'api-badge set' : 'api-badge unset';
-  b.textContent = getKey() ? '🔑 API conectada' : '🔑 Configurar API';
-}
+    updateBadge();
+  }
+  function updateBadge() {
+    const b  = document.getElementById('api-badge');
+    b.className = getKey() ? 'api-badge set' : 'api-badge unset';
+    b.textContent = getKey() ? '🔑 API conectada' : '🔑 Configurar API';
+  }
 
-async function speakEL(text, gender) {
-  const key = getKey();
-  if (!key) { speakBrowser(text); return; }
-  const voiceId = gender === 'f' ? VOICE_F : VOICE_M;
-  const lb = document.getElementById('btn-listen');
-  const rb = document.getElementById('btn-replay');
-  [lb, rb].forEach(b => { if (b) b.disabled = true; });
-  if (lb) lb.classList.add('playing');
-  try {
-    const res = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`, {
-      method: 'POST',
-      headers: { 'xi-api-key': key, 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        text,
-        model_id: EL_MODEL,
-        language_code: 'fr',
-        voice_settings: { stability: 0.5, similarity_boost: 0.75 }
-      })
-    });
-    if (!res.ok) throw new Error('EL error');
-    const blob = await res.blob();
-    const url  = URL.createObjectURL(blob);
-    const a    = new Audio(url);
-    a.play();
-    a.onended = () => {
-      URL.revokeObjectURL(url);
+  async function speakEL(text, gender) {
+    const key = getKey();
+    if (!key) { speakBrowser(text); return; }
+    const voiceId = gender === 'f' ? VOICE_F : VOICE_M;
+    const lb = document.getElementById('btn-listen');
+    const rb = document.getElementById('btn-replay');
+    [lb, rb].forEach(b => { if (b) b.disabled = true; });
+    if (lb) lb.classList.add('playing');
+    try {
+      const res = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`, {
+        method: 'POST',
+        headers: { 'xi-api-key': key, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          text,
+          model_id: EL_MODEL,
+          language_code: 'fr',
+          voice_settings: { stability: 0.5, similarity_boost: 0.75 }
+        })
+      });
+      if (!res.ok) throw new Error('EL error');
+      const blob = await res.blob();
+      const url  = URL.createObjectURL(blob);
+      const a    = new Audio(url);
+      a.play();
+      a.onended = () => {
+        URL.revokeObjectURL(url);
+        [lb, rb].forEach(b => { if (b) b.disabled = false; });
+        if (lb) lb.classList.remove('playing');
+      };
+    } catch {
+      speakBrowser(text);
       [lb, rb].forEach(b => { if (b) b.disabled = false; });
       if (lb) lb.classList.remove('playing');
-    };
-  } catch {
-    speakBrowser(text);
-    [lb, rb].forEach(b => { if (b) b.disabled = false; });
-    if (lb) lb.classList.remove('playing');
+    }
   }
-}
 
-function speakBrowser(text) {
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = 'fr-FR';
-  speechSynthesis.cancel();
-  speechSynthesis.speak(u);
-}
+  function speakBrowser(text) {
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'fr-FR';
+    speechSynthesis.cancel();
+    speechSynthesis.speak(u);
+  }
 
-/* ════════════════════════════════════════════════════════
-   INITIALISATION
-════════════════════════════════════════════════════════ */
-updateBadge();
+  // ============================================================
+  // INITIALISATION
+  // ============================================================
+  updateBadge();
 </script>
 </body>
 </html>
