@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vocabulaire — Frenchois</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Nunito:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+/* ══════════════════════════════════════════════════════
+   VARIABLES & RESET
+   Les couleurs d'accentuation changent dynamiquement
+   selon le niveau sélectionné
+══════════════════════════════════════════════════════ */
+:root {
+  --bg: #f7f4ef;
+  --white: #ffffff;
+  --text: #1c1c2e;
+  --muted: #7a7a8c;
+  --border: #e4ddd4;
+  --success: #2eaa6b;
+  --success-l: #dcf5ea;
+  --error: #c0392b;
+  --error-l: #fdecea;
+
+  /* Couleur d'accentuation — modifiée par JS selon le niveau */
+  --accent: #e63946;
+  --accent-dark: #c1121f;
+  --accent-light: #fdecea;
+
+  /* Palettes par niveau */
+  --a1: #e63946;      --a1-dark: #c1121f;   --a1-light: #fdecea;
+  --a2: #2563eb;      --a2-dark: #1d4ed8;   --a2-light: #dbeafe;
+  --b1: #059669;      --b1-dark: #047857;   --b1-light: #d1fae5;
+  --b2: #7c3aed;      --b2-dark: #6d28d9;   --b2-light: #ede9fe;
+  --rnd: #d97706;     --rnd-dark: #b45309;  --rnd-light: #fef3c7;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* Fond décoratif subtil */
+body::before {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(ellipse 60% 40% at 5% 10%, rgba(230,57,70,.06) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 95% 90%, rgba(37,99,235,.04) 0%, transparent 60%);
+}
+
+/* ── HEADER ──────────────────────────────────────────── */
+.header {
+  position: relative; z-index: 10;
+  display: flex; align-items: center; gap: 14px;
+  padding: 16px 24px;
+  background: var(--white);
+  border-bottom: 1.5px solid var(--border);
+  flex-wrap: wrap;
+}
+.header-back {
+  font-size: 12px; font-weight: 700; color: var(--muted);
+  text-decoration: none; display: flex; align-items: center; gap: 5px;
+  transition: color .2s;
+}
+.header-back:hover { color: var(--accent); }
+.header-divider { color: var(--border); }
+.header-badge {
+  font-size: 11px; font-weight: 800; letter-spacing: 1px;
+  text-transform: uppercase; padding: 3px 11px; border-radius: 20px;
+  background: var(--accent-light); color: var(--accent);
+  transition: background .3s, color .3s;
+}
+.header-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px; font-weight: 700; color: var(--text);
+}
+
+/* ── LAYOUT PRINCIPAL ────────────────────────────────── */
+.main {
+  position: relative; z-index: 1;
+  max-width: 680px; margin: 0 auto;
+  padding: 28px 18px 80px;
+}
+
+/* ── ÉTAGE 1 : SÉLECTION DU NIVEAU ──────────────────── */
+.level-label {
+  font-size: 10px; font-weight: 800; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--muted);
+  margin-bottom: 8px;
+}
+.levels {
+  display: flex; gap: 8px; flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.level-btn {
+  padding: 8px 18px; border-radius: 24px;
+  border: 2px solid var(--border);
+  background: var(--white);
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px; font-weight: 800;
+  cursor: pointer; color: var(--muted);
+  transition: all .22s; letter-spacing: .3px;
+}
+.level-btn:hover { transform: translateY(-1px); }
+
+.level-btn[data-level="A1"]:hover,
+.level-btn[data-level="A1"].active { border-color: var(--a1); background: var(--a1); color: white; }
+.level-btn[data-level="A2"]:hover,
+.level-btn[data-level="A2"].active { border-color: var(--a2); background: var(--a2); color: white; }
+.level-btn[data-level="B1"]:hover,
+.level-btn[data-level="B1"].active { border-color: var(--b1); background: var(--b1); color: white; }
+.level-btn[data-level="B2"]:hover,
+.level-btn[data-level="B2"].active { border-color: var(--b2); background: var(--b2); color: white; }
+.level-btn[data-level="random"]:hover,
+.level-btn[data-level="random"].active { border-color: var(--rnd); background: var(--rnd); color: white; }
+
+/* ── ÉTAGE 2 : CATÉGORIES ────────────────────────────── */
+.cats-section { margin-bottom: 16px; }
+.cats {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  max-height: 200px; overflow-y: auto;
+}
+.cat {
+  padding: 4px 12px; border-radius: 20px;
+  border: 1.5px solid var(--border); background: var(--white);
+  font-size: 11px; font-weight: 700; cursor: pointer;
+  transition: all .18s; color: var(--muted);
+  white-space: nowrap;
+}
+.cat:hover { border-color: var(--accent); color: var(--accent); }
+.cat.active { background: var(--accent); border-color: var(--accent); color: white; }
+
+/* ── TABS DE MODE ────────────────────────────────────── */
+.tabs {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 8px; margin-bottom: 16px;
+}
+.tab {
+  background: var(--white); border: 1.5px solid var(--border);
+  border-radius: 14px; padding: 12px 8px 10px;
+  cursor: pointer; text-align: center;
+  transition: all .2s; color: inherit;
+}
+.tab:hover { border-color: var(--accent); transform: translateY(-1px); }
+.tab.active { background: var(--accent); border-color: var(--accent); }
+.tab-icon { font-size: 1.25rem; display: block; margin-bottom: 3px; }
+.tab-name { font-size: 11px; font-weight: 800; color: var(--text); }
+.tab-desc { font-size: 10px; color: var(--muted); margin-top: 1px; }
+.tab.active .tab-name,
+.tab.active .tab-desc { color: rgba(255,255,255,.9); }
+.tab.active .tab-desc { color: rgba(255,255,255,.65); }
+
+/* ── BARRE DE SCORE ──────────────────────────────────── */
+.scorebar {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 14px; background: var(--white);
+  border: 1.5px solid var(--border); border-radius: 14px;
+  margin-bottom: 14px;
+}
+.score-pill {
+  display: flex; align-items: center; gap: 4px;
+  font-size: 13px; font-weight: 800;
+}
+.score-pill.ok  { color: var(--success); }
+.score-pill.err { color: var(--error); }
+
+/* Streak — visible uniquement si >= 3 */
+.streak { font-size: 12px; color: var(--rnd); font-weight: 800; display: none; }
+.streak.on { display: block; }
+
+/* Barre de progression dynamique */
+.prog-wrap { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+.prog-bar-bg {
+  width: 80px; height: 5px; border-radius: 10px;
+  background: var(--border); overflow: hidden;
+}
+.prog-bar-fill {
+  height: 100%; border-radius: 10px;
+  background: var(--accent); width: 0%;
+  transition: width .4s ease;
+}
+.prog-text { font-size: 11px; font-weight: 700; color: var(--muted); white-space: nowrap; }
+
+/* ── CARTE ───────────────────────────────────────────── */
+.card {
+  background: var(--white); border: 1.5px solid var(--border);
+  border-radius: 20px; overflow: hidden;
+  box-shadow: 0 10px 40px rgba(28,28,46,.09);
+  transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+}
+.card.pop { animation: pop .35s cubic-bezier(.34,1.56,.64,1); }
+@keyframes pop {
+  from { transform: scale(.96); opacity: .6; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+/* Face supérieure colorée */
+.card-top {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+  padding: 36px 28px 30px;
+  min-height: 200px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+  text-align: center;
+  transition: background .35s;
+}
+.card-top::before {
+  content: '';
+  position: absolute; width: 240px; height: 240px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.05);
+  bottom: -100px; right: -60px; pointer-events: none;
+}
+.card-top::after {
+  content: '';
+  position: absolute; width: 120px; height: 120px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.07);
+  top: -40px; left: -30px; pointer-events: none;
+}
+
+/* Badge niveau + catégorie sur la carte */
+.card-badges {
+  position: absolute; top: 12px; right: 14px;
+  display: flex; gap: 6px;
+}
+.card-level-badge, .card-cat-tag {
+  font-size: 9px; font-weight: 800; letter-spacing: .5px;
+  text-transform: uppercase;
+  background: rgba(255,255,255,.18);
+  color: rgba(255,255,255,.9);
+  padding: 3px 9px; border-radius: 20px;
+}
+
+.card-mode-label {
+  font-size: 10px; font-weight: 800; letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.55);
+  margin-bottom: 14px; position: relative;
+}
+.card-word {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.9rem, 6vw, 2.7rem);
+  font-weight: 700; color: white;
+  line-height: 1.15; position: relative;
+}
+.card-hint {
+  margin-top: 10px; font-size: 12px;
+  color: rgba(255,255,255,.5); position: relative;
+}
+
+/* Zone audio (mode Dictée) */
+.audio-zone {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 10px; position: relative;
+}
+.btn-listen {
+  width: 70px; height: 70px; border-radius: 50%;
+  border: 3px solid rgba(255,255,255,.4);
+  background: rgba(255,255,255,.18);
+  color: white; font-size: 1.8rem;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: all .2s; backdrop-filter: blur(4px);
+}
+.btn-listen:hover { background: rgba(255,255,255,.28); border-color: rgba(255,255,255,.7); transform: scale(1.06); }
+.btn-listen:disabled { opacity: .5; cursor: wait; }
+.btn-listen.playing { animation: ripple 1.4s ease-in-out infinite; }
+@keyframes ripple {
+  0%,100% { box-shadow: 0 0 0 0 rgba(255,255,255,.3); }
+  50%      { box-shadow: 0 0 0 16px rgba(255,255,255,0); }
+}
+.listen-label { font-size: 10px; color: rgba(255,255,255,.5); font-weight: 700; letter-spacing: .5px; }
+.btn-replay {
+  background: rgba(255,255,255,.12); border: 1.5px solid rgba(255,255,255,.25);
+  color: rgba(255,255,255,.75); font-size: 12px; font-weight: 700;
+  padding: 4px 14px; border-radius: 20px; cursor: pointer;
+  transition: all .18s; font-family: 'Nunito', sans-serif;
+}
+.btn-replay:hover { background: rgba(255,255,255,.22); color: white; }
+.btn-replay:disabled { opacity: .4; cursor: wait; }
+
+/* Face inférieure */
+.card-bottom { padding: 22px 22px 18px; }
+.input-row { display: flex; gap: 8px; }
+.answer-input {
+  flex: 1; padding: 13px 15px;
+  border: 1.5px solid var(--border); border-radius: 13px;
+  font-size: 15px; font-family: 'Nunito', sans-serif;
+  outline: none; background: var(--bg); color: var(--text);
+  transition: border-color .2s, background .2s;
+  font-weight: 700;
+}
+.answer-input:focus { border-color: var(--accent); background: var(--white); }
+.answer-input.ok  { border-color: var(--success); background: var(--success-l); }
+.answer-input.err { border-color: var(--error);   background: var(--error-l); }
+.answer-input:disabled { opacity: .85; }
+
+.btn-check {
+  padding: 12px 16px; background: var(--accent); color: white;
+  border: none; border-radius: 13px;
+  font-size: 17px; font-weight: 800; cursor: pointer;
+  transition: background .18s, transform .1s;
+  font-family: 'Nunito', sans-serif;
+}
+.btn-check:hover { background: var(--accent-dark); }
+.btn-check:active { transform: scale(.94); }
+
+/* Feedback correct / incorrect */
+.feedback {
+  margin-top: 12px; padding: 10px 14px;
+  border-radius: 13px; font-size: 14px; font-weight: 600;
+  display: none; align-items: center; gap: 8px;
+  animation: fadein .2s ease;
+}
+@keyframes fadein { from { opacity:0; transform:translateY(4px) } to { opacity:1; } }
+.feedback.ok  { display:flex; background:var(--success-l); color:var(--success); border:1.5px solid #a7f3d0; }
+.feedback.err { display:flex; background:var(--error-l);   color:var(--error);   border:1.5px solid #fca5a5; }
+.feedback-text strong { font-family: 'Playfair Display', serif; font-size: 1.05rem; }
+.feedback-text .fb-es { font-size: .83rem; font-weight: 600; opacity: .7; margin-left: 4px; }
+
+/* Bouton "Suivant" */
+.btn-next {
+  width: 100%; margin-top: 10px; padding: 12px;
+  background: var(--text); color: white; border: none; border-radius: 13px;
+  font-size: 14px; font-weight: 800; cursor: pointer;
+  display: none; transition: opacity .18s;
+  font-family: 'Nunito', sans-serif; letter-spacing: .3px;
+}
+.btn-next:hover { opacity: .82; }
+.btn-next.on { display: block; animation: fadein .2s ease; }
+
+/* ── ÉCRAN D'ACCUEIL (avant sélection) ───────────────── */
+.welcome {
+  text-align: center; padding: 40px 20px;
+  background: var(--white); border: 1.5px solid var(--border);
+  border-radius: 20px; margin-top: 4px;
+}
+.welcome h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem; margin-bottom: 8px;
+}
+.welcome p { color: var(--muted); font-size: 14px; line-height: 1.6; }
+.welcome-emoji { font-size: 2.5rem; margin-bottom: 12px; display: block; }
+
+/* ── BADGE API ────────────────────────────────────────── */
+.api-badge {
+  position: fixed; bottom: 20px; right: 18px;
+  padding: 6px 14px; border-radius: 20px;
+  font-size: 11px; font-weight: 800; cursor: pointer;
+  border: 1.5px solid; transition: all .2s; z-index: 10;
+  font-family: 'Nunito', sans-serif;
+}
+.api-badge.set   { background: var(--success-l); color: var(--success); border-color: #a7f3d0; }
+.api-badge.unset { background: var(--error-l);   color: var(--error);   border-color: #fca5a5; }
+
+/* ── MODAL ───────────────────────────────────────────── */
+.overlay {
+  position: fixed; inset: 0; background: rgba(28,28,46,.45);
+  display: none; align-items: center; justify-content: center;
+  z-index: 200; backdrop-filter: blur(4px);
+}
+.overlay.open { display: flex; }
+.modal {
+  background: var(--white); border-radius: 20px;
+  padding: 28px; max-width: 360px; width: 90%;
+  box-shadow: 0 24px 64px rgba(28,28,46,.18);
+  border: 1.5px solid var(--border);
+}
+.modal h3 { font-family: 'Playfair Display', serif; font-size: 20px; margin-bottom: 6px; }
+.modal p  { font-size: 13px; color: var(--muted); margin-bottom: 16px; line-height: 1.6; }
+.modal input {
+  width: 100%; padding: 11px 14px;
+  border: 1.5px solid var(--border); border-radius: 12px;
+  font-size: 14px; margin-bottom: 10px;
+  font-family: 'Nunito', sans-serif; font-weight: 600;
+}
+.modal input:focus { outline: none; border-color: var(--accent); }
+.modal-btn {
+  width: 100%; padding: 12px;
+  background: var(--accent); color: white; border: none; border-radius: 12px;
+  font-size: 15px; font-weight: 800; cursor: pointer;
+  transition: background .18s; font-family: 'Nunito', sans-serif;
+}
+.modal-btn:hover { background: var(--accent-dark); }
+
+/* ── RESPONSIVE ──────────────────────────────────────── */
+@media (max-width: 500px) {
+  .tabs { gap: 6px; }
+  .card-top { padding: 26px 18px; min-height: 170px; }
+  .card-word { font-size: 1.85rem; }
+  .header-title { display: none; }
+  .levels { gap: 6px; }
+  .level-btn { padding: 7px 14px; font-size: 12px; }
+}
+</style>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="auth.js"></script>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <a href="index.html" class="header-back">← Volver</a>
+  <span class="header-divider">|</span>
+  <span class="header-badge" id="header-badge">Vocabulaire</span>
+  <span class="header-title">Entraînement au vocabulaire</span>
+</header>
+
+<main class="main">
+
+  <!-- ÉTAGE 1 : NIVEAU -->
+  <div class="level-label">Choisir un niveau</div>
+  <div class="levels">
+    <button class="level-btn" data-level="A1"     onclick="selectLevel('A1')">A1 — Débutant</button>
+    <button class="level-btn" data-level="A2"     onclick="selectLevel('A2')">A2 — Élémentaire</button>
+    <button class="level-btn" data-level="B1"     onclick="selectLevel('B1')">B1 — Intermédiaire</button>
+    <button class="level-btn" data-level="B2"     onclick="selectLevel('B2')">B2 — Avancé</button>
+    <button class="level-btn" data-level="random" onclick="selectLevel('random')">🎲 Aléatoire</button>
+  </div>
+
+  <!-- ÉTAGE 2 : CATÉGORIES (affiché après sélection du niveau) -->
+  <div class="cats-section" id="cats-section" style="display:none">
+    <div class="level-label" style="margin-bottom:8px">Filtrer par catégorie</div>
+    <div class="cats" id="cats"></div>
+  </div>
+
+  <!-- TABS MODE (ES→FR / FR→ES / Dictée) -->
+  <div class="tabs" id="tabs-section" style="display:none">
+    <div class="tab active" id="tab-es-fr" onclick="setMode('es-fr')">
+      <span class="tab-icon">🇪🇸→🇫🇷</span>
+      <div class="tab-name">ES → FR</div>
+      <div class="tab-desc">Traducir al francés</div>
+    </div>
+    <div class="tab" id="tab-fr-es" onclick="setMode('fr-es')">
+      <span class="tab-icon">🇫🇷→🇪🇸</span>
+      <div class="tab-name">FR → ES</div>
+      <div class="tab-desc">Traducir al español</div>
+    </div>
+    <div class="tab" id="tab-dictee" onclick="setMode('dictee')">
+      <span class="tab-icon">🎧</span>
+      <div class="tab-name">Dictée</div>
+      <div class="tab-desc">¿Qué escuchaste?</div>
+    </div>
+  </div>
+
+  <!-- SCOREBAR -->
+  <div class="scorebar" id="scorebar" style="display:none">
+    <span class="score-pill ok">✅ <span id="sc-ok">0</span></span>
+    <span class="score-pill err">❌ <span id="sc-err">0</span></span>
+    <span class="streak" id="streak-el"></span>
+    <div class="prog-wrap">
+      <div class="prog-bar-bg">
+        <div class="prog-bar-fill" id="prog-bar-fill"></div>
+      </div>
+      <span class="prog-text" id="prog">0 / 0</span>
+    </div>
+  </div>
+
+  <!-- CARTE DE JEU -->
+  <div class="card" id="card" style="display:none">
+    <div class="card-top" id="card-top">
+      <div class="card-badges">
+        <span class="card-level-badge" id="card-level-badge"></span>
+        <span class="card-cat-tag"     id="card-cat-tag"></span>
+      </div>
+      <div class="card-mode-label" id="mode-label"></div>
+      <div class="card-word" id="card-word"></div>
+
+      <!-- Zone audio pour le mode Dictée -->
+      <div class="audio-zone" id="audio-zone" style="display:none">
+        <button class="btn-listen" id="btn-listen" onclick="playAudio()">🔊</button>
+        <span class="listen-label">TOCA PARA ESCUCHAR</span>
+        <button class="btn-replay" id="btn-replay" onclick="playAudio()">↻ Repetir</button>
+      </div>
+
+      <div class="card-hint" id="card-hint"></div>
+    </div>
+
+    <div class="card-bottom">
+      <div class="input-row">
+        <input type="text" class="answer-input" id="answer-input"
+               placeholder="Tu respuesta…"
+               autocomplete="off" autocorrect="off" spellcheck="false"
+               onkeydown="if(event.key==='Enter') checkAnswer()">
+        <button class="btn-check" onclick="checkAnswer()">✓</button>
+      </div>
+      <div class="feedback" id="feedback">
+        <span id="fb-icon"></span>
+        <span class="feedback-text" id="fb-text"></span>
+      </div>
+      <button class="btn-next" id="btn-next" onclick="nextWord()">Siguiente palabra →</button>
+    </div>
+  </div>
+
+  <!-- ÉCRAN DE BIENVENUE (avant sélection d'un niveau) -->
+  <div class="welcome" id="welcome">
+    <span class="welcome-emoji">📚</span>
+    <h2>Entraînement au vocabulaire</h2>
+    <p>Sélectionne un niveau pour commencer.<br>
+       Plus de <strong>700 mots</strong> disponibles de A1 à B2.</p>
+  </div>
+
+</main>
+
+<!-- BADGE API -->
+<div class="api-badge unset" id="api-badge" onclick="openModal()">🔑 Configurar API</div>
+
+<!-- MODAL ELEVENLABS -->
+<div class="overlay" id="modal-overlay" onclick="closeIfOut(event)">
+  <div class="modal">
+    <h3>🔑 API ElevenLabs</h3>
+    <p>Pour écouter Charlotte et Lucas. Ta clé est enregistrée uniquement dans ce navigateur et n'en sort jamais.</p>
+    <input type="password" id="modal-input" placeholder="Pega tu clave aquí…">
+    <button class="modal-btn" onclick="saveKey()">Guardar</button>
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════════════════════
+   BASE DE DONNÉES — DATABASE
+   Structure : { fr, es, g, cat, level, noArt? }
+   
+   Commentaires de section pour faciliter l'ajout de B1/B2 :
+     // ── B1 · [Thème] ──
+     // ── B2 · [Thème] ──
+════════════════════════════════════════════════════════ */
+  <!-- ════ DONNÉES VOCABULAIRE (fichier séparé) ════ -->
+  <script src="vocabulaire.js"></script>
+
+/* ════════════════════════════════════════════════════════
+   CONFIGURATION ELEVENLABS
+════════════════════════════════════════════════════════ */
+const VOICE_F   = 'XB0fDUnXU5powFXDhCwa'; // Charlotte (féminin)
+const VOICE_M   = 'onwK4e9ZLuTAKqWW03F9'; // Daniel / Lucas (masculin)
+const EL_MODEL  = 'eleven_multilingual_v2';
+
+/* ════════════════════════════════════════════════════════
+   ÉTAT DE L'APPLICATION
+════════════════════════════════════════════════════════ */
+let selLevel  = null;   // niveau actif : 'A1' | 'A2' | 'B1' | 'B2' | 'random'
+let selCat    = '__all__'; // catégorie active
+let mode      = 'es-fr';  // mode de jeu
+let pool      = [];        // liste de mots en cours
+let idx       = 0;
+let cur       = null;
+let answered  = false;
+let nOk = 0, nErr = 0, streak = 0;
+
+/* ════════════════════════════════════════════════════════
+   COULEURS D'ACCENTUATION PAR NIVEAU
+════════════════════════════════════════════════════════ */
+const ACCENT_MAP = {
+  A1:     { accent:'#e63946', dark:'#c1121f', light:'#fdecea' },
+  A2:     { accent:'#2563eb', dark:'#1d4ed8', light:'#dbeafe' },
+  B1:     { accent:'#059669', dark:'#047857', light:'#d1fae5' },
+  B2:     { accent:'#7c3aed', dark:'#6d28d9', light:'#ede9fe' },
+  random: { accent:'#d97706', dark:'#b45309', light:'#fef3c7' },
+};
+
+/**
+ * Applique la couleur d'accentuation selon le niveau
+ */
+function applyAccent(level) {
+  const c = ACCENT_MAP[level] || ACCENT_MAP.A1;
+  const r = document.documentElement.style;
+  r.setProperty('--accent',       c.accent);
+  r.setProperty('--accent-dark',  c.dark);
+  r.setProperty('--accent-light', c.light);
+}
+
+/* ════════════════════════════════════════════════════════
+   ÉTAGE 1 — SÉLECTION DU NIVEAU
+════════════════════════════════════════════════════════ */
+function selectLevel(level) {
+  selLevel = level;
+  selCat   = '__all__';
+  applyAccent(level);
+
+  // Active le bon bouton de niveau
+  document.querySelectorAll('.level-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.level === level);
+  });
+
+  // Met à jour le badge header
+  const label = level === 'random' ? '🎲 Tous niveaux' : level;
+  document.getElementById('header-badge').textContent = label;
+
+  // Affiche les catégories
+  buildCats();
+  document.getElementById('cats-section').style.display  = 'block';
+  document.getElementById('tabs-section').style.display  = 'grid';
+  document.getElementById('scorebar').style.display      = 'flex';
+  document.getElementById('card').style.display          = 'block';
+  document.getElementById('welcome').style.display       = 'none';
+
+  startFresh();
+}
+
+/* ════════════════════════════════════════════════════════
+   ÉTAGE 2 — CATÉGORIES
+   generateSessionList() filtre la DATABASE et mélange les mots
+════════════════════════════════════════════════════════ */
+function buildCats() {
+  // Sélectionner les mots selon le niveau
+  const source = selLevel === 'random'
+    ? DATABASE
+    : DATABASE.filter(w => w.level === selLevel);
+
+  // Catégories uniques dans l'ordre d'apparition
+  const seen = new Set();
+  const cats = [];
+  source.forEach(w => { if (!seen.has(w.cat)) { seen.add(w.cat); cats.push(w.cat); } });
+
+  const el = document.getElementById('cats');
+  el.innerHTML = '';
+
+  // Bouton "Toutes les catégories" en premier
+  const btnAll = document.createElement('button');
+  btnAll.className = 'cat active';
+  btnAll.textContent = '🌟 Toutes les catégories';
+  btnAll.onclick = () => { selCat = '__all__'; syncCatBtns(btnAll); startFresh(); };
+  el.appendChild(btnAll);
+
+  // Un bouton par catégorie
+  cats.forEach(c => {
+    const b = document.createElement('button');
+    b.className = 'cat';
+    b.textContent = c;
+    b.onclick = () => { selCat = c; syncCatBtns(b); startFresh(); };
+    el.appendChild(b);
+  });
+}
+
+function syncCatBtns(activeBtn) {
+  document.querySelectorAll('.cat').forEach(b => b.classList.remove('active'));
+  activeBtn.classList.add('active');
+}
+
+/**
+ * generateSessionList()
+ * Filtre la DATABASE selon niveau et catégorie,
+ * puis mélange aléatoirement.
+ */
+function generateSessionList() {
+  let src = DATABASE;
+
+  // Filtre niveau
+  if (selLevel !== 'random') {
+    src = src.filter(w => w.level === selLevel);
+  }
+
+  // Filtre catégorie
+  if (selCat !== '__all__') {
+    src = src.filter(w => w.cat === selCat);
+  }
+
+  // Mélange Fisher-Yates
+  const arr = [...src];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+/* ════════════════════════════════════════════════════════
+   MODE DE JEU
+════════════════════════════════════════════════════════ */
+function setMode(m) {
+  mode = m;
+  ['es-fr','fr-es','dictee'].forEach(k =>
+    document.getElementById('tab-' + k).classList.toggle('active', k === m)
+  );
+  startFresh();
+}
+
+/* ════════════════════════════════════════════════════════
+   DÉMARRAGE D'UNE SESSION
+════════════════════════════════════════════════════════ */
+function startFresh() {
+  nOk = 0; nErr = 0; streak = 0;
+  pool = generateSessionList();
+  idx  = 0;
+  updateScore();
+  loadWord();
+}
+
+/* ════════════════════════════════════════════════════════
+   CHARGEMENT D'UN MOT
+════════════════════════════════════════════════════════ */
+function loadWord() {
+  // On boucle quand la liste est épuisée
+  if (idx >= pool.length) {
+    pool = generateSessionList();
+    idx  = 0;
+  }
+  cur      = pool[idx];
+  answered = false;
+
+  // Animation pop
+  const card = document.getElementById('card');
+  card.classList.remove('pop');
+  void card.offsetWidth;
+  card.classList.add('pop');
+
+  // Réinitialise l'interface
+  const inp = document.getElementById('answer-input');
+  inp.value = ''; inp.className = 'answer-input'; inp.disabled = false;
+  document.getElementById('feedback').className = 'feedback';
+  document.getElementById('btn-next').className = 'btn-next';
+
+  // Badges sur la carte
+  document.getElementById('card-level-badge').textContent = cur.level;
+  document.getElementById('card-cat-tag').textContent     = cur.cat;
+
+  // Références des éléments
+  const wordEl    = document.getElementById('card-word');
+  const audioZone = document.getElementById('audio-zone');
+  const modeLabel = document.getElementById('mode-label');
+  const hintEl    = document.getElementById('card-hint');
+
+  if (mode === 'es-fr') {
+    if (cur.noArt) {
+      modeLabel.textContent = 'Traduce al francés';
+      wordEl.textContent    = cur.es.split('/')[0].trim();
+      inp.placeholder       = 'traduction en français…';
+      hintEl.textContent    = '';
+    } else {
+      modeLabel.textContent = 'Traduce al francés con el artículo';
+      const esClean = cur.es.split('/')[0].trim().replace(/^(el|la|los|las|un|una)\s+/i,'');
+      wordEl.textContent = esClean;
+      inp.placeholder    = 'le / la + mot…';
+      hintEl.textContent = '💡 ¿Cuál es el artículo correcto en francés?';
+    }
+    wordEl.style.display    = 'block';
+    audioZone.style.display = 'none';
+
+  } else if (mode === 'fr-es') {
+    modeLabel.textContent   = 'Traduce al español';
+    wordEl.textContent      = cur.fr;
+    wordEl.style.display    = 'block';
+    audioZone.style.display = 'none';
+    inp.placeholder         = 'traducción en español…';
+    hintEl.textContent      = '';
+
+  } else {
+    // Mode Dictée
+    modeLabel.textContent   = cur.noArt
+      ? '¿Qué escuchaste? Escribe en francés'
+      : '¿Qué escuchaste? Escribe con el artículo';
+    wordEl.style.display    = 'none';
+    audioZone.style.display = 'flex';
+    inp.placeholder         = cur.noArt ? 'traduction en français…' : 'artículo + palabra…';
+    hintEl.textContent      = '';
+    setTimeout(() => playAudio(), 550);
+  }
+
+  updateProgress();
+  inp.focus();
+  window.scrollTo({ top: 0, behavior: 'instant' });
+}
+
+function playAudio() {
+  if (cur) speakEL(cur.fr, cur.g);
+}
+
+/* ════════════════════════════════════════════════════════
+   COMPARAISON INTELLIGENTE
+   Normalise, ignore accents, gère noArt
+════════════════════════════════════════════════════════ */
+function norm(s) {
+  return s.toLowerCase().trim()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/['']/g,"'").replace(/\s+/g,' ');
+}
+
+function checkAnswer() {
+  if (answered) { nextWord(); return; }
+  const inp = document.getElementById('answer-input');
+  const raw = inp.value.trim();
+  if (!raw) return;
+
+  answered = true;
+  inp.disabled = true;
+
+  let correct        = false;
+  let correctAnswer  = '';
+
+  if (mode === 'es-fr') {
+    correctAnswer = cur.fr;
+    if (cur.noArt) {
+      const variants = cur.fr.split('/').map(s => s.trim());
+      correct = variants.some(v => norm(raw) === norm(v));
+    } else {
+      // Accepte aussi avec article indéfini (un/une)
+      const variants = [cur.fr,
+        cur.fr.replace(/^le /,'un ').replace(/^la /,'une ')
+              .replace(/^l'/,'un ').replace(/^l'/,'un ')];
+      correct = variants.some(v => norm(raw) === norm(v));
+    }
+
+  } else if (mode === 'fr-es') {
+    correctAnswer = cur.es;
+    const variants = cur.es.split('/').map(s => s.trim());
+    correct = variants.some(v => {
+      const vc = v.replace(/^(el|la|los|las|un|una)\s+/i,'').trim();
+      const rc = raw.replace(/^(el|la|los|las|un|una)\s+/i,'').trim();
+      return norm(rc) === norm(vc) || norm(raw) === norm(v);
+    });
+
+  } else {
+    // Mode Dictée : accepte avec ou sans article
+    correctAnswer = cur.fr;
+    correct = norm(raw) === norm(cur.fr);
+    if (!correct && !cur.noArt) {
+      const noArt = cur.fr.replace(/^(le|la|les|l'|l')\s*/i,'').trim();
+      correct = norm(raw) === norm(noArt);
+    }
+  }
+
+  // Affichage du feedback
+  const fbEl   = document.getElementById('feedback');
+  const fbTxt  = document.getElementById('fb-text');
+  const fbIcon = document.getElementById('fb-icon');
+
+  if (correct) {
+    nOk++; streak++;
+    inp.className  = 'answer-input ok';
+    fbEl.className = 'feedback ok';
+    fbIcon.textContent = '✅';
+    fbTxt.innerHTML = mode === 'dictee'
+      ? `¡Correcto! <strong>${correctAnswer}</strong><span class="fb-es"> = ${cur.es.split('/')[0].trim()}</span>`
+      : `¡Correcto! <strong>${correctAnswer}</strong>`;
+    if (mode !== 'fr-es') setTimeout(() => speakEL(cur.fr, cur.g), 380);
+  } else {
+    nErr++; streak = 0;
+    inp.className  = 'answer-input err';
+    fbEl.className = 'feedback err';
+    fbIcon.textContent = '❌';
+    fbTxt.innerHTML = mode === 'dictee'
+      ? `La respuesta es: <strong>${correctAnswer}</strong><span class="fb-es"> = ${cur.es.split('/')[0].trim()}</span>`
+      : `La respuesta es: <strong>${correctAnswer}</strong>`;
+    if (mode !== 'fr-es') setTimeout(() => speakEL(cur.fr, cur.g), 380);
+  }
+
+  updateScore();
+  document.getElementById('btn-next').className = 'btn-next on';
+}
+
+function nextWord() { idx++; loadWord(); }
+
+/* ════════════════════════════════════════════════════════
+   MISE À JOUR DU SCORE & PROGRESSION
+════════════════════════════════════════════════════════ */
+function updateScore() {
+  document.getElementById('sc-ok').textContent  = nOk;
+  document.getElementById('sc-err').textContent = nErr;
+  const sEl = document.getElementById('streak-el');
+  if (streak >= 3) {
+    sEl.textContent = `🔥 ${streak} seguidos`;
+    sEl.className   = 'streak on';
+  } else {
+    sEl.className = 'streak';
+  }
+}
+
+function updateProgress() {
+  const total = pool.length;
+  const done  = idx;
+  const pct   = total > 0 ? Math.round((done / total) * 100) : 0;
+  document.getElementById('prog').textContent         = `${done} / ${total}`;
+  document.getElementById('prog-bar-fill').style.width = pct + '%';
+}
+
+/* ════════════════════════════════════════════════════════
+   SYNTHÈSE VOCALE — ELEVENLABS
+════════════════════════════════════════════════════════ */
+function getKey() { return localStorage.getItem('elevenlabs_api_key') || ''; }
+
+function openModal() {
+  document.getElementById('modal-input').value = getKey();
+  document.getElementById('modal-overlay').classList.add('open');
+}
+function closeIfOut(e) {
+  if (e.target === document.getElementById('modal-overlay'))
+    document.getElementById('modal-overlay').classList.remove('open');
+}
+function saveKey() {
+  localStorage.setItem('elevenlabs_api_key', document.getElementById('modal-input').value.trim());
+  document.getElementById('modal-overlay').classList.remove('open');
+  updateBadge();
+}
+function updateBadge() {
+  const b  = document.getElementById('api-badge');
+  b.className = getKey() ? 'api-badge set' : 'api-badge unset';
+  b.textContent = getKey() ? '🔑 API conectada' : '🔑 Configurar API';
+}
+
+async function speakEL(text, gender) {
+  const key = getKey();
+  if (!key) { speakBrowser(text); return; }
+  const voiceId = gender === 'f' ? VOICE_F : VOICE_M;
+  const lb = document.getElementById('btn-listen');
+  const rb = document.getElementById('btn-replay');
+  [lb, rb].forEach(b => { if (b) b.disabled = true; });
+  if (lb) lb.classList.add('playing');
+  try {
+    const res = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`, {
+      method: 'POST',
+      headers: { 'xi-api-key': key, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        text,
+        model_id: EL_MODEL,
+        language_code: 'fr',
+        voice_settings: { stability: 0.5, similarity_boost: 0.75 }
+      })
+    });
+    if (!res.ok) throw new Error('EL error');
+    const blob = await res.blob();
+    const url  = URL.createObjectURL(blob);
+    const a    = new Audio(url);
+    a.play();
+    a.onended = () => {
+      URL.revokeObjectURL(url);
+      [lb, rb].forEach(b => { if (b) b.disabled = false; });
+      if (lb) lb.classList.remove('playing');
+    };
+  } catch {
+    speakBrowser(text);
+    [lb, rb].forEach(b => { if (b) b.disabled = false; });
+    if (lb) lb.classList.remove('playing');
+  }
+}
+
+function speakBrowser(text) {
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'fr-FR';
+  speechSynthesis.cancel();
+  speechSynthesis.speak(u);
+}
+
+/* ════════════════════════════════════════════════════════
+   INITIALISATION
+════════════════════════════════════════════════════════ */
+updateBadge();
+</script>
+</body>
+</html>
