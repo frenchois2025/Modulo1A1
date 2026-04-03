@@ -9,8 +9,6 @@
 <style>
 /* ══════════════════════════════════════════════════════
    VARIABLES & RESET
-   Les couleurs d'accentuation changent dynamiquement
-   selon le niveau sélectionné
 ══════════════════════════════════════════════════════ */
 :root {
   --bg: #f7f4ef;
@@ -22,40 +20,29 @@
   --success-l: #dcf5ea;
   --error: #c0392b;
   --error-l: #fdecea;
-
-  /* Couleur d'accentuation — modifiée par JS selon le niveau */
   --accent: #e63946;
   --accent-dark: #c1121f;
   --accent-light: #fdecea;
-
-  /* Palettes par niveau */
   --a1: #e63946;      --a1-dark: #c1121f;   --a1-light: #fdecea;
   --a2: #2563eb;      --a2-dark: #1d4ed8;   --a2-light: #dbeafe;
   --b1: #059669;      --b1-dark: #047857;   --b1-light: #d1fae5;
   --b2: #7c3aed;      --b2-dark: #6d28d9;   --b2-light: #ede9fe;
   --rnd: #d97706;     --rnd-dark: #b45309;  --rnd-light: #fef3c7;
 }
-
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
-
 body {
   font-family: 'Nunito', sans-serif;
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
 }
-
-/* Fond décoratif subtil */
 body::before {
   content: '';
   position: fixed; inset: 0; pointer-events: none; z-index: 0;
-  background:
-    radial-gradient(ellipse 60% 40% at 5% 10%, rgba(230,57,70,.06) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 40% at 95% 90%, rgba(37,99,235,.04) 0%, transparent 60%);
+  background: radial-gradient(ellipse 60% 40% at 5% 10%, rgba(230,57,70,.06) 0%, transparent 60%),
+              radial-gradient(ellipse 50% 40% at 95% 90%, rgba(37,99,235,.04) 0%, transparent 60%);
 }
-
-/* ── HEADER ──────────────────────────────────────────── */
 .header {
   position: relative; z-index: 10;
   display: flex; align-items: center; gap: 14px;
@@ -81,15 +68,11 @@ body::before {
   font-family: 'Playfair Display', serif;
   font-size: 17px; font-weight: 700; color: var(--text);
 }
-
-/* ── LAYOUT PRINCIPAL ────────────────────────────────── */
 .main {
   position: relative; z-index: 1;
   max-width: 680px; margin: 0 auto;
   padding: 28px 18px 80px;
 }
-
-/* ── ÉTAGE 1 : SÉLECTION DU NIVEAU ──────────────────── */
 .level-label {
   font-size: 10px; font-weight: 800; letter-spacing: 1.5px;
   text-transform: uppercase; color: var(--muted);
@@ -109,7 +92,6 @@ body::before {
   transition: all .22s; letter-spacing: .3px;
 }
 .level-btn:hover { transform: translateY(-1px); }
-
 .level-btn[data-level="A1"]:hover,
 .level-btn[data-level="A1"].active { border-color: var(--a1); background: var(--a1); color: white; }
 .level-btn[data-level="A2"]:hover,
@@ -120,8 +102,6 @@ body::before {
 .level-btn[data-level="B2"].active { border-color: var(--b2); background: var(--b2); color: white; }
 .level-btn[data-level="random"]:hover,
 .level-btn[data-level="random"].active { border-color: var(--rnd); background: var(--rnd); color: white; }
-
-/* ── ÉTAGE 2 : CATÉGORIES ────────────────────────────── */
 .cats-section { margin-bottom: 16px; }
 .cats {
   display: flex; flex-wrap: wrap; gap: 6px;
@@ -136,8 +116,6 @@ body::before {
 }
 .cat:hover { border-color: var(--accent); color: var(--accent); }
 .cat.active { background: var(--accent); border-color: var(--accent); color: white; }
-
-/* ── TABS DE MODE ────────────────────────────────────── */
 .tabs {
   display: grid; grid-template-columns: repeat(3,1fr);
   gap: 8px; margin-bottom: 16px;
@@ -156,8 +134,6 @@ body::before {
 .tab.active .tab-name,
 .tab.active .tab-desc { color: rgba(255,255,255,.9); }
 .tab.active .tab-desc { color: rgba(255,255,255,.65); }
-
-/* ── BARRE DE SCORE ──────────────────────────────────── */
 .scorebar {
   display: flex; align-items: center; gap: 10px;
   padding: 9px 14px; background: var(--white);
@@ -170,12 +146,8 @@ body::before {
 }
 .score-pill.ok  { color: var(--success); }
 .score-pill.err { color: var(--error); }
-
-/* Streak — visible uniquement si >= 3 */
 .streak { font-size: 12px; color: var(--rnd); font-weight: 800; display: none; }
 .streak.on { display: block; }
-
-/* Barre de progression dynamique */
 .prog-wrap { margin-left: auto; display: flex; align-items: center; gap: 8px; }
 .prog-bar-bg {
   width: 80px; height: 5px; border-radius: 10px;
@@ -187,8 +159,6 @@ body::before {
   transition: width .4s ease;
 }
 .prog-text { font-size: 11px; font-weight: 700; color: var(--muted); white-space: nowrap; }
-
-/* ── CARTE ───────────────────────────────────────────── */
 .card {
   background: var(--white); border: 1.5px solid var(--border);
   border-radius: 20px; overflow: hidden;
@@ -200,8 +170,6 @@ body::before {
   from { transform: scale(.96); opacity: .6; }
   to   { transform: scale(1);   opacity: 1; }
 }
-
-/* Face supérieure colorée */
 .card-top {
   background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
   padding: 36px 28px 30px;
@@ -226,8 +194,6 @@ body::before {
   background: rgba(255,255,255,.07);
   top: -40px; left: -30px; pointer-events: none;
 }
-
-/* Badge niveau + catégorie sur la carte */
 .card-badges {
   position: absolute; top: 12px; right: 14px;
   display: flex; gap: 6px;
@@ -239,7 +205,6 @@ body::before {
   color: rgba(255,255,255,.9);
   padding: 3px 9px; border-radius: 20px;
 }
-
 .card-mode-label {
   font-size: 10px; font-weight: 800; letter-spacing: 1.5px;
   text-transform: uppercase;
@@ -256,8 +221,6 @@ body::before {
   margin-top: 10px; font-size: 12px;
   color: rgba(255,255,255,.5); position: relative;
 }
-
-/* Zone audio (mode Dictée) */
 .audio-zone {
   display: flex; flex-direction: column;
   align-items: center; gap: 10px; position: relative;
@@ -286,8 +249,6 @@ body::before {
 }
 .btn-replay:hover { background: rgba(255,255,255,.22); color: white; }
 .btn-replay:disabled { opacity: .4; cursor: wait; }
-
-/* Face inférieure */
 .card-bottom { padding: 22px 22px 18px; }
 .input-row { display: flex; gap: 8px; }
 .answer-input {
@@ -302,7 +263,6 @@ body::before {
 .answer-input.ok  { border-color: var(--success); background: var(--success-l); }
 .answer-input.err { border-color: var(--error);   background: var(--error-l); }
 .answer-input:disabled { opacity: .85; }
-
 .btn-check {
   padding: 12px 16px; background: var(--accent); color: white;
   border: none; border-radius: 13px;
@@ -312,8 +272,6 @@ body::before {
 }
 .btn-check:hover { background: var(--accent-dark); }
 .btn-check:active { transform: scale(.94); }
-
-/* Feedback correct / incorrect */
 .feedback {
   margin-top: 12px; padding: 10px 14px;
   border-radius: 13px; font-size: 14px; font-weight: 600;
@@ -325,8 +283,6 @@ body::before {
 .feedback.err { display:flex; background:var(--error-l);   color:var(--error);   border:1.5px solid #fca5a5; }
 .feedback-text strong { font-family: 'Playfair Display', serif; font-size: 1.05rem; }
 .feedback-text .fb-es { font-size: .83rem; font-weight: 600; opacity: .7; margin-left: 4px; }
-
-/* Bouton "Suivant" */
 .btn-next {
   width: 100%; margin-top: 10px; padding: 12px;
   background: var(--text); color: white; border: none; border-radius: 13px;
@@ -336,8 +292,6 @@ body::before {
 }
 .btn-next:hover { opacity: .82; }
 .btn-next.on { display: block; animation: fadein .2s ease; }
-
-/* ── ÉCRAN D'ACCUEIL (avant sélection) ───────────────── */
 .welcome {
   text-align: center; padding: 40px 20px;
   background: var(--white); border: 1.5px solid var(--border);
@@ -349,8 +303,6 @@ body::before {
 }
 .welcome p { color: var(--muted); font-size: 14px; line-height: 1.6; }
 .welcome-emoji { font-size: 2.5rem; margin-bottom: 12px; display: block; }
-
-/* ── BADGE API ────────────────────────────────────────── */
 .api-badge {
   position: fixed; bottom: 20px; right: 18px;
   padding: 6px 14px; border-radius: 20px;
@@ -360,8 +312,6 @@ body::before {
 }
 .api-badge.set   { background: var(--success-l); color: var(--success); border-color: #a7f3d0; }
 .api-badge.unset { background: var(--error-l);   color: var(--error);   border-color: #fca5a5; }
-
-/* ── MODAL ───────────────────────────────────────────── */
 .overlay {
   position: fixed; inset: 0; background: rgba(28,28,46,.45);
   display: none; align-items: center; justify-content: center;
@@ -390,8 +340,6 @@ body::before {
   transition: background .18s; font-family: 'Nunito', sans-serif;
 }
 .modal-btn:hover { background: var(--accent-dark); }
-
-/* ── RESPONSIVE ──────────────────────────────────────── */
 @media (max-width: 500px) {
   .tabs { gap: 6px; }
   .card-top { padding: 26px 18px; min-height: 170px; }
@@ -402,12 +350,12 @@ body::before {
 }
 </style>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="auth.js"></script>
+<!-- Les lignes suivantes peuvent être supprimées si vous n'utilisez pas Supabase ou auth.js -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="auth.js"></script>
 </head>
 <body>
 
-<!-- HEADER -->
 <header class="header">
   <a href="index.html" class="header-back">← Volver</a>
   <span class="header-divider">|</span>
@@ -416,8 +364,6 @@ body::before {
 </header>
 
 <main class="main">
-
-  <!-- ÉTAGE 1 : NIVEAU -->
   <div class="level-label">Choisir un niveau</div>
   <div class="levels">
     <button class="level-btn" data-level="A1"     onclick="selectLevel('A1')">A1 — Débutant</button>
@@ -427,13 +373,11 @@ body::before {
     <button class="level-btn" data-level="random" onclick="selectLevel('random')">🎲 Aléatoire</button>
   </div>
 
-  <!-- ÉTAGE 2 : CATÉGORIES (affiché après sélection du niveau) -->
   <div class="cats-section" id="cats-section" style="display:none">
     <div class="level-label" style="margin-bottom:8px">Filtrer par catégorie</div>
     <div class="cats" id="cats"></div>
   </div>
 
-  <!-- TABS MODE (ES→FR / FR→ES / Dictée) -->
   <div class="tabs" id="tabs-section" style="display:none">
     <div class="tab active" id="tab-es-fr" onclick="setMode('es-fr')">
       <span class="tab-icon">🇪🇸→🇫🇷</span>
@@ -452,39 +396,31 @@ body::before {
     </div>
   </div>
 
-  <!-- SCOREBAR -->
   <div class="scorebar" id="scorebar" style="display:none">
     <span class="score-pill ok">✅ <span id="sc-ok">0</span></span>
     <span class="score-pill err">❌ <span id="sc-err">0</span></span>
     <span class="streak" id="streak-el"></span>
     <div class="prog-wrap">
-      <div class="prog-bar-bg">
-        <div class="prog-bar-fill" id="prog-bar-fill"></div>
-      </div>
+      <div class="prog-bar-bg"><div class="prog-bar-fill" id="prog-bar-fill"></div></div>
       <span class="prog-text" id="prog">0 / 0</span>
     </div>
   </div>
 
-  <!-- CARTE DE JEU -->
   <div class="card" id="card" style="display:none">
     <div class="card-top" id="card-top">
       <div class="card-badges">
         <span class="card-level-badge" id="card-level-badge"></span>
-        <span class="card-cat-tag"     id="card-cat-tag"></span>
+        <span class="card-cat-tag" id="card-cat-tag"></span>
       </div>
       <div class="card-mode-label" id="mode-label"></div>
       <div class="card-word" id="card-word"></div>
-
-      <!-- Zone audio pour le mode Dictée -->
       <div class="audio-zone" id="audio-zone" style="display:none">
         <button class="btn-listen" id="btn-listen" onclick="playAudio()">🔊</button>
         <span class="listen-label">TOCA PARA ESCUCHAR</span>
         <button class="btn-replay" id="btn-replay" onclick="playAudio()">↻ Repetir</button>
       </div>
-
       <div class="card-hint" id="card-hint"></div>
     </div>
-
     <div class="card-bottom">
       <div class="input-row">
         <input type="text" class="answer-input" id="answer-input"
@@ -501,20 +437,15 @@ body::before {
     </div>
   </div>
 
-  <!-- ÉCRAN DE BIENVENUE (avant sélection d'un niveau) -->
   <div class="welcome" id="welcome">
     <span class="welcome-emoji">📚</span>
     <h2>Entraînement au vocabulaire</h2>
     <p>Sélectionne un niveau pour commencer.<br>
        Plus de <strong>700 mots</strong> disponibles de A1 à B2.</p>
   </div>
-
 </main>
 
-<!-- BADGE API -->
 <div class="api-badge unset" id="api-badge" onclick="openModal()">🔑 Configurar API</div>
-
-<!-- MODAL ELEVENLABS -->
 <div class="overlay" id="modal-overlay" onclick="closeIfOut(event)">
   <div class="modal">
     <h3>🔑 API ElevenLabs</h3>
@@ -525,404 +456,1345 @@ body::before {
 </div>
 
 <script>
-  // ============================================================
-  // BASE DE DONNÉES (contenu de vocabulaire.js)
-  // ============================================================
-  const DATABASE = [
-    // ... TOUT LE CONTENU DE vocabulaire.js ICI ...
-    // (Pour des raisons de lisibilité, je n'inclus pas les 700+ lignes,
-    //  mais tu dois copier l'intégralité du fichier vocabulaire.js à cet endroit)
-    // Exemple de début :
-    /* ════════════════════════════════════════════════════════
-       FRENCHOIS — vocabulaire.js
-       Base de données centrale du vocabulaire français / espagnol
-    ════════════════════════════════════════════════════════ */
-    // { fr:"Je m'appelle", es:"Me llamo", g:"m", cat:"Presentarse", level:"A1", noArt:true },
-    // ... etc ...
-  ];
+// ============================================================
+// BASE DE DONNÉES (contenu complet de vocabulaire.js)
+// ============================================================
+const DATABASE = [
+  /* ╔══════════════════════════════════════════
+     ║  NIVEAU A1 — Débutant
+     ╚══════════════════════════════════════════ */
+  // ── A1 · Presentarse ────────────────────
+  { fr:"Je m'appelle",          es:"Me llamo",                   g:"m", cat:"Presentarse",     level:"A1", noArt:true },
+  { fr:"Quel est ton nom ?",    es:"¿Cuál es tu nombre?",        g:"m", cat:"Presentarse",     level:"A1", noArt:true },
+  { fr:"J'ai… ans",            es:"Tengo… años",                g:"m", cat:"Presentarse",     level:"A1", noArt:true },
+  { fr:"Je suis",               es:"Soy / Estoy",                g:"m", cat:"Presentarse",     level:"A1", noArt:true },
+  { fr:"D'où es-tu ?",         es:"¿De dónde eres?",            g:"m", cat:"Presentarse",     level:"A1", noArt:true },
+  { fr:"Je suis de…",          es:"Soy de…",                    g:"m", cat:"Presentarse",     level:"A1", noArt:true },
+  { fr:"français(e)",           es:"francés / francesa",          g:"m", cat:"Presentarse",     level:"A1", noArt:true },
+  { fr:"argentin(e)",           es:"argentino / argentina",       g:"m", cat:"Presentarse",     level:"A1", noArt:true },
+  { fr:"étudiant(e)",           es:"estudiante",                  g:"m", cat:"Presentarse",     level:"A1", noArt:true },
+  { fr:"marié(e)",              es:"casado / casada",             g:"m", cat:"Presentarse",     level:"A1", noArt:true },
+  { fr:"célibataire",           es:"soltero / soltera",           g:"m", cat:"Presentarse",     level:"A1", noArt:true },
+  { fr:"en couple",             es:"en pareja",                   g:"m", cat:"Presentarse",     level:"A1", noArt:true },
+  // ── A1 · Saludos ─────────────────────────
+  { fr:"Bonjour",               es:"Buenos días / Buenas tardes", g:"m", cat:"Saludos",         level:"A1", noArt:true },
+  { fr:"Salut",                 es:"Hola",                        g:"m", cat:"Saludos",         level:"A1", noArt:true },
+  { fr:"Bonsoir",               es:"Buenas tardes / noches",      g:"m", cat:"Saludos",         level:"A1", noArt:true },
+  { fr:"Au revoir",             es:"Adiós",                       g:"m", cat:"Saludos",         level:"A1", noArt:true },
+  { fr:"S'il vous plaît",       es:"Por favor",                   g:"m", cat:"Saludos",         level:"A1", noArt:true },
+  { fr:"Merci",                 es:"Gracias",                     g:"m", cat:"Saludos",         level:"A1", noArt:true },
+  { fr:"De rien",               es:"De nada",                     g:"m", cat:"Saludos",         level:"A1", noArt:true },
+  { fr:"Excusez-moi",           es:"Lo siento / Disculpe",        g:"m", cat:"Saludos",         level:"A1", noArt:true },
+  { fr:"Pardon",                es:"Perdón",                      g:"m", cat:"Saludos",         level:"A1", noArt:true },
+  { fr:"Comment vas-tu ?",      es:"¿Cómo estás?",               g:"m", cat:"Saludos",         level:"A1", noArt:true },
+  { fr:"Enchanté(e)",           es:"Encantado / Mucho gusto",     g:"m", cat:"Saludos",         level:"A1", noArt:true },
+  { fr:"Bonne journée",         es:"Buen día",                    g:"m", cat:"Saludos",         level:"A1", noArt:true },
+  // ── A1 · Verbos ──────────────────────────
+  { fr:"être",                  es:"ser / estar",                 g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"avoir",                 es:"tener",                       g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"aller",                 es:"ir",                          g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"faire",                 es:"hacer",                       g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"vouloir",               es:"querer",                      g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"parler",                es:"hablar",                      g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"comprendre",            es:"comprender",                  g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"habiter",               es:"vivir",                       g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"aimer",                 es:"amar / querer",               g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"manger",                es:"comer",                       g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"boire",                 es:"beber",                       g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"ouvrir",                es:"abrir",                       g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"fermer",                es:"cerrar",                      g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"regarder",              es:"mirar",                       g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"écouter",               es:"escuchar",                    g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"apprendre",             es:"aprender",                    g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"étudier",               es:"estudiar",                    g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"travailler",            es:"trabajar",                    g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"acheter",               es:"comprar",                     g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"vendre",                es:"vender",                      g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"payer",                 es:"pagar",                       g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"venir",                 es:"venir",                       g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"partir",                es:"salir / irse",                g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"arriver",               es:"llegar",                      g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"attendre",              es:"esperar",                     g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"demander",              es:"pedir / preguntar",           g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"répondre",              es:"responder",                   g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"donner",                es:"dar",                         g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"prendre",               es:"tomar",                       g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"finir",                 es:"terminar",                    g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"commencer",             es:"empezar",                     g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"sortir",                es:"salir",                       g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"rentrer",               es:"entrar / volver",             g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"dormir",                es:"dormir",                      g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"se réveiller",          es:"despertarse",                 g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"se lever",              es:"levantarse",                  g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"se laver",              es:"lavarse",                     g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"s'habiller",            es:"vestirse",                    g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"savoir",                es:"saber",                       g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"pouvoir",               es:"poder",                       g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"devoir",                es:"deber",                       g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"voyager",               es:"viajar",                      g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"cuisiner",              es:"cocinar",                     g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"lire",                  es:"leer",                        g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"écrire",                es:"escribir",                    g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"jouer",                 es:"jugar",                       g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"chanter",               es:"cantar",                      g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"danser",                es:"bailar",                      g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"nager",                 es:"nadar",                       g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  { fr:"courir",                es:"correr",                      g:"m", cat:"Verbos",          level:"A1", noArt:true },
+  // ── A1 · Adjectifs ───────────────────────
+  { fr:"grand",                 es:"grande / alto",               g:"m", cat:"Adjectifs",       level:"A1", noArt:true },
+  { fr:"petit",                 es:"pequeño",                     g:"m", cat:"Adjectifs",       level:"A1", noArt:true },
+  { fr:"beau",                  es:"bonito / hermoso",            g:"m", cat:"Adjectifs",       level:"A1", noArt:true },
+  { fr:"bon",                   es:"bueno",                       g:"m", cat:"Adjectifs",       level:"A1", noArt:true },
+  { fr:"mauvais",               es:"malo",                        g:"m", cat:"Adjectifs",       level:"A1", noArt:true },
+  { fr:"cher",                  es:"caro",                        g:"m", cat:"Adjectifs",       level:"A1", noArt:true },
+  { fr:"facile",                es:"fácil",                       g:"m", cat:"Adjectifs",       level:"A1", noArt:true },
+  { fr:"difficile",             es:"difícil",                     g:"m", cat:"Adjectifs",       level:"A1", noArt:true },
+  { fr:"heureux",               es:"feliz",                       g:"m", cat:"Adjectifs",       level:"A1", noArt:true },
+  { fr:"triste",                es:"triste",                      g:"m", cat:"Adjectifs",       level:"A1", noArt:true },
+  { fr:"nouveau",               es:"nuevo",                       g:"m", cat:"Adjectifs",       level:"A1", noArt:true },
+  { fr:"vieux",                 es:"viejo",                       g:"m", cat:"Adjectifs",       level:"A1", noArt:true },
+  { fr:"jeune",                 es:"joven",                       g:"m", cat:"Adjectifs",       level:"A1", noArt:true },
+  { fr:"chaud",                 es:"caliente",                    g:"m", cat:"Adjectifs",       level:"A1", noArt:true },
+  { fr:"froid",                 es:"frío",                        g:"m", cat:"Adjectifs",       level:"A1", noArt:true },
+  { fr:"gentil",                es:"amable",                      g:"m", cat:"Adjectifs",       level:"A1", noArt:true },
+  { fr:"drôle",                 es:"divertido / gracioso",        g:"m", cat:"Adjectifs",       level:"A1", noArt:true },
+  { fr:"sérieux",               es:"serio",                       g:"m", cat:"Adjectifs",       level:"A1", noArt:true },
+  { fr:"calme",                 es:"tranquilo",                   g:"m", cat:"Adjectifs",       level:"A1", noArt:true },
+  { fr:"fatigué",               es:"cansado",                     g:"m", cat:"Adjectifs",       level:"A1", noArt:true },
+  { fr:"content",               es:"contento",                    g:"m", cat:"Adjectifs",       level:"A1", noArt:true },
+  { fr:"inquiet",               es:"preocupado",                  g:"m", cat:"Adjectifs",       level:"A1", noArt:true },
+  { fr:"poli",                  es:"cortés",                      g:"m", cat:"Adjectifs",       level:"A1", noArt:true },
+  { fr:"timide",                es:"tímido",                      g:"m", cat:"Adjectifs",       level:"A1", noArt:true },
+  { fr:"courageux",             es:"valiente",                    g:"m", cat:"Adjectifs",       level:"A1", noArt:true },
+  { fr:"patient",               es:"paciente",                    g:"m", cat:"Adjectifs",       level:"A1", noArt:true },
+  { fr:"paresseux",             es:"perezoso",                    g:"m", cat:"Adjectifs",       level:"A1", noArt:true },
+  // ── A1 · Couleurs ─────────────────────────
+  { fr:"rouge",                 es:"rojo",                        g:"m", cat:"Couleurs",        level:"A1", noArt:true },
+  { fr:"jaune",                 es:"amarillo",                    g:"m", cat:"Couleurs",        level:"A1", noArt:true },
+  { fr:"vert",                  es:"verde",                       g:"m", cat:"Couleurs",        level:"A1", noArt:true },
+  { fr:"bleu",                  es:"azul",                        g:"m", cat:"Couleurs",        level:"A1", noArt:true },
+  { fr:"orange",                es:"naranja",                     g:"m", cat:"Couleurs",        level:"A1", noArt:true },
+  { fr:"noir",                  es:"negro",                       g:"m", cat:"Couleurs",        level:"A1", noArt:true },
+  { fr:"blanc",                 es:"blanco",                      g:"m", cat:"Couleurs",        level:"A1", noArt:true },
+  { fr:"gris",                  es:"gris",                        g:"m", cat:"Couleurs",        level:"A1", noArt:true },
+  { fr:"rose",                  es:"rosa / rosado",               g:"m", cat:"Couleurs",        level:"A1", noArt:true },
+  { fr:"violet",                es:"morado / violeta",            g:"m", cat:"Couleurs",        level:"A1", noArt:true },
+  { fr:"marron",                es:"marrón / café",               g:"m", cat:"Couleurs",        level:"A1", noArt:true },
+  // ── A1 · Famille ──────────────────────────
+  { fr:"la mère",               es:"la madre",                    g:"f", cat:"Famille",         level:"A1" },
+  { fr:"le père",               es:"el padre",                    g:"m", cat:"Famille",         level:"A1" },
+  { fr:"le frère",              es:"el hermano",                  g:"m", cat:"Famille",         level:"A1" },
+  { fr:"la sœur",               es:"la hermana",                  g:"f", cat:"Famille",         level:"A1" },
+  { fr:"la femme",              es:"la mujer / la esposa",        g:"f", cat:"Famille",         level:"A1" },
+  { fr:"l'homme",               es:"el hombre",                   g:"m", cat:"Famille",         level:"A1" },
+  { fr:"le fils",               es:"el hijo",                     g:"m", cat:"Famille",         level:"A1" },
+  { fr:"la fille",              es:"la hija",                     g:"f", cat:"Famille",         level:"A1" },
+  { fr:"la grand-mère",         es:"la abuela",                   g:"f", cat:"Famille",         level:"A1" },
+  { fr:"le grand-père",         es:"el abuelo",                   g:"m", cat:"Famille",         level:"A1" },
+  { fr:"le cousin",             es:"el primo",                    g:"m", cat:"Famille",         level:"A1" },
+  { fr:"la cousine",            es:"la prima",                    g:"f", cat:"Famille",         level:"A1" },
+  { fr:"le mari",               es:"el marido",                   g:"m", cat:"Famille",         level:"A1" },
+  { fr:"le bébé",               es:"el bebé",                     g:"m", cat:"Famille",         level:"A1" },
+  { fr:"l'enfant",              es:"el niño / la niña",           g:"m", cat:"Famille",         level:"A1" },
+  // ── A1 · Vie quotidienne ─────────────────
+  { fr:"la maison",             es:"la casa",                     g:"f", cat:"Vie quotidienne",  level:"A1" },
+  { fr:"la voiture",            es:"el coche / el carro",         g:"f", cat:"Vie quotidienne",  level:"A1" },
+  { fr:"le livre",              es:"el libro",                    g:"m", cat:"Vie quotidienne",  level:"A1" },
+  { fr:"le téléphone",          es:"el teléfono",                 g:"m", cat:"Vie quotidienne",  level:"A1" },
+  { fr:"l'argent",              es:"el dinero",                   g:"m", cat:"Vie quotidienne",  level:"A1" },
+  { fr:"le travail",            es:"el trabajo",                  g:"m", cat:"Vie quotidienne",  level:"A1" },
+  { fr:"l'école",               es:"la escuela",                  g:"f", cat:"Vie quotidienne",  level:"A1" },
+  { fr:"la table",              es:"la mesa",                     g:"f", cat:"Vie quotidienne",  level:"A1" },
+  { fr:"la chaise",             es:"la silla",                    g:"f", cat:"Vie quotidienne",  level:"A1" },
+  { fr:"la porte",              es:"la puerta",                   g:"f", cat:"Vie quotidienne",  level:"A1" },
+  { fr:"la fenêtre",            es:"la ventana",                  g:"f", cat:"Vie quotidienne",  level:"A1" },
+  { fr:"le lit",                es:"la cama",                     g:"m", cat:"Vie quotidienne",  level:"A1" },
+  { fr:"la cuisine",            es:"la cocina",                   g:"f", cat:"Vie quotidienne",  level:"A1" },
+  { fr:"la salle de bain",      es:"el baño",                     g:"f", cat:"Vie quotidienne",  level:"A1" },
+  { fr:"le salon",              es:"el salón",                    g:"m", cat:"Vie quotidienne",  level:"A1" },
+  { fr:"la chambre",            es:"la habitación",               g:"f", cat:"Vie quotidienne",  level:"A1" },
+  { fr:"le bus",                es:"el autobús",                  g:"m", cat:"Vie quotidienne",  level:"A1" },
+  { fr:"le train",              es:"el tren",                     g:"m", cat:"Vie quotidienne",  level:"A1" },
+  { fr:"l'avion",               es:"el avión",                    g:"m", cat:"Vie quotidienne",  level:"A1" },
+  // ── A1 · Lieux ────────────────────────────
+  { fr:"la gare",               es:"la estación de tren",         g:"f", cat:"Lieux",           level:"A1" },
+  { fr:"l'hôtel",               es:"el hotel",                    g:"m", cat:"Lieux",           level:"A1" },
+  { fr:"le restaurant",         es:"el restaurante",              g:"m", cat:"Lieux",           level:"A1" },
+  { fr:"la banque",             es:"el banco",                    g:"f", cat:"Lieux",           level:"A1" },
+  { fr:"l'aéroport",            es:"el aeropuerto",               g:"m", cat:"Lieux",           level:"A1" },
+  { fr:"la ville",              es:"la ciudad",                   g:"f", cat:"Lieux",           level:"A1" },
+  { fr:"la rue",                es:"la calle",                    g:"f", cat:"Lieux",           level:"A1" },
+  { fr:"le musée",              es:"el museo",                    g:"m", cat:"Lieux",           level:"A1" },
+  { fr:"le parc",               es:"el parque",                   g:"m", cat:"Lieux",           level:"A1" },
+  { fr:"le supermarché",        es:"el supermercado",             g:"m", cat:"Lieux",           level:"A1" },
+  { fr:"la pharmacie",          es:"la farmacia",                 g:"f", cat:"Lieux",           level:"A1" },
+  { fr:"la bibliothèque",       es:"la biblioteca",               g:"f", cat:"Lieux",           level:"A1" },
+  { fr:"la mer",                es:"el mar",                      g:"f", cat:"Lieux",           level:"A1" },
+  { fr:"la montagne",           es:"la montaña",                  g:"f", cat:"Lieux",           level:"A1" },
+  { fr:"l'hôpital",             es:"el hospital",                 g:"m", cat:"Lieux",           level:"A1" },
+  { fr:"à gauche",              es:"a la izquierda",              g:"m", cat:"Lieux",           level:"A1", noArt:true },
+  { fr:"à droite",              es:"a la derecha",                g:"m", cat:"Lieux",           level:"A1", noArt:true },
+  { fr:"tout droit",            es:"todo recto",                  g:"m", cat:"Lieux",           level:"A1", noArt:true },
+  // ── A1 · Temps ────────────────────────────
+  { fr:"lundi",                 es:"lunes",                       g:"m", cat:"Temps",           level:"A1", noArt:true },
+  { fr:"mardi",                 es:"martes",                      g:"m", cat:"Temps",           level:"A1", noArt:true },
+  { fr:"mercredi",              es:"miércoles",                   g:"m", cat:"Temps",           level:"A1", noArt:true },
+  { fr:"jeudi",                 es:"jueves",                      g:"m", cat:"Temps",           level:"A1", noArt:true },
+  { fr:"vendredi",              es:"viernes",                     g:"m", cat:"Temps",           level:"A1", noArt:true },
+  { fr:"samedi",                es:"sábado",                      g:"m", cat:"Temps",           level:"A1", noArt:true },
+  { fr:"dimanche",              es:"domingo",                     g:"m", cat:"Temps",           level:"A1", noArt:true },
+  { fr:"janvier",               es:"enero",                       g:"m", cat:"Temps",           level:"A1", noArt:true },
+  { fr:"février",               es:"febrero",                     g:"m", cat:"Temps",           level:"A1", noArt:true },
+  { fr:"mars",                  es:"marzo",                       g:"m", cat:"Temps",           level:"A1", noArt:true },
+  { fr:"avril",                 es:"abril",                       g:"m", cat:"Temps",           level:"A1", noArt:true },
+  { fr:"mai",                   es:"mayo",                        g:"m", cat:"Temps",           level:"A1", noArt:true },
+  { fr:"juin",                  es:"junio",                       g:"m", cat:"Temps",           level:"A1", noArt:true },
+  { fr:"juillet",               es:"julio",                       g:"m", cat:"Temps",           level:"A1", noArt:true },
+  { fr:"août",                  es:"agosto",                      g:"m", cat:"Temps",           level:"A1", noArt:true },
+  { fr:"septembre",             es:"septiembre",                  g:"m", cat:"Temps",           level:"A1", noArt:true },
+  { fr:"octobre",               es:"octubre",                     g:"m", cat:"Temps",           level:"A1", noArt:true },
+  { fr:"novembre",              es:"noviembre",                   g:"m", cat:"Temps",           level:"A1", noArt:true },
+  { fr:"décembre",              es:"diciembre",                   g:"m", cat:"Temps",           level:"A1", noArt:true },
+  { fr:"aujourd'hui",           es:"hoy",                         g:"m", cat:"Temps",           level:"A1", noArt:true },
+  { fr:"hier",                  es:"ayer",                        g:"m", cat:"Temps",           level:"A1", noArt:true },
+  { fr:"demain",                es:"mañana",                      g:"m", cat:"Temps",           level:"A1", noArt:true },
+  { fr:"le matin",              es:"la mañana",                   g:"m", cat:"Temps",           level:"A1" },
+  { fr:"le soir",               es:"la noche / la tarde",         g:"m", cat:"Temps",           level:"A1" },
+  { fr:"le printemps",          es:"la primavera",                g:"m", cat:"Temps",           level:"A1" },
+  { fr:"l'été",                 es:"el verano",                   g:"m", cat:"Temps",           level:"A1" },
+  { fr:"l'automne",             es:"el otoño",                    g:"m", cat:"Temps",           level:"A1" },
+  { fr:"l'hiver",               es:"el invierno",                 g:"m", cat:"Temps",           level:"A1" },
+  { fr:"Il fait chaud",         es:"Hace calor",                  g:"m", cat:"Temps",           level:"A1", noArt:true },
+  { fr:"Il fait froid",         es:"Hace frío",                   g:"m", cat:"Temps",           level:"A1", noArt:true },
+  { fr:"la semaine",            es:"la semana",                   g:"f", cat:"Temps",           level:"A1" },
+  { fr:"le mois",               es:"el mes",                      g:"m", cat:"Temps",           level:"A1" },
+  { fr:"l'année",               es:"el año",                      g:"f", cat:"Temps",           level:"A1" },
+  // ── A1 · Comida ───────────────────────────
+  { fr:"le café",               es:"el café",                     g:"m", cat:"Comida",          level:"A1" },
+  { fr:"l'eau",                 es:"el agua",                     g:"f", cat:"Comida",          level:"A1" },
+  { fr:"le pain",               es:"el pan",                      g:"m", cat:"Comida",          level:"A1" },
+  { fr:"la viande",             es:"la carne",                    g:"f", cat:"Comida",          level:"A1" },
+  { fr:"le poisson",            es:"el pescado",                  g:"m", cat:"Comida",          level:"A1" },
+  { fr:"les pâtes",             es:"los fideos / la pasta",       g:"m", cat:"Comida",          level:"A1" },
+  { fr:"le thé",                es:"el té",                       g:"m", cat:"Comida",          level:"A1" },
+  { fr:"le lait",               es:"la leche",                    g:"m", cat:"Comida",          level:"A1" },
+  { fr:"le vin",                es:"el vino",                     g:"m", cat:"Comida",          level:"A1" },
+  { fr:"le fromage",            es:"el queso",                    g:"m", cat:"Comida",          level:"A1" },
+  { fr:"les légumes",           es:"las verduras",                g:"m", cat:"Comida",          level:"A1" },
+  { fr:"les fruits",            es:"las frutas",                  g:"m", cat:"Comida",          level:"A1" },
+  { fr:"la soupe",              es:"la sopa",                     g:"f", cat:"Comida",          level:"A1" },
+  { fr:"le poulet",             es:"el pollo",                    g:"m", cat:"Comida",          level:"A1" },
+  { fr:"le riz",                es:"el arroz",                    g:"m", cat:"Comida",          level:"A1" },
+  { fr:"le dessert",            es:"el postre",                   g:"m", cat:"Comida",          level:"A1" },
+  { fr:"le sucre",              es:"el azúcar",                   g:"m", cat:"Comida",          level:"A1" },
+  { fr:"le sel",                es:"la sal",                      g:"m", cat:"Comida",          level:"A1" },
+  { fr:"le beurre",             es:"la mantequilla",              g:"m", cat:"Comida",          level:"A1" },
+  { fr:"le petit-déjeuner",     es:"el desayuno",                 g:"m", cat:"Comida",          level:"A1" },
+  { fr:"le déjeuner",           es:"el almuerzo",                 g:"m", cat:"Comida",          level:"A1" },
+  { fr:"le dîner",              es:"la cena",                     g:"m", cat:"Comida",          level:"A1" },
+  { fr:"le gâteau",             es:"el pastel / la torta",        g:"m", cat:"Comida",          level:"A1" },
+  { fr:"la glace",              es:"el helado",                   g:"f", cat:"Comida",          level:"A1" },
+  { fr:"le chocolat",           es:"el chocolate",                g:"m", cat:"Comida",          level:"A1" },
+  // ── A1 · Corps & santé ───────────────────
+  { fr:"la tête",               es:"la cabeza",                   g:"f", cat:"Corps & santé",   level:"A1" },
+  { fr:"le bras",               es:"el brazo",                    g:"m", cat:"Corps & santé",   level:"A1" },
+  { fr:"la jambe",              es:"la pierna",                   g:"f", cat:"Corps & santé",   level:"A1" },
+  { fr:"le pied",               es:"el pie",                      g:"m", cat:"Corps & santé",   level:"A1" },
+  { fr:"le cœur",               es:"el corazón",                  g:"m", cat:"Corps & santé",   level:"A1" },
+  { fr:"l'œil",                 es:"el ojo",                      g:"m", cat:"Corps & santé",   level:"A1" },
+  { fr:"la bouche",             es:"la boca",                     g:"f", cat:"Corps & santé",   level:"A1" },
+  { fr:"le nez",                es:"la nariz",                    g:"m", cat:"Corps & santé",   level:"A1" },
+  { fr:"l'oreille",             es:"la oreja",                    g:"f", cat:"Corps & santé",   level:"A1" },
+  { fr:"la main",               es:"la mano",                     g:"f", cat:"Corps & santé",   level:"A1" },
+  { fr:"le dos",                es:"la espalda",                  g:"m", cat:"Corps & santé",   level:"A1" },
+  { fr:"les cheveux",           es:"el cabello / el pelo",        g:"m", cat:"Corps & santé",   level:"A1" },
+  { fr:"malade",                es:"enfermo / enferma",           g:"m", cat:"Corps & santé",   level:"A1", noArt:true },
+  { fr:"la douleur",            es:"el dolor",                    g:"f", cat:"Corps & santé",   level:"A1" },
+  { fr:"le médecin",            es:"el médico",                   g:"m", cat:"Corps & santé",   level:"A1" },
+  { fr:"la fièvre",             es:"la fiebre",                   g:"f", cat:"Corps & santé",   level:"A1" },
+  // ── A1 · Ropa ─────────────────────────────
+  { fr:"le pantalon",           es:"el pantalón",                 g:"m", cat:"Ropa",            level:"A1" },
+  { fr:"la chemise",            es:"la camisa",                   g:"f", cat:"Ropa",            level:"A1" },
+  { fr:"la robe",               es:"el vestido",                  g:"f", cat:"Ropa",            level:"A1" },
+  { fr:"les chaussures",        es:"los zapatos",                 g:"f", cat:"Ropa",            level:"A1" },
+  { fr:"la veste",              es:"la chaqueta / el saco",       g:"f", cat:"Ropa",            level:"A1" },
+  { fr:"le pull",               es:"el suéter",                   g:"m", cat:"Ropa",            level:"A1" },
+  { fr:"le manteau",            es:"el abrigo",                   g:"m", cat:"Ropa",            level:"A1" },
 
-  // ============================================================
-  // CONFIGURATION ELEVENLABS
-  // ============================================================
-  const VOICE_F   = 'XB0fDUnXU5powFXDhCwa';
-  const VOICE_M   = 'onwK4e9ZLuTAKqWW03F9';
-  const EL_MODEL  = 'eleven_multilingual_v2';
+  /* ╔══════════════════════════════════════════
+     ║  NIVEAU A2 — Élémentaire
+     ╚══════════════════════════════════════════ */
+  // ── A2 · Personnalité ────────────────────
+  { fr:"ambitieux",             es:"ambicioso",                   g:"m", cat:"Personnalité",    level:"A2", noArt:true },
+  { fr:"généreux",              es:"generoso",                    g:"m", cat:"Personnalité",    level:"A2", noArt:true },
+  { fr:"honnête",               es:"honesto",                     g:"m", cat:"Personnalité",    level:"A2", noArt:true },
+  { fr:"jaloux",                es:"celoso",                      g:"m", cat:"Personnalité",    level:"A2", noArt:true },
+  { fr:"optimiste",             es:"optimista",                   g:"m", cat:"Personnalité",    level:"A2", noArt:true },
+  { fr:"pessimiste",            es:"pesimista",                   g:"m", cat:"Personnalité",    level:"A2", noArt:true },
+  { fr:"nerveux",               es:"nervioso",                    g:"m", cat:"Personnalité",    level:"A2", noArt:true },
+  { fr:"sensible",              es:"sensible",                    g:"m", cat:"Personnalité",    level:"A2", noArt:true },
+  { fr:"responsable",           es:"responsable",                 g:"m", cat:"Personnalité",    level:"A2", noArt:true },
+  { fr:"indépendant",           es:"independiente",               g:"m", cat:"Personnalité",    level:"A2", noArt:true },
+  { fr:"sociable",              es:"sociable",                    g:"m", cat:"Personnalité",    level:"A2", noArt:true },
+  { fr:"bavard",                es:"hablador / parlanchín",       g:"m", cat:"Personnalité",    level:"A2", noArt:true },
+  { fr:"sympa",                 es:"simpático",                   g:"m", cat:"Personnalité",    level:"A2", noArt:true },
+  { fr:"curieux",               es:"curioso",                     g:"m", cat:"Personnalité",    level:"A2", noArt:true },
+  { fr:"créatif",               es:"creativo",                    g:"m", cat:"Personnalité",    level:"A2", noArt:true },
+  { fr:"gourmand",              es:"glotón / goloso",             g:"m", cat:"Personnalité",    level:"A2", noArt:true },
+  { fr:"sincère",               es:"sincero",                     g:"m", cat:"Personnalité",    level:"A2", noArt:true },
+  { fr:"fidèle",                es:"fiel",                        g:"m", cat:"Personnalité",    level:"A2", noArt:true },
+  { fr:"intelligent",           es:"inteligente",                 g:"m", cat:"Personnalité",    level:"A2", noArt:true },
+  // ── A2 · Obligation & nécessité ──────────
+  { fr:"il faut",               es:"hay que / se debe",           g:"m", cat:"Obligation",      level:"A2", noArt:true },
+  { fr:"il est nécessaire de",  es:"es necesario",                g:"m", cat:"Obligation",      level:"A2", noArt:true },
+  { fr:"il est important de",   es:"es importante",               g:"m", cat:"Obligation",      level:"A2", noArt:true },
+  { fr:"il est interdit de",    es:"está prohibido",              g:"m", cat:"Obligation",      level:"A2", noArt:true },
+  { fr:"avoir besoin de",       es:"necesitar",                   g:"m", cat:"Obligation",      level:"A2", noArt:true },
+  { fr:"il vaut mieux",         es:"es mejor / más vale",         g:"m", cat:"Obligation",      level:"A2", noArt:true },
+  { fr:"ne… plus",              es:"ya no",                       g:"m", cat:"Obligation",      level:"A2", noArt:true },
+  { fr:"ne… jamais",            es:"no… nunca",                   g:"m", cat:"Obligation",      level:"A2", noArt:true },
+  { fr:"ne… que",               es:"solo / solamente",            g:"m", cat:"Obligation",      level:"A2", noArt:true },
+  // ── A2 · Connecteurs avancés ─────────────
+  { fr:"pourtant",              es:"sin embargo / pero aún así",  g:"m", cat:"Connecteurs A2",  level:"A2", noArt:true },
+  { fr:"néanmoins",             es:"no obstante",                 g:"m", cat:"Connecteurs A2",  level:"A2", noArt:true },
+  { fr:"en revanche",           es:"en cambio",                   g:"m", cat:"Connecteurs A2",  level:"A2", noArt:true },
+  { fr:"d'ailleurs",            es:"además / por otro lado",      g:"m", cat:"Connecteurs A2",  level:"A2", noArt:true },
+  { fr:"de plus",               es:"además",                      g:"m", cat:"Connecteurs A2",  level:"A2", noArt:true },
+  { fr:"en fait",               es:"en realidad / de hecho",      g:"m", cat:"Connecteurs A2",  level:"A2", noArt:true },
+  { fr:"c'est-à-dire",          es:"es decir",                    g:"m", cat:"Connecteurs A2",  level:"A2", noArt:true },
+  { fr:"par exemple",           es:"por ejemplo",                 g:"m", cat:"Connecteurs A2",  level:"A2", noArt:true },
+  { fr:"en effet",              es:"en efecto",                   g:"m", cat:"Connecteurs A2",  level:"A2", noArt:true },
+  { fr:"malgré",                es:"a pesar de",                  g:"m", cat:"Connecteurs A2",  level:"A2", noArt:true },
+  { fr:"grâce à",               es:"gracias a",                   g:"m", cat:"Connecteurs A2",  level:"A2", noArt:true },
+  { fr:"à cause de",            es:"a causa de / por culpa de",   g:"m", cat:"Connecteurs A2",  level:"A2", noArt:true },
+  { fr:"au lieu de",            es:"en vez de / en lugar de",     g:"m", cat:"Connecteurs A2",  level:"A2", noArt:true },
+  // ── A2 · Au travail ──────────────────────
+  { fr:"le bureau",             es:"la oficina",                  g:"m", cat:"Au travail",      level:"A2" },
+  { fr:"le collègue",           es:"el colega / el compañero",    g:"m", cat:"Au travail",      level:"A2" },
+  { fr:"la réunion",            es:"la reunión",                  g:"f", cat:"Au travail",      level:"A2" },
+  { fr:"le rendez-vous",        es:"la cita",                     g:"m", cat:"Au travail",      level:"A2" },
+  { fr:"le patron",             es:"el jefe",                     g:"m", cat:"Au travail",      level:"A2" },
+  { fr:"le contrat",            es:"el contrato",                 g:"m", cat:"Au travail",      level:"A2" },
+  { fr:"le salaire",            es:"el salario / el sueldo",      g:"m", cat:"Au travail",      level:"A2" },
+  { fr:"les congés",            es:"las vacaciones",              g:"m", cat:"Au travail",      level:"A2" },
+  { fr:"l'entreprise",          es:"la empresa",                  g:"f", cat:"Au travail",      level:"A2" },
+  { fr:"le CV",                 es:"el currículum",               g:"m", cat:"Au travail",      level:"A2" },
+  { fr:"postuler",              es:"postularse / solicitar",      g:"m", cat:"Au travail",      level:"A2", noArt:true },
+  { fr:"démissionner",          es:"renunciar / dimitir",         g:"m", cat:"Au travail",      level:"A2", noArt:true },
+  { fr:"la formation",          es:"la formación / la capacitación", g:"f", cat:"Au travail",   level:"A2" },
+  // ── A2 · Passé & récit ───────────────────
+  { fr:"autrefois",             es:"antes / antaño",              g:"m", cat:"Passé & récit",   level:"A2", noArt:true },
+  { fr:"à l'époque",            es:"en aquella época",            g:"m", cat:"Passé & récit",   level:"A2", noArt:true },
+  { fr:"se souvenir de",        es:"recordar / acordarse de",     g:"m", cat:"Passé & récit",   level:"A2", noArt:true },
+  { fr:"oublier",               es:"olvidar",                     g:"m", cat:"Passé & récit",   level:"A2", noArt:true },
+  { fr:"raconter",              es:"contar / relatar",            g:"m", cat:"Passé & récit",   level:"A2", noArt:true },
+  { fr:"tout à coup",           es:"de repente",                  g:"m", cat:"Passé & récit",   level:"A2", noArt:true },
+  { fr:"soudain",               es:"de pronto / súbitamente",     g:"m", cat:"Passé & récit",   level:"A2", noArt:true },
+  { fr:"d'abord",               es:"primero / en primer lugar",   g:"m", cat:"Passé & récit",   level:"A2", noArt:true },
+  { fr:"ensuite",               es:"luego / después",             g:"m", cat:"Passé & récit",   level:"A2", noArt:true },
+  { fr:"finalement",            es:"finalmente / al final",       g:"m", cat:"Passé & récit",   level:"A2", noArt:true },
+  { fr:"pendant ce temps",      es:"mientras tanto",              g:"m", cat:"Passé & récit",   level:"A2", noArt:true },
+  { fr:"la veille",             es:"la víspera / el día anterior",g:"f", cat:"Passé & récit",   level:"A2" },
+  { fr:"le lendemain",          es:"el día siguiente",            g:"m", cat:"Passé & récit",   level:"A2" },
+  { fr:"l'enfance",             es:"la infancia / la niñez",      g:"f", cat:"Passé & récit",   level:"A2" },
+  { fr:"la jeunesse",           es:"la juventud",                 g:"f", cat:"Passé & récit",   level:"A2" },
+  // ── A2 · Opinions & comparaisons ─────────
+  { fr:"à mon avis",            es:"en mi opinión",               g:"m", cat:"Opinions",        level:"A2", noArt:true },
+  { fr:"je pense que",          es:"pienso que",                  g:"m", cat:"Opinions",        level:"A2", noArt:true },
+  { fr:"je trouve que",         es:"encuentro que / creo que",    g:"m", cat:"Opinions",        level:"A2", noArt:true },
+  { fr:"je crois que",          es:"creo que",                    g:"m", cat:"Opinions",        level:"A2", noArt:true },
+  { fr:"je suis d'accord",      es:"estoy de acuerdo",            g:"m", cat:"Opinions",        level:"A2", noArt:true },
+  { fr:"je ne suis pas d'accord",es:"no estoy de acuerdo",        g:"m", cat:"Opinions",        level:"A2", noArt:true },
+  { fr:"plus… que",             es:"más… que",                    g:"m", cat:"Opinions",        level:"A2", noArt:true },
+  { fr:"moins… que",            es:"menos… que",                  g:"m", cat:"Opinions",        level:"A2", noArt:true },
+  { fr:"aussi… que",            es:"tan… como",                   g:"m", cat:"Opinions",        level:"A2", noArt:true },
+  { fr:"meilleur",              es:"mejor",                       g:"m", cat:"Opinions",        level:"A2", noArt:true },
+  { fr:"pire",                  es:"peor",                        g:"m", cat:"Opinions",        level:"A2", noArt:true },
+  // ── A2 · Voyage ──────────────────────────
+  { fr:"la valise",             es:"la maleta",                   g:"f", cat:"Voyage",          level:"A2" },
+  { fr:"le passeport",          es:"el pasaporte",                g:"m", cat:"Voyage",          level:"A2" },
+  { fr:"réserver",              es:"reservar",                    g:"m", cat:"Voyage",          level:"A2", noArt:true },
+  { fr:"annuler",               es:"cancelar",                    g:"m", cat:"Voyage",          level:"A2", noArt:true },
+  { fr:"l'excursion",           es:"la excursión",                g:"f", cat:"Voyage",          level:"A2" },
+  { fr:"la réception",          es:"la recepción",                g:"f", cat:"Voyage",          level:"A2" },
+  { fr:"le billet",             es:"el billete / el boleto",      g:"m", cat:"Voyage",          level:"A2" },
+  { fr:"l'aller-retour",        es:"el viaje de ida y vuelta",    g:"m", cat:"Voyage",          level:"A2" },
+  { fr:"le quai",               es:"el andén",                    g:"m", cat:"Voyage",          level:"A2" },
+  { fr:"l'horaire",             es:"el horario",                  g:"m", cat:"Voyage",          level:"A2" },
+  { fr:"en retard",             es:"con retraso / tarde",         g:"m", cat:"Voyage",          level:"A2", noArt:true },
+  { fr:"à l'heure",             es:"a tiempo",                    g:"m", cat:"Voyage",          level:"A2", noArt:true },
+  { fr:"la douane",             es:"la aduana",                   g:"f", cat:"Voyage",          level:"A2" },
+  { fr:"l'hébergement",         es:"el alojamiento",              g:"m", cat:"Voyage",          level:"A2" },
+  { fr:"le séjour",             es:"la estadía / la estancia",    g:"m", cat:"Voyage",          level:"A2" },
+  // ── A2 · Projets & intentions ────────────
+  { fr:"j'ai l'intention de",   es:"tengo la intención de",       g:"m", cat:"Projets",         level:"A2", noArt:true },
+  { fr:"je prévois de",         es:"preveo / planeo",             g:"m", cat:"Projets",         level:"A2", noArt:true },
+  { fr:"j'espère",              es:"espero",                      g:"m", cat:"Projets",         level:"A2", noArt:true },
+  { fr:"peut-être que",         es:"quizás / tal vez",            g:"m", cat:"Projets",         level:"A2", noArt:true },
+  { fr:"bientôt",               es:"pronto / en breve",           g:"m", cat:"Projets",         level:"A2", noArt:true },
+  { fr:"un objectif",           es:"un objetivo",                 g:"m", cat:"Projets",         level:"A2" },
+  { fr:"un rêve",               es:"un sueño",                    g:"m", cat:"Projets",         level:"A2" },
+  { fr:"réaliser",              es:"realizar / lograr",           g:"m", cat:"Projets",         level:"A2", noArt:true },
+  // ── A2 · Chez le médecin ─────────────────
+  { fr:"avoir mal à",           es:"tener dolor de / doler",      g:"m", cat:"Médecin A2",      level:"A2", noArt:true },
+  { fr:"se blesser",            es:"hacerse daño / lastimarse",   g:"m", cat:"Médecin A2",      level:"A2", noArt:true },
+  { fr:"tousser",               es:"toser",                       g:"m", cat:"Médecin A2",      level:"A2", noArt:true },
+  { fr:"guérir",                es:"sanar / curarse",             g:"m", cat:"Médecin A2",      level:"A2", noArt:true },
+  { fr:"l'ordonnance",          es:"la receta médica",            g:"f", cat:"Médecin A2",      level:"A2" },
+  { fr:"le médicament",         es:"el medicamento",              g:"m", cat:"Médecin A2",      level:"A2" },
+  { fr:"la consultation",       es:"la consulta",                 g:"f", cat:"Médecin A2",      level:"A2" },
+  { fr:"le rhume",              es:"el resfriado",                g:"m", cat:"Médecin A2",      level:"A2" },
+  { fr:"la grippe",             es:"la gripe",                    g:"f", cat:"Médecin A2",      level:"A2" },
+  // ── A2 · Logement ────────────────────────
+  { fr:"louer",                 es:"alquilar",                    g:"m", cat:"Logement",        level:"A2", noArt:true },
+  { fr:"l'appartement",         es:"el apartamento / el piso",    g:"m", cat:"Logement",        level:"A2" },
+  { fr:"le propriétaire",       es:"el propietario / el dueño",   g:"m", cat:"Logement",        level:"A2" },
+  { fr:"le locataire",          es:"el inquilino",                g:"m", cat:"Logement",        level:"A2" },
+  { fr:"le loyer",              es:"el alquiler / la renta",      g:"m", cat:"Logement",        level:"A2" },
+  { fr:"déménager",             es:"mudarse",                     g:"m", cat:"Logement",        level:"A2", noArt:true },
+  { fr:"les travaux",           es:"las obras / los arreglos",    g:"m", cat:"Logement",        level:"A2" },
+  { fr:"la terrasse",           es:"la terraza",                  g:"f", cat:"Logement",        level:"A2" },
+  { fr:"l'immeuble",            es:"el edificio",                 g:"m", cat:"Logement",        level:"A2" },
+  { fr:"le quartier",           es:"el barrio",                   g:"m", cat:"Logement",        level:"A2" },
+  { fr:"le chauffage",          es:"la calefacción",              g:"m", cat:"Logement",        level:"A2" },
+  // ── A2 · Achats & services ───────────────
+  { fr:"la taille",             es:"la talla",                    g:"f", cat:"Achats",          level:"A2" },
+  { fr:"essayer",               es:"probar / probarse",           g:"m", cat:"Achats",          level:"A2", noArt:true },
+  { fr:"ça me va bien",         es:"me queda bien",               g:"m", cat:"Achats",          level:"A2", noArt:true },
+  { fr:"rembourser",            es:"reembolsar / devolver el dinero", g:"m", cat:"Achats",      level:"A2", noArt:true },
+  { fr:"la carte bancaire",     es:"la tarjeta bancaria",         g:"f", cat:"Achats",          level:"A2" },
+  { fr:"en promotion",          es:"en oferta / de promoción",    g:"m", cat:"Achats",          level:"A2", noArt:true },
+  { fr:"les soldes",            es:"las rebajas / los saldos",    g:"m", cat:"Achats",          level:"A2" },
+  // ── A2 · Médias & communication ──────────
+  { fr:"le mail",               es:"el correo electrónico",       g:"m", cat:"Médias",          level:"A2" },
+  { fr:"le réseau social",      es:"la red social",               g:"m", cat:"Médias",          level:"A2" },
+  { fr:"le site web",           es:"el sitio web",                g:"m", cat:"Médias",          level:"A2" },
+  { fr:"télécharger",           es:"descargar",                   g:"m", cat:"Médias",          level:"A2", noArt:true },
+  { fr:"une application",       es:"una aplicación",              g:"f", cat:"Médias",          level:"A2" },
+  { fr:"une série",             es:"una serie",                   g:"f", cat:"Médias",          level:"A2" },
+  { fr:"les informations",      es:"las noticias / los informativos", g:"f", cat:"Médias",      level:"A2" },
+  { fr:"un abonnement",         es:"una suscripción",             g:"m", cat:"Médias",          level:"A2" },
+  { fr:"s'abonner",             es:"suscribirse",                 g:"m", cat:"Médias",          level:"A2", noArt:true },
+  { fr:"partager",              es:"compartir",                   g:"m", cat:"Médias",          level:"A2", noArt:true },
+  { fr:"le mot de passe",       es:"la contraseña",               g:"m", cat:"Médias",          level:"A2" },
+  { fr:"en ligne",              es:"en línea / online",           g:"m", cat:"Médias",          level:"A2", noArt:true },
+  // ── A2 · Sentiments & relations ──────────
+  { fr:"tomber amoureux",       es:"enamorarse",                  g:"m", cat:"Sentiments",      level:"A2", noArt:true },
+  { fr:"se disputer",           es:"pelearse / discutir",         g:"m", cat:"Sentiments",      level:"A2", noArt:true },
+  { fr:"se réconcilier",        es:"reconciliarse",               g:"m", cat:"Sentiments",      level:"A2", noArt:true },
+  { fr:"manquer",               es:"extrañar / echar de menos",   g:"m", cat:"Sentiments",      level:"A2", noArt:true },
+  { fr:"décevoir",              es:"decepcionar",                 g:"m", cat:"Sentiments",      level:"A2", noArt:true },
+  { fr:"faire confiance",       es:"confiar",                     g:"m", cat:"Sentiments",      level:"A2", noArt:true },
+  { fr:"féliciter",             es:"felicitar",                   g:"m", cat:"Sentiments",      level:"A2", noArt:true },
+  { fr:"remercier",             es:"agradecer",                   g:"m", cat:"Sentiments",      level:"A2", noArt:true },
+  { fr:"s'excuser",             es:"disculparse / pedir perdón",  g:"m", cat:"Sentiments",      level:"A2", noArt:true },
+  { fr:"pardonner",             es:"perdonar",                    g:"m", cat:"Sentiments",      level:"A2", noArt:true },
+  { fr:"la fierté",             es:"el orgullo",                  g:"f", cat:"Sentiments",      level:"A2" },
 
-  // ============================================================
-  // ÉTAT DE L'APPLICATION
-  // ============================================================
-  let selLevel  = null;   // niveau actif : 'A1' | 'A2' | 'B1' | 'B2' | 'random'
-  let selCat    = '__all__'; // catégorie active
-  let mode      = 'es-fr';  // mode de jeu
-  let pool      = [];        // liste de mots en cours
-  let idx       = 0;
-  let cur       = null;
-  let answered  = false;
-  let nOk = 0, nErr = 0, streak = 0;
+  /* ╔══════════════════════════════════════════════════════
+     ║  NIVEAU B1 — Intermédiaire (seuil)
+     ╚══════════════════════════════════════════════════════ */
+  // ── B1 · Argumentation & connecteurs logiques ────────
+  { fr:"néanmoins",               es:"sin embargo / no obstante",      g:"m", cat:"Argumentation B1", level:"B1", noArt:true },
+  { fr:"par conséquent",          es:"por consiguiente / por lo tanto", g:"m", cat:"Argumentation B1", level:"B1", noArt:true },
+  { fr:"en outre",                es:"además / por otra parte",         g:"m", cat:"Argumentation B1", level:"B1", noArt:true },
+  { fr:"quant à",                 es:"en cuanto a",                     g:"m", cat:"Argumentation B1", level:"B1", noArt:true },
+  { fr:"autrement dit",           es:"dicho de otro modo",              g:"m", cat:"Argumentation B1", level:"B1", noArt:true },
+  { fr:"il convient de",          es:"conviene / es conveniente",       g:"m", cat:"Argumentation B1", level:"B1", noArt:true },
+  { fr:"d'une part… d'autre part",es:"por un lado… por otro lado",     g:"m", cat:"Argumentation B1", level:"B1", noArt:true },
+  { fr:"en ce qui concerne",      es:"en lo que respecta a",            g:"m", cat:"Argumentation B1", level:"B1", noArt:true },
+  { fr:"c'est pourquoi",          es:"es por eso que / por eso",        g:"m", cat:"Argumentation B1", level:"B1", noArt:true },
+  { fr:"ainsi",                   es:"así / de este modo",              g:"m", cat:"Argumentation B1", level:"B1", noArt:true },
+  { fr:"en revanche",             es:"en cambio / por otro lado",       g:"m", cat:"Argumentation B1", level:"B1", noArt:true },
+  { fr:"toutefois",               es:"sin embargo / no obstante",       g:"m", cat:"Argumentation B1", level:"B1", noArt:true },
+  { fr:"dans la mesure où",       es:"en la medida en que",             g:"m", cat:"Argumentation B1", level:"B1", noArt:true },
+  { fr:"à condition que",         es:"con la condición de que",         g:"m", cat:"Argumentation B1", level:"B1", noArt:true },
+  { fr:"bien que",                es:"aunque / si bien",                g:"m", cat:"Argumentation B1", level:"B1", noArt:true },
+  { fr:"afin de",                 es:"con el fin de / para",            g:"m", cat:"Argumentation B1", level:"B1", noArt:true },
+  { fr:"à moins que",             es:"a menos que",                     g:"m", cat:"Argumentation B1", level:"B1", noArt:true },
+  { fr:"dès que",                 es:"en cuanto / tan pronto como",     g:"m", cat:"Argumentation B1", level:"B1", noArt:true },
+  { fr:"alors que",               es:"mientras que / aunque",           g:"m", cat:"Argumentation B1", level:"B1", noArt:true },
+  { fr:"puisque",                 es:"ya que / dado que / puesto que",  g:"m", cat:"Argumentation B1", level:"B1", noArt:true },
+  // ── B1 · Émotions & psychologie ──────────────────────
+  { fr:"la nostalgie",            es:"la nostalgia",                    g:"f", cat:"Émotions B1",      level:"B1" },
+  { fr:"la méfiance",             es:"la desconfianza",                 g:"f", cat:"Émotions B1",      level:"B1" },
+  { fr:"la bienveillance",        es:"la benevolencia / la buena voluntad", g:"f", cat:"Émotions B1", level:"B1" },
+  { fr:"la jalousie",             es:"los celos / la envidia",          g:"f", cat:"Émotions B1",      level:"B1" },
+  { fr:"la honte",                es:"la vergüenza",                    g:"f", cat:"Émotions B1",      level:"B1" },
+  { fr:"la culpabilité",          es:"la culpabilidad",                 g:"f", cat:"Émotions B1",      level:"B1" },
+  { fr:"la reconnaissance",       es:"el agradecimiento / el reconocimiento", g:"f", cat:"Émotions B1", level:"B1" },
+  { fr:"l'inquiétude",            es:"la preocupación / la inquietud",  g:"f", cat:"Émotions B1",      level:"B1" },
+  { fr:"la déception",            es:"la decepción",                    g:"f", cat:"Émotions B1",      level:"B1" },
+  { fr:"la confiance en soi",     es:"la confianza en uno mismo",       g:"f", cat:"Émotions B1",      level:"B1" },
+  { fr:"l'estime de soi",         es:"la autoestima",                   g:"f", cat:"Émotions B1",      level:"B1" },
+  { fr:"la sérénité",             es:"la serenidad",                    g:"f", cat:"Émotions B1",      level:"B1" },
+  { fr:"l'angoisse",              es:"la angustia",                     g:"f", cat:"Émotions B1",      level:"B1" },
+  { fr:"se sentir à l'aise",      es:"sentirse cómodo / a gusto",       g:"m", cat:"Émotions B1",      level:"B1", noArt:true },
+  { fr:"faire face à",            es:"hacer frente a / enfrentarse a",  g:"m", cat:"Émotions B1",      level:"B1", noArt:true },
+  { fr:"surmonter",               es:"superar / sobreponerse",          g:"m", cat:"Émotions B1",      level:"B1", noArt:true },
+  { fr:"se remettre de",          es:"recuperarse de",                  g:"m", cat:"Émotions B1",      level:"B1", noArt:true },
+  // ── B1 · Société & actualité ─────────────────────────
+  { fr:"l'environnement",         es:"el medio ambiente",               g:"m", cat:"Société B1",       level:"B1" },
+  { fr:"le réchauffement climatique",es:"el calentamiento global",      g:"m", cat:"Société B1",       level:"B1" },
+  { fr:"le développement durable",es:"el desarrollo sostenible",        g:"m", cat:"Société B1",       level:"B1" },
+  { fr:"l'inégalité",             es:"la desigualdad",                  g:"f", cat:"Société B1",       level:"B1" },
+  { fr:"la mondialisation",       es:"la globalización",                g:"f", cat:"Société B1",       level:"B1" },
+  { fr:"les droits de l'homme",   es:"los derechos humanos",            g:"m", cat:"Société B1",       level:"B1" },
+  { fr:"l'immigration",           es:"la inmigración",                  g:"f", cat:"Société B1",       level:"B1" },
+  { fr:"la citoyenneté",          es:"la ciudadanía",                   g:"f", cat:"Société B1",       level:"B1" },
+  { fr:"la discrimination",       es:"la discriminación",               g:"f", cat:"Société B1",       level:"B1" },
+  { fr:"la solidarité",           es:"la solidaridad",                  g:"f", cat:"Société B1",       level:"B1" },
+  { fr:"le bénévolat",            es:"el voluntariado",                 g:"m", cat:"Société B1",       level:"B1" },
+  { fr:"la pauvreté",             es:"la pobreza",                      g:"f", cat:"Société B1",       level:"B1" },
+  { fr:"la richesse",             es:"la riqueza",                      g:"f", cat:"Société B1",       level:"B1" },
+  { fr:"le chômage",              es:"el desempleo / el paro",          g:"m", cat:"Société B1",       level:"B1" },
+  { fr:"la grève",                es:"la huelga",                       g:"f", cat:"Société B1",       level:"B1" },
+  { fr:"manifester",              es:"manifestarse",                    g:"m", cat:"Société B1",       level:"B1", noArt:true },
+  { fr:"voter",                   es:"votar",                           g:"m", cat:"Société B1",       level:"B1", noArt:true },
+  { fr:"le gouvernement",         es:"el gobierno",                     g:"m", cat:"Société B1",       level:"B1" },
+  { fr:"la loi",                  es:"la ley",                          g:"f", cat:"Société B1",       level:"B1" },
+  { fr:"l'association",           es:"la asociación",                   g:"f", cat:"Société B1",       level:"B1" },
+  { fr:"la communauté",           es:"la comunidad",                    g:"f", cat:"Société B1",       level:"B1" },
+  { fr:"l'intégration",           es:"la integración",                  g:"f", cat:"Société B1",       level:"B1" },
+  // ── B1 · Environnement & écologie ────────────────────
+  { fr:"recycler",                es:"reciclar",                        g:"m", cat:"Écologie B1",      level:"B1", noArt:true },
+  { fr:"les énergies renouvelables",es:"las energías renovables",       g:"f", cat:"Écologie B1",      level:"B1" },
+  { fr:"le gaz à effet de serre", es:"el gas de efecto invernadero",    g:"m", cat:"Écologie B1",      level:"B1" },
+  { fr:"la pollution",            es:"la contaminación / la polución",  g:"f", cat:"Écologie B1",      level:"B1" },
+  { fr:"les déchets",             es:"los desechos / los residuos",     g:"m", cat:"Écologie B1",      level:"B1" },
+  { fr:"la biodiversité",         es:"la biodiversidad",                g:"f", cat:"Écologie B1",      level:"B1" },
+  { fr:"protéger la planète",     es:"proteger el planeta",             g:"m", cat:"Écologie B1",      level:"B1", noArt:true },
+  { fr:"l'énergie solaire",       es:"la energía solar",                g:"f", cat:"Écologie B1",      level:"B1" },
+  { fr:"l'empreinte carbone",     es:"la huella de carbono",            g:"f", cat:"Écologie B1",      level:"B1" },
+  { fr:"la déforestation",        es:"la deforestación",                g:"f", cat:"Écologie B1",      level:"B1" },
+  { fr:"la sécheresse",           es:"la sequía",                       g:"f", cat:"Écologie B1",      level:"B1" },
+  { fr:"l'inondation",            es:"la inundación",                   g:"f", cat:"Écologie B1",      level:"B1" },
+  { fr:"trier ses déchets",       es:"separar / clasificar la basura",  g:"m", cat:"Écologie B1",      level:"B1", noArt:true },
+  { fr:"économiser l'énergie",    es:"ahorrar energía",                 g:"m", cat:"Écologie B1",      level:"B1", noArt:true },
+  // ── B1 · Santé & bien-être ───────────────────────────
+  { fr:"l'alimentation équilibrée",es:"la alimentación equilibrada",    g:"f", cat:"Santé B1",         level:"B1" },
+  { fr:"le régime alimentaire",   es:"la dieta / el régimen alimentario",g:"m", cat:"Santé B1",        level:"B1" },
+  { fr:"le stress",               es:"el estrés",                       g:"m", cat:"Santé B1",         level:"B1" },
+  { fr:"l'hygiène de vie",        es:"los hábitos de vida / el estilo de vida saludable", g:"f", cat:"Santé B1", level:"B1" },
+  { fr:"la prévention",           es:"la prevención",                   g:"f", cat:"Santé B1",         level:"B1" },
+  { fr:"le bien-être",            es:"el bienestar",                    g:"m", cat:"Santé B1",         level:"B1" },
+  { fr:"la dépendance",           es:"la dependencia / la adicción",    g:"f", cat:"Santé B1",         level:"B1" },
+  { fr:"l'obésité",               es:"la obesidad",                     g:"f", cat:"Santé B1",         level:"B1" },
+  { fr:"le diabète",              es:"la diabetes",                     g:"m", cat:"Santé B1",         level:"B1" },
+  { fr:"la chirurgie",            es:"la cirugía",                      g:"f", cat:"Santé B1",         level:"B1" },
+  { fr:"le traitement",           es:"el tratamiento",                  g:"m", cat:"Santé B1",         level:"B1" },
+  { fr:"l'urgence",               es:"la urgencia / la emergencia",     g:"f", cat:"Santé B1",         level:"B1" },
+  { fr:"se faire vacciner",       es:"vacunarse",                       g:"m", cat:"Santé B1",         level:"B1", noArt:true },
+  { fr:"soigner",                 es:"tratar / cuidar / atender",       g:"m", cat:"Santé B1",         level:"B1", noArt:true },
+  { fr:"faire du sport régulièrement",es:"hacer deporte regularmente",  g:"m", cat:"Santé B1",         level:"B1", noArt:true },
+  { fr:"la mutuelle",             es:"la mutua / el seguro médico complementario", g:"f", cat:"Santé B1", level:"B1" },
+  { fr:"le généraliste",          es:"el médico de cabecera / el generalista", g:"m", cat:"Santé B1",  level:"B1" },
+  // ── B1 · Travail & carrière ───────────────────────────
+  { fr:"la candidature",          es:"la candidatura / la postulación", g:"f", cat:"Travail B1",       level:"B1" },
+  { fr:"l'entretien d'embauche",  es:"la entrevista de trabajo",        g:"m", cat:"Travail B1",       level:"B1" },
+  { fr:"le stage",                es:"la práctica / la pasantía",       g:"m", cat:"Travail B1",       level:"B1" },
+  { fr:"la promotion",            es:"el ascenso / la promoción",       g:"f", cat:"Travail B1",       level:"B1" },
+  { fr:"le licenciement",         es:"el despido",                      g:"m", cat:"Travail B1",       level:"B1" },
+  { fr:"les avantages sociaux",   es:"los beneficios sociales",         g:"m", cat:"Travail B1",       level:"B1" },
+  { fr:"la charge de travail",    es:"la carga de trabajo",             g:"f", cat:"Travail B1",       level:"B1" },
+  { fr:"le délai",                es:"el plazo / el límite de tiempo",  g:"m", cat:"Travail B1",       level:"B1" },
+  { fr:"la réunion d'équipe",     es:"la reunión de equipo",            g:"f", cat:"Travail B1",       level:"B1" },
+  { fr:"négocier",                es:"negociar",                        g:"m", cat:"Travail B1",       level:"B1", noArt:true },
+  { fr:"gérer",                   es:"gestionar / manejar",             g:"m", cat:"Travail B1",       level:"B1", noArt:true },
+  { fr:"collaborer",              es:"colaborar",                       g:"m", cat:"Travail B1",       level:"B1", noArt:true },
+  { fr:"le télétravail",          es:"el teletrabajo",                  g:"m", cat:"Travail B1",       level:"B1" },
+  { fr:"l'indépendant",           es:"el autónomo / el freelance",      g:"m", cat:"Travail B1",       level:"B1" },
+  { fr:"le budget",               es:"el presupuesto",                  g:"m", cat:"Travail B1",       level:"B1" },
+  { fr:"la réunion",              es:"la reunión / la junta",           g:"f", cat:"Travail B1",       level:"B1" },
+  { fr:"le projet",               es:"el proyecto",                     g:"m", cat:"Travail B1",       level:"B1" },
+  { fr:"la compétence",           es:"la competencia / la habilidad",   g:"f", cat:"Travail B1",       level:"B1" },
+  // ── B1 · Médias & technologies ───────────────────────
+  { fr:"les réseaux sociaux",     es:"las redes sociales",              g:"m", cat:"Médias B1",        level:"B1" },
+  { fr:"l'intelligence artificielle",es:"la inteligencia artificial",   g:"f", cat:"Médias B1",        level:"B1" },
+  { fr:"le numérique",            es:"lo digital / lo numérico",        g:"m", cat:"Médias B1",        level:"B1" },
+  { fr:"la cybersécurité",        es:"la ciberseguridad",               g:"f", cat:"Médias B1",        level:"B1" },
+  { fr:"le piratage",             es:"la piratería informática",        g:"m", cat:"Médias B1",        level:"B1" },
+  { fr:"les données personnelles",es:"los datos personales",            g:"f", cat:"Médias B1",        level:"B1" },
+  { fr:"la vie privée",           es:"la privacidad / la intimidad",    g:"f", cat:"Médias B1",        level:"B1" },
+  { fr:"l'algorithme",            es:"el algoritmo",                    g:"m", cat:"Médias B1",        level:"B1" },
+  { fr:"diffuser",                es:"difundir / transmitir",           g:"m", cat:"Médias B1",        level:"B1", noArt:true },
+  { fr:"le streaming",            es:"el streaming / la transmisión",   g:"m", cat:"Médias B1",        level:"B1" },
+  { fr:"la chaîne YouTube",       es:"el canal de YouTube",             g:"f", cat:"Médias B1",        level:"B1" },
+  { fr:"le podcast",              es:"el pódcast",                      g:"m", cat:"Médias B1",        level:"B1" },
+  { fr:"les fake news",           es:"las noticias falsas",             g:"f", cat:"Médias B1",        level:"B1" },
+  { fr:"l'information fiable",    es:"la información fiable / verificada",g:"f", cat:"Médias B1",      level:"B1" },
+  { fr:"connecté",                es:"conectado",                       g:"m", cat:"Médias B1",        level:"B1", noArt:true },
+  // ── B1 · Voyages & interculturalité ──────────────────
+  { fr:"le dépaysement",          es:"el cambio de ambiente / el alejamiento",g:"m", cat:"Voyages B1", level:"B1" },
+  { fr:"s'adapter à",             es:"adaptarse a",                     g:"m", cat:"Voyages B1",       level:"B1", noArt:true },
+  { fr:"la culture locale",       es:"la cultura local",                g:"f", cat:"Voyages B1",       level:"B1" },
+  { fr:"le choc culturel",        es:"el choque cultural",              g:"m", cat:"Voyages B1",       level:"B1" },
+  { fr:"l'échange culturel",      es:"el intercambio cultural",         g:"m", cat:"Voyages B1",       level:"B1" },
+  { fr:"l'expatriation",          es:"la expatriación",                 g:"f", cat:"Voyages B1",       level:"B1" },
+  { fr:"le visa",                 es:"el visado / la visa",             g:"m", cat:"Voyages B1",       level:"B1" },
+  { fr:"l'assurance voyage",      es:"el seguro de viaje",              g:"f", cat:"Voyages B1",       level:"B1" },
+  { fr:"la langue officielle",    es:"la lengua oficial",               g:"f", cat:"Voyages B1",       level:"B1" },
+  { fr:"se perdre",               es:"perderse",                        g:"m", cat:"Voyages B1",       level:"B1", noArt:true },
+  { fr:"trouver son chemin",      es:"encontrar su camino",             g:"m", cat:"Voyages B1",       level:"B1", noArt:true },
+  { fr:"l'auberge de jeunesse",   es:"el albergue juvenil",             g:"f", cat:"Voyages B1",       level:"B1" },
+  { fr:"la location de voiture",  es:"el alquiler de coche / auto",     g:"f", cat:"Voyages B1",       level:"B1" },
+  // ── B1 · Gastronomie & culture culinaire ─────────────
+  { fr:"la cuisine régionale",    es:"la cocina regional",              g:"f", cat:"Gastronomie B1",   level:"B1" },
+  { fr:"le terroir",              es:"el terruño / los productos locales",g:"m", cat:"Gastronomie B1", level:"B1" },
+  { fr:"les produits bio",        es:"los productos ecológicos / orgánicos",g:"m", cat:"Gastronomie B1", level:"B1" },
+  { fr:"la gastronomie",          es:"la gastronomía",                  g:"f", cat:"Gastronomie B1",   level:"B1" },
+  { fr:"le chef cuisinier",       es:"el chef / el cocinero jefe",      g:"m", cat:"Gastronomie B1",   level:"B1" },
+  { fr:"la spécialité",           es:"la especialidad",                 g:"f", cat:"Gastronomie B1",   level:"B1" },
+  { fr:"le repas de fête",        es:"la comida de fiesta / el banquete",g:"m", cat:"Gastronomie B1",  level:"B1" },
+  { fr:"faire mijoter",           es:"cocinar a fuego lento / estofar", g:"m", cat:"Gastronomie B1",   level:"B1", noArt:true },
+  { fr:"assaisonner",             es:"sazonar / aderezar",              g:"m", cat:"Gastronomie B1",   level:"B1", noArt:true },
+  { fr:"la carte des vins",       es:"la carta de vinos",               g:"f", cat:"Gastronomie B1",   level:"B1" },
+  { fr:"végétarien",              es:"vegetariano",                     g:"m", cat:"Gastronomie B1",   level:"B1", noArt:true },
+  { fr:"vegan",                   es:"vegano",                          g:"m", cat:"Gastronomie B1",   level:"B1", noArt:true },
+  { fr:"sans gluten",             es:"sin gluten",                      g:"m", cat:"Gastronomie B1",   level:"B1", noArt:true },
+  { fr:"une allergie alimentaire",es:"una alergia alimentaria",         g:"f", cat:"Gastronomie B1",   level:"B1" },
+  // ── B1 · Culture & arts ──────────────────────────────
+  { fr:"l'œuvre d'art",           es:"la obra de arte",                 g:"f", cat:"Culture B1",       level:"B1" },
+  { fr:"le patrimoine",           es:"el patrimonio",                   g:"m", cat:"Culture B1",       level:"B1" },
+  { fr:"la mise en scène",        es:"la puesta en escena / la dirección escénica", g:"f", cat:"Culture B1", level:"B1" },
+  { fr:"le roman",                es:"la novela",                       g:"m", cat:"Culture B1",       level:"B1" },
+  { fr:"la poésie",               es:"la poesía",                       g:"f", cat:"Culture B1",       level:"B1" },
+  { fr:"le personnage principal", es:"el personaje principal",          g:"m", cat:"Culture B1",       level:"B1" },
+  { fr:"l'intrigue",              es:"la trama / la intriga",           g:"f", cat:"Culture B1",       level:"B1" },
+  { fr:"la bande dessinée",       es:"el cómic / la historieta",        g:"f", cat:"Culture B1",       level:"B1" },
+  { fr:"critiquer",               es:"criticar",                        g:"m", cat:"Culture B1",       level:"B1", noArt:true },
+  { fr:"interpréter",             es:"interpretar",                     g:"m", cat:"Culture B1",       level:"B1", noArt:true },
+  { fr:"l'auteur",                es:"el autor / la autora",            g:"m", cat:"Culture B1",       level:"B1" },
+  { fr:"le réalisateur",          es:"el director / la directora (de cine)", g:"m", cat:"Culture B1", level:"B1" },
+  { fr:"le chef d'orchestre",     es:"el director de orquesta",         g:"m", cat:"Culture B1",       level:"B1" },
+  { fr:"la sculpture",            es:"la escultura",                    g:"f", cat:"Culture B1",       level:"B1" },
+  { fr:"l'architecture",          es:"la arquitectura",                 g:"f", cat:"Culture B1",       level:"B1" },
+  { fr:"la galerie d'art",        es:"la galería de arte",              g:"f", cat:"Culture B1",       level:"B1" },
+  // ── B1 · Éducation & formation ───────────────────────
+  { fr:"la formation continue",   es:"la formación continua",           g:"f", cat:"Éducation B1",     level:"B1" },
+  { fr:"le master",               es:"el máster",                       g:"m", cat:"Éducation B1",     level:"B1" },
+  { fr:"la thèse",                es:"la tesis",                        g:"f", cat:"Éducation B1",     level:"B1" },
+  { fr:"la bourse d'études",      es:"la beca de estudios",             g:"f", cat:"Éducation B1",     level:"B1" },
+  { fr:"l'échange universitaire", es:"el intercambio universitario",    g:"m", cat:"Éducation B1",     level:"B1" },
+  { fr:"l'apprentissage",         es:"el aprendizaje",                  g:"m", cat:"Éducation B1",     level:"B1" },
+  { fr:"la pédagogie",            es:"la pedagogía",                    g:"f", cat:"Éducation B1",     level:"B1" },
+  { fr:"l'enseignement supérieur",es:"la enseñanza superior / la educación universitaria", g:"m", cat:"Éducation B1", level:"B1" },
+  { fr:"approfondir",             es:"profundizar",                     g:"m", cat:"Éducation B1",     level:"B1", noArt:true },
+  { fr:"maîtriser",               es:"dominar / tener dominio de",      g:"m", cat:"Éducation B1",     level:"B1", noArt:true },
+  { fr:"le cursus",               es:"el plan de estudios / la carrera",g:"m", cat:"Éducation B1",     level:"B1" },
+  { fr:"la conférence",           es:"la conferencia",                  g:"f", cat:"Éducation B1",     level:"B1" },
+  // ── B1 · Logement & urbanisme ────────────────────────
+  { fr:"la colocation",           es:"la convivencia / el piso compartido",g:"f", cat:"Logement B1",   level:"B1" },
+  { fr:"la rénovation",           es:"la renovación / la reforma",      g:"f", cat:"Logement B1",      level:"B1" },
+  { fr:"l'isolation thermique",   es:"el aislamiento térmico",          g:"f", cat:"Logement B1",      level:"B1" },
+  { fr:"la taxe foncière",        es:"el impuesto sobre bienes inmuebles",g:"f", cat:"Logement B1",    level:"B1" },
+  { fr:"la copropriété",          es:"la copropiedad",                  g:"f", cat:"Logement B1",      level:"B1" },
+  { fr:"l'urbanisme",             es:"el urbanismo",                    g:"m", cat:"Logement B1",      level:"B1" },
+  { fr:"la banlieue",             es:"los suburbios / el extrarradio",  g:"f", cat:"Logement B1",      level:"B1" },
+  { fr:"le centre-ville",         es:"el centro de la ciudad",          g:"m", cat:"Logement B1",      level:"B1" },
+  { fr:"l'agence immobilière",    es:"la agencia inmobiliaria",         g:"f", cat:"Logement B1",      level:"B1" },
+  // ── B1 · Expressions idiomatiques courantes ───────────
+  { fr:"avoir le cafard",         es:"estar deprimido / tener la depre",g:"m", cat:"Expressions B1",  level:"B1", noArt:true },
+  { fr:"casser les pieds",        es:"fastidiar / molestar",            g:"m", cat:"Expressions B1",  level:"B1", noArt:true },
+  { fr:"avoir la tête dans les nuages",es:"estar en las nubes / soñar despierto", g:"m", cat:"Expressions B1", level:"B1", noArt:true },
+  { fr:"donner un coup de main",  es:"echar una mano / ayudar",         g:"m", cat:"Expressions B1",  level:"B1", noArt:true },
+  { fr:"prendre son temps",       es:"tomarse su tiempo",               g:"m", cat:"Expressions B1",  level:"B1", noArt:true },
+  { fr:"tenir au courant",        es:"mantener informado",              g:"m", cat:"Expressions B1",  level:"B1", noArt:true },
+  { fr:"tomber sur",              es:"encontrarse con / toparse con",   g:"m", cat:"Expressions B1",  level:"B1", noArt:true },
+  { fr:"se débrouiller",          es:"arreglárselas / apañárselas",     g:"m", cat:"Expressions B1",  level:"B1", noArt:true },
+  { fr:"mettre les pieds dans le plat",es:"meter la pata",             g:"m", cat:"Expressions B1",  level:"B1", noArt:true },
+  { fr:"ne pas tourner autour du pot",es:"no andarse con rodeos / ir al grano",g:"m", cat:"Expressions B1", level:"B1", noArt:true },
+  { fr:"ça tombe bien",           es:"qué oportuno / viene bien",       g:"m", cat:"Expressions B1",  level:"B1", noArt:true },
+  { fr:"se mettre d'accord",      es:"ponerse de acuerdo",              g:"m", cat:"Expressions B1",  level:"B1", noArt:true },
+  { fr:"en avoir marre",          es:"estar harto / estar hasta las narices",g:"m", cat:"Expressions B1", level:"B1", noArt:true },
+  { fr:"faire semblant",          es:"fingir / hacer como si",          g:"m", cat:"Expressions B1",  level:"B1", noArt:true },
 
-  // ============================================================
-  // COULEURS D'ACCENTUATION PAR NIVEAU
-  // ============================================================
-  const ACCENT_MAP = {
-    A1:     { accent:'#e63946', dark:'#c1121f', light:'#fdecea' },
-    A2:     { accent:'#2563eb', dark:'#1d4ed8', light:'#dbeafe' },
-    B1:     { accent:'#059669', dark:'#047857', light:'#d1fae5' },
-    B2:     { accent:'#7c3aed', dark:'#6d28d9', light:'#ede9fe' },
-    random: { accent:'#d97706', dark:'#b45309', light:'#fef3c7' },
-  };
+  /* ╔══════════════════════════════════════════════════════
+     ║  NIVEAU B2 — Avancé (indépendant)
+     ╚══════════════════════════════════════════════════════ */
+  // ── B2 · Argumentation & rhétorique ─────────────────
+  { fr:"nonobstant",              es:"no obstante / sin embargo",       g:"m", cat:"Rhétorique B2",   level:"B2", noArt:true },
+  { fr:"eu égard à",              es:"en consideración a / en virtud de",g:"m", cat:"Rhétorique B2",  level:"B2", noArt:true },
+  { fr:"de surcroît",             es:"además / por añadidura",          g:"m", cat:"Rhétorique B2",   level:"B2", noArt:true },
+  { fr:"quoi qu'il en soit",      es:"sea como sea / en todo caso",     g:"m", cat:"Rhétorique B2",   level:"B2", noArt:true },
+  { fr:"à dessein",               es:"a propósito / adrede / intencionalmente",g:"m", cat:"Rhétorique B2", level:"B2", noArt:true },
+  { fr:"force est de constater",  es:"hay que reconocer / es innegable",g:"m", cat:"Rhétorique B2",   level:"B2", noArt:true },
+  { fr:"il n'en demeure pas moins",es:"no es menos cierto que",        g:"m", cat:"Rhétorique B2",   level:"B2", noArt:true },
+  { fr:"en dépit de",             es:"a pesar de / pese a",             g:"m", cat:"Rhétorique B2",   level:"B2", noArt:true },
+  { fr:"par-delà",                es:"más allá de",                     g:"m", cat:"Rhétorique B2",   level:"B2", noArt:true },
+  { fr:"dans la mesure du possible",es:"en la medida de lo posible",    g:"m", cat:"Rhétorique B2",   level:"B2", noArt:true },
+  { fr:"à cet égard",             es:"a este respecto / en este sentido",g:"m", cat:"Rhétorique B2",  level:"B2", noArt:true },
+  { fr:"il y a lieu de",          es:"hay motivo para / corresponde",   g:"m", cat:"Rhétorique B2",   level:"B2", noArt:true },
+  { fr:"pour ce qui est de",      es:"en lo que se refiere a / en cuanto a",g:"m", cat:"Rhétorique B2", level:"B2", noArt:true },
+  // ── B2 · Nuances & subtilités lexicales ──────────────
+  { fr:"l'ambiguïté",             es:"la ambigüedad",                   g:"f", cat:"Nuances B2",      level:"B2" },
+  { fr:"la subtilité",            es:"la sutileza",                     g:"f", cat:"Nuances B2",      level:"B2" },
+  { fr:"l'implicite",             es:"lo implícito",                    g:"m", cat:"Nuances B2",      level:"B2" },
+  { fr:"la nuance",               es:"el matiz",                        g:"f", cat:"Nuances B2",      level:"B2" },
+  { fr:"le sous-entendu",         es:"el sobreentendido / la insinuación",g:"m", cat:"Nuances B2",    level:"B2" },
+  { fr:"la connotation",          es:"la connotación",                  g:"f", cat:"Nuances B2",      level:"B2" },
+  { fr:"le registre de langue",   es:"el registro de lengua / el nivel de habla",g:"m", cat:"Nuances B2", level:"B2" },
+  { fr:"la périphrase",           es:"la perífrasis",                   g:"f", cat:"Nuances B2",      level:"B2" },
+  { fr:"l'euphémisme",            es:"el eufemismo",                    g:"m", cat:"Nuances B2",      level:"B2" },
+  { fr:"l'ironie",                es:"la ironía",                       g:"f", cat:"Nuances B2",      level:"B2" },
+  { fr:"le double sens",          es:"el doble sentido",                g:"m", cat:"Nuances B2",      level:"B2" },
+  { fr:"le sens figuré",          es:"el sentido figurado",             g:"m", cat:"Nuances B2",      level:"B2" },
+  { fr:"péjoratif",               es:"peyorativo / despectivo",         g:"m", cat:"Nuances B2",      level:"B2", noArt:true },
+  { fr:"mélioratif",              es:"meliorativo / positivo",          g:"m", cat:"Nuances B2",      level:"B2", noArt:true },
+  // ── B2 · Économie & finance ───────────────────────────
+  { fr:"le marché financier",     es:"el mercado financiero",           g:"m", cat:"Économie B2",     level:"B2" },
+  { fr:"l'inflation",             es:"la inflación",                    g:"f", cat:"Économie B2",     level:"B2" },
+  { fr:"la récession",            es:"la recesión",                     g:"f", cat:"Économie B2",     level:"B2" },
+  { fr:"le PIB",                  es:"el PIB (Producto Interior Bruto)",g:"m", cat:"Économie B2",     level:"B2" },
+  { fr:"la dette publique",       es:"la deuda pública",                g:"f", cat:"Économie B2",     level:"B2" },
+  { fr:"les inégalités économiques",es:"las desigualdades económicas",  g:"f", cat:"Économie B2",     level:"B2" },
+  { fr:"la bourse",               es:"la bolsa de valores",             g:"f", cat:"Économie B2",     level:"B2" },
+  { fr:"l'investissement",        es:"la inversión",                    g:"m", cat:"Économie B2",     level:"B2" },
+  { fr:"la croissance économique",es:"el crecimiento económico",        g:"f", cat:"Économie B2",     level:"B2" },
+  { fr:"la fiscalité",            es:"la fiscalidad / el sistema fiscal",g:"f", cat:"Économie B2",    level:"B2" },
+  { fr:"les impôts",              es:"los impuestos",                   g:"m", cat:"Économie B2",     level:"B2" },
+  { fr:"le pouvoir d'achat",      es:"el poder adquisitivo",            g:"m", cat:"Économie B2",     level:"B2" },
+  { fr:"la libre concurrence",    es:"la libre competencia",            g:"f", cat:"Économie B2",     level:"B2" },
+  { fr:"la mondialisation des échanges",es:"la globalización de los intercambios", g:"f", cat:"Économie B2", level:"B2" },
+  // ── B2 · Politique & relations internationales ────────
+  { fr:"la démocratie",           es:"la democracia",                   g:"f", cat:"Politique B2",    level:"B2" },
+  { fr:"l'État de droit",         es:"el Estado de derecho",            g:"m", cat:"Politique B2",    level:"B2" },
+  { fr:"la souveraineté",         es:"la soberanía",                    g:"f", cat:"Politique B2",    level:"B2" },
+  { fr:"le traité international", es:"el tratado internacional",        g:"m", cat:"Politique B2",    level:"B2" },
+  { fr:"la diplomatie",           es:"la diplomacia",                   g:"f", cat:"Politique B2",    level:"B2" },
+  { fr:"les droits fondamentaux", es:"los derechos fundamentales",      g:"m", cat:"Politique B2",    level:"B2" },
+  { fr:"la laïcité",              es:"la laicidad / el laicismo",       g:"f", cat:"Politique B2",    level:"B2" },
+  { fr:"le lobbying",             es:"el cabildeo / el lobbying",       g:"m", cat:"Politique B2",    level:"B2" },
+  { fr:"la réforme",              es:"la reforma",                      g:"f", cat:"Politique B2",    level:"B2" },
+  { fr:"le débat public",         es:"el debate público",               g:"m", cat:"Politique B2",    level:"B2" },
+  { fr:"le parlement",            es:"el parlamento",                   g:"m", cat:"Politique B2",    level:"B2" },
+  { fr:"l'élection",              es:"la elección",                     g:"f", cat:"Politique B2",    level:"B2" },
+  { fr:"le suffrage universel",   es:"el sufragio universal",           g:"m", cat:"Politique B2",    level:"B2" },
+  // ── B2 · Sciences & technologie ──────────────────────
+  { fr:"la recherche scientifique",es:"la investigación científica",    g:"f", cat:"Sciences B2",     level:"B2" },
+  { fr:"l'hypothèse",             es:"la hipótesis",                    g:"f", cat:"Sciences B2",     level:"B2" },
+  { fr:"l'expérience",            es:"el experimento / la experiencia", g:"f", cat:"Sciences B2",     level:"B2" },
+  { fr:"la découverte",           es:"el descubrimiento",               g:"f", cat:"Sciences B2",     level:"B2" },
+  { fr:"l'innovation",            es:"la innovación",                   g:"f", cat:"Sciences B2",     level:"B2" },
+  { fr:"le brevet",               es:"la patente",                      g:"m", cat:"Sciences B2",     level:"B2" },
+  { fr:"la génétique",            es:"la genética",                     g:"f", cat:"Sciences B2",     level:"B2" },
+  { fr:"l'intelligence artificielle",es:"la inteligencia artificial",   g:"f", cat:"Sciences B2",     level:"B2" },
+  { fr:"la robotique",            es:"la robótica",                     g:"f", cat:"Sciences B2",     level:"B2" },
+  { fr:"le big data",             es:"el big data / los macrodatos",    g:"m", cat:"Sciences B2",     level:"B2" },
+  { fr:"démontrer",               es:"demostrar",                       g:"m", cat:"Sciences B2",     level:"B2", noArt:true },
+  { fr:"analyser",                es:"analizar",                        g:"m", cat:"Sciences B2",     level:"B2", noArt:true },
+  { fr:"l'ère numérique",         es:"la era digital",                  g:"f", cat:"Sciences B2",     level:"B2" },
+  // ── B2 · Environnement & éthique ─────────────────────
+  { fr:"l'accord de Paris",       es:"el Acuerdo de París",             g:"m", cat:"Environnement B2",level:"B2" },
+  { fr:"la transition énergétique",es:"la transición energética",       g:"f", cat:"Environnement B2",level:"B2" },
+  { fr:"l'éco-responsabilité",    es:"la ecoresponsabilidad",           g:"f", cat:"Environnement B2",level:"B2" },
+  { fr:"la neutralité carbone",   es:"la neutralidad de carbono",       g:"f", cat:"Environnement B2",level:"B2" },
+  { fr:"les espèces menacées",    es:"las especies amenazadas / en peligro",g:"f", cat:"Environnement B2", level:"B2" },
+  { fr:"le greenwashing",         es:"el greenwashing / el ecoblanqueo",g:"m", cat:"Environnement B2",level:"B2" },
+  { fr:"l'agriculture intensive", es:"la agricultura intensiva",        g:"f", cat:"Environnement B2",level:"B2" },
+  { fr:"la surconsommation",      es:"el sobreconsumo / el consumismo", g:"f", cat:"Environnement B2",level:"B2" },
+  { fr:"l'économie circulaire",   es:"la economía circular",            g:"f", cat:"Environnement B2",level:"B2" },
+  // ── B2 · Droit & justice ─────────────────────────────
+  { fr:"la jurisprudence",        es:"la jurisprudencia",               g:"f", cat:"Droit B2",        level:"B2" },
+  { fr:"le tribunal",             es:"el tribunal",                     g:"m", cat:"Droit B2",        level:"B2" },
+  { fr:"le jugement",             es:"el juicio / la sentencia",        g:"m", cat:"Droit B2",        level:"B2" },
+  { fr:"la peine",                es:"la pena",                         g:"f", cat:"Droit B2",        level:"B2" },
+  { fr:"l'avocat de la défense",  es:"el abogado defensor",             g:"m", cat:"Droit B2",        level:"B2" },
+  { fr:"le procureur",            es:"el fiscal / el procurador",       g:"m", cat:"Droit B2",        level:"B2" },
+  { fr:"la présomption d'innocence",es:"la presunción de inocencia",    g:"f", cat:"Droit B2",        level:"B2" },
+  { fr:"le recours",              es:"el recurso / la apelación",       g:"m", cat:"Droit B2",        level:"B2" },
+  { fr:"la condamnation",         es:"la condena",                      g:"f", cat:"Droit B2",        level:"B2" },
+  { fr:"l'acquittement",          es:"la absolución",                   g:"m", cat:"Droit B2",        level:"B2" },
+  // ── B2 · Psychologie & comportement ──────────────────
+  { fr:"le comportement",         es:"el comportamiento / la conducta", g:"m", cat:"Psychologie B2",  level:"B2" },
+  { fr:"l'inconscient",           es:"el inconsciente",                 g:"m", cat:"Psychologie B2",  level:"B2" },
+  { fr:"le traumatisme",          es:"el trauma / el traumatismo",      g:"m", cat:"Psychologie B2",  level:"B2" },
+  { fr:"la résilience",           es:"la resiliencia",                  g:"f", cat:"Psychologie B2",  level:"B2" },
+  { fr:"l'empathie",              es:"la empatía",                      g:"f", cat:"Psychologie B2",  level:"B2" },
+  { fr:"le biais cognitif",       es:"el sesgo cognitivo",              g:"m", cat:"Psychologie B2",  level:"B2" },
+  { fr:"la manipulation",         es:"la manipulación",                 g:"f", cat:"Psychologie B2",  level:"B2" },
+  { fr:"l'identité",              es:"la identidad",                    g:"f", cat:"Psychologie B2",  level:"B2" },
+  { fr:"la perception",           es:"la percepción",                   g:"f", cat:"Psychologie B2",  level:"B2" },
+  { fr:"le sentiment d'appartenance",es:"el sentido de pertenencia",    g:"m", cat:"Psychologie B2",  level:"B2" },
+  // ── B2 · Expressions idiomatiques avancées ────────────
+  { fr:"jeter de l'huile sur le feu",es:"echar leña al fuego",         g:"m", cat:"Expressions B2",  level:"B2", noArt:true },
+  { fr:"noyer le poisson",        es:"escurrir el bulto / dar largas",  g:"m", cat:"Expressions B2",  level:"B2", noArt:true },
+  { fr:"passer entre les mailles du filet",es:"escapar por los flecos / escabullirse",g:"m", cat:"Expressions B2", level:"B2", noArt:true },
+  { fr:"avoir le vent en poupe",  es:"tener el viento a favor / estar en alza",g:"m", cat:"Expressions B2", level:"B2", noArt:true },
+  { fr:"prêcher dans le désert",  es:"predicar en el desierto",         g:"m", cat:"Expressions B2",  level:"B2", noArt:true },
+  { fr:"mettre des bâtons dans les roues",es:"poner palos en las ruedas / poner obstáculos",g:"m", cat:"Expressions B2", level:"B2", noArt:true },
+  { fr:"tirer les marrons du feu",es:"sacar las castañas del fuego",    g:"m", cat:"Expressions B2",  level:"B2", noArt:true },
+  { fr:"avoir plus d'un tour dans son sac",es:"tener más de un as en la manga",g:"m", cat:"Expressions B2", level:"B2", noArt:true },
+  { fr:"rouler dans la farine",   es:"engañar / tomar el pelo",         g:"m", cat:"Expressions B2",  level:"B2", noArt:true },
+  { fr:"c'est une autre paire de manches",es:"es otra historia / es harina de otro costal",g:"m", cat:"Expressions B2", level:"B2", noArt:true },
+  { fr:"faire feu de tout bois",  es:"aprovechar todo lo que se tiene", g:"m", cat:"Expressions B2",  level:"B2", noArt:true },
+  { fr:"couper l'herbe sous le pied",es:"quitarle el pan de la boca / adelantarse",g:"m", cat:"Expressions B2", level:"B2", noArt:true },
+  // ── B2 · Philosophie & éthique ───────────────────────
+  { fr:"la liberté d'expression", es:"la libertad de expresión",        g:"f", cat:"Philosophie B2",  level:"B2" },
+  { fr:"l'éthique",               es:"la ética",                        g:"f", cat:"Philosophie B2",  level:"B2" },
+  { fr:"la morale",               es:"la moral",                        g:"f", cat:"Philosophie B2",  level:"B2" },
+  { fr:"le relativisme",          es:"el relativismo",                  g:"m", cat:"Philosophie B2",  level:"B2" },
+  { fr:"l'absurde",               es:"lo absurdo / el absurdo",         g:"m", cat:"Philosophie B2",  level:"B2" },
+  { fr:"la conscience",           es:"la conciencia",                   g:"f", cat:"Philosophie B2",  level:"B2" },
+  { fr:"le libre arbitre",        es:"el libre albedrío",               g:"m", cat:"Philosophie B2",  level:"B2" },
+  { fr:"remettre en question",    es:"cuestionar / poner en duda",      g:"m", cat:"Philosophie B2",  level:"B2", noArt:true },
+  { fr:"prendre du recul",        es:"tomar distancia / ver las cosas con perspectiva",g:"m", cat:"Philosophie B2", level:"B2", noArt:true },
 
-  function applyAccent(level) {
-    const c = ACCENT_MAP[level] || ACCENT_MAP.A1;
-    const r = document.documentElement.style;
-    r.setProperty('--accent',       c.accent);
-    r.setProperty('--accent-dark',  c.dark);
-    r.setProperty('--accent-light', c.light);
+  // ================== ENRICHISSEMENT A1 ==================
+  { fr:"zéro",                  es:"cero",                        g:"m", cat:"Chiffres",        level:"A1", noArt:true },
+  { fr:"un / une",              es:"uno / una",                   g:"m", cat:"Chiffres",        level:"A1", noArt:true },
+  { fr:"deux",                  es:"dos",                         g:"m", cat:"Chiffres",        level:"A1", noArt:true },
+  { fr:"trois",                 es:"tres",                        g:"m", cat:"Chiffres",        level:"A1", noArt:true },
+  { fr:"quatre",                es:"cuatro",                      g:"m", cat:"Chiffres",        level:"A1", noArt:true },
+  { fr:"cinq",                  es:"cinco",                       g:"m", cat:"Chiffres",        level:"A1", noArt:true },
+  { fr:"six",                   es:"seis",                        g:"m", cat:"Chiffres",        level:"A1", noArt:true },
+  { fr:"sept",                  es:"siete",                       g:"m", cat:"Chiffres",        level:"A1", noArt:true },
+  { fr:"huit",                  es:"ocho",                        g:"m", cat:"Chiffres",        level:"A1", noArt:true },
+  { fr:"neuf",                  es:"nueve",                       g:"m", cat:"Chiffres",        level:"A1", noArt:true },
+  { fr:"dix",                   es:"diez",                        g:"m", cat:"Chiffres",        level:"A1", noArt:true },
+  { fr:"onze",                  es:"once",                        g:"m", cat:"Chiffres",        level:"A1", noArt:true },
+  { fr:"douze",                 es:"doce",                        g:"m", cat:"Chiffres",        level:"A1", noArt:true },
+  { fr:"treize",                es:"trece",                       g:"m", cat:"Chiffres",        level:"A1", noArt:true },
+  { fr:"quatorze",              es:"catorce",                     g:"m", cat:"Chiffres",        level:"A1", noArt:true },
+  { fr:"quinze",                es:"quince",                      g:"m", cat:"Chiffres",        level:"A1", noArt:true },
+  { fr:"seize",                 es:"dieciséis",                   g:"m", cat:"Chiffres",        level:"A1", noArt:true },
+  { fr:"dix-sept",              es:"diecisiete",                  g:"m", cat:"Chiffres",        level:"A1", noArt:true },
+  { fr:"dix-huit",              es:"dieciocho",                   g:"m", cat:"Chiffres",        level:"A1", noArt:true },
+  { fr:"dix-neuf",              es:"diecinueve",                  g:"m", cat:"Chiffres",        level:"A1", noArt:true },
+  { fr:"vingt",                 es:"veinte",                      g:"m", cat:"Chiffres",        level:"A1", noArt:true },
+  { fr:"trente",                es:"treinta",                     g:"m", cat:"Chiffres",        level:"A1", noArt:true },
+  { fr:"quarante",              es:"cuarenta",                    g:"m", cat:"Chiffres",        level:"A1", noArt:true },
+  { fr:"cinquante",             es:"cincuenta",                   g:"m", cat:"Chiffres",        level:"A1", noArt:true },
+  { fr:"soixante",              es:"sesenta",                     g:"m", cat:"Chiffres",        level:"A1", noArt:true },
+  { fr:"soixante-dix",          es:"setenta",                     g:"m", cat:"Chiffres",        level:"A1", noArt:true },
+  { fr:"quatre-vingts",         es:"ochenta",                     g:"m", cat:"Chiffres",        level:"A1", noArt:true },
+  { fr:"quatre-vingt-dix",      es:"noventa",                     g:"m", cat:"Chiffres",        level:"A1", noArt:true },
+  { fr:"cent",                  es:"cien / ciento",               g:"m", cat:"Chiffres",        level:"A1", noArt:true },
+  { fr:"mille",                 es:"mil",                         g:"m", cat:"Chiffres",        level:"A1", noArt:true },
+  { fr:"premier / première",    es:"primero / primera",           g:"m", cat:"Chiffres",        level:"A1", noArt:true },
+  { fr:"deuxième",              es:"segundo / segunda",           g:"m", cat:"Chiffres",        level:"A1", noArt:true },
+  { fr:"dernier / dernière",    es:"último / última",             g:"m", cat:"Chiffres",        level:"A1", noArt:true },
+  { fr:"le chat",               es:"el gato",                     g:"m", cat:"Animaux",         level:"A1" },
+  { fr:"le chien",              es:"el perro",                    g:"m", cat:"Animaux",         level:"A1" },
+  { fr:"le cheval",             es:"el caballo",                  g:"m", cat:"Animaux",         level:"A1" },
+  { fr:"la vache",              es:"la vaca",                     g:"f", cat:"Animaux",         level:"A1" },
+  { fr:"le cochon",             es:"el cerdo",                    g:"m", cat:"Animaux",         level:"A1" },
+  { fr:"le mouton",             es:"la oveja",                    g:"m", cat:"Animaux",         level:"A1" },
+  { fr:"la poule",              es:"la gallina",                  g:"f", cat:"Animaux",         level:"A1" },
+  { fr:"le poisson",            es:"el pez",                      g:"m", cat:"Animaux",         level:"A1" },
+  { fr:"l'oiseau",              es:"el pájaro",                   g:"m", cat:"Animaux",         level:"A1" },
+  { fr:"le lapin",              es:"el conejo",                   g:"m", cat:"Animaux",         level:"A1" },
+  { fr:"le lion",               es:"el león",                     g:"m", cat:"Animaux",         level:"A1" },
+  { fr:"l'éléphant",            es:"el elefante",                 g:"m", cat:"Animaux",         level:"A1" },
+  { fr:"le tigre",              es:"el tigre",                    g:"m", cat:"Animaux",         level:"A1" },
+  { fr:"le singe",              es:"el mono",                     g:"m", cat:"Animaux",         level:"A1" },
+  { fr:"le serpent",            es:"la serpiente",                g:"m", cat:"Animaux",         level:"A1" },
+  { fr:"l'araignée",            es:"la araña",                    g:"f", cat:"Animaux",         level:"A1" },
+  { fr:"la souris",             es:"el ratón",                    g:"f", cat:"Animaux",         level:"A1" },
+  { fr:"l'animal",              es:"el animal",                   g:"m", cat:"Animaux",         level:"A1" },
+  { fr:"le médecin",            es:"el médico / la médica",       g:"m", cat:"Professions",     level:"A1" },
+  { fr:"le professeur",         es:"el profesor / la profesora",  g:"m", cat:"Professions",     level:"A1" },
+  { fr:"l'infirmier",           es:"el enfermero / la enfermera", g:"m", cat:"Professions",     level:"A1" },
+  { fr:"le cuisinier",          es:"el cocinero / la cocinera",   g:"m", cat:"Professions",     level:"A1" },
+  { fr:"le policier",           es:"el policía",                  g:"m", cat:"Professions",     level:"A1" },
+  { fr:"le pompier",            es:"el bombero",                  g:"m", cat:"Professions",     level:"A1" },
+  { fr:"le chauffeur",          es:"el chofer / el conductor",    g:"m", cat:"Professions",     level:"A1" },
+  { fr:"le vendeur",            es:"el vendedor / la vendedora",  g:"m", cat:"Professions",     level:"A1" },
+  { fr:"le secrétaire",         es:"el secretario / la secretaria", g:"m", cat:"Professions",  level:"A1" },
+  { fr:"le directeur",          es:"el director / la directora",  g:"m", cat:"Professions",    level:"A1" },
+  { fr:"l'avocat",              es:"el abogado / la abogada",     g:"m", cat:"Professions",     level:"A1" },
+  { fr:"l'architecte",          es:"el arquitecto / la arquitecta", g:"m", cat:"Professions",  level:"A1" },
+  { fr:"le journaliste",        es:"el periodista / la periodista", g:"m", cat:"Professions",  level:"A1" },
+  { fr:"l'agriculteur",         es:"el agricultor / la agricultora", g:"m", cat:"Professions", level:"A1" },
+  { fr:"le mécanicien",         es:"el mecánico",                 g:"m", cat:"Professions",     level:"A1" },
+  { fr:"l'ingénieur",           es:"el ingeniero / la ingeniera", g:"m", cat:"Professions",     level:"A1" },
+  { fr:"les yeux",              es:"los ojos",                    g:"m", cat:"Corps & santé",   level:"A1" },
+  { fr:"la dent",               es:"el diente",                   g:"f", cat:"Corps & santé",   level:"A1" },
+  { fr:"la gorge",              es:"la garganta",                 g:"f", cat:"Corps & santé",   level:"A1" },
+  { fr:"le genou",              es:"la rodilla",                  g:"m", cat:"Corps & santé",   level:"A1" },
+  { fr:"l'épaule",              es:"el hombro",                   g:"f", cat:"Corps & santé",   level:"A1" },
+  { fr:"le ventre",             es:"el vientre / la panza",       g:"m", cat:"Corps & santé",   level:"A1" },
+  { fr:"la langue",             es:"la lengua",                   g:"f", cat:"Corps & santé",   level:"A1" },
+  { fr:"le doigt",              es:"el dedo",                     g:"m", cat:"Corps & santé",   level:"A1" },
+  { fr:"J'ai mal à…",           es:"Me duele… / Me duelen…",      g:"m", cat:"Corps & santé",   level:"A1", noArt:true },
+  { fr:"Je suis fatigué(e)",    es:"Estoy cansado / cansada",     g:"m", cat:"Corps & santé",   level:"A1", noArt:true },
+  { fr:"les chaussettes",       es:"los calcetines",              g:"f", cat:"Ropa",            level:"A1" },
+  { fr:"le short",              es:"el short / el pantalón corto",g:"m", cat:"Ropa",            level:"A1" },
+  { fr:"le pyjama",             es:"el pijama",                   g:"m", cat:"Ropa",            level:"A1" },
+  { fr:"les sous-vêtements",    es:"la ropa interior",            g:"m", cat:"Ropa",            level:"A1" },
+  { fr:"l'écharpe",             es:"la bufanda",                  g:"f", cat:"Ropa",            level:"A1" },
+  { fr:"les gants",             es:"los guantes",                 g:"m", cat:"Ropa",            level:"A1" },
+  { fr:"la cravate",            es:"la corbata",                  g:"f", cat:"Ropa",            level:"A1" },
+  { fr:"porter",                es:"llevar / usar",               g:"m", cat:"Ropa",            level:"A1", noArt:true },
+  { fr:"le sol",                es:"el suelo / el piso",          g:"m", cat:"Vie quotidienne", level:"A1" },
+  { fr:"le mur",                es:"la pared",                    g:"m", cat:"Vie quotidienne", level:"A1" },
+  { fr:"le plafond",            es:"el techo / el cielo raso",    g:"m", cat:"Vie quotidienne", level:"A1" },
+  { fr:"l'armoire",             es:"el armario",                  g:"f", cat:"Vie quotidienne", level:"A1" },
+  { fr:"le tiroir",             es:"el cajón",                    g:"m", cat:"Vie quotidienne", level:"A1" },
+  { fr:"le frigo",              es:"el refrigerador / la heladera", g:"m", cat:"Vie quotidienne", level:"A1" },
+  { fr:"le four",               es:"el horno",                    g:"m", cat:"Vie quotidienne", level:"A1" },
+  { fr:"la douche",             es:"la ducha",                    g:"f", cat:"Vie quotidienne", level:"A1" },
+  { fr:"les toilettes",         es:"el baño / el inodoro",        g:"f", cat:"Vie quotidienne", level:"A1" },
+  { fr:"l'entrée",              es:"la entrada / el recibidor",   g:"f", cat:"Vie quotidienne", level:"A1" },
+  { fr:"la farine",             es:"la harina",                   g:"f", cat:"Comida",          level:"A1" },
+  { fr:"le poivre",             es:"la pimienta",                 g:"m", cat:"Comida",          level:"A1" },
+  { fr:"la crème",              es:"la crema / la nata",          g:"f", cat:"Comida",          level:"A1" },
+  { fr:"les céréales",          es:"los cereales",                g:"f", cat:"Comida",          level:"A1" },
+  { fr:"le yaourt",             es:"el yogur",                    g:"m", cat:"Comida",          level:"A1" },
+  { fr:"le jambon",             es:"el jamón",                    g:"m", cat:"Comida",          level:"A1" },
+  { fr:"les frites",            es:"las papas fritas / las patatas fritas", g:"f", cat:"Comida", level:"A1" },
+  { fr:"une bouteille de",      es:"una botella de",              g:"f", cat:"Comida",          level:"A1" },
+  { fr:"un kilo de",            es:"un kilo de",                  g:"m", cat:"Comida",          level:"A1", noArt:true },
+  { fr:"J'ai faim",             es:"Tengo hambre",                g:"m", cat:"Comida",          level:"A1", noArt:true },
+  { fr:"J'ai soif",             es:"Tengo sed",                   g:"m", cat:"Comida",          level:"A1", noArt:true },
+  { fr:"C'est délicieux",       es:"Está delicioso",              g:"m", cat:"Comida",          level:"A1", noArt:true },
+  { fr:"Oui",                   es:"Sí",                          g:"m", cat:"Expressions",     level:"A1", noArt:true },
+  { fr:"Non",                   es:"No",                          g:"m", cat:"Expressions",     level:"A1", noArt:true },
+  { fr:"Je ne sais pas",        es:"No sé",                       g:"m", cat:"Expressions",     level:"A1", noArt:true },
+  { fr:"Je ne comprends pas",   es:"No entiendo",                 g:"m", cat:"Expressions",     level:"A1", noArt:true },
+  { fr:"Pouvez-vous répéter ?", es:"¿Puede repetir?",            g:"m", cat:"Expressions",     level:"A1", noArt:true },
+  { fr:"Plus lentement",        es:"Más despacio",                g:"m", cat:"Expressions",     level:"A1", noArt:true },
+  { fr:"Combien ça coûte ?",    es:"¿Cuánto cuesta?",            g:"m", cat:"Expressions",     level:"A1", noArt:true },
+  { fr:"C'est combien ?",       es:"¿Cuánto es?",                g:"m", cat:"Expressions",     level:"A1", noArt:true },
+  { fr:"Il y a",                es:"Hay",                         g:"m", cat:"Expressions",     level:"A1", noArt:true },
+  { fr:"Voilà",                 es:"Aquí tiene / Aquí está",      g:"m", cat:"Expressions",     level:"A1", noArt:true },
+  { fr:"C'est",                 es:"Es / Está",                   g:"m", cat:"Expressions",     level:"A1", noArt:true },
+  { fr:"Je voudrais",           es:"Quisiera / Me gustaría",      g:"m", cat:"Expressions",     level:"A1", noArt:true },
+  { fr:"Est-ce que…?",          es:"¿… ?",                       g:"m", cat:"Expressions",     level:"A1", noArt:true },
+  { fr:"Qu'est-ce que c'est ?", es:"¿Qué es esto?",              g:"m", cat:"Expressions",     level:"A1", noArt:true },
+
+  // ================== ENRICHISSEMENT A2 ==================
+  { fr:"le football",           es:"el fútbol",                   g:"m", cat:"Sports",          level:"A2" },
+  { fr:"le tennis",             es:"el tenis",                    g:"m", cat:"Sports",          level:"A2" },
+  { fr:"le basket-ball",        es:"el baloncesto / el básquet",  g:"m", cat:"Sports",          level:"A2" },
+  { fr:"la natation",           es:"la natación",                 g:"f", cat:"Sports",          level:"A2" },
+  { fr:"le vélo",               es:"el ciclismo / la bicicleta",  g:"m", cat:"Sports",          level:"A2" },
+  { fr:"la course à pied",      es:"el running / correr",         g:"f", cat:"Sports",          level:"A2" },
+  { fr:"la danse",              es:"la danza / el baile",         g:"f", cat:"Sports",          level:"A2" },
+  { fr:"le yoga",               es:"el yoga",                     g:"m", cat:"Sports",          level:"A2" },
+  { fr:"la gym",                es:"el gimnasio / la gimnasia",   g:"f", cat:"Sports",          level:"A2" },
+  { fr:"la randonnée",          es:"el senderismo / la excursión",g:"f", cat:"Sports",          level:"A2" },
+  { fr:"le ski",                es:"el esquí",                    g:"m", cat:"Sports",          level:"A2" },
+  { fr:"la piscine",            es:"la piscina / la pileta",      g:"f", cat:"Sports",          level:"A2" },
+  { fr:"le match",              es:"el partido / el encuentro",   g:"m", cat:"Sports",          level:"A2" },
+  { fr:"l'équipe",              es:"el equipo",                   g:"f", cat:"Sports",          level:"A2" },
+  { fr:"gagner",                es:"ganar",                       g:"m", cat:"Sports",          level:"A2", noArt:true },
+  { fr:"perdre",                es:"perder",                      g:"m", cat:"Sports",          level:"A2", noArt:true },
+  { fr:"s'entraîner",           es:"entrenar / entrenarse",       g:"m", cat:"Sports",          level:"A2", noArt:true },
+  { fr:"marquer un but",        es:"marcar un gol",               g:"m", cat:"Sports",          level:"A2", noArt:true },
+  { fr:"le stade",              es:"el estadio",                  g:"m", cat:"Sports",          level:"A2" },
+  { fr:"le terrain de sport",   es:"la cancha / el campo de deporte", g:"m", cat:"Sports",     level:"A2" },
+  { fr:"la salle de classe",    es:"el aula / la sala de clases", g:"f", cat:"École",           level:"A2" },
+  { fr:"le tableau",            es:"la pizarra / el tablero",     g:"m", cat:"École",           level:"A2" },
+  { fr:"le cahier",             es:"el cuaderno",                 g:"m", cat:"École",           level:"A2" },
+  { fr:"le sac à dos",          es:"la mochila",                  g:"m", cat:"École",           level:"A2" },
+  { fr:"la règle",              es:"la regla",                    g:"f", cat:"École",           level:"A2" },
+  { fr:"la gomme",              es:"la goma / el borrador",       g:"f", cat:"École",           level:"A2" },
+  { fr:"le crayon",             es:"el lápiz",                    g:"m", cat:"École",           level:"A2" },
+  { fr:"les devoirs",           es:"los deberes / la tarea",      g:"m", cat:"École",           level:"A2" },
+  { fr:"l'examen",              es:"el examen",                   g:"m", cat:"École",           level:"A2" },
+  { fr:"la note",               es:"la nota / la calificación",   g:"f", cat:"École",           level:"A2" },
+  { fr:"la récréation",         es:"el recreo",                   g:"f", cat:"École",           level:"A2" },
+  { fr:"le lycée",              es:"el bachillerato / la preparatoria", g:"m", cat:"École",     level:"A2" },
+  { fr:"l'université",          es:"la universidad",              g:"f", cat:"École",           level:"A2" },
+  { fr:"le diplôme",            es:"el diploma / el título",      g:"m", cat:"École",           level:"A2" },
+  { fr:"passer un examen",      es:"rendir un examen / presentar un examen", g:"m", cat:"École", level:"A2", noArt:true },
+  { fr:"réussir",               es:"aprobar / lograr",            g:"m", cat:"École",           level:"A2", noArt:true },
+  { fr:"échouer",               es:"reprobar / suspender",        g:"m", cat:"École",           level:"A2", noArt:true },
+  { fr:"s'inscrire",            es:"inscribirse / matricularse",  g:"m", cat:"École",           level:"A2", noArt:true },
+  { fr:"la matière",            es:"la asignatura / la materia",  g:"f", cat:"École",           level:"A2" },
+  { fr:"les mathématiques",     es:"las matemáticas",             g:"f", cat:"École",           level:"A2" },
+  { fr:"l'histoire",            es:"la historia",                 g:"f", cat:"École",           level:"A2" },
+  { fr:"la géographie",         es:"la geografía",                g:"f", cat:"École",           level:"A2" },
+  { fr:"les sciences",          es:"las ciencias",                g:"f", cat:"École",           level:"A2" },
+  { fr:"le billet",             es:"el billete / el boleto",      g:"m", cat:"Transports",      level:"A2" },
+  { fr:"l'arrêt de bus",        es:"la parada de autobús",        g:"m", cat:"Transports",      level:"A2" },
+  { fr:"la station de métro",   es:"la estación de metro / subte",g:"f", cat:"Transports",      level:"A2" },
+  { fr:"prendre le métro",      es:"tomar el metro / subte",      g:"m", cat:"Transports",      level:"A2", noArt:true },
+  { fr:"changer de ligne",      es:"cambiar de línea",            g:"m", cat:"Transports",      level:"A2", noArt:true },
+  { fr:"le ticket",             es:"el ticket / el boleto",       g:"m", cat:"Transports",      level:"A2" },
+  { fr:"la correspondance",     es:"el transbordo",               g:"f", cat:"Transports",      level:"A2" },
+  { fr:"la direction",          es:"la dirección",                g:"f", cat:"Transports",      level:"A2" },
+  { fr:"le conducteur",         es:"el conductor / el chofer",    g:"m", cat:"Transports",      level:"A2" },
+  { fr:"la voie",               es:"la vía / el carril",          g:"f", cat:"Transports",      level:"A2" },
+  { fr:"le feu rouge",          es:"el semáforo en rojo",         g:"m", cat:"Transports",      level:"A2" },
+  { fr:"traverser",             es:"cruzar / atravesar",          g:"m", cat:"Transports",      level:"A2", noArt:true },
+  { fr:"monter dans",           es:"subir a",                     g:"m", cat:"Transports",      level:"A2", noArt:true },
+  { fr:"descendre de",          es:"bajar de",                    g:"m", cat:"Transports",      level:"A2", noArt:true },
+  { fr:"le parking",            es:"el estacionamiento / el parking", g:"m", cat:"Transports",  level:"A2" },
+  { fr:"l'embouteillage",       es:"el atasco / el embotellamiento", g:"m", cat:"Transports",   level:"A2" },
+  { fr:"le ciel",               es:"el cielo",                    g:"m", cat:"Nature",          level:"A2" },
+  { fr:"les nuages",            es:"las nubes",                   g:"m", cat:"Nature",          level:"A2" },
+  { fr:"l'arc-en-ciel",         es:"el arcoíris",                 g:"m", cat:"Nature",          level:"A2" },
+  { fr:"la neige",              es:"la nieve",                    g:"f", cat:"Nature",          level:"A2" },
+  { fr:"le brouillard",         es:"la neblina / la niebla",      g:"m", cat:"Nature",          level:"A2" },
+  { fr:"l'orage",               es:"la tormenta / el temporal",   g:"m", cat:"Nature",          level:"A2" },
+  { fr:"la tempête",            es:"la tormenta / el temporal",   g:"f", cat:"Nature",          level:"A2" },
+  { fr:"Il neige",              es:"Nieva",                       g:"m", cat:"Nature",          level:"A2", noArt:true },
+  { fr:"Il fait beau",          es:"Hace buen tiempo",            g:"m", cat:"Nature",          level:"A2", noArt:true },
+  { fr:"Il fait mauvais",       es:"Hace mal tiempo",             g:"m", cat:"Nature",          level:"A2", noArt:true },
+  { fr:"la plante",             es:"la planta",                   g:"f", cat:"Nature",          level:"A2" },
+  { fr:"l'arbre",               es:"el árbol",                    g:"m", cat:"Nature",          level:"A2" },
+  { fr:"la fleur",              es:"la flor",                     g:"f", cat:"Nature",          level:"A2" },
+  { fr:"la feuille",            es:"la hoja",                     g:"f", cat:"Nature",          level:"A2" },
+  { fr:"l'herbe",               es:"el pasto / la hierba",        g:"f", cat:"Nature",          level:"A2" },
+  { fr:"le sable",              es:"la arena",                    g:"m", cat:"Nature",          level:"A2" },
+  { fr:"la terre",              es:"la tierra",                   g:"f", cat:"Nature",          level:"A2" },
+  { fr:"le caillou",            es:"la piedra / el guijarro",     g:"m", cat:"Nature",          level:"A2" },
+  { fr:"avoir peur de",         es:"tener miedo de",              g:"m", cat:"Émotions",        level:"A2", noArt:true },
+  { fr:"être amoureux de",      es:"estar enamorado de",          g:"m", cat:"Émotions",        level:"A2", noArt:true },
+  { fr:"se sentir bien",        es:"sentirse bien",               g:"m", cat:"Émotions",        level:"A2", noArt:true },
+  { fr:"se sentir mal",         es:"sentirse mal",                g:"m", cat:"Émotions",        level:"A2", noArt:true },
+  { fr:"être stressé(e)",       es:"estar estresado / estresada",  g:"m", cat:"Émotions",       level:"A2", noArt:true },
+  { fr:"être déprimé(e)",       es:"estar deprimido / deprimida", g:"m", cat:"Émotions",        level:"A2", noArt:true },
+  { fr:"être excité(e)",        es:"estar emocionado / entusiasmado", g:"m", cat:"Émotions",    level:"A2", noArt:true },
+  { fr:"s'ennuyer",             es:"aburrirse",                   g:"m", cat:"Émotions",        level:"A2", noArt:true },
+  { fr:"se détendre",           es:"relajarse",                   g:"m", cat:"Émotions",        level:"A2", noArt:true },
+  { fr:"se mettre en colère",   es:"enojarse / enfadarse",        g:"m", cat:"Émotions",        level:"A2", noArt:true },
+  { fr:"pleurer",               es:"llorar",                      g:"m", cat:"Émotions",        level:"A2", noArt:true },
+  { fr:"rire",                  es:"reír / reírse",               g:"m", cat:"Émotions",        level:"A2", noArt:true },
+  { fr:"sourire",               es:"sonreír",                     g:"m", cat:"Émotions",        level:"A2", noArt:true },
+  { fr:"la joie",               es:"la alegría",                  g:"f", cat:"Émotions",        level:"A2" },
+  { fr:"la peur",               es:"el miedo",                    g:"f", cat:"Émotions",        level:"A2" },
+  { fr:"la colère",             es:"la rabia / el enojo",         g:"f", cat:"Émotions",        level:"A2" },
+  { fr:"la surprise",           es:"la sorpresa",                 g:"f", cat:"Émotions",        level:"A2" },
+  { fr:"la honte",              es:"la vergüenza",                g:"f", cat:"Émotions",        level:"A2" },
+  { fr:"le goût",               es:"el gusto / el sabor",         g:"m", cat:"Cuisine A2",      level:"A2" },
+  { fr:"sucré",                 es:"dulce",                       g:"m", cat:"Cuisine A2",      level:"A2", noArt:true },
+  { fr:"salé",                  es:"salado",                      g:"m", cat:"Cuisine A2",      level:"A2", noArt:true },
+  { fr:"épicé",                 es:"picante",                     g:"m", cat:"Cuisine A2",      level:"A2", noArt:true },
+  { fr:"amer",                  es:"amargo",                      g:"m", cat:"Cuisine A2",      level:"A2", noArt:true },
+  { fr:"acide",                 es:"ácido",                       g:"m", cat:"Cuisine A2",      level:"A2", noArt:true },
+  { fr:"grillé",                es:"a la parrilla / asado",       g:"m", cat:"Cuisine A2",      level:"A2", noArt:true },
+  { fr:"bouilli",               es:"hervido",                     g:"m", cat:"Cuisine A2",      level:"A2", noArt:true },
+  { fr:"la recette",            es:"la receta",                   g:"f", cat:"Cuisine A2",      level:"A2" },
+  { fr:"les ingrédients",       es:"los ingredientes",            g:"m", cat:"Cuisine A2",      level:"A2" },
+  { fr:"faire la cuisine",      es:"cocinar / hacer la comida",   g:"m", cat:"Cuisine A2",      level:"A2", noArt:true },
+  { fr:"couper",                es:"cortar",                      g:"m", cat:"Cuisine A2",      level:"A2", noArt:true },
+  { fr:"mélanger",              es:"mezclar",                     g:"m", cat:"Cuisine A2",      level:"A2", noArt:true },
+  { fr:"faire chauffer",        es:"calentar",                    g:"m", cat:"Cuisine A2",      level:"A2", noArt:true },
+  { fr:"ajouter",               es:"agregar / añadir",            g:"m", cat:"Cuisine A2",      level:"A2", noArt:true },
+  { fr:"le rôti",               es:"el asado",                    g:"m", cat:"Cuisine A2",      level:"A2" },
+  { fr:"les fruits de mer",     es:"los mariscos",                g:"m", cat:"Cuisine A2",      level:"A2" },
+  { fr:"le plat principal",     es:"el plato principal",          g:"m", cat:"Cuisine A2",      level:"A2" },
+  { fr:"l'entrée",              es:"la entrada / el entrante",    g:"f", cat:"Cuisine A2",      level:"A2" },
+  { fr:"assez de",              es:"suficiente / bastante",        g:"m", cat:"Quantités",       level:"A2", noArt:true },
+  { fr:"trop de",               es:"demasiado de",                g:"m", cat:"Quantités",       level:"A2", noArt:true },
+  { fr:"beaucoup de",           es:"mucho / muchos",              g:"m", cat:"Quantités",       level:"A2", noArt:true },
+  { fr:"peu de",                es:"poco / pocos",                g:"m", cat:"Quantités",       level:"A2", noArt:true },
+  { fr:"un peu de",             es:"un poco de",                  g:"m", cat:"Quantités",       level:"A2", noArt:true },
+  { fr:"la moitié",             es:"la mitad",                    g:"f", cat:"Quantités",       level:"A2" },
+  { fr:"le quart",              es:"el cuarto",                   g:"m", cat:"Quantités",       level:"A2" },
+  { fr:"environ",               es:"aproximadamente / alrededor de", g:"m", cat:"Quantités",    level:"A2", noArt:true },
+  { fr:"plusieurs",             es:"varios / varias",             g:"m", cat:"Quantités",       level:"A2", noArt:true },
+  { fr:"quelques",              es:"algunos / unos pocos",        g:"m", cat:"Quantités",       level:"A2", noArt:true },
+  { fr:"chaque",                es:"cada",                        g:"m", cat:"Quantités",       level:"A2", noArt:true },
+  { fr:"tous les",              es:"todos los",                   g:"m", cat:"Quantités",       level:"A2", noArt:true },
+  { fr:"un gramme",             es:"un gramo",                    g:"m", cat:"Quantités",       level:"A2", noArt:true },
+  { fr:"un litre",              es:"un litro",                    g:"m", cat:"Quantités",       level:"A2", noArt:true },
+  { fr:"le/la comptable",       es:"el/la contable / el/la contador(a)", g:"m", cat:"Professions A2", level:"A2" },
+  { fr:"l'informaticien",       es:"el informático / el desarrollador", g:"m", cat:"Professions A2", level:"A2" },
+  { fr:"le/la commerciale",     es:"el/la comercial / el/la vendedor(a)", g:"m", cat:"Professions A2", level:"A2" },
+  { fr:"le technicien",         es:"el técnico",                  g:"m", cat:"Professions A2",  level:"A2" },
+  { fr:"l'artiste",             es:"el/la artista",               g:"m", cat:"Professions A2",  level:"A2" },
+  { fr:"le musicien",           es:"el músico / la música",       g:"m", cat:"Professions A2",  level:"A2" },
+  { fr:"le photographe",        es:"el/la fotógrafo(a)",          g:"m", cat:"Professions A2",  level:"A2" },
+  { fr:"le traducteur",         es:"el traductor / la traductora",g:"m", cat:"Professions A2",  level:"A2" },
+  { fr:"le chercheur",          es:"el investigador / la investigadora", g:"m", cat:"Professions A2", level:"A2" },
+  { fr:"sans emploi",           es:"sin empleo / desempleado",    g:"m", cat:"Professions A2",  level:"A2", noArt:true },
+  { fr:"à temps plein",         es:"a tiempo completo",           g:"m", cat:"Professions A2",  level:"A2", noArt:true },
+  { fr:"à temps partiel",       es:"a tiempo parcial",            g:"m", cat:"Professions A2",  level:"A2", noArt:true },
+  { fr:"travailler à son compte",es:"trabajar por cuenta propia", g:"m", cat:"Professions A2",  level:"A2", noArt:true },
+  { fr:"avoir de la fièvre",    es:"tener fiebre",                g:"m", cat:"Santé A2",        level:"A2", noArt:true },
+  { fr:"avoir mal à la tête",   es:"tener dolor de cabeza",       g:"m", cat:"Santé A2",        level:"A2", noArt:true },
+  { fr:"avoir mal au ventre",   es:"tener dolor de barriga / estómago", g:"m", cat:"Santé A2",  level:"A2", noArt:true },
+  { fr:"être enrhumé(e)",       es:"estar resfriado / acatarrado",g:"m", cat:"Santé A2",        level:"A2", noArt:true },
+  { fr:"prendre un médicament", es:"tomar un medicamento",        g:"m", cat:"Santé A2",        level:"A2", noArt:true },
+  { fr:"se reposer",            es:"descansar",                   g:"m", cat:"Santé A2",        level:"A2", noArt:true },
+  { fr:"l'assurance",           es:"el seguro (médico)",          g:"f", cat:"Santé A2",        level:"A2" },
+  { fr:"la salle d'attente",    es:"la sala de espera",           g:"f", cat:"Santé A2",        level:"A2" },
+  { fr:"le spécialiste",        es:"el especialista",             g:"m", cat:"Santé A2",        level:"A2" },
+  { fr:"opérer",                es:"operar",                      g:"m", cat:"Santé A2",        level:"A2", noArt:true },
+  { fr:"guérir",                es:"sanar / curarse",             g:"m", cat:"Santé A2",        level:"A2", noArt:true },
+  { fr:"se faire du bien",      es:"hacerse bien / beneficiarse", g:"m", cat:"Santé A2",        level:"A2", noArt:true },
+  { fr:"les ordures",           es:"la basura",                   g:"f", cat:"Logement",        level:"A2" },
+  { fr:"la boîte aux lettres",  es:"el buzón",                    g:"f", cat:"Logement",        level:"A2" },
+  { fr:"l'interphone",          es:"el portero eléctrico / el interfono", g:"m", cat:"Logement", level:"A2" },
+  { fr:"le syndic",             es:"el administrador de fincas",  g:"m", cat:"Logement",        level:"A2" },
+  { fr:"la facture",            es:"la factura",                  g:"f", cat:"Logement",        level:"A2" },
+  { fr:"le contrat de location",es:"el contrato de alquiler",     g:"m", cat:"Logement",        level:"A2" },
+  { fr:"l'état des lieux",      es:"el inventario del inmueble",  g:"m", cat:"Logement",        level:"A2" },
+  { fr:"meublé",                es:"amueblado",                   g:"m", cat:"Logement",        level:"A2", noArt:true },
+  { fr:"vide",                  es:"vacío",                       g:"m", cat:"Logement",        level:"A2", noArt:true },
+  { fr:"le spectacle",          es:"el espectáculo",              g:"m", cat:"Loisirs",         level:"A2" },
+  { fr:"la pièce de théâtre",   es:"la obra de teatro",           g:"f", cat:"Loisirs",         level:"A2" },
+  { fr:"l'exposition",          es:"la exposición",               g:"f", cat:"Loisirs",         level:"A2" },
+  { fr:"le festival",           es:"el festival",                 g:"m", cat:"Loisirs",         level:"A2" },
+  { fr:"le billet d'entrée",    es:"la entrada / el boleto",      g:"m", cat:"Loisirs",         level:"A2" },
+  { fr:"réserver une place",    es:"reservar un asiento / una entrada", g:"m", cat:"Loisirs",   level:"A2", noArt:true },
+  { fr:"ça m'intéresse",        es:"me interesa",                 g:"m", cat:"Loisirs",         level:"A2", noArt:true },
+  { fr:"ça me plaît",           es:"me gusta / me agrada",        g:"m", cat:"Loisirs",         level:"A2", noArt:true },
+  { fr:"ça ne me plaît pas",    es:"no me gusta / no me agrada",  g:"m", cat:"Loisirs",         level:"A2", noArt:true },
+  { fr:"avoir envie de",        es:"tener ganas de",              g:"m", cat:"Loisirs",         level:"A2", noArt:true },
+  { fr:"l'entrée est gratuite", es:"la entrada es gratuita",      g:"f", cat:"Loisirs",         level:"A2", noArt:true }
+];
+
+// ============================================================
+// CONFIGURATION ELEVENLABS
+// ============================================================
+const VOICE_F   = 'XB0fDUnXU5powFXDhCwa';
+const VOICE_M   = 'onwK4e9ZLuTAKqWW03F9';
+const EL_MODEL  = 'eleven_multilingual_v2';
+
+// ============================================================
+// ÉTAT DE L'APPLICATION
+// ============================================================
+let selLevel  = null;
+let selCat    = '__all__';
+let mode      = 'es-fr';
+let pool      = [];
+let idx       = 0;
+let cur       = null;
+let answered  = false;
+let nOk = 0, nErr = 0, streak = 0;
+
+const ACCENT_MAP = {
+  A1:     { accent:'#e63946', dark:'#c1121f', light:'#fdecea' },
+  A2:     { accent:'#2563eb', dark:'#1d4ed8', light:'#dbeafe' },
+  B1:     { accent:'#059669', dark:'#047857', light:'#d1fae5' },
+  B2:     { accent:'#7c3aed', dark:'#6d28d9', light:'#ede9fe' },
+  random: { accent:'#d97706', dark:'#b45309', light:'#fef3c7' },
+};
+
+function applyAccent(level) {
+  const c = ACCENT_MAP[level] || ACCENT_MAP.A1;
+  const r = document.documentElement.style;
+  r.setProperty('--accent', c.accent);
+  r.setProperty('--accent-dark', c.dark);
+  r.setProperty('--accent-light', c.light);
+}
+
+function selectLevel(level) {
+  selLevel = level;
+  selCat = '__all__';
+  applyAccent(level);
+  document.querySelectorAll('.level-btn').forEach(b => b.classList.toggle('active', b.dataset.level === level));
+  document.getElementById('header-badge').textContent = level === 'random' ? '🎲 Tous niveaux' : level;
+  buildCats();
+  document.getElementById('cats-section').style.display = 'block';
+  document.getElementById('tabs-section').style.display = 'grid';
+  document.getElementById('scorebar').style.display = 'flex';
+  document.getElementById('card').style.display = 'block';
+  document.getElementById('welcome').style.display = 'none';
+  startFresh();
+}
+
+function buildCats() {
+  const source = selLevel === 'random' ? DATABASE : DATABASE.filter(w => w.level === selLevel);
+  const cats = [...new Set(source.map(w => w.cat))];
+  const el = document.getElementById('cats');
+  el.innerHTML = '';
+  const btnAll = document.createElement('button');
+  btnAll.className = 'cat active';
+  btnAll.textContent = '🌟 Toutes les catégories';
+  btnAll.onclick = () => { selCat = '__all__'; syncCatBtns(btnAll); startFresh(); };
+  el.appendChild(btnAll);
+  cats.forEach(c => {
+    const b = document.createElement('button');
+    b.className = 'cat';
+    b.textContent = c;
+    b.onclick = () => { selCat = c; syncCatBtns(b); startFresh(); };
+    el.appendChild(b);
+  });
+}
+
+function syncCatBtns(activeBtn) {
+  document.querySelectorAll('.cat').forEach(b => b.classList.remove('active'));
+  activeBtn.classList.add('active');
+}
+
+function generateSessionList() {
+  let src = DATABASE;
+  if (selLevel !== 'random') src = src.filter(w => w.level === selLevel);
+  if (selCat !== '__all__') src = src.filter(w => w.cat === selCat);
+  const arr = [...src];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
   }
+  return arr;
+}
 
-  // ============================================================
-  // ÉTAGE 1 — SÉLECTION DU NIVEAU
-  // ============================================================
-  function selectLevel(level) {
-    selLevel = level;
-    selCat   = '__all__';
-    applyAccent(level);
+function setMode(m) {
+  mode = m;
+  ['es-fr','fr-es','dictee'].forEach(k =>
+    document.getElementById('tab-' + k).classList.toggle('active', k === m)
+  );
+  startFresh();
+}
 
-    document.querySelectorAll('.level-btn').forEach(b => {
-      b.classList.toggle('active', b.dataset.level === level);
-    });
+function startFresh() {
+  nOk = 0; nErr = 0; streak = 0;
+  pool = generateSessionList();
+  idx = 0;
+  updateScore();
+  loadWord();
+}
 
-    const label = level === 'random' ? '🎲 Tous niveaux' : level;
-    document.getElementById('header-badge').textContent = label;
-
-    buildCats();
-    document.getElementById('cats-section').style.display  = 'block';
-    document.getElementById('tabs-section').style.display  = 'grid';
-    document.getElementById('scorebar').style.display      = 'flex';
-    document.getElementById('card').style.display          = 'block';
-    document.getElementById('welcome').style.display       = 'none';
-
-    startFresh();
-  }
-
-  // ============================================================
-  // ÉTAGE 2 — CATÉGORIES
-  // ============================================================
-  function buildCats() {
-    const source = selLevel === 'random'
-      ? DATABASE
-      : DATABASE.filter(w => w.level === selLevel);
-
-    const seen = new Set();
-    const cats = [];
-    source.forEach(w => { if (!seen.has(w.cat)) { seen.add(w.cat); cats.push(w.cat); } });
-
-    const el = document.getElementById('cats');
-    el.innerHTML = '';
-
-    const btnAll = document.createElement('button');
-    btnAll.className = 'cat active';
-    btnAll.textContent = '🌟 Toutes les catégories';
-    btnAll.onclick = () => { selCat = '__all__'; syncCatBtns(btnAll); startFresh(); };
-    el.appendChild(btnAll);
-
-    cats.forEach(c => {
-      const b = document.createElement('button');
-      b.className = 'cat';
-      b.textContent = c;
-      b.onclick = () => { selCat = c; syncCatBtns(b); startFresh(); };
-      el.appendChild(b);
-    });
-  }
-
-  function syncCatBtns(activeBtn) {
-    document.querySelectorAll('.cat').forEach(b => b.classList.remove('active'));
-    activeBtn.classList.add('active');
-  }
-
-  function generateSessionList() {
-    let src = DATABASE;
-    if (selLevel !== 'random') {
-      src = src.filter(w => w.level === selLevel);
-    }
-    if (selCat !== '__all__') {
-      src = src.filter(w => w.cat === selCat);
-    }
-    const arr = [...src];
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-    return arr;
-  }
-
-  // ============================================================
-  // MODE DE JEU
-  // ============================================================
-  function setMode(m) {
-    mode = m;
-    ['es-fr','fr-es','dictee'].forEach(k =>
-      document.getElementById('tab-' + k).classList.toggle('active', k === m)
-    );
-    startFresh();
-  }
-
-  // ============================================================
-  // DÉMARRAGE D'UNE SESSION
-  // ============================================================
-  function startFresh() {
-    nOk = 0; nErr = 0; streak = 0;
+function loadWord() {
+  if (idx >= pool.length) {
     pool = generateSessionList();
-    idx  = 0;
-    updateScore();
-    loadWord();
+    idx = 0;
   }
-
-  // ============================================================
-  // CHARGEMENT D'UN MOT
-  // ============================================================
-  function loadWord() {
-    if (idx >= pool.length) {
-      pool = generateSessionList();
-      idx  = 0;
-    }
-    cur      = pool[idx];
-    answered = false;
-
-    const card = document.getElementById('card');
-    card.classList.remove('pop');
-    void card.offsetWidth;
-    card.classList.add('pop');
-
-    const inp = document.getElementById('answer-input');
-    inp.value = ''; inp.className = 'answer-input'; inp.disabled = false;
-    document.getElementById('feedback').className = 'feedback';
-    document.getElementById('btn-next').className = 'btn-next';
-
-    document.getElementById('card-level-badge').textContent = cur.level;
-    document.getElementById('card-cat-tag').textContent     = cur.cat;
-
-    const wordEl    = document.getElementById('card-word');
-    const audioZone = document.getElementById('audio-zone');
-    const modeLabel = document.getElementById('mode-label');
-    const hintEl    = document.getElementById('card-hint');
-
-    if (mode === 'es-fr') {
-      if (cur.noArt) {
-        modeLabel.textContent = 'Traduce al francés';
-        wordEl.textContent    = cur.es.split('/')[0].trim();
-        inp.placeholder       = 'traduction en français…';
-        hintEl.textContent    = '';
-      } else {
-        modeLabel.textContent = 'Traduce al francés con el artículo';
-        const esClean = cur.es.split('/')[0].trim().replace(/^(el|la|los|las|un|una)\s+/i,'');
-        wordEl.textContent = esClean;
-        inp.placeholder    = 'le / la + mot…';
-        hintEl.textContent = '💡 ¿Cuál es el artículo correcto en francés?';
-      }
-      wordEl.style.display    = 'block';
-      audioZone.style.display = 'none';
-    } else if (mode === 'fr-es') {
-      modeLabel.textContent   = 'Traduce al español';
-      wordEl.textContent      = cur.fr;
-      wordEl.style.display    = 'block';
-      audioZone.style.display = 'none';
-      inp.placeholder         = 'traducción en español…';
-      hintEl.textContent      = '';
+  cur = pool[idx];
+  answered = false;
+  const card = document.getElementById('card');
+  card.classList.remove('pop');
+  void card.offsetWidth;
+  card.classList.add('pop');
+  const inp = document.getElementById('answer-input');
+  inp.value = ''; inp.className = 'answer-input'; inp.disabled = false;
+  document.getElementById('feedback').className = 'feedback';
+  document.getElementById('btn-next').className = 'btn-next';
+  document.getElementById('card-level-badge').textContent = cur.level;
+  document.getElementById('card-cat-tag').textContent = cur.cat;
+  const wordEl = document.getElementById('card-word');
+  const audioZone = document.getElementById('audio-zone');
+  const modeLabel = document.getElementById('mode-label');
+  const hintEl = document.getElementById('card-hint');
+  if (mode === 'es-fr') {
+    if (cur.noArt) {
+      modeLabel.textContent = 'Traduce al francés';
+      wordEl.textContent = cur.es.split('/')[0].trim();
+      inp.placeholder = 'traduction en français…';
+      hintEl.textContent = '';
     } else {
-      // Mode Dictée
-      modeLabel.textContent   = cur.noArt
-        ? '¿Qué escuchaste? Escribe en francés'
-        : '¿Qué escuchaste? Escribe con el artículo';
-      wordEl.style.display    = 'none';
-      audioZone.style.display = 'flex';
-      inp.placeholder         = cur.noArt ? 'traduction en français…' : 'artículo + palabra…';
-      hintEl.textContent      = '';
-      setTimeout(() => playAudio(), 550);
+      modeLabel.textContent = 'Traduce al francés con el artículo';
+      wordEl.textContent = cur.es.split('/')[0].trim().replace(/^(el|la|los|las|un|una)\s+/i,'');
+      inp.placeholder = 'le / la + mot…';
+      hintEl.textContent = '💡 ¿Cuál es el artículo correcto en francés?';
     }
-
-    updateProgress();
-    inp.focus();
-    window.scrollTo({ top: 0, behavior: 'instant' });
+    wordEl.style.display = 'block';
+    audioZone.style.display = 'none';
+  } else if (mode === 'fr-es') {
+    modeLabel.textContent = 'Traduce al español';
+    wordEl.textContent = cur.fr;
+    wordEl.style.display = 'block';
+    audioZone.style.display = 'none';
+    inp.placeholder = 'traducción en español…';
+    hintEl.textContent = '';
+  } else {
+    modeLabel.textContent = cur.noArt ? '¿Qué escuchaste? Escribe en francés' : '¿Qué escuchaste? Escribe con el artículo';
+    wordEl.style.display = 'none';
+    audioZone.style.display = 'flex';
+    inp.placeholder = cur.noArt ? 'traduction en français…' : 'artículo + palabra…';
+    hintEl.textContent = '';
+    setTimeout(() => playAudio(), 550);
   }
+  updateProgress();
+  inp.focus();
+  window.scrollTo({ top: 0, behavior: 'instant' });
+}
 
-  function playAudio() {
-    if (cur) speakEL(cur.fr, cur.g);
-  }
+function playAudio() { if (cur) speakEL(cur.fr, cur.g); }
 
-  // ============================================================
-  // COMPARAISON INTELLIGENTE
-  // ============================================================
-  function norm(s) {
-    return s.toLowerCase().trim()
-      .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
-      .replace(/['']/g,"'").replace(/\s+/g,' ');
-  }
+function norm(s) {
+  return s.toLowerCase().trim().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/['']/g,"'").replace(/\s+/g,' ');
+}
 
-  function checkAnswer() {
-    if (answered) { nextWord(); return; }
-    const inp = document.getElementById('answer-input');
-    const raw = inp.value.trim();
-    if (!raw) return;
-
-    answered = true;
-    inp.disabled = true;
-
-    let correct        = false;
-    let correctAnswer  = '';
-
-    if (mode === 'es-fr') {
-      correctAnswer = cur.fr;
-      if (cur.noArt) {
-        const variants = cur.fr.split('/').map(s => s.trim());
-        correct = variants.some(v => norm(raw) === norm(v));
-      } else {
-        const variants = [cur.fr,
-          cur.fr.replace(/^le /,'un ').replace(/^la /,'une ')
-                .replace(/^l'/,'un ').replace(/^l'/,'un ')];
-        correct = variants.some(v => norm(raw) === norm(v));
-      }
-    } else if (mode === 'fr-es') {
-      correctAnswer = cur.es;
-      const variants = cur.es.split('/').map(s => s.trim());
-      correct = variants.some(v => {
-        const vc = v.replace(/^(el|la|los|las|un|una)\s+/i,'').trim();
-        const rc = raw.replace(/^(el|la|los|las|un|una)\s+/i,'').trim();
-        return norm(rc) === norm(vc) || norm(raw) === norm(v);
-      });
+function checkAnswer() {
+  if (answered) { nextWord(); return; }
+  const inp = document.getElementById('answer-input');
+  const raw = inp.value.trim();
+  if (!raw) return;
+  answered = true;
+  inp.disabled = true;
+  let correct = false;
+  let correctAnswer = '';
+  if (mode === 'es-fr') {
+    correctAnswer = cur.fr;
+    if (cur.noArt) {
+      correct = cur.fr.split('/').map(s => s.trim()).some(v => norm(raw) === norm(v));
     } else {
-      // Mode Dictée
-      correctAnswer = cur.fr;
-      correct = norm(raw) === norm(cur.fr);
-      if (!correct && !cur.noArt) {
-        const noArt = cur.fr.replace(/^(le|la|les|l'|l')\s*/i,'').trim();
-        correct = norm(raw) === norm(noArt);
-      }
+      const variants = [cur.fr, cur.fr.replace(/^le /,'un ').replace(/^la /,'une ').replace(/^l'/,'un ')];
+      correct = variants.some(v => norm(raw) === norm(v));
     }
-
-    const fbEl   = document.getElementById('feedback');
-    const fbTxt  = document.getElementById('fb-text');
-    const fbIcon = document.getElementById('fb-icon');
-
-    if (correct) {
-      nOk++; streak++;
-      inp.className  = 'answer-input ok';
-      fbEl.className = 'feedback ok';
-      fbIcon.textContent = '✅';
-      fbTxt.innerHTML = mode === 'dictee'
-        ? `¡Correcto! <strong>${correctAnswer}</strong><span class="fb-es"> = ${cur.es.split('/')[0].trim()}</span>`
-        : `¡Correcto! <strong>${correctAnswer}</strong>`;
-      if (mode !== 'fr-es') setTimeout(() => speakEL(cur.fr, cur.g), 380);
-    } else {
-      nErr++; streak = 0;
-      inp.className  = 'answer-input err';
-      fbEl.className = 'feedback err';
-      fbIcon.textContent = '❌';
-      fbTxt.innerHTML = mode === 'dictee'
-        ? `La respuesta es: <strong>${correctAnswer}</strong><span class="fb-es"> = ${cur.es.split('/')[0].trim()}</span>`
-        : `La respuesta es: <strong>${correctAnswer}</strong>`;
-      if (mode !== 'fr-es') setTimeout(() => speakEL(cur.fr, cur.g), 380);
-    }
-
-    updateScore();
-    document.getElementById('btn-next').className = 'btn-next on';
-  }
-
-  function nextWord() { idx++; loadWord(); }
-
-  // ============================================================
-  // MISE À JOUR DU SCORE & PROGRESSION
-  // ============================================================
-  function updateScore() {
-    document.getElementById('sc-ok').textContent  = nOk;
-    document.getElementById('sc-err').textContent = nErr;
-    const sEl = document.getElementById('streak-el');
-    if (streak >= 3) {
-      sEl.textContent = `🔥 ${streak} seguidos`;
-      sEl.className   = 'streak on';
-    } else {
-      sEl.className = 'streak';
+  } else if (mode === 'fr-es') {
+    correctAnswer = cur.es;
+    correct = cur.es.split('/').map(s => s.trim()).some(v => norm(raw) === norm(v));
+  } else {
+    correctAnswer = cur.fr;
+    correct = norm(raw) === norm(cur.fr);
+    if (!correct && !cur.noArt) {
+      correct = norm(raw) === norm(cur.fr.replace(/^(le|la|les|l')\s*/i,'').trim());
     }
   }
+  const fbEl = document.getElementById('feedback');
+  const fbTxt = document.getElementById('fb-text');
+  const fbIcon = document.getElementById('fb-icon');
+  if (correct) {
+    nOk++; streak++;
+    inp.className = 'answer-input ok';
+    fbEl.className = 'feedback ok';
+    fbIcon.textContent = '✅';
+    fbTxt.innerHTML = mode === 'dictee' ? `¡Correcto! <strong>${correctAnswer}</strong><span class="fb-es"> = ${cur.es.split('/')[0].trim()}</span>` : `¡Correcto! <strong>${correctAnswer}</strong>`;
+    if (mode !== 'fr-es') setTimeout(() => speakEL(cur.fr, cur.g), 380);
+  } else {
+    nErr++; streak = 0;
+    inp.className = 'answer-input err';
+    fbEl.className = 'feedback err';
+    fbIcon.textContent = '❌';
+    fbTxt.innerHTML = mode === 'dictee' ? `La respuesta es: <strong>${correctAnswer}</strong><span class="fb-es"> = ${cur.es.split('/')[0].trim()}</span>` : `La respuesta es: <strong>${correctAnswer}</strong>`;
+    if (mode !== 'fr-es') setTimeout(() => speakEL(cur.fr, cur.g), 380);
+  }
+  updateScore();
+  document.getElementById('btn-next').className = 'btn-next on';
+}
 
-  function updateProgress() {
-    const total = pool.length;
-    const done  = idx;
-    const pct   = total > 0 ? Math.round((done / total) * 100) : 0;
-    document.getElementById('prog').textContent         = `${done} / ${total}`;
-    document.getElementById('prog-bar-fill').style.width = pct + '%';
-  }
+function nextWord() { idx++; loadWord(); }
 
-  // ============================================================
-  // SYNTHÈSE VOCALE — ELEVENLABS
-  // ============================================================
-  function getKey() { return localStorage.getItem('elevenlabs_api_key') || ''; }
+function updateScore() {
+  document.getElementById('sc-ok').textContent = nOk;
+  document.getElementById('sc-err').textContent = nErr;
+  const sEl = document.getElementById('streak-el');
+  if (streak >= 3) { sEl.textContent = `🔥 ${streak} seguidos`; sEl.className = 'streak on'; }
+  else sEl.className = 'streak';
+}
 
-  function openModal() {
-    document.getElementById('modal-input').value = getKey();
-    document.getElementById('modal-overlay').classList.add('open');
-  }
-  function closeIfOut(e) {
-    if (e.target === document.getElementById('modal-overlay'))
-      document.getElementById('modal-overlay').classList.remove('open');
-  }
-  function saveKey() {
-    localStorage.setItem('elevenlabs_api_key', document.getElementById('modal-input').value.trim());
-    document.getElementById('modal-overlay').classList.remove('open');
-    updateBadge();
-  }
-  function updateBadge() {
-    const b  = document.getElementById('api-badge');
-    b.className = getKey() ? 'api-badge set' : 'api-badge unset';
-    b.textContent = getKey() ? '🔑 API conectada' : '🔑 Configurar API';
-  }
+function updateProgress() {
+  const total = pool.length;
+  const done = idx;
+  const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+  document.getElementById('prog').textContent = `${done} / ${total}`;
+  document.getElementById('prog-bar-fill').style.width = pct + '%';
+}
 
-  async function speakEL(text, gender) {
-    const key = getKey();
-    if (!key) { speakBrowser(text); return; }
-    const voiceId = gender === 'f' ? VOICE_F : VOICE_M;
-    const lb = document.getElementById('btn-listen');
-    const rb = document.getElementById('btn-replay');
-    [lb, rb].forEach(b => { if (b) b.disabled = true; });
-    if (lb) lb.classList.add('playing');
-    try {
-      const res = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`, {
-        method: 'POST',
-        headers: { 'xi-api-key': key, 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          text,
-          model_id: EL_MODEL,
-          language_code: 'fr',
-          voice_settings: { stability: 0.5, similarity_boost: 0.75 }
-        })
-      });
-      if (!res.ok) throw new Error('EL error');
-      const blob = await res.blob();
-      const url  = URL.createObjectURL(blob);
-      const a    = new Audio(url);
-      a.play();
-      a.onended = () => {
-        URL.revokeObjectURL(url);
-        [lb, rb].forEach(b => { if (b) b.disabled = false; });
-        if (lb) lb.classList.remove('playing');
-      };
-    } catch {
-      speakBrowser(text);
-      [lb, rb].forEach(b => { if (b) b.disabled = false; });
-      if (lb) lb.classList.remove('playing');
-    }
-  }
+function getKey() { return localStorage.getItem('elevenlabs_api_key') || ''; }
+function openModal() { document.getElementById('modal-input').value = getKey(); document.getElementById('modal-overlay').classList.add('open'); }
+function closeIfOut(e) { if (e.target === document.getElementById('modal-overlay')) document.getElementById('modal-overlay').classList.remove('open'); }
+function saveKey() { localStorage.setItem('elevenlabs_api_key', document.getElementById('modal-input').value.trim()); document.getElementById('modal-overlay').classList.remove('open'); updateBadge(); }
+function updateBadge() { const b = document.getElementById('api-badge'); b.className = getKey() ? 'api-badge set' : 'api-badge unset'; b.textContent = getKey() ? '🔑 API conectada' : '🔑 Configurar API'; }
+async function speakEL(text, gender) {
+  const key = getKey();
+  if (!key) { speakBrowser(text); return; }
+  const voiceId = gender === 'f' ? VOICE_F : VOICE_M;
+  const lb = document.getElementById('btn-listen');
+  const rb = document.getElementById('btn-replay');
+  [lb, rb].forEach(b => { if (b) b.disabled = true; });
+  if (lb) lb.classList.add('playing');
+  try {
+    const res = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`, { method:'POST', headers:{'xi-api-key':key,'Content-Type':'application/json'}, body:JSON.stringify({ text, model_id:EL_MODEL, language_code:'fr', voice_settings:{ stability:0.5, similarity_boost:0.75 } }) });
+    if (!res.ok) throw new Error();
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+    const a = new Audio(url);
+    a.play();
+    a.onended = () => { URL.revokeObjectURL(url); [lb,rb].forEach(b => { if (b) b.disabled = false; }); if (lb) lb.classList.remove('playing'); };
+  } catch { speakBrowser(text); [lb,rb].forEach(b => { if (b) b.disabled = false; }); if (lb) lb.classList.remove('playing'); }
+}
+function speakBrowser(text) { const u = new SpeechSynthesisUtterance(text); u.lang = 'fr-FR'; speechSynthesis.cancel(); speechSynthesis.speak(u); }
 
-  function speakBrowser(text) {
-    const u = new SpeechSynthesisUtterance(text);
-    u.lang = 'fr-FR';
-    speechSynthesis.cancel();
-    speechSynthesis.speak(u);
-  }
-
-  // ============================================================
-  // INITIALISATION
-  // ============================================================
-  updateBadge();
+updateBadge();
 </script>
 </body>
 </html>
