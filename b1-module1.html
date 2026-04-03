@@ -5,57 +5,29 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Français B1 — Module 1</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="auth.js"></script>
-  <script src="moteur.js"></script>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="auth.js"></script>
+<script src="moteur.js"></script>
 
-  <style>
+<style>
 * { box-sizing: border-box; margin:0; padding:0; }
 .sidebar-logo span { color: var(--l1); }
 .nav-btn:hover { background: var(--bg); color: var(--text); }
 .nav-btn.active { color: var(--white); }
 .nav-btn .nav-icon { font-size: 18px; width: 24px; text-align: center; }
-.nav-btn[data-lesson="0"].active { background: var(--l0); }
 .nav-btn[data-lesson="1"].active { background: var(--l1); }
 .nav-btn[data-lesson="2"].active { background: var(--l2); }
 .nav-btn[data-lesson="3"].active { background: var(--l3); }
 .nav-btn[data-lesson="4"].active { background: var(--l4); }
-.nav-btn[data-lesson="5"].active { background: var(--l5); }
-.nav-btn[data-lesson="0"]:not(.active):hover { background: var(--l0l); color: var(--l0d); }
 .nav-btn[data-lesson="1"]:not(.active):hover { background: var(--l1l); color: var(--l1d); }
 .nav-btn[data-lesson="2"]:not(.active):hover { background: var(--l2l); color: var(--l2d); }
 .nav-btn[data-lesson="3"]:not(.active):hover { background: var(--l3l); color: var(--l3d); }
 .nav-btn[data-lesson="4"]:not(.active):hover { background: var(--l4l); color: var(--l4d); }
-.nav-btn[data-lesson="5"]:not(.active):hover { background: var(--l5l); color: var(--l5d); }
 .lesson-panel { display: none; }
 .lesson-panel.active { display: block; animation: fadeIn .3s ease; }
 @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
 .lesson-meta { flex: 1; }
-.phone-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
-.phone-card.playing { border-color: currentColor; }
-.phone-fr { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; margin-bottom: 2px; }
-.phone-ipa { font-size: 10px; opacity: .6; margin-bottom: 4px; font-style: italic; }
-.phone-es { font-size: 11px; color: var(--muted); }
-.phone-play-icon { font-size: 14px; margin-bottom: 4px; }
-.rec-word { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700; margin-bottom: 4px; }
-.rec-ipa { font-size: 13px; margin-bottom: 6px; font-style: italic; opacity: .7; }
-.rec-es { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
-.btn-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 12px; }
-.btn:disabled { opacity: .4; cursor: not-allowed; }
-.btn:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,.15); }
-.rec-dot { width: 8px; height: 8px; border-radius: 50%; background: #fff; animation: blink 1s infinite; }
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
-.rec-status { font-size: 13px; color: var(--muted); margin-top: 8px; min-height: 20px; }
-.compare-label { font-size: 10px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
-.mini-btn:hover { border-color: var(--text); }
-.word-selector { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
-.word-pill {
-  padding: 6px 14px; border-radius: 20px; border: 1.5px solid var(--border);
-  background: var(--bg); font-size: 13px; font-weight: 600; cursor: pointer;
-  transition: all .15s; font-family: 'Nunito', sans-serif;
-}
-
 .qcm-item { margin-bottom: 22px; }
 .q-label { font-size: 11px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; opacity: .6; }
 .q-text { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 12px; line-height: 1.5; }
@@ -64,11 +36,7 @@
 .opt:disabled { cursor: default; }
 .opt.correct { border-color: var(--l4); background: var(--l4l); color: var(--l4d); }
 .opt.wrong   { border-color: var(--l1); background: var(--l1l); color: var(--l1d); }
-.fb {
-  margin-top: 8px; padding: 8px 14px; border-radius: 8px;
-  font-size: 13px; font-weight: 600; display: none;
-}
-
+.fb { margin-top: 8px; padding: 8px 14px; border-radius: 8px; font-size: 13px; font-weight: 600; display: none; }
 .fb.show { display: block; }
 .fb.ok   { background: var(--l4l); color: var(--l4d); }
 .fb.nope { background: var(--l1l); color: var(--l1d); }
@@ -78,130 +46,40 @@
 .match-item.selected { border-color: var(--l2); background: var(--l2l); color: var(--l2d); }
 .match-item.matched-ok { border-color: var(--l4); background: var(--l4l); color: var(--l4d); pointer-events: none; }
 .match-item.matched-err { border-color: var(--l1); background: var(--l1l); color: var(--l1d); animation: shake .3s; }
-.match-item:disabled, .match-item.matched-ok { pointer-events: none; }
 @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)} }
 .match-score { margin-top: 14px; text-align: center; font-size: 14px; font-weight: 700; color: var(--muted); }
 .fill-item { margin-bottom: 16px; }
-.fill-sentence {
-  font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 8px; line-height: 1.7;
-}
-
+.fill-sentence { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 8px; line-height: 1.7; }
 .fill-input:focus { border-color: var(--l2); }
 .fill-input.ok { border-color: var(--l4); background: var(--l4l); color: var(--l4d); }
 .fill-input.nope { border-color: var(--l1); background: var(--l1l); color: var(--l1d); }
 .fill-hint { font-size: 12px; color: var(--muted); margin-top: 4px; }
-.color-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(100px,1fr)); gap: 12px;
-}
-
-.color-card {
-  border-radius: 14px; border: 2px solid var(--border); padding: 14px 8px;
-  text-align: center; cursor: pointer; transition: all .18s; background: var(--bg);
-}
-
-.color-swatch { width: 48px; height: 48px; border-radius: 50%; margin: 0 auto 8px; border: 2px solid rgba(0,0,0,.06); }
-.color-fr { font-size: 14px; font-weight: 700; }
-.color-es { font-size: 11px; color: var(--muted); }
-.color-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
-.color-card.playing { border-color: var(--l3); }
-.num-quiz .q-text .num-display {
-  font-family: 'Playfair Display', serif;
-  font-size: 48px; font-weight: 700; display: block;
-  margin-bottom: 4px; line-height: 1;
-}
-
-.form-table { width: 100%; border-collapse: collapse; font-size: 14px; }
-.form-table td { padding: 9px 14px; border-bottom: 1px solid var(--border); }
-.form-table tr:last-child td { border-bottom: none; }
-.form-table tr:nth-child(even) td { background: var(--bg); }
-.form-fr { font-weight: 700; }
-.form-es { color: var(--muted); font-size: 13px; }
-.progress-wrap { margin-bottom: 28px; }
-.progress-info { display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; color: var(--muted); margin-bottom: 6px; }
-.progress-track { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
-.progress-fill { height: 100%; border-radius: 3px; transition: width .4s ease; }
-.score-box {
-  border-radius: 16px; padding: 24px; text-align: center; margin-top: 20px; display: none;
-}
-
+.score-box { border-radius: 16px; padding: 24px; text-align: center; margin-top: 20px; display: none; }
 .score-box.show { display: block; }
 .score-emoji { font-size: 40px; margin-bottom: 8px; }
 .score-num { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; margin-bottom: 4px; }
 .score-msg { font-size: 14px; color: var(--muted); }
 .check-btn:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
-.divider { height: 1px; background: var(--border); margin: 28px 0; }
-.liaison-card {
-  border-radius: 12px; padding: 16px 20px; margin-bottom: 10px;
-  display: flex; align-items: center; gap: 16px;
-}
-
-.liaison-text { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; }
-.liaison-phonetic { font-size: 13px; font-style: italic; margin-left: 8px; opacity: .7; }
-.liaison-es { font-size: 13px; color: var(--muted); }
-.speak-btn:hover { border-color: var(--text); }
-.nasal-table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin-bottom: 4px; }
-.nasal-table th { padding: 8px 14px; font-size: 11px; font-weight: 800; letter-spacing: .5px; text-transform: uppercase; text-align: left; }
-.nasal-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
-.nasal-table tr:last-child td { border-bottom: none; }
-.ra-list { display: flex; flex-direction: column; gap: 14px; }
-.ra-item {
-  background: var(--bg);
-  border: 1.5px solid var(--border);
-  border-radius: 14px;
-  padding: 18px 20px;
-  transition: border-color .2s;
-}
-
+.ra-item { background: var(--bg); border: 1.5px solid var(--border); border-radius: 14px; padding: 18px 20px; margin-bottom: 12px; transition: border-color .2s; }
 .ra-item.recording-active { border-color: #e63946; }
-.ra-phrase {
-  font-family: 'Playfair Display', serif;
-  font-size: 18px; font-weight: 700;
-  color: var(--text); margin-bottom: 4px; line-height: 1.4;
-}
-
+.ra-phrase { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 4px; line-height: 1.4; }
 .ra-translation { font-size: 12px; color: var(--muted); margin-bottom: 14px; }
-.ra-controls { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-.ra-btn {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 8px 16px; border-radius: 8px; border: none;
-  font-family: 'Nunito', sans-serif; font-size: 12px; font-weight: 700;
-  cursor: pointer; transition: all .18s;
-}
-
+.ra-btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 8px; border: none; font-family: 'Nunito', sans-serif; font-size: 12px; font-weight: 700; cursor: pointer; transition: all .18s; }
 .ra-btn:hover { transform: translateY(-1px); }
 .ra-btn:disabled { opacity:.4; cursor:not-allowed; transform:none; }
 .ra-status { font-size: 11px; color: var(--muted); margin-left: 4px; min-width: 120px; }
-.ra-compare {
-  margin-top: 10px; display: none;
-  gap: 8px; flex-wrap: wrap;
-}
-
+.ra-compare { margin-top: 10px; display: none; gap: 8px; flex-wrap: wrap; }
 .ra-compare.show { display: flex; }
-.ra-cmp-btn {
-  display: inline-flex; align-items: center; gap: 5px;
-  padding: 6px 12px; border-radius: 7px; border: 1px solid var(--border);
-  background: var(--white); font-family: 'Nunito', sans-serif;
-  font-size: 11px; font-weight: 700; cursor: pointer; transition: all .15s;
-}
-
+.ra-cmp-btn { display: inline-flex; align-items: center; gap: 5px; padding: 6px 12px; border-radius: 7px; border: 1px solid var(--border); background: var(--white); font-family: 'Nunito', sans-serif; font-size: 11px; font-weight: 700; cursor: pointer; transition: all .15s; }
 .ra-cmp-btn:hover { border-color: var(--text); }
 @media(max-width:700px){
   .sidebar { display: none; }
   .main { padding: 20px 16px; }
-  .mob-nav {
-    display: flex; overflow-x: auto; gap: 6px; padding: 12px 16px;
-    background: var(--white); border-bottom: 1px solid var(--border);
-    position: sticky; top: 0; z-index: 10;
-  }
-  .mob-nav-btn {
-    flex-shrink: 0; padding: 8px 14px; border-radius: 20px; border: none;
-    font-family: 'Nunito', sans-serif; font-size: 12px; font-weight: 700;
-    cursor: pointer; background: var(--bg); color: var(--muted);
-  }
+  .mob-nav { display: flex; overflow-x: auto; gap: 6px; padding: 12px 16px; background: var(--white); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10; }
+  .mob-nav-btn { flex-shrink: 0; padding: 8px 14px; border-radius: 20px; border: none; font-family: 'Nunito', sans-serif; font-size: 12px; font-weight: 700; cursor: pointer; background: var(--bg); color: var(--muted); }
   .mob-nav-btn.active { color: white; }
   .match-wrap { grid-template-columns: 1fr; }
 }
-
 @media(min-width:701px){ .mob-nav { display: none; } }
 #el-fab:hover{transform:scale(1.1);background:#6d28d9}
 #el-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:10000;align-items:center;justify-content:center}
@@ -217,18 +95,11 @@
 .el-chars{font-size:11px;color:#7a7a8c;text-align:center;margin-top:8px}
 .speaking{opacity:.65;pointer-events:none}
 @keyframes spin{to{transform:rotate(360deg)}}
-.nav-btn[data-lesson="1"].active{background:var(--l1);color:white}
-.nav-btn[data-lesson="2"].active{background:var(--l2);color:white}
-.nav-btn[data-lesson="3"].active{background:var(--l3);color:white}
-.nav-btn[data-lesson="4"].active{background:var(--l4);color:white}
-.nav-btn[data-lesson="1"]:not(.active):hover{background:var(--l1l);color:var(--l1d)}
-.nav-btn[data-lesson="2"]:not(.active):hover{background:var(--l2l);color:var(--l2d)}
-.nav-btn[data-lesson="3"]:not(.active):hover{background:var(--l3l);color:var(--l3d)}
-.nav-btn[data-lesson="4"]:not(.active):hover{background:var(--l4l);color:var(--l4d)}
 </style>
 </head>
 <body>
 <div class="app">
+
 <nav class="sidebar">
   <div class="sidebar-logo">Français B1<br><span>Module 1</span></div>
   <a class="sidebar-back" href="index.html">← Volver al inicio</a>
@@ -237,703 +108,768 @@
   <button class="nav-btn" data-lesson="3" onclick="showLesson(3,this)"><span class="nav-icon">📐</span>Leçon 3 — Lequel<span class="nav-badge">4 ex.</span></button>
   <button class="nav-btn" data-lesson="4" onclick="showLesson(4,this)"><span class="nav-icon">✍️</span>Leçon 4 — Phrases complexes<span class="nav-badge">4 ex.</span></button>
 </nav>
+
+<div id="mobNav" class="mob-nav"></div>
+
 <main class="main">
+
+<!-- ─── LEÇON 1 ─── -->
 <div class="lesson-panel active" id="panel-1">
-  <div class="lesson-header"><div class="lesson-icon-big" style="background:var(--l1l)">🔗</div><div class="lesson-meta"><div class="lesson-tag" style="background:var(--l1l);color:var(--l1d)">Leçon 1</div><div class="lesson-title">Les pronoms relatifs — qui, que, où</div><div class="lesson-desc">Pronombres relativos simples · Unir frases · Expresarse con más precisión</div></div></div>
-  <div class="ex-card"><div class="ex-title" style="color:var(--l1)">Ejercicio 1 — QCM</div><div class="ex-instr">Elige la respuesta correcta.</div><div id="ex1a"></div>
+  <div class="lesson-header">
+    <div class="lesson-icon-big" style="background:var(--l1l)">🔗</div>
+    <div class="lesson-meta">
+      <div class="lesson-tag" style="background:var(--l1l);color:var(--l1d)">Leçon 1</div>
+      <div class="lesson-title">Les pronoms relatifs — qui, que, où</div>
+      <div class="lesson-desc">Pronombres relativos simples · Unir frases · Expresarse con más precisión</div>
+    </div>
+  </div>
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l1)">Ejercicio 1 — QCM</div>
+    <div class="ex-instr">Elige la respuesta correcta.</div>
+    <div id="ex1a"></div>
     <div class="score-box" id="sc1a" style="background:var(--l1l)"><div class="score-emoji" id="sc1a-em"></div><div class="score-num" id="sc1a-n" style="color:var(--l1d)"></div><div class="score-msg" id="sc1a-m"></div></div>
   </div>
-  <div class="ex-card"><div class="ex-title" style="color:var(--l1)">Ejercicio 2 — Completa</div><div class="ex-instr">Elige qui, que o où.</div><div id="ex1b"></div>
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l1)">Ejercicio 2 — Completa</div>
+    <div class="ex-instr">Elige qui, que o où.</div>
+    <div id="ex1b"></div>
     <button class="check-btn" style="background:var(--l1);color:white" onclick="checkFill('ex1b','sc1b')">Verificar</button>
     <div class="score-box" id="sc1b" style="background:var(--l1l)"><div class="score-emoji" id="sc1b-em"></div><div class="score-num" id="sc1b-n" style="color:var(--l1d)"></div><div class="score-msg" id="sc1b-m"></div></div>
   </div>
-  <div class="ex-card"><div class="ex-title" style="color:var(--l1)">Ejercicio 3 — Asocia</div><div class="ex-instr">Une cada pronombre con su función.</div><div id="ex1c"></div>
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l1)">Ejercicio 3 — Asocia</div>
+    <div class="ex-instr">Une cada pronombre con su función.</div>
+    <div id="ex1c"></div>
     <div class="score-box" id="sc1c" style="background:var(--l1l)"><div class="score-emoji" id="sc1c-em"></div><div class="score-num" id="sc1c-n" style="color:var(--l1d)"></div><div class="score-msg" id="sc1c-m"></div></div>
   </div>
-  <div class="ex-card"><div class="ex-title" style="color:var(--l1)">Ejercicio 4 — Comprensión oral</div><div class="ex-instr">Escucha el diálogo y responde.</div><div id="dial1"></div>
-    <div class="score-box" id="sc1d" style="background:var(--l1l)"><div class="score-emoji" id="sc1d-em"></div><div class="score-num" id="sc1d-n" style="color:var(--l1d)"></div><div class="score-msg" id="sc1d-m"></div></div>
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l1)">Ejercicio 4 — Comprensión oral</div>
+    <div class="ex-instr">Escucha el diálogo y responde.</div>
+    <div id="dial1"></div>
   </div>
-  <div class="ex-card"><div class="ex-title" style="color:var(--l1)">Ejercicio 5 — Leer en voz alta</div><div class="ex-instr">Escucha y repite cada frase.</div><div id="ra1"></div>
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l1)">Ejercicio 5 — Leer en voz alta</div>
+    <div class="ex-instr">Escucha y repite cada frase.</div>
+    <div id="ra1"></div>
   </div>
 </div>
+
+<!-- ─── LEÇON 2 ─── -->
 <div class="lesson-panel" id="panel-2">
-  <div class="lesson-header"><div class="lesson-icon-big" style="background:var(--l2l)">🔄</div><div class="lesson-meta"><div class="lesson-tag" style="background:var(--l2l);color:var(--l2d)">Leçon 2</div><div class="lesson-title">Le pronom relatif DONT</div><div class="lesson-desc">Complementos con DE · Posesión · Dont vs de qui</div></div></div>
-  <div class="ex-card"><div class="ex-title" style="color:var(--l2)">Ejercicio 1 — QCM</div><div class="ex-instr">Elige la respuesta correcta.</div><div id="ex2a"></div>
+  <div class="lesson-header">
+    <div class="lesson-icon-big" style="background:var(--l2l)">🔄</div>
+    <div class="lesson-meta">
+      <div class="lesson-tag" style="background:var(--l2l);color:var(--l2d)">Leçon 2</div>
+      <div class="lesson-title">Le pronom relatif DONT</div>
+      <div class="lesson-desc">Complementos con DE · Posesión · Dont vs de qui</div>
+    </div>
+  </div>
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l2)">Ejercicio 1 — QCM</div>
+    <div class="ex-instr">Elige la respuesta correcta.</div>
+    <div id="ex2a"></div>
     <div class="score-box" id="sc2a" style="background:var(--l2l)"><div class="score-emoji" id="sc2a-em"></div><div class="score-num" id="sc2a-n" style="color:var(--l2d)"></div><div class="score-msg" id="sc2a-m"></div></div>
   </div>
-  <div class="ex-card"><div class="ex-title" style="color:var(--l2)">Ejercicio 2 — Completa con DONT</div><div class="ex-instr">Completa con dont.</div><div id="ex2b"></div>
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l2)">Ejercicio 2 — Completa con DONT</div>
+    <div class="ex-instr">Completa con dont.</div>
+    <div id="ex2b"></div>
     <button class="check-btn" style="background:var(--l2);color:white" onclick="checkFill('ex2b','sc2b')">Verificar</button>
     <div class="score-box" id="sc2b" style="background:var(--l2l)"><div class="score-emoji" id="sc2b-em"></div><div class="score-num" id="sc2b-n" style="color:var(--l2d)"></div><div class="score-msg" id="sc2b-m"></div></div>
   </div>
-  <div class="ex-card"><div class="ex-title" style="color:var(--l2)">Ejercicio 3 — Comprensión oral</div><div class="ex-instr">Escucha el diálogo y responde.</div><div id="dial2"></div>
-    <div class="score-box" id="sc2d" style="background:var(--l2l)"><div class="score-emoji" id="sc2d-em"></div><div class="score-num" id="sc2d-n" style="color:var(--l2d)"></div><div class="score-msg" id="sc2d-m"></div></div>
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l2)">Ejercicio 3 — Comprensión oral</div>
+    <div class="ex-instr">Escucha el diálogo y responde.</div>
+    <div id="dial2"></div>
   </div>
-  <div class="ex-card"><div class="ex-title" style="color:var(--l2)">Ejercicio 4 — Leer en voz alta</div><div class="ex-instr">Escucha y repite cada frase.</div><div id="ra2"></div>
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l2)">Ejercicio 4 — Leer en voz alta</div>
+    <div class="ex-instr">Escucha y repite cada frase.</div>
+    <div id="ra2"></div>
   </div>
 </div>
+
+<!-- ─── LEÇON 3 ─── -->
 <div class="lesson-panel" id="panel-3">
-  <div class="lesson-header"><div class="lesson-icon-big" style="background:var(--l3l)">📐</div><div class="lesson-meta"><div class="lesson-tag" style="background:var(--l3l);color:var(--l3d)">Leçon 3</div><div class="lesson-title">Les pronoms relatifs composés — lequel</div><div class="lesson-desc">Preposiciones · Auquel · Laquelle · Auxquels</div></div></div>
-  <div class="ex-card"><div class="ex-title" style="color:var(--l3)">Ejercicio 1 — QCM</div><div class="ex-instr">Elige la respuesta correcta.</div><div id="ex3a"></div>
+  <div class="lesson-header">
+    <div class="lesson-icon-big" style="background:var(--l3l)">📐</div>
+    <div class="lesson-meta">
+      <div class="lesson-tag" style="background:var(--l3l);color:var(--l3d)">Leçon 3</div>
+      <div class="lesson-title">Les pronoms relatifs composés — lequel</div>
+      <div class="lesson-desc">Preposiciones · Auquel · Laquelle · Auxquels</div>
+    </div>
+  </div>
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l3)">Ejercicio 1 — QCM</div>
+    <div class="ex-instr">Elige la respuesta correcta.</div>
+    <div id="ex3a"></div>
     <div class="score-box" id="sc3a" style="background:var(--l3l)"><div class="score-emoji" id="sc3a-em"></div><div class="score-num" id="sc3a-n" style="color:var(--l3d)"></div><div class="score-msg" id="sc3a-m"></div></div>
   </div>
-  <div class="ex-card"><div class="ex-title" style="color:var(--l3)">Ejercicio 2 — Completa</div><div class="ex-instr">Elige la forma correcta de lequel.</div><div id="ex3b"></div>
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l3)">Ejercicio 2 — Completa</div>
+    <div class="ex-instr">Elige la forma correcta de lequel.</div>
+    <div id="ex3b"></div>
     <button class="check-btn" style="background:var(--l3);color:white" onclick="checkFill('ex3b','sc3b')">Verificar</button>
     <div class="score-box" id="sc3b" style="background:var(--l3l)"><div class="score-emoji" id="sc3b-em"></div><div class="score-num" id="sc3b-n" style="color:var(--l3d)"></div><div class="score-msg" id="sc3b-m"></div></div>
   </div>
-  <div class="ex-card"><div class="ex-title" style="color:var(--l3)">Ejercicio 3 — Comprensión oral</div><div class="ex-instr">Escucha el diálogo y responde.</div><div id="dial3"></div>
-    <div class="score-box" id="sc3d" style="background:var(--l3l)"><div class="score-emoji" id="sc3d-em"></div><div class="score-num" id="sc3d-n" style="color:var(--l3d)"></div><div class="score-msg" id="sc3d-m"></div></div>
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l3)">Ejercicio 3 — Comprensión oral</div>
+    <div class="ex-instr">Escucha el diálogo y responde.</div>
+    <div id="dial3"></div>
   </div>
-  <div class="ex-card"><div class="ex-title" style="color:var(--l3)">Ejercicio 4 — Leer en voz alta</div><div class="ex-instr">Escucha y repite cada frase.</div><div id="ra3"></div>
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l3)">Ejercicio 4 — Leer en voz alta</div>
+    <div class="ex-instr">Escucha y repite cada frase.</div>
+    <div id="ra3"></div>
   </div>
 </div>
+
+<!-- ─── LEÇON 4 ─── -->
 <div class="lesson-panel" id="panel-4">
-  <div class="lesson-header"><div class="lesson-icon-big" style="background:var(--l4l)">✍️</div><div class="lesson-meta"><div class="lesson-tag" style="background:var(--l4l);color:var(--l4d)">Leçon 4</div><div class="lesson-title">Construire des phrases complexes</div><div class="lesson-desc">Encadenar pronombres · Relativas explicativas y determinativas</div></div></div>
-  <div class="ex-card"><div class="ex-title" style="color:var(--l4)">Ejercicio 1 — QCM</div><div class="ex-instr">Elige la respuesta correcta.</div><div id="ex4a"></div>
+  <div class="lesson-header">
+    <div class="lesson-icon-big" style="background:var(--l4l)">✍️</div>
+    <div class="lesson-meta">
+      <div class="lesson-tag" style="background:var(--l4l);color:var(--l4d)">Leçon 4</div>
+      <div class="lesson-title">Construire des phrases complexes</div>
+      <div class="lesson-desc">Encadenar pronombres · Relativas explicativas y determinativas</div>
+    </div>
+  </div>
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l4)">Ejercicio 1 — QCM</div>
+    <div class="ex-instr">Elige la respuesta correcta.</div>
+    <div id="ex4a"></div>
     <div class="score-box" id="sc4a" style="background:var(--l4l)"><div class="score-emoji" id="sc4a-em"></div><div class="score-num" id="sc4a-n" style="color:var(--l4d)"></div><div class="score-msg" id="sc4a-m"></div></div>
   </div>
-  <div class="ex-card"><div class="ex-title" style="color:var(--l4)">Ejercicio 2 — Completa</div><div class="ex-instr">Combina frases usando pronombres relativos.</div><div id="ex4b"></div>
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l4)">Ejercicio 2 — Completa</div>
+    <div class="ex-instr">Combina frases usando pronombres relativos.</div>
+    <div id="ex4b"></div>
     <button class="check-btn" style="background:var(--l4);color:white" onclick="checkFill('ex4b','sc4b')">Verificar</button>
     <div class="score-box" id="sc4b" style="background:var(--l4l)"><div class="score-emoji" id="sc4b-em"></div><div class="score-num" id="sc4b-n" style="color:var(--l4d)"></div><div class="score-msg" id="sc4b-m"></div></div>
   </div>
-  <div class="ex-card"><div class="ex-title" style="color:var(--l4)">Ejercicio 3 — Comprensión oral</div><div class="ex-instr">Escucha el diálogo y responde.</div><div id="dial4"></div>
-    <div class="score-box" id="sc4d" style="background:var(--l4l)"><div class="score-emoji" id="sc4d-em"></div><div class="score-num" id="sc4d-n" style="color:var(--l4d)"></div><div class="score-msg" id="sc4d-m"></div></div>
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l4)">Ejercicio 3 — Comprensión oral</div>
+    <div class="ex-instr">Escucha el diálogo y responde.</div>
+    <div id="dial4"></div>
   </div>
-  <div class="ex-card"><div class="ex-title" style="color:var(--l4)">Ejercicio 4 — Leer en voz alta</div><div class="ex-instr">Escucha y repite. Presta atención a la fluidez.</div><div id="ra4"></div>
+  <div class="ex-card">
+    <div class="ex-title" style="color:var(--l4)">Ejercicio 4 — Leer en voz alta</div>
+    <div class="ex-instr">Escucha y repite. Presta atención a la fluidez.</div>
+    <div id="ra4"></div>
   </div>
 </div>
 
 </main>
 </div>
-<script>function speakWithVoice(t,r,v,el){speak(t,v);}
 
+<script>
+// ══════════════════════════════════════════════════════════════════
+//  B1 MODULE 1 — Pronoms relatifs
+//
+//  moteur.js fournit : speak(), showLesson(), buildELModal(),
+//                      EL_KEY, VOICE_F, VOICE_M
+//  Ce fichier fournit : tous les moteurs de construction + données
+//
+//  RÈGLE : les variables d'état utilisent "var" (jamais "const")
+//  pour éviter les SyntaxError de redéclaration avec moteur.js
+// ══════════════════════════════════════════════════════════════════
 
-// ══════════════════════════════════════
-// NAVIGATION
-// ══════════════════════════════════════
+// ── Wrapper speak — moteur.js fournit speak(text, voiceId) ──
+function speakWithVoice(text, rate, voice) { speak(text, voice); }
 
-
-// ══════════════════════════════════════
-// SPEECH — robuste avec retry
-// ══════════════════════════════════════
-// ══ ElevenLabs TTS Engine ══
-
-function browserSpeak(t,r){r=r||.82;window.speechSynthesis.cancel();function g(){const u=new SpeechSynthesisUtterance(t);u.lang='fr-FR';u.rate=r;const v=window.speechSynthesis.getVoices().find(x=>x.lang&&x.lang.startsWith('fr'));if(v)u.voice=v;window.speechSynthesis.speak(u);}window.speechSynthesis.getVoices().length===0?(window.speechSynthesis.onvoiceschanged=g):g();}
-
-// Charlotte ID and Daniel ID
-const VOICE_F = 'XB0fDUnXU5powFXDhCwa'; // Charlotte
-const VOICE_M = 'onwK4e9ZLuTAKqWW03F9'; // Daniel
-
-function getVoiceForText(text){
-  // If text contains feminine subject indicators → Charlotte
-  const femPatterns = /\b(elle|elles|madame|marie|sophie|femme|fille|mère|sœur|dame)\b/i;
-  const mascPatterns = /\b(il|ils|monsieur|paul|pierre|homme|garçon|père|frère)\b/i;
-  if(femPatterns.test(text)) return VOICE_F;
-  if(mascPatterns.test(text)) return VOICE_M;
-  return EL_VOICE; // default to user selection
+function speakRA(btn) {
+  var text  = btn.getAttribute('data-phrase') || '';
+  var v     = btn.getAttribute('data-voice') || '';
+  var voice = v === 'f' ? VOICE_F : v === 'm' ? VOICE_M : VOICE_F;
+  speak(text, voice);
 }
 
-function speakGendered(text, rate, triggerEl){
-  const voice = getVoiceForText(text);
-  speakWithVoice(text, rate, triggerEl, voice);
-}
+// ══ RECORDER ══
+var B1_REC = {};
 
-// ══════════════════════════════════════
-// RECORDER — centralisé, par id unique
-// ══════════════════════════════════════
-const REC = {}; // key → {recorder, chunks, blob, recording}
-
-async function recStart(id){
-  if(REC[id] && REC[id].recording) return;
-  const statusEl = document.getElementById('rs_'+id);
-  const btnEl    = document.getElementById('rb_'+id);
-  const cmpEl    = document.getElementById('rc_'+id);
+async function recStart(id) {
+  if (B1_REC[id] && B1_REC[id].recording) return;
+  var statusEl = document.getElementById('rs_' + id);
+  var btnEl    = document.getElementById('rb_' + id);
+  var cmpEl    = document.getElementById('rc_' + id);
   try {
-    const stream = await navigator.mediaDevices.getUserMedia({audio:true});
-    REC[id] = {chunks:[], recording:true, blob:null};
-    // Choose best available mime
-    const mime = MediaRecorder.isTypeSupported('audio/webm') ? 'audio/webm'
-               : MediaRecorder.isTypeSupported('audio/ogg')  ? 'audio/ogg'
-               : '';
-    REC[id].recorder = mime ? new MediaRecorder(stream,{mimeType:mime}) : new MediaRecorder(stream);
-    REC[id].recorder.ondataavailable = e => { if(e.data && e.data.size>0) REC[id].chunks.push(e.data); };
-    REC[id].recorder.onstop = () => {
-      REC[id].blob = new Blob(REC[id].chunks, {type: REC[id].recorder.mimeType||'audio/webm'});
-      REC[id].recording = false;
-      stream.getTracks().forEach(t=>t.stop());
-      if(statusEl) { statusEl.textContent='✓ ¡Grabado!'; statusEl.style.color='#1d7a4c'; }
-      if(btnEl)    { btnEl.textContent='🎙️ Grabar de nuevo'; btnEl.style.background='#555'; }
-      if(cmpEl)    { cmpEl.style.display='flex'; }
+    var stream = await navigator.mediaDevices.getUserMedia({audio: true});
+    B1_REC[id] = {chunks: [], recording: true, blob: null};
+    var mime = MediaRecorder.isTypeSupported('audio/webm') ? 'audio/webm'
+             : MediaRecorder.isTypeSupported('audio/ogg')  ? 'audio/ogg' : '';
+    B1_REC[id].recorder = mime ? new MediaRecorder(stream, {mimeType: mime}) : new MediaRecorder(stream);
+    B1_REC[id].recorder.ondataavailable = function(e) { if (e.data && e.data.size > 0) B1_REC[id].chunks.push(e.data); };
+    B1_REC[id].recorder.onstop = function() {
+      B1_REC[id].blob = new Blob(B1_REC[id].chunks, {type: B1_REC[id].recorder.mimeType || 'audio/webm'});
+      B1_REC[id].recording = false;
+      stream.getTracks().forEach(function(t) { t.stop(); });
+      if (statusEl) { statusEl.textContent = '✓ ¡Grabado!'; statusEl.style.color = '#1d7a4c'; }
+      if (btnEl)    { btnEl.textContent = '🎙️ Grabar de nuevo'; btnEl.style.background = '#555'; }
+      if (cmpEl)    { cmpEl.style.display = 'flex'; }
     };
-    REC[id].recorder.start(100); // collect every 100ms
-    if(statusEl) { statusEl.textContent='● Grabando…'; statusEl.style.color='#e63946'; }
-    if(btnEl)    { btnEl.textContent='⬛ Detener'; btnEl.style.background='#e63946'; }
-    if(cmpEl)    { cmpEl.style.display='none'; }
+    B1_REC[id].recorder.start(100);
+    if (statusEl) { statusEl.textContent = '● Grabando…'; statusEl.style.color = '#e63946'; }
+    if (btnEl)    { btnEl.textContent = '⬛ Detener'; btnEl.style.background = '#e63946'; }
+    if (cmpEl)    { cmpEl.style.display = 'none'; }
   } catch(err) {
-    if(statusEl) {
-      statusEl.textContent = err.name==='NotAllowedError'
+    if (statusEl) {
+      statusEl.textContent = err.name === 'NotAllowedError'
         ? '⚠ Autoriza el micrófono en tu navegador'
         : '⚠ Micrófono no disponible';
-      statusEl.style.color='#e63946';
+      statusEl.style.color = '#e63946';
     }
   }
 }
+function recStop(id)    { if (B1_REC[id] && B1_REC[id].recording && B1_REC[id].recorder) B1_REC[id].recorder.stop(); }
+function recToggle(id)  { if (B1_REC[id] && B1_REC[id].recording) recStop(id); else recStart(id); }
+function recPlayback(id){ if (B1_REC[id] && B1_REC[id].blob) new Audio(URL.createObjectURL(B1_REC[id].blob)).play().catch(function(){}); }
 
-function recStop(id){
-  if(REC[id] && REC[id].recording && REC[id].recorder){
-    REC[id].recorder.stop();
-  }
-}
-
-function recToggle(id){
-  if(REC[id] && REC[id].recording) recStop(id);
-  else recStart(id);
-}
-
-function recPlayback(id){
-  if(REC[id] && REC[id].blob){
-    const url = URL.createObjectURL(REC[id].blob);
-    const a = new Audio(url);
-    a.play().catch(()=>{ /* autoplay blocked — ignore */ });
-  }
-}
-
-// ══════════════════════════════════════
-// BUILD: WORD CARDS (écoute + répétition)
-// ══════════════════════════════════════
-// words: [{fr, es, ipa}], accentColor, bgColor
-function buildWordCards(containerId, words, accentColor, bgColor){
-  const c = document.getElementById(containerId);
-  if(!c) return;
+// ══ READ-ALOUD ENGINE ══
+function buildReadAloud(containerId, phrases, accentColor) {
+  var c = document.getElementById(containerId);
+  if (!c) return;
   c.innerHTML = '';
-
-  // Grid of cards — each card is self-contained: listen + record
-  words.forEach((w, i) => {
-    const rid = containerId + '_w' + i;
-    const card = document.createElement('div');
-    card.style.cssText = `background:${bgColor};border:2px solid #e8e2d9;border-radius:14px;padding:16px 12px;text-align:center;`;
-    card.innerHTML = `
-      <div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:#1a1a2e;margin-bottom:2px">${w.fr}</div>
-      <div style="font-size:11px;font-style:italic;color:#8a8a9a;margin-bottom:2px">${w.ipa||''}</div>
-      <div style="font-size:11px;color:#8a8a9a;margin-bottom:12px">${w.es}</div>
-      <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:8px">
-        <button onclick="speak('${(w.speak_fr||w.fr).replace(/'/g,"\\'")}');this.style.opacity='.6';setTimeout(()=>this.style.opacity='1',800)"
-          style="background:${accentColor};color:white;border:none;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif">
-          🔊 Escuchar
-        </button>
-        <button id="rb_${rid}" onclick="recToggle('${rid}')"
-          style="background:#555;color:white;border:none;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif">
-          🎙️ Grabar
-        </button>
-      </div>
-      <div id="rs_${rid}" style="font-size:11px;min-height:16px;margin-bottom:6px"></div>
-      <div id="rc_${rid}" style="display:none;gap:6px;justify-content:center;flex-wrap:wrap">
-        <button onclick="speak('${(w.speak_fr||w.fr).replace(/'/g,"\\'")}');this.style.opacity='.6';setTimeout(()=>this.style.opacity='1',800)"
-          style="background:white;border:1px solid #e8e2d9;border-radius:7px;padding:5px 10px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif">
-          🇫🇷 Modelo
-        </button>
-        <button onclick="recPlayback('${rid}')"
-          style="background:white;border:1px solid #e8e2d9;border-radius:7px;padding:5px 10px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif">
-          ▶ Mi voz
-        </button>
-      </div>`;
-    c.appendChild(card);
-  });
-}
-
-// ══════════════════════════════════════
-// BUILD: READ-ALOUD (phrases complètes)
-// ══════════════════════════════════════
-function speakRA(btn){
-  const text = btn.getAttribute('data-phrase') || '';
-  const v = btn.getAttribute('data-voice') || '';
-  const voice = v==='f' ? VOICE_F : v==='m' ? VOICE_M : EL_VOICE;
-  speakWithVoice(text, 1.0, voice);
-}
-function buildReadAloud(containerId, phrases, accentColor){
-  const c = document.getElementById(containerId);
-  if(!c) return;
-  c.innerHTML = '';
-  phrases.forEach((p, i) => {
-    const rid = containerId + '_p' + i;
-    const item = document.createElement('div');
-    item._phrase = p.phrase;
-    item._voice = p.voice || '';
+  phrases.forEach(function(p, i) {
+    var rid  = containerId + '_p' + i;
+    var item = document.createElement('div');
     item.style.cssText = 'background:#faf7f2;border:1.5px solid #e8e2d9;border-radius:14px;padding:18px 20px;margin-bottom:12px;';
-    item.innerHTML = `
-      <div style="font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:#1a1a2e;margin-bottom:4px;line-height:1.4">${p.phrase}</div>
-      <div style="font-size:12px;color:#8a8a9a;margin-bottom:14px">${p.translation}</div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px">
-        <button id="sb_${rid}" data-phrase="${p.phrase.replace(/"/g,'&quot;')}" data-voice="${p.voice||''}" onclick="speakRA(this);this.style.opacity='.6';setTimeout(()=>this.style.opacity='1',900)"
-          style="background:${accentColor};color:white;border:none;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif">
-          🔊 Escuchar modelo
-        </button>
-        <button id="rb_${rid}" onclick="recToggle('${rid}')"
-          style="background:#555;color:white;border:none;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif">
-          🎙️ Grabar mi voz
-        </button>
-        <span id="rs_${rid}" style="font-size:12px;color:#8a8a9a"></span>
-      </div>
-      <div id="rc_${rid}" style="display:none;gap:8px;flex-wrap:wrap">
-        <button id="sb_${rid}" data-phrase="${p.phrase.replace(/"/g,'&quot;')}" data-voice="${p.voice||''}" onclick="speakRA(this);this.style.opacity='.6';setTimeout(()=>this.style.opacity='1',900)"
-          style="background:white;border:1.5px solid #e8e2d9;border-radius:8px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif">
-          🇫🇷 Escuchar modelo
-        </button>
-        <button onclick="recPlayback('${rid}')"
-          style="background:white;border:1.5px solid #e8e2d9;border-radius:8px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif">
-          ▶ Reproducir mi voz
-        </button>
-      </div>`;
+    item.innerHTML =
+      '<div style="font-family:\'Playfair Display\',serif;font-size:17px;font-weight:700;color:#1a1a2e;margin-bottom:4px;line-height:1.4">' + p.phrase + '</div>' +
+      '<div style="font-size:12px;color:#8a8a9a;margin-bottom:14px">' + p.translation + '</div>' +
+      '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px">' +
+        '<button data-phrase="' + p.phrase.replace(/"/g,'&quot;') + '" data-voice="' + (p.voice||'') + '" onclick="speakRA(this);this.style.opacity=\'.6\';setTimeout(()=>this.style.opacity=\'1\',900)" style="background:' + accentColor + ';color:white;border:none;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:\'Nunito\',sans-serif">🔊 Escuchar modelo</button>' +
+        '<button id="rb_' + rid + '" onclick="recToggle(\'' + rid + '\')" style="background:#555;color:white;border:none;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:\'Nunito\',sans-serif">🎙️ Grabar mi voz</button>' +
+        '<span id="rs_' + rid + '" style="font-size:12px;color:#8a8a9a"></span>' +
+      '</div>' +
+      '<div id="rc_' + rid + '" style="display:none;gap:8px;flex-wrap:wrap">' +
+        '<button data-phrase="' + p.phrase.replace(/"/g,'&quot;') + '" data-voice="' + (p.voice||'') + '" onclick="speakRA(this);this.style.opacity=\'.6\';setTimeout(()=>this.style.opacity=\'1\',900)" style="background:white;border:1.5px solid #e8e2d9;border-radius:8px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:\'Nunito\',sans-serif">🇫🇷 Escuchar modelo</button>' +
+        '<button onclick="recPlayback(\'' + rid + '\')" style="background:white;border:1.5px solid #e8e2d9;border-radius:8px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:\'Nunito\',sans-serif">▶ Reproducir mi voz</button>' +
+      '</div>';
     c.appendChild(item);
   });
 }
 
-// ══════════════════════════════════════
-// QCM ENGINE
-// ══════════════════════════════════════
-const qcmState={}, qcmTally={};
-function buildQCM(containerId, questions, scoreId, color){
-  const c=document.getElementById(containerId);
-  if(!c) return;
-  questions.forEach((q,qi)=>{
-    const id=containerId+'_'+qi;
-    qcmState[id]={done:false};
-    const div=document.createElement('div');
-    div.className='qcm-item';
-    const speakBtn=q.speak?`<button class="speak-btn" onclick="speak('${q.speak.replace(/'/g,"\\'")}')">🔊</button>`:'';
-    div.innerHTML=`
-      <div class="q-label">Pregunta ${qi+1}</div>
-      <div class="q-text">${q.q}${speakBtn}</div>
-      <div class="opts" id="opts_${id}">
-        ${q.opts.map((o,oi)=>`<button class="opt" onclick="answerQCM('${id}',${oi},${q.ans},'${scoreId}',${questions.length})">${o}</button>`).join('')}
-      </div>
-      <div class="fb" id="fb_${id}"></div>`;
+// ══ QCM ENGINE ══
+var b1QcmState = {}, b1QcmTally = {};
+
+function buildQCM(containerId, questions, scoreId, color) {
+  var c = document.getElementById(containerId);
+  if (!c) return;
+  questions.forEach(function(q, qi) {
+    var id = containerId + '_' + qi;
+    b1QcmState[id] = {done: false};
+    var div = document.createElement('div');
+    div.className = 'qcm-item';
+    div.innerHTML =
+      '<div class="q-label">Pregunta ' + (qi + 1) + '</div>' +
+      '<div class="q-text">' + q.q + '</div>' +
+      '<div class="opts" id="opts_' + id + '">' +
+        q.opts.map(function(o, oi) {
+          return '<button class="opt" onclick="answerQCM(\'' + id + '\',' + oi + ',' + q.ans + ',\'' + scoreId + '\',' + questions.length + ')">' + o + '</button>';
+        }).join('') +
+      '</div>' +
+      '<div class="fb" id="fb_' + id + '"></div>';
     c.appendChild(div);
   });
 }
-function answerQCM(id,chosen,correct,scoreId,total){
-  if(qcmState[id] && qcmState[id].done) return;
-  if(!qcmState[id]) qcmState[id]={};
-  qcmState[id].done=true;
-  const opts=document.getElementById('opts_'+id);
-  const fb=document.getElementById('fb_'+id);
-  opts.querySelectorAll('.opt').forEach((b,i)=>{
-    b.disabled=true;
-    if(i===correct) b.classList.add('correct');
-    else if(i===chosen) b.classList.add('wrong');
+
+function answerQCM(id, chosen, correct, scoreId, total) {
+  if (b1QcmState[id] && b1QcmState[id].done) return;
+  if (!b1QcmState[id]) b1QcmState[id] = {};
+  b1QcmState[id].done = true;
+  var opts = document.getElementById('opts_' + id);
+  var fb   = document.getElementById('fb_' + id);
+  opts.querySelectorAll('.opt').forEach(function(b, i) {
+    b.disabled = true;
+    if (i === correct) b.classList.add('correct');
+    else if (i === chosen) b.classList.add('wrong');
   });
-  const ok=chosen===correct;
-  const correctText=opts.querySelectorAll('.opt')[correct].textContent;
-  fb.textContent=(ok?'✓ ¡Correcto! ':'✗ Incorrecto → ')+correctText;
-  fb.className='fb show '+(ok?'ok':'nope');
-  if(!qcmTally[scoreId]) qcmTally[scoreId]={score:0,done:0};
-  if(ok) qcmTally[scoreId].score++;
-  qcmTally[scoreId].done++;
-  if(qcmTally[scoreId].done===total) showQCMScore(scoreId,qcmTally[scoreId].score,total);
+  var ok = chosen === correct;
+  var correctText = opts.querySelectorAll('.opt')[correct].textContent;
+  fb.textContent = (ok ? '✓ ¡Correcto! ' : '✗ Incorrecto → ') + correctText;
+  fb.className = 'fb show ' + (ok ? 'ok' : 'nope');
+  if (!b1QcmTally[scoreId]) b1QcmTally[scoreId] = {score: 0, done: 0};
+  if (ok) b1QcmTally[scoreId].score++;
+  b1QcmTally[scoreId].done++;
+  if (b1QcmTally[scoreId].done === total) showQCMScore(scoreId, b1QcmTally[scoreId].score, total);
 }
-function showQCMScore(id,score,total){
-  const pct=score/total;
-  const box=document.getElementById(id);
-  if(!box) return;
+
+function showQCMScore(id, score, total) {
+  var pct = score / total;
+  var box = document.getElementById(id);
+  if (!box) return;
   box.classList.add('show');
-  const em=pct>=.8?'🎉':pct>=.6?'👍':'💪';
-  const msg=pct>=.8?'¡Excelente! Dominas este tema.':pct>=.6?'¡Bien! Repasa los errores.':'Sigue practicando, ¡tú puedes!';
-  document.getElementById(id+'-em').textContent=em;
-  document.getElementById(id+'-n').textContent=score+' / '+total;
-  document.getElementById(id+'-m').textContent=msg;
-  box.scrollIntoView({behavior:'smooth',block:'nearest'});
+  document.getElementById(id + '-em').textContent = pct >= .8 ? '🎉' : pct >= .6 ? '👍' : '💪';
+  document.getElementById(id + '-n').textContent  = score + ' / ' + total;
+  document.getElementById(id + '-m').textContent  = pct >= .8 ? '¡Excelente! Dominas este tema.' : pct >= .6 ? '¡Bien! Repasa los errores.' : 'Sigue practicando, ¡tú puedes!';
+  box.scrollIntoView({behavior: 'smooth', block: 'nearest'});
 }
 
-// ══════════════════════════════════════
-// FILL ENGINE
-// ══════════════════════════════════════
-function buildFill(containerId, items){
-  const c=document.getElementById(containerId);
-  if(!c) return;
-  items.forEach((item,i)=>{
-    const div=document.createElement('div');
-    div.className='fill-item';
-    div.innerHTML=`
-      <div class="fill-sentence">${item.sentence}</div>
-      <input class="fill-input" id="${containerId}_${i}" placeholder="${item.hint||'Tu respuesta…'}" data-answer="${item.answer}" autocomplete="off" autocorrect="off" spellcheck="false">
-      <div class="fill-hint" id="${containerId}_hint_${i}"></div>`;
+// ══ FILL ENGINE ══
+function buildFill(containerId, items) {
+  var c = document.getElementById(containerId);
+  if (!c) return;
+  items.forEach(function(item, i) {
+    var div = document.createElement('div');
+    div.className = 'fill-item';
+    div.innerHTML =
+      '<div class="fill-sentence">' + item.sentence + '</div>' +
+      '<input class="fill-input" id="' + containerId + '_' + i + '" placeholder="' + (item.hint || 'Tu respuesta…') + '" data-answer="' + item.answer + '" autocomplete="off" autocorrect="off" spellcheck="false">' +
+      '<div class="fill-hint" id="' + containerId + '_hint_' + i + '"></div>';
     c.appendChild(div);
   });
 }
 
+function checkFill(formId, scoreId) {
+  var items = document.querySelectorAll('#' + formId + ' .fill-item');
+  var correct = 0, total = 0;
+  items.forEach(function(item) {
+    var inp = item.querySelector('input');
+    if (!inp) return;
+    total++;
+    var answers = inp.getAttribute('data-answer').split('|');
+    var val     = inp.value.trim().toLowerCase().replace(/['']/g, "'");
+    var ok      = answers.some(function(a) { return a.toLowerCase().replace(/['']/g, "'") === val; });
+    inp.style.borderColor = ok ? '#2eaa6b' : '#e63946';
+    if (ok) correct++;
+  });
+  var sc = document.getElementById(scoreId);
+  if (sc) {
+    sc.style.display = 'block';
+    document.getElementById(scoreId + '-em').textContent = correct === total ? '🎉' : correct >= total / 2 ? '👍' : '💪';
+    document.getElementById(scoreId + '-n').textContent  = correct + '/' + total;
+    document.getElementById(scoreId + '-m').textContent  = correct === total ? '¡Perfecto!' : correct >= total * 0.7 ? '¡Muy bien!' : '¡Sigue intentando!';
+  }
+}
 
-// ══════════════════════════════════════
-// MATCH ENGINE
-// ══════════════════════════════════════
-const matchState={};
+// ══ MATCH ENGINE ══
+var b1MatchState = {};
 
-function pickMatch(cid, side, idx, scoreId, total){
-  const st=matchState[cid];
-  const el=document.getElementById(cid+'_'+side+idx);
-  if(el.classList.contains('matched-ok')) return;
-  if(!st.selected){ st.selected={side,idx,el}; el.classList.add('selected'); return; }
-  const prev=st.selected;
-  if(prev.side===side){ prev.el.classList.remove('selected'); st.selected={side,idx,el}; el.classList.add('selected'); return; }
-  let lEl=side==='L'?el:prev.el, rEl=side==='R'?el:prev.el;
-  const matched=rEl.getAttribute('data-val')===lEl.textContent.trim();
+function buildMatch(containerId, pairs, scoreId) {
+  var c = document.getElementById(containerId);
+  if (!c) return;
+  b1MatchState[containerId] = {selected: null, score: 0, total: pairs.length};
+  var shuffled = pairs.slice().sort(function() { return Math.random() - 0.5; });
+  c.innerHTML =
+    '<div class="match-wrap">' +
+      '<div>' +
+        '<div class="match-col-title">Concepto</div>' +
+        '<div class="match-col" id="' + containerId + '_L">' +
+          pairs.map(function(p, i) {
+            return '<button class="match-item" id="' + containerId + '_L' + i + '" onclick="pickMatch(\'' + containerId + '\',\'L\',' + i + ',\'' + scoreId + '\',' + pairs.length + ')">' + p.left + '</button>';
+          }).join('') +
+        '</div>' +
+      '</div>' +
+      '<div>' +
+        '<div class="match-col-title">Definición</div>' +
+        '<div class="match-col" id="' + containerId + '_R">' +
+          shuffled.map(function(p, i) {
+            return '<button class="match-item" id="' + containerId + '_R' + i + '" data-val="' + p.left + '" onclick="pickMatch(\'' + containerId + '\',\'R\',' + i + ',\'' + scoreId + '\',' + pairs.length + ')">' + p.right + '</button>';
+          }).join('') +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="match-score" id="' + scoreId + '"></div>';
+}
+
+function pickMatch(cid, side, idx, scoreId, total) {
+  var st = b1MatchState[cid];
+  var el = document.getElementById(cid + '_' + side + idx);
+  if (el.classList.contains('matched-ok')) return;
+  if (!st.selected) { st.selected = {side: side, idx: idx, el: el}; el.classList.add('selected'); return; }
+  var prev = st.selected;
+  if (prev.side === side) { prev.el.classList.remove('selected'); st.selected = {side: side, idx: idx, el: el}; el.classList.add('selected'); return; }
+  var lEl = side === 'L' ? el : prev.el;
+  var rEl = side === 'R' ? el : prev.el;
+  var matched = rEl.getAttribute('data-val') === lEl.textContent.trim();
   lEl.classList.remove('selected'); rEl.classList.remove('selected');
-  if(matched){
+  if (matched) {
     lEl.classList.add('matched-ok'); rEl.classList.add('matched-ok');
     st.score++;
   } else {
     lEl.classList.add('matched-err'); rEl.classList.add('matched-err');
-    setTimeout(()=>{ lEl.classList.remove('matched-err'); rEl.classList.remove('matched-err'); },700);
+    setTimeout(function() { lEl.classList.remove('matched-err'); rEl.classList.remove('matched-err'); }, 700);
   }
-  st.selected=null;
-  const sc=document.getElementById(scoreId);
-  if(sc) sc.textContent=st.score+' / '+st.total+' pares correctos';
+  st.selected = null;
+  var sc = document.getElementById(scoreId);
+  if (sc) sc.textContent = st.score + ' / ' + st.total + ' pares correctos';
 }
 
-// ══════════════════════════════════════
-// COLOR GRID
-// ══════════════════════════════════════
-function buildColorGrid(){
-  const c=document.getElementById('ex3b');
-  if(!c) return;
-  colors.forEach(col=>{
-    const d=document.createElement('div');
-    d.className='color-card';
-    d.innerHTML=`<div class="color-swatch" style="background:${col.hex}"></div><div class="color-fr">${col.fr}</div><div class="color-es">${col.es}</div>`;
-    d.onclick=()=>{ speak(col.fr); d.classList.add('playing'); setTimeout(()=>d.classList.remove('playing'),1200); };
-    c.appendChild(d);
+// ══ DIALOGUE LISTEN ENGINE ══
+var b1DlTally = {}, b1DlData = {};
+
+function registerDL(id, data) { b1DlData[id] = data; }
+
+function buildDialogueListen(cid, data, accentColor) {
+  var c = document.getElementById(cid);
+  if (!c) return;
+  c.innerHTML = '';
+  var ph1 = document.createElement('div');
+  ph1.id = cid + '_phase1';
+
+  var lb = document.createElement('div');
+  lb.style.cssText = 'text-align:center;padding:20px 0 24px';
+  lb.innerHTML =
+    '<div style="font-size:13px;color:#7a7a8c;margin-bottom:14px;font-style:italic">Escucha el diálogo completo, luego responde las preguntas sin ver el texto.</div>' +
+    '<button id="' + cid + '_listenAll" onclick="playDialogueFull(\'' + cid + '\')" style="background:' + accentColor + ';color:white;border:none;border-radius:12px;padding:14px 28px;font-size:15px;font-weight:800;cursor:pointer;font-family:\'Nunito\',sans-serif;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 16px rgba(0,0,0,.12)">🔊 Écouter le dialogue</button>' +
+    '<div id="' + cid + '_playing" style="margin-top:10px;font-size:12px;color:' + accentColor + ';font-weight:700;display:none">▶ En cours…</div>';
+  ph1.appendChild(lb);
+
+  var ql = document.createElement('div');
+  ql.style.cssText = 'font-size:12px;font-weight:800;color:' + accentColor + ';text-transform:uppercase;letter-spacing:1px;margin-bottom:10px';
+  ql.textContent = '🧠 Comprensión — responde sin ver el texto';
+  ph1.appendChild(ql);
+
+  data.qcm.forEach(function(q, qi) {
+    var d = document.createElement('div');
+    d.className = 'qcm-item';
+    d.innerHTML =
+      '<div class="q-label">Pregunta ' + (qi + 1) + '</div>' +
+      '<div class="q-text">' + q.q + '</div>' +
+      '<div class="opts" id="' + cid + '_opts_' + qi + '">' +
+        q.opts.map(function(o, oi) {
+          return '<button class="opt" onclick="answerDLQ(\'' + cid + '\',' + qi + ',' + oi + ',' + q.ans + ',' + data.qcm.length + ')">' + o + '</button>';
+        }).join('') +
+      '</div>' +
+      '<div class="fb" id="' + cid + '_fb_' + qi + '"></div>';
+    ph1.appendChild(d);
   });
-}
 
-// ══════════════════════════════════════
-// ALPHABET
-// ══════════════════════════════════════
-const ALPHA_FR = {'A':'a','B':'bé','C':'cée','D':'dé','E':'e','F':'ef','G':'gé','H':'ache','I':'i','J':'ji','K':'ka','L':'elle','M':'emme','N':'ène','O':'o','P':'pé','Q':'cul','R':'erre','S':'esse','T':'té','U':'u','V':'vé','W':'double vé','X':'iks','Y':'i grec','Z':'zède'};
-function buildAlphabet(){
-  const c=document.getElementById('ex5a');
-  if(!c) return;
-  const grid=document.createElement('div');
-  grid.style.cssText='display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;';
-  'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(l=>{
-    const b=document.createElement('button');
-    b.style.cssText='width:42px;height:42px;border-radius:8px;border:1.5px solid #e8e2d9;background:#faf7f2;font-family:"Playfair Display",serif;font-size:18px;font-weight:700;cursor:pointer;transition:all .15s;color:#6d28d9;';
-    b.textContent=l;
-    b.onclick=()=>{ browserSpeak(ALPHA_FR[l]||l,0.7); b.style.background='#ede9fe'; setTimeout(()=>b.style.background='#faf7f2',900); };
-    grid.appendChild(b);
+  var sc = document.createElement('div');
+  sc.className = 'score-box'; sc.id = cid + '_score'; sc.style.background = accentColor + '22';
+  sc.innerHTML = '<div class="score-emoji" id="' + cid + '_sc_em"></div><div class="score-num" id="' + cid + '_sc_n" style="color:' + accentColor + '"></div><div class="score-msg" id="' + cid + '_sc_m"></div>';
+  ph1.appendChild(sc);
+  c.appendChild(ph1);
+
+  // Phase 2 — transcription karaoke
+  var ph2 = document.createElement('div');
+  ph2.id = cid + '_phase2'; ph2.style.display = 'none';
+  ph2.innerHTML = '<div style="font-size:12px;font-weight:800;color:' + accentColor + ';text-transform:uppercase;letter-spacing:1px;margin:18px 0 10px">📖 Transcripción del diálogo</div>';
+  var dw = document.createElement('div');
+  dw.style.cssText = 'background:#1a1a2e;border:1.5px solid #2a2a4e;border-radius:14px;padding:16px 18px';
+  data.lines.forEach(function(line, li) {
+    var isF = line.speaker === 'f';
+    var al  = isF ? '#e63946' : '#2a7dd1';
+    var bl  = isF ? '#fdecea' : '#deeeff';
+    var words = line.text.split(' ');
+    var ws = words.map(function(w, wi) {
+      return '<span id="' + cid + '_w' + li + '_' + wi + '" style="color:rgba(255,255,255,0.5);transition:color .12s">' + w + '</span>';
+    }).join(' ');
+    var row = document.createElement('div');
+    row.style.cssText = 'display:flex;align-items:flex-start;gap:10px;margin-bottom:' + (li < data.lines.length - 1 ? '16' : '0') + 'px';
+    row.innerHTML =
+      '<button onclick="playLineKaraoke(\'' + cid + '\',' + li + ',b1DlData[\'' + cid + '\'].lines[' + li + '],this)" style="flex-shrink:0;width:34px;height:34px;border-radius:50%;border:1.5px solid ' + al + ';background:' + bl + ';cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center">🔊</button>' +
+      '<div style="flex:1"><div style="font-size:11px;font-weight:800;color:' + al + ';margin-bottom:4px">' + (line.name || line.speaker) + '</div>' +
+      '<div style="font-family:\'Playfair Display\',serif;font-size:15px;font-weight:700;line-height:1.6">' + ws + '</div>' +
+      '<div style="font-size:11px;color:rgba(255,255,255,.35);margin-top:4px;font-style:italic">' + (line.translation || '') + '</div></div>';
+    dw.appendChild(row);
   });
-  c.appendChild(grid);
-  // Read-aloud for alphabet section
-  buildReadAloud('rec5', [
-    {phrase:'Bonjour, comment vous appelez-vous ?', translation:'Buenos días, ¿cómo se llama usted?'},
-    {phrase:'Au revoir, à bientôt !',              translation:'Adiós, ¡hasta pronto!'},
-    {phrase:'Merci beaucoup, enchanté !',           translation:'Muchas gracias, ¡encantado!'},
-  ], 'var(--l5)');
+  ph2.appendChild(dw);
+  c.appendChild(ph2);
 }
 
-function buildNasales(){
-  const c=document.getElementById('ex5b');
-  if(!c) return;
-  [{comb:'an, en, am, em',ex:'sans, lent, lampe, temps',trad:'sin, lento, lámpara, tiempo',bg:'#fdecea',speak_w:'sans'},
-   {comb:'in, ain, ein, un',ex:'pain, main, vingt, synthèse',trad:'pan, mano, veinte, resumen',bg:'#deeeff',speak_w:'le pain'},
-   {comb:'on, om',ex:'bon, nom',trad:'bueno, nombre',bg:'#dcf5ea',speak_w:'le bon'}
-  ].forEach(n=>{
-    const d=document.createElement('div');
-    d.className='liaison-card'; d.style.background=n.bg;
-    d.innerHTML=`
-      <div>
-        <div style="font-size:11px;font-weight:800;letter-spacing:1px;color:#8a8a9a;margin-bottom:4px">COMBINACIÓN</div>
-        <div style="font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:#1a1a2e">${n.comb}</div>
-        <div style="font-size:13px;color:#8a8a9a;margin-top:4px">Ej: <em>${n.ex}</em> → ${n.trad}</div>
-      </div>
-      <button class="speak-btn" onclick="speak('${n.speak_w}')">🔊</button>`;
-    c.appendChild(d);
+async function playDialogueFull(cid) {
+  var data = b1DlData[cid];
+  var btn  = document.getElementById(cid + '_listenAll');
+  var ind  = document.getElementById(cid + '_playing');
+  if (!data) return;
+  if (btn) btn.disabled = true;
+  if (ind) ind.style.display = 'block';
+  for (var i = 0; i < data.lines.length; i++) {
+    var line = data.lines[i];
+    await speakPromise(line.text, line.speaker === 'f' ? VOICE_F : VOICE_M);
+    await new Promise(function(r) { setTimeout(r, 320); });
+  }
+  if (btn) { btn.disabled = false; btn.innerHTML = '🔊 Écouter à nouveau'; }
+  if (ind) ind.style.display = 'none';
+}
+
+function speakPromise(text, voiceId) {
+  var key = typeof EL_KEY !== 'undefined' ? EL_KEY : null;
+  if (!key) {
+    return new Promise(function(res) {
+      var u = new SpeechSynthesisUtterance(text);
+      u.lang = 'fr-FR'; u.rate = 0.88; u.onend = res;
+      window.speechSynthesis.cancel();
+      window.speechSynthesis.speak(u);
+    });
+  }
+  return fetch('https://api.elevenlabs.io/v1/text-to-speech/' + voiceId, {
+    method: 'POST',
+    headers: {'xi-api-key': key, 'Content-Type': 'application/json'},
+    body: JSON.stringify({text: text, model_id: 'eleven_multilingual_v2', language_code: 'fr', voice_settings: {stability: 0.5, similarity_boost: 0.75}})
+  })
+  .then(function(r) { return r.blob(); })
+  .then(function(blob) {
+    return new Promise(function(res) {
+      var url = URL.createObjectURL(blob);
+      var a = new Audio(url);
+      a.play(); a.onended = function() { URL.revokeObjectURL(url); res(); };
+    });
+  })
+  .catch(function() { return speakPromise(text, null); });
+}
+
+async function playLineKaraoke(cid, li, line, btn) {
+  if (!line) return;
+  var words   = line.text.split(' ');
+  var voiceId = line.speaker === 'f' ? VOICE_F : VOICE_M;
+  var key     = typeof EL_KEY !== 'undefined' ? EL_KEY : null;
+  btn.disabled = true;
+  words.forEach(function(_, wi) {
+    var s = document.getElementById(cid + '_w' + li + '_' + wi);
+    if (s) s.style.color = 'rgba(255,255,255,0.5)';
   });
+  var sk = function(dur) {
+    var ms = (dur * 1000) / words.length;
+    words.forEach(function(_, wi) {
+      setTimeout(function() {
+        var s = document.getElementById(cid + '_w' + li + '_' + wi);
+        if (s) s.style.color = '#ffd166';
+      }, wi * ms);
+    });
+    setTimeout(function() { btn.disabled = false; }, dur * 1000 + 200);
+  };
+  if (!key) {
+    var u = new SpeechSynthesisUtterance(line.text);
+    u.lang = 'fr-FR'; u.rate = 0.88;
+    window.speechSynthesis.cancel(); window.speechSynthesis.speak(u);
+    sk(words.length * 0.42); return;
+  }
+  try {
+    var r    = await fetch('https://api.elevenlabs.io/v1/text-to-speech/' + voiceId, {method: 'POST', headers: {'xi-api-key': key, 'Content-Type': 'application/json'}, body: JSON.stringify({text: line.text, model_id: 'eleven_multilingual_v2', language_code: 'fr', voice_settings: {stability: 0.5, similarity_boost: 0.75}})});
+    var blob = await r.blob();
+    var url  = URL.createObjectURL(blob);
+    var audio = new Audio(url);
+    audio.addEventListener('loadedmetadata', function() { sk(audio.duration); });
+    audio.play(); audio.onended = function() { URL.revokeObjectURL(url); btn.disabled = false; };
+  } catch(e) { btn.disabled = false; }
 }
 
-// ══════════════════════════════════════
-// MOBILE NAV
-// ══════════════════════════════════════
-function buildMobNav(){
-  const nav=document.getElementById('mobNav');
-  if(!nav) return;
-  [{n:1,icon:'🤝',label:'Se présenter'},{n:2,icon:'👤',label:'Pronoms'},
-   {n:3,icon:'🔢',label:'Nombres'},{n:4,icon:'📋',label:'Formulaire'},{n:5,icon:'🔤',label:'Prononciation',n:0}
-  ].forEach(l=>{
-    const b=document.createElement('button');
-    b.className='mob-nav-btn'+(l.n===1?' active':'');
-    b.setAttribute('data-lesson',l.n);
-    b.textContent=l.icon+' '+l.label;
-    if(l.n===1) b.style.cssText='background:var(--l1);color:white;';
-    b.onclick=()=>showLesson(l.n);
+function answerDLQ(cid, qi, chosen, correct, total) {
+  var key = cid + '_' + qi;
+  if (b1DlTally[key]) return;
+  b1DlTally[key] = {done: true, wasCorrect: chosen === correct};
+  var opts = document.querySelectorAll('#' + cid + '_opts_' + qi + ' .opt');
+  opts.forEach(function(b, i) {
+    b.disabled = true;
+    if (i === correct) b.classList.add('correct');
+    else if (i === chosen && chosen !== correct) b.classList.add('wrong');
+  });
+  var fb = document.getElementById(cid + '_fb_' + qi);
+  fb.textContent = chosen === correct ? '✅ ¡Correcto!' : '❌ ' + opts[correct].textContent;
+  fb.style.cssText = 'color:' + (chosen === correct ? '#1d7a4c' : '#c0392b') + ';font-size:12px;margin-top:6px;font-weight:700';
+  var answered = 0, good = 0;
+  for (var i = 0; i < total; i++) {
+    if (b1DlTally[cid + '_' + i]) { answered++; if (b1DlTally[cid + '_' + i].wasCorrect) good++; }
+  }
+  if (answered === total) {
+    var sc = document.getElementById(cid + '_score');
+    if (sc) {
+      sc.classList.add('show');
+      var pct = good / total;
+      document.getElementById(cid + '_sc_em').textContent = pct >= .75 ? '🎉' : pct >= .5 ? '👍' : '💪';
+      document.getElementById(cid + '_sc_n').textContent  = good + ' / ' + total;
+      document.getElementById(cid + '_sc_m').textContent  = pct >= .75 ? '¡Excelente comprensión!' : pct >= .5 ? '¡Bien! Vuelve a escuchar.' : 'Escucha el diálogo otra vez.';
+      sc.scrollIntoView({behavior: 'smooth', block: 'nearest'});
+    }
+    setTimeout(function() {
+      var p2 = document.getElementById(cid + '_phase2');
+      if (p2) { p2.style.display = 'block'; p2.scrollIntoView({behavior: 'smooth', block: 'nearest'}); }
+    }, 900);
+  }
+}
+
+// ══ MOBILE NAV — B1 Module 1 ══
+function buildMobNav() {
+  var nav = document.getElementById('mobNav');
+  if (!nav) return;
+  [{n:1,icon:'🔗',label:'Qui/que/où'},
+   {n:2,icon:'🔄',label:'Dont'},
+   {n:3,icon:'📐',label:'Lequel'},
+   {n:4,icon:'✍️',label:'Complexes'}
+  ].forEach(function(l) {
+    var b = document.createElement('button');
+    b.className = 'mob-nav-btn' + (l.n === 1 ? ' active' : '');
+    b.setAttribute('data-lesson', l.n);
+    b.textContent = l.icon + ' ' + l.label;
+    if (l.n === 1) b.style.cssText = 'background:var(--l1);color:white;';
+    b.onclick = function() { showLesson(l.n, b); };
     nav.appendChild(b);
   });
 }
 
 // ══════════════════════════════════════
-// ALL DATA
+// DONNÉES — B1 Module 1
 // ══════════════════════════════════════
 
-// ── LEÇON 1 ──
-
-
-const qcm1a=[
-  {q:'¿Qué pronombre relativo reemplaza el SUJETO del verbo?', opts:['que','qui','où'], ans:1},
-  {q:"J'ai un ami ___ parle très bien français.", opts:['que','qui','où'], ans:1},
-  {q:'Le film ___ nous regardons est long.', opts:['qui','où','que'], ans:2},
-  {q:"La ville ___ j'habite est belle.", opts:['qui','que','où'], ans:2},
-  {q:"¿Cuándo se usa QU' en lugar de QUE?", opts:['Siempre','Delante de vocal o h muda','Solo con personas'], ans:1},
+// ── LEÇON 1 — QUI, QUE, OÙ ──
+const qcm1a = [
+  {q:'¿Qué pronombre relativo reemplaza el SUJETO del verbo?',  opts:['que','qui','où'], ans:1},
+  {q:"J'ai un ami ___ parle très bien français.",               opts:['que','qui','où'], ans:1},
+  {q:'Le film ___ nous regardons est long.',                    opts:['qui','où','que'], ans:2},
+  {q:"La ville ___ j'habite est belle.",                        opts:['qui','que','où'], ans:2},
+  {q:"¿Cuándo se usa QU' en lugar de QUE?",                    opts:['Siempre','Delante de vocal o h muda','Solo con personas'], ans:1},
 ];
-const fill1b=[
-  {sentence:"C'est un livre ___ m'a beaucoup appris.", answer:"qui"},
-  {sentence:"L'homme ___ elle aime est gentil.", answer:"qu'|que"},
-  {sentence:"C'est le restaurant ___ nous allons souvent.", answer:"où"},
-  {sentence:"Les étudiants ___ travaillent dur réussissent.", answer:"qui"},
+const fill1b = [
+  {sentence:"C'est un livre ___ m'a beaucoup appris.",          answer:"qui"},
+  {sentence:"L'homme ___ elle aime est gentil.",                answer:"qu'|que"},
+  {sentence:"C'est le restaurant ___ nous allons souvent.",     answer:"où"},
+  {sentence:"Les étudiants ___ travaillent dur réussissent.",   answer:"qui"},
   {sentence:"Le jour ___ nous nous sommes rencontrés était beau.", answer:"où"},
 ];
-const match1c=[
-  {left:'qui',right:'reemplaza el sujeto'},
-  {left:"que / qu'",right:'reemplaza el complemento directo'},
-  {left:'où',right:'reemplaza lugar o tiempo'},
+const match1c = [
+  {left:'qui',       right:'reemplaza el sujeto'},
+  {left:"que / qu'", right:'reemplaza el complemento directo'},
+  {left:'où',        right:'reemplaza lugar o tiempo'},
 ];
-const dialogueL1=[
-  {speaker:'f', name:'Charlotte', text:"Tu as vu le film dont tout le monde parle ?", translation:"¿Viste la película de la que todo el mundo habla?"},
-  {speaker:'m', name:'Lucas', text:"Oui ! C'est celui qui a gagné le festival de Cannes.", translation:"¡Sí! Es la que ganó el festival de Cannes."},
-  {speaker:'f', name:'Charlotte', text:"Exactement. C'est un film que j'ai adoré.", translation:"Exactamente. Es una película que adoré."},
-  {speaker:'m', name:'Lucas', text:"La ville où il a été tourné est magnifique aussi.", translation:"La ciudad donde fue filmada también es magnífica."},
+const dialogueL1 = [
+  {speaker:'f', name:'Charlotte', text:"Tu as vu le film dont tout le monde parle ?",                translation:"¿Viste la película de la que todo el mundo habla?"},
+  {speaker:'m', name:'Lucas',     text:"Oui ! C'est celui qui a gagné le festival de Cannes.",       translation:"¡Sí! Es la que ganó el festival de Cannes."},
+  {speaker:'f', name:'Charlotte', text:"Exactement. C'est un film que j'ai adoré.",                  translation:"Exactamente. Es una película que adoré."},
+  {speaker:'m', name:'Lucas',     text:"La ville où il a été tourné est magnifique aussi.",           translation:"La ciudad donde fue filmada también es magnífica."},
   {speaker:'f', name:'Charlotte', text:"Tu parles de Lyon ? C'est une ville où j'ai vécu deux ans.", translation:"¿Hablas de Lyon? Es una ciudad donde viví dos años."},
-  {speaker:'m', name:'Lucas', text:"Vraiment ? C'est une ville que je voudrais visiter.", translation:"¿En serio? Es una ciudad que me gustaría visitar."},
+  {speaker:'m', name:'Lucas',     text:"Vraiment ? C'est une ville que je voudrais visiter.",        translation:"¿En serio? Es una ciudad que me gustaría visitar."},
 ];
-const qcmEcoute1=[
-  {q:"¿Qué ganó la película mencionada?", opts:['El Oscar','El festival de Cannes','El BAFTA'], ans:1},
-  {q:"¿En qué ciudad fue filmada?", opts:['París','Cannes','Lyon'], ans:2},
-  {q:"¿Cuánto tiempo vivió ella en esa ciudad?", opts:['Un año','Dos años','Tres años'], ans:1},
+const qcmEcoute1 = [
+  {q:"¿Qué ganó la película mencionada?",        opts:['El Oscar','El festival de Cannes','El BAFTA'], ans:1},
+  {q:"¿En qué ciudad fue filmada?",              opts:['París','Cannes','Lyon'],                       ans:2},
+  {q:"¿Cuánto tiempo vivió ella en esa ciudad?", opts:['Un año','Dos años','Tres años'],               ans:1},
 ];
-const ra1=[
-  {phrase:"J'ai une amie qui parle espagnol.", translation:"Tengo una amiga que habla español.", voice:"f"},
+const ra1 = [
+  {phrase:"J'ai une amie qui parle espagnol.",       translation:"Tengo una amiga que habla español.",    voice:"f"},
   {phrase:"C'est un livre qui m'a beaucoup appris.", translation:"Es un libro que me ha enseñado mucho.", voice:"m"},
-  {phrase:"La ville où j'habite est très belle.", translation:"La ciudad donde vivo es muy bonita.", voice:"f"},
-  {phrase:"Le film qu'elle regarde est excellent.", translation:"La película que ella ve es excelente.", voice:"f"},
+  {phrase:"La ville où j'habite est très belle.",    translation:"La ciudad donde vivo es muy bonita.",   voice:"f"},
+  {phrase:"Le film qu'elle regarde est excellent.",  translation:"La película que ella ve es excelente.",  voice:"f"},
 ];
 
-const qcm2a=[
-  {q:'DONT reemplaza complementos introducidos por...', opts:['à','de','pour'], ans:1},
-  {q:"C'est un voyage ___ je me souviens encore.", opts:['qui','que','dont'], ans:2},
-  {q:"Elle a trouvé le travail ___ elle avait besoin.", opts:['dont','que','où'], ans:0},
-  {q:"J'ai un ami ___ la sœur est médecin. (posesión)", opts:['qui','dont','que'], ans:1},
-  {q:"¿Cuál es la diferencia entre DONT y DE QUI?", opts:['Son idénticos','DONT es más natural','DE QUI es más común'], ans:1},
+// ── LEÇON 2 — DONT ──
+const qcm2a = [
+  {q:'DONT reemplaza complementos introducidos por...',         opts:['à','de','pour'], ans:1},
+  {q:"C'est un voyage ___ je me souviens encore.",             opts:['qui','que','dont'], ans:2},
+  {q:"Elle a trouvé le travail ___ elle avait besoin.",         opts:['dont','que','où'], ans:0},
+  {q:"J'ai un ami ___ la sœur est médecin. (posesión)",        opts:['qui','dont','que'], ans:1},
+  {q:"¿Cuál es la diferencia entre DONT y DE QUI?",            opts:['Son idénticos','DONT es más natural','DE QUI es más común'], ans:1},
 ];
-const fill2b=[
+const fill2b = [
   {sentence:"C'est un acteur ___ j'admire beaucoup le talent.", answer:"dont"},
-  {sentence:"Il parle d'un projet ___ il est très fier.", answer:"dont"},
-  {sentence:"C'est une maison ___ les fenêtres sont grandes.", answer:"dont"},
-  {sentence:"Elle a le livre ___ tu as besoin.", answer:"dont"},
+  {sentence:"Il parle d'un projet ___ il est très fier.",       answer:"dont"},
+  {sentence:"C'est une maison ___ les fenêtres sont grandes.",  answer:"dont"},
+  {sentence:"Elle a le livre ___ tu as besoin.",                answer:"dont"},
 ];
-const dialogueL2=[
-  {speaker:'f', name:'Charlotte', text:"Tu connais ce chanteur dont tout le monde parle ?", translation:"¿Conoces a ese cantante del que todo el mundo habla?"},
-  {speaker:'m', name:'Lucas', text:"Oui, c'est celui dont la voix est incroyable.", translation:"Sí, es el de la voz increíble."},
-  {speaker:'f', name:'Charlotte', text:"C'est un artiste dont j'admire vraiment le talent.", translation:"Es un artista cuyo talento admiro de verdad."},
-  {speaker:'m', name:'Lucas', text:"Il vient d'un pays dont je ne connais pas bien la langue.", translation:"Viene de un país cuya lengua no conozco bien."},
+const dialogueL2 = [
+  {speaker:'f', name:'Charlotte', text:"Tu connais ce chanteur dont tout le monde parle ?",             translation:"¿Conoces a ese cantante del que todo el mundo habla?"},
+  {speaker:'m', name:'Lucas',     text:"Oui, c'est celui dont la voix est incroyable.",                 translation:"Sí, es el de la voz increíble."},
+  {speaker:'f', name:'Charlotte', text:"C'est un artiste dont j'admire vraiment le talent.",             translation:"Es un artista cuyo talento admiro de verdad."},
+  {speaker:'m', name:'Lucas',     text:"Il vient d'un pays dont je ne connais pas bien la langue.",      translation:"Viene de un país cuya lengua no conozco bien."},
   {speaker:'f', name:'Charlotte', text:"Il est brésilien. Le portugais est une langue dont les sons sont très beaux.", translation:"Es brasileño. El portugués es una lengua cuyos sonidos son muy bonitos."},
 ];
-const qcmEcoute2=[
-  {q:"¿De quién hablan?", opts:['Un actor','Un chanteur','Un sportif'], ans:1},
-  {q:"¿Qué destacan de él?", opts:['Su aspecto','Su voz','Su fortuna'], ans:1},
-  {q:"¿De dónde viene el artista?", opts:['Argentina','España','Brasil'], ans:2},
+const qcmEcoute2 = [
+  {q:"¿De quién hablan?",           opts:['Un actor','Un chanteur','Un sportif'], ans:1},
+  {q:"¿Qué destacan de él?",        opts:['Su aspecto','Su voz','Su fortuna'],    ans:1},
+  {q:"¿De dónde viene el artista?", opts:['Argentina','España','Brasil'],         ans:2},
 ];
-const ra2=[
-  {phrase:"C'est un voyage dont je me souviens encore.", translation:"Es un viaje que todavía recuerdo.", voice:"m"},
-  {phrase:"Elle a trouvé le travail dont elle avait besoin.", translation:"Encontró el trabajo que necesitaba.", voice:"f"},
-  {phrase:"Il parle d'un projet dont il est très fier.", translation:"Habla de un proyecto del que está muy orgulloso.", voice:"m"},
+const ra2 = [
+  {phrase:"C'est un voyage dont je me souviens encore.",          translation:"Es un viaje que todavía recuerdo.",                 voice:"m"},
+  {phrase:"Elle a trouvé le travail dont elle avait besoin.",      translation:"Encontró el trabajo que necesitaba.",               voice:"f"},
+  {phrase:"Il parle d'un projet dont il est très fier.",           translation:"Habla de un proyecto del que está muy orgulloso.", voice:"m"},
 ];
 
-const qcm3a=[
-  {q:"¿Cuándo se usan los pronombres relativos compuestos?", opts:['Siempre','Con preposición distinta de DE','Solo en escrito'], ans:1},
-  {q:'La table ___ je travaille est grande. (sur)', opts:['sur qui','sur laquelle','sur que'], ans:1},
-  {q:'Le problème ___ je pense est complexe. (à)', opts:['auquel','à qui','à que'], ans:0},
-  {q:'À + lequel =', opts:['duquel','auquel','lequel'], ans:1},
-  {q:'De + lequel =', opts:['duquel','auquel','lequel'], ans:0},
+// ── LEÇON 3 — LEQUEL ──
+const qcm3a = [
+  {q:"¿Cuándo se usan los pronombres relativos compuestos?",    opts:['Siempre','Con preposición distinta de DE','Solo en escrito'], ans:1},
+  {q:'La table ___ je travaille est grande. (sur)',             opts:['sur qui','sur laquelle','sur que'], ans:1},
+  {q:'Le problème ___ je pense est complexe. (à)',              opts:['auquel','à qui','à que'], ans:0},
+  {q:'À + lequel =',                                           opts:['duquel','auquel','lequel'], ans:1},
+  {q:'De + lequel =',                                          opts:['duquel','auquel','lequel'], ans:0},
 ];
-const fill3b=[
-  {sentence:"La lettre ___ elle répond est longue. (à, fém.)", answer:"à laquelle"},
+const fill3b = [
+  {sentence:"La lettre ___ elle répond est longue. (à, fém.)",                   answer:"à laquelle"},
   {sentence:"Les événements ___ il participe sont importants. (à, plur. masc.)", answer:"auxquels"},
-  {sentence:"C'est le problème ___ je pense. (à, masc.)", answer:"auquel"},
-  {sentence:"C'est l'outil ___ j'ai besoin. (de)", answer:"dont"},
+  {sentence:"C'est le problème ___ je pense. (à, masc.)",                        answer:"auquel"},
+  {sentence:"C'est l'outil ___ j'ai besoin. (de)",                               answer:"dont"},
 ];
-const dialogueL3=[
-  {speaker:'f', name:'Charlotte', text:"Quel est le projet sur lequel tu travailles en ce moment ?", translation:"¿En qué proyecto estás trabajando ahora?"},
-  {speaker:'m', name:'Lucas', text:"C'est un projet auquel je pense depuis longtemps.", translation:"Es un proyecto en el que llevo mucho tiempo pensando."},
-  {speaker:'f', name:'Charlotte', text:"C'est le type de travail pour lequel tu es vraiment qualifié.", translation:"Es el tipo de trabajo para el que estás realmente cualificado."},
-  {speaker:'m', name:'Lucas', text:"Oui, c'est une opportunité à laquelle je ne veux pas renoncer.", translation:"Sí, es una oportunidad a la que no quiero renunciar."},
+const dialogueL3 = [
+  {speaker:'f', name:'Charlotte', text:"Quel est le projet sur lequel tu travailles en ce moment ?",        translation:"¿En qué proyecto estás trabajando ahora?"},
+  {speaker:'m', name:'Lucas',     text:"C'est un projet auquel je pense depuis longtemps.",                  translation:"Es un proyecto en el que llevo mucho tiempo pensando."},
+  {speaker:'f', name:'Charlotte', text:"C'est le type de travail pour lequel tu es vraiment qualifié.",     translation:"Es el tipo de trabajo para el que estás realmente cualificado."},
+  {speaker:'m', name:'Lucas',     text:"Oui, c'est une opportunité à laquelle je ne veux pas renoncer.",    translation:"Sí, es una oportunidad a la que no quiero renunciar."},
   {speaker:'f', name:'Charlotte', text:"Les défis auxquels tu feras face seront importants mais surmontables.", translation:"Los desafíos a los que te enfrentarás serán importantes pero superables."},
 ];
-const qcmEcoute3=[
-  {q:"¿Sobre qué hablan?", opts:['Un viaje','Un proyecto de trabajo','Una película'], ans:1},
+const qcmEcoute3 = [
+  {q:"¿Sobre qué hablan?",                        opts:['Un viaje','Un proyecto de trabajo','Una película'], ans:1},
   {q:"¿Desde cuándo piensa él en este proyecto?", opts:['Hace poco','Desde hace mucho tiempo','Desde ayer'], ans:1},
-  {q:"¿Cómo describe ella los desafíos?", opts:['Imposibles','Fáciles','Importantes pero superables'], ans:2},
+  {q:"¿Cómo describe ella los desafíos?",         opts:['Imposibles','Fáciles','Importantes pero superables'], ans:2},
 ];
-const ra3=[
-  {phrase:"La table sur laquelle je travaille est grande.", translation:"La mesa sobre la que trabajo es grande.", voice:"f"},
-  {phrase:"Le problème auquel je pense est complexe.", translation:"El problema en el que pienso es complejo.", voice:"m"},
+const ra3 = [
+  {phrase:"La table sur laquelle je travaille est grande.",        translation:"La mesa sobre la que trabajo es grande.",           voice:"f"},
+  {phrase:"Le problème auquel je pense est complexe.",             translation:"El problema en el que pienso es complejo.",         voice:"m"},
   {phrase:"Les événements auxquels il participe sont importants.", translation:"Los eventos en los que participa son importantes.", voice:"m"},
 ];
 
-const qcm4a=[
+// ── LEÇON 4 — PHRASES COMPLEXES ──
+const qcm4a = [
   {q:"A2→B1 : 'J'ai un ami. Il est médecin. Il habite à Paris.' → B1 :", opts:["J'ai un ami qui est médecin et qui habite à Paris.","J'ai un ami que est médecin que habite à Paris.","J'ai un ami, il est médecin, il habite à Paris."], ans:0},
   {q:"¿Cuántos pronombres relativos máximo en una frase?", opts:['1','2','Sin límite'], ans:1},
-  {q:'Relativa DÉTERMINATIVE :', opts:['Entre comas, info secundaria','Precisa de qué elemento se habla','Siempre con DONT'], ans:1},
-  {q:'Relativa EXPLICATIVE :', opts:['Entre comas, info secundaria','Precisa de qué elemento se habla','Solo con QUI'], ans:0},
+  {q:'Relativa DÉTERMINATIVE :',  opts:['Entre comas, info secundaria','Precisa de qué elemento se habla','Siempre con DONT'], ans:1},
+  {q:'Relativa EXPLICATIVE :',    opts:['Entre comas, info secundaria','Precisa de qué elemento se habla','Solo con QUI'], ans:0},
 ];
-const fill4b=[
+const fill4b = [
   {sentence:"C'est un livre ___ j'ai lu l'été dernier et ___ m'a beaucoup marqué.", answer:"que|qui"},
-  {sentence:"C'est une ville ___ j'ai grandi et ___ je garde un bon souvenir.", answer:"où|dont"},
-  {sentence:"Mon frère, ___ habite à Lyon, viendra ce week-end.", answer:"qui"},
+  {sentence:"C'est une ville ___ j'ai grandi et ___ je garde un bon souvenir.",     answer:"où|dont"},
+  {sentence:"Mon frère, ___ habite à Lyon, viendra ce week-end.",                   answer:"qui"},
 ];
-const dialogueL4=[
-  {speaker:'f', name:'Charlotte', text:"Je cherche un appartement qui soit grand et dont le loyer soit raisonnable.", translation:"Busco un apartamento que sea grande y cuyo alquiler sea razonable."},
-  {speaker:'m', name:'Lucas', text:"J'en connais un qui est situé dans un quartier où il y a beaucoup de commerces.", translation:"Conozco uno en un barrio donde hay muchos comercios."},
-  {speaker:'f', name:'Charlotte', text:"C'est exactement le type d'endroit dont j'ai besoin.", translation:"Es exactamente el tipo de lugar que necesito."},
-  {speaker:'m', name:'Lucas', text:"C'est un appartement que le propriétaire, qui est très sympa, vient de rénover.", translation:"Es un apartamento que el propietario, muy simpático, acaba de renovar."},
-  {speaker:'f', name:'Charlotte', text:"C'est le genre d'offre pour laquelle je ne veux pas attendre !", translation:"¡Es el tipo de oferta por la que no quiero esperar!"},
+const dialogueL4 = [
+  {speaker:'f', name:'Charlotte', text:"Je cherche un appartement qui soit grand et dont le loyer soit raisonnable.",    translation:"Busco un apartamento que sea grande y cuyo alquiler sea razonable."},
+  {speaker:'m', name:'Lucas',     text:"J'en connais un qui est situé dans un quartier où il y a beaucoup de commerces.", translation:"Conozco uno en un barrio donde hay muchos comercios."},
+  {speaker:'f', name:'Charlotte', text:"C'est exactement le type d'endroit dont j'ai besoin.",                          translation:"Es exactamente el tipo de lugar que necesito."},
+  {speaker:'m', name:'Lucas',     text:"C'est un appartement que le propriétaire, qui est très sympa, vient de rénover.", translation:"Es un apartamento que el propietario, muy simpático, acaba de renovar."},
+  {speaker:'f', name:'Charlotte', text:"C'est le genre d'offre pour laquelle je ne veux pas attendre !",                translation:"¡Es el tipo de oferta por la que no quiero esperar!"},
 ];
-const qcmEcoute4=[
-  {q:"¿Qué busca ella?", opts:['Una casa','Un appartement','Una oficina'], ans:1},
-  {q:"¿Qué describe el barrio?", opts:['Tranquilo y sin comercios','Con muchos comercios','Lejos del centro'], ans:1},
-  {q:"¿Qué hizo el propietario recientemente?", opts:['Vendió el apartamento','Renovó el apartamento','Subió el alquiler'], ans:1},
+const qcmEcoute4 = [
+  {q:"¿Qué busca ella?",                          opts:['Una casa','Un appartement','Una oficina'],                   ans:1},
+  {q:"¿Qué describe el barrio?",                  opts:['Tranquilo y sin comercios','Con muchos comercios','Lejos del centro'], ans:1},
+  {q:"¿Qué hizo el propietario recientemente?",   opts:['Vendió el apartamento','Renovó el apartamento','Subió el alquiler'], ans:1},
 ];
-const ra4=[
-  {phrase:"J'ai un ami qui est médecin et qui habite à Paris.", translation:"Tengo un amigo que es médico y que vive en París.", voice:"m"},
+const ra4 = [
+  {phrase:"J'ai un ami qui est médecin et qui habite à Paris.",                    translation:"Tengo un amigo que es médico y que vive en París.",                   voice:"m"},
   {phrase:"C'est une ville où j'ai grandi et dont je garde un très bon souvenir.", translation:"Es una ciudad donde crecí y de la que guardo un muy buen recuerdo.", voice:"f"},
-  {phrase:"Mon frère, qui habite à Lyon, viendra ce week-end.", translation:"Mi hermano, que vive en Lyon, vendrá este fin de semana.", voice:"m"},
+  {phrase:"Mon frère, qui habite à Lyon, viendra ce week-end.",                    translation:"Mi hermano, que vive en Lyon, vendrá este fin de semana.",            voice:"m"},
 ];
 
-
-// ── Dialogue Listen Engine (phase 1 + phase 2 karaoke) ──
-const dlTally={}, dlDataStore={};
-function registerDL(id,data){dlDataStore[id]=data;}
-
-function buildDialogueListen(cid,data,accentColor){
-  const c=document.getElementById(cid);if(!c)return;c.innerHTML='';
-  const ph1=document.createElement('div');ph1.id=cid+'_phase1';
-  const lb=document.createElement('div');lb.style.cssText='text-align:center;padding:20px 0 24px';
-  lb.innerHTML='<div style="font-size:13px;color:#7a7a8c;margin-bottom:14px;font-style:italic">Escucha el diálogo completo, luego responde las preguntas sin ver el texto.</div>'+
-    '<button id="'+cid+'_listenAll" onclick="playDialogueFull(\''+cid+'\',dlDataStore[\''+cid+'\'])" style="background:'+accentColor+';color:white;border:none;border-radius:12px;padding:14px 28px;font-size:15px;font-weight:800;cursor:pointer;font-family:\'Nunito\',sans-serif;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 16px rgba(0,0,0,.12)">🔊 Écouter le dialogue</button>'+
-    '<div id="'+cid+'_playing" style="margin-top:10px;font-size:12px;color:'+accentColor+';font-weight:700;display:none">▶ En cours…</div>';
-  ph1.appendChild(lb);
-  const ql=document.createElement('div');ql.style.cssText='font-size:12px;font-weight:800;color:'+accentColor+';text-transform:uppercase;letter-spacing:1px;margin-bottom:10px';
-  ql.textContent='🧠 Comprensión — responde sin ver el texto';ph1.appendChild(ql);
-  data.qcm.forEach((q,qi)=>{
-    const d=document.createElement('div');d.className='qcm-item';
-    d.innerHTML='<div class="q-label">Pregunta '+(qi+1)+'</div><div class="q-text">'+q.q+'</div>'+
-      '<div class="opts" id="'+cid+'_opts_'+qi+'">'+q.opts.map((o,oi)=>'<button class="opt" onclick="answerDLQ(\''+cid+'\','+qi+','+oi+','+q.ans+','+data.qcm.length+')">'+o+'</button>').join('')+'</div>'+
-      '<div class="fb" id="'+cid+'_fb_'+qi+'"></div>';
-    ph1.appendChild(d);
-  });
-  const sc=document.createElement('div');sc.className='score-box';sc.id=cid+'_score';sc.style.background=accentColor+'22';
-  sc.innerHTML='<div class="score-emoji" id="'+cid+'_sc_em"></div><div class="score-num" id="'+cid+'_sc_n" style="color:'+accentColor+'"></div><div class="score-msg" id="'+cid+'_sc_m"></div>';
-  ph1.appendChild(sc);c.appendChild(ph1);
-  // Phase 2
-  const ph2=document.createElement('div');ph2.id=cid+'_phase2';ph2.style.display='none';
-  ph2.innerHTML='<div style="font-size:12px;font-weight:800;color:'+accentColor+';text-transform:uppercase;letter-spacing:1px;margin:18px 0 10px">📖 Transcripción del diálogo</div>';
-  const dw=document.createElement('div');dw.style.cssText='background:#1a1a2e;border:1.5px solid #2a2a4e;border-radius:14px;padding:16px 18px';
-  data.lines.forEach((line,li)=>{
-    const isF=line.speaker==='f';const al=isF?'#e63946':'#2a7dd1';const bl=isF?'#fdecea':'#deeeff';
-    const words=line.text.split(' ');
-    const ws=words.map((w,wi)=>'<span id="'+cid+'_w'+li+'_'+wi+'" style="color:rgba(255,255,255,0.5);transition:color .12s">'+w+'</span>').join(' ');
-    const row=document.createElement('div');row.style.cssText='display:flex;align-items:flex-start;gap:10px;margin-bottom:'+(li<data.lines.length-1?'16':'0')+'px';
-    row.innerHTML='<button onclick="playLineKaraoke(\''+cid+'\','+li+',dlDataStore[\''+cid+'\'].lines['+li+'],this)" style="flex-shrink:0;width:34px;height:34px;border-radius:50%;border:1.5px solid '+al+';background:'+bl+';cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center">🔊</button>'+
-      '<div style="flex:1"><div style="font-size:11px;font-weight:800;color:'+al+';margin-bottom:4px">'+(line.name||line.speaker)+'</div>'+
-      '<div style="font-family:\'Playfair Display\',serif;font-size:15px;font-weight:700;line-height:1.6">'+ws+'</div>'+
-      '<div style="font-size:11px;color:rgba(255,255,255,.35);margin-top:4px;font-style:italic">'+(line.translation||'')+'</div></div>';
-    dw.appendChild(row);
-  });
-  ph2.appendChild(dw);c.appendChild(ph2);
-}
-
-async function playDialogueFull(cid,data){
-  const btn=document.getElementById(cid+'_listenAll');const ind=document.getElementById(cid+'_playing');
-  if(!data)return;if(btn)btn.disabled=true;if(ind)ind.style.display='block';
-  for(const line of data.lines){await speakPromise(line.text,line.speaker==='f'?VOICE_F:VOICE_M);await new Promise(r=>setTimeout(r,320));}
-  if(btn){btn.disabled=false;btn.innerHTML='🔊 Écouter à nouveau';}if(ind)ind.style.display='none';
-}
-function speakPromise(text,voiceId){
-  if(!EL_KEY){return new Promise(res=>{const u=new SpeechSynthesisUtterance(text);u.lang='fr-FR';u.rate=0.88;u.onend=res;window.speechSynthesis.cancel();window.speechSynthesis.speak(u);});}
-  return fetch('https://api.elevenlabs.io/v1/text-to-speech/'+voiceId,{method:'POST',headers:{'xi-api-key':EL_KEY,'Content-Type':'application/json'},body:JSON.stringify({text,model_id:'eleven_multilingual_v2',language_code:'fr',voice_settings:{stability:0.5,similarity_boost:0.75}})})
-  .then(r=>r.blob()).then(blob=>new Promise(res=>{const url=URL.createObjectURL(blob);const a=new Audio(url);a.play();a.onended=()=>{URL.revokeObjectURL(url);res();};}))
-  .catch(()=>speakPromise(text,null));
-}
-async function playLineKaraoke(cid,li,line,btn){
-  if(!line)return;const words=line.text.split(' ');const voiceId=line.speaker==='f'?VOICE_F:VOICE_M;
-  btn.disabled=true;words.forEach((_,wi)=>{const s=document.getElementById(cid+'_w'+li+'_'+wi);if(s)s.style.color='rgba(255,255,255,0.5)';});
-  const sk=dur=>{const ms=(dur*1000)/words.length;words.forEach((_,wi)=>setTimeout(()=>{const s=document.getElementById(cid+'_w'+li+'_'+wi);if(s)s.style.color='#ffd166';},wi*ms));setTimeout(()=>btn.disabled=false,dur*1000+200);};
-  if(!EL_KEY){const u=new SpeechSynthesisUtterance(line.text);u.lang='fr-FR';u.rate=0.88;window.speechSynthesis.cancel();window.speechSynthesis.speak(u);sk(words.length*0.42);return;}
-  try{const r=await fetch('https://api.elevenlabs.io/v1/text-to-speech/'+voiceId,{method:'POST',headers:{'xi-api-key':EL_KEY,'Content-Type':'application/json'},body:JSON.stringify({text:line.text,model_id:'eleven_multilingual_v2',language_code:'fr',voice_settings:{stability:0.5,similarity_boost:0.75}})});
-  const blob=await r.blob();const url=URL.createObjectURL(blob);const audio=new Audio(url);
-  audio.addEventListener('loadedmetadata',()=>sk(audio.duration));audio.play();audio.onended=()=>{URL.revokeObjectURL(url);btn.disabled=false;};}catch{btn.disabled=false;}
-}
-function answerDLQ(cid,qi,chosen,correct,total){
-  const key=cid+'_'+qi;if(dlTally[key])return;dlTally[key]={done:true,wasCorrect:chosen===correct};
-  const opts=document.querySelectorAll('#'+cid+'_opts_'+qi+' .opt');
-  opts.forEach((b,i)=>{b.disabled=true;if(i===correct)b.classList.add('correct');else if(i===chosen&&chosen!==correct)b.classList.add('wrong');});
-  const fb=document.getElementById(cid+'_fb_'+qi);
-  fb.textContent=chosen===correct?'✅ ¡Correcto!':'❌ '+opts[correct].textContent;
-  fb.style.cssText='color:'+(chosen===correct?'#1d7a4c':'#c0392b')+';font-size:12px;margin-top:6px;font-weight:700';
-  let answered=0,good=0;for(let i=0;i<total;i++){if(dlTally[cid+'_'+i]){answered++;if(dlTally[cid+'_'+i].wasCorrect)good++;}}
-  if(answered===total){
-    const sc=document.getElementById(cid+'_score');if(sc){sc.classList.add('show');const pct=good/total;
-      document.getElementById(cid+'_sc_em').textContent=pct>=.75?'🎉':pct>=.5?'👍':'💪';
-      document.getElementById(cid+'_sc_n').textContent=good+' / '+total;
-      document.getElementById(cid+'_sc_m').textContent=pct>=.75?'¡Excelente comprensión!':pct>=.5?'¡Bien! Vuelve a escuchar.':'Escucha el diálogo otra vez.';
-      sc.scrollIntoView({behavior:'smooth',block:'nearest'});}
-    setTimeout(()=>{const p2=document.getElementById(cid+'_phase2');if(p2){p2.style.display='block';p2.scrollIntoView({behavior:'smooth',block:'nearest'});}},900);
-  }
-}
-
-
-function checkFill(formId, scoreId){
-  const items = document.querySelectorAll('#'+formId+' .fill-item');
-  let correct=0, total=0;
-  items.forEach(item=>{
-    const inp = item.querySelector('input');
-    if(!inp) return;
-    total++;
-    const answers = inp.getAttribute('data-answer').split('|');
-    const val = inp.value.trim().toLowerCase().replace(/['']/g,"'");
-    const ok = answers.some(a=>a.toLowerCase().replace(/['']/g,"'")===val);
-    inp.style.borderColor = ok ? '#2eaa6b' : '#e63946';
-    if(ok) correct++;
-  });
-  const sc=document.getElementById(scoreId);
-  if(sc){
-    sc.style.display='block';
-    document.getElementById(scoreId+'-em').textContent = correct===total?'🎉':correct>=total/2?'👍':'💪';
-    document.getElementById(scoreId+'-n').textContent = correct+'/'+total;
-    document.getElementById(scoreId+'-m').textContent = correct===total?'¡Perfecto!':correct>=total*0.7?'¡Muy bien!':'¡Sigue intentando!';
-  }
-}
-
-document.addEventListener('DOMContentLoaded',()=>{
+// ══ INITIALISATION ══
+document.addEventListener('DOMContentLoaded', function() {
   window.speechSynthesis.getVoices();
-  if(window.speechSynthesis.onvoiceschanged!==undefined)
-    window.speechSynthesis.onvoiceschanged=()=>window.speechSynthesis.getVoices();
-  
-  buildQCM('ex1a',qcm1a,'sc1a','var(--l1)');
-  buildFill('ex1b',fill1b);
-  buildMatch('ex1c',match1c,'sc1c');
-  buildDialogueListen('dial1',{lines:dialogueL1,qcm:qcmEcoute1},'var(--l1)');registerDL('dial1',{lines:dialogueL1,qcm:qcmEcoute1});
-  buildReadAloud('ra1',ra1,'var(--l1)');
-  buildQCM('ex2a',qcm2a,'sc2a','var(--l2)');
-  buildFill('ex2b',fill2b);
-  buildDialogueListen('dial2',{lines:dialogueL2,qcm:qcmEcoute2},'var(--l2)');registerDL('dial2',{lines:dialogueL2,qcm:qcmEcoute2});
-  buildReadAloud('ra2',ra2,'var(--l2)');
-  buildQCM('ex3a',qcm3a,'sc3a','var(--l3)');
-  buildFill('ex3b',fill3b);
-  buildDialogueListen('dial3',{lines:dialogueL3,qcm:qcmEcoute3},'var(--l3)');registerDL('dial3',{lines:dialogueL3,qcm:qcmEcoute3});
-  buildReadAloud('ra3',ra3,'var(--l3)');
-  buildQCM('ex4a',qcm4a,'sc4a','var(--l4)');
-  buildFill('ex4b',fill4b);
-  buildDialogueListen('dial4',{lines:dialogueL4,qcm:qcmEcoute4},'var(--l4)');registerDL('dial4',{lines:dialogueL4,qcm:qcmEcoute4});
-  buildReadAloud('ra4',ra4,'var(--l4)');
+  if (window.speechSynthesis.onvoiceschanged !== undefined)
+    window.speechSynthesis.onvoiceschanged = function() { window.speechSynthesis.getVoices(); };
+
+  buildQCM('ex1a', qcm1a, 'sc1a', 'var(--l1)');
+  buildFill('ex1b', fill1b);
+  buildMatch('ex1c', match1c, 'sc1c');
+  buildDialogueListen('dial1', {lines: dialogueL1, qcm: qcmEcoute1}, 'var(--l1)');
+  registerDL('dial1', {lines: dialogueL1, qcm: qcmEcoute1});
+  buildReadAloud('ra1', ra1, 'var(--l1)');
+
+  buildQCM('ex2a', qcm2a, 'sc2a', 'var(--l2)');
+  buildFill('ex2b', fill2b);
+  buildDialogueListen('dial2', {lines: dialogueL2, qcm: qcmEcoute2}, 'var(--l2)');
+  registerDL('dial2', {lines: dialogueL2, qcm: qcmEcoute2});
+  buildReadAloud('ra2', ra2, 'var(--l2)');
+
+  buildQCM('ex3a', qcm3a, 'sc3a', 'var(--l3)');
+  buildFill('ex3b', fill3b);
+  buildDialogueListen('dial3', {lines: dialogueL3, qcm: qcmEcoute3}, 'var(--l3)');
+  registerDL('dial3', {lines: dialogueL3, qcm: qcmEcoute3});
+  buildReadAloud('ra3', ra3, 'var(--l3)');
+
+  buildQCM('ex4a', qcm4a, 'sc4a', 'var(--l4)');
+  buildFill('ex4b', fill4b);
+  buildDialogueListen('dial4', {lines: dialogueL4, qcm: qcmEcoute4}, 'var(--l4)');
+  registerDL('dial4', {lines: dialogueL4, qcm: qcmEcoute4});
+  buildReadAloud('ra4', ra4, 'var(--l4)');
 
   buildMobNav();
-  buildELModal();
+  if (typeof buildELModal === 'function') buildELModal();
 });
 </script>
 </body>
