@@ -1,69 +1,617 @@
-<!DOCTYPE html>
-<html lang="es">
+<\!DOCTYPE html>
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Français B1 · Module 1</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<title>Français B1 · Module 1 — Pronoms relatifs</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="auth.js"></script>
-<script src="moteur.js" defer></script>
+<script src="moteur.js"></script>
 <style>
-/* (le même style que dans ton A1 module 1) */
-* { box-sizing: border-box; margin:0; padding:0; }
-.sidebar-logo span { color: var(--l1); }
-.nav-btn:hover { background: var(--bg); color: var(--text); }
-.nav-btn.active { color: var(--white); }
-.nav-btn .nav-icon { font-size: 18px; width: 24px; text-align: center; }
-.nav-btn[data-lesson="1"].active { background: var(--l1); }
-.nav-btn[data-lesson="2"].active { background: var(--l2); }
-.nav-btn[data-lesson="3"].active { background: var(--l3); }
-.nav-btn[data-lesson="4"].active { background: var(--l4); }
-.nav-btn[data-lesson="1"]:not(.active):hover { background: var(--l1l); color: var(--l1d); }
-.nav-btn[data-lesson="2"]:not(.active):hover { background: var(--l2l); color: var(--l2d); }
-.nav-btn[data-lesson="3"]:not(.active):hover { background: var(--l3l); color: var(--l3d); }
-.nav-btn[data-lesson="4"]:not(.active):hover { background: var(--l4l); color: var(--l4d); }
-.lesson-panel { display: none; }
-.lesson-panel.active { display: block; animation: fadeIn .3s ease; }
-@keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
-.lesson-meta { flex: 1; }
-/* ... tout le reste du style de ton a1-module1.html ... */
+*{box-sizing:border-box;margin:0;padding:0}
+.sidebar-logo span{color:var(--b1)}
+.nav-btn[data-l="1"].active{background:var(--l1);color:white}
+.nav-btn[data-l="2"].active{background:var(--l2);color:white}
+.nav-btn[data-l="3"].active{background:var(--l3);color:white}
+.nav-btn[data-l="4"].active{background:var(--l4);color:white}
+.nav-btn[data-l="1"]:not(.active):hover{background:var(--l1l);color:var(--l1d)}
+.nav-btn[data-l="2"]:not(.active):hover{background:var(--l2l);color:var(--l2d)}
+.nav-btn[data-l="3"]:not(.active):hover{background:var(--l3l);color:var(--l3d)}
+.nav-btn[data-l="4"]:not(.active):hover{background:var(--l4l);color:var(--l4d)}
+.lesson-panel{display:none}.lesson-panel.active{display:block;animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.theory-box{background:var(--l2l);border-left:4px solid var(--l2);border-radius:0 12px 12px 0;padding:16px 18px;margin-bottom:20px}
+.theory-title{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--l2d);margin-bottom:10px}
+.theory-table{width:100%;border-collapse:collapse;font-size:13px}
+.theory-table th{text-align:left;padding:6px 10px;background:rgba(42,125,209,.15);font-weight:800;color:var(--l2d)}
+.theory-table td{padding:6px 10px;border-bottom:1px solid rgba(42,125,209,.1)}
+.theory-table tr:last-child td{border-bottom:none}
+.theory-table em{font-style:italic;color:var(--l3d);font-weight:600}
+.qcm-item{margin-bottom:22px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt:hover:not(:disabled){border-color:var(--text);background:var(--white)}
+.opt:disabled{cursor:default}
+.opt.correct{border-color:var(--l4);background:var(--l4l);color:var(--l4d)}
+.opt.wrong{border-color:var(--l1);background:var(--l1l);color:var(--l1d)}
+.fb{margin-top:8px;padding:8px 14px;border-radius:8px;font-size:13px;font-weight:600;display:none}
+.fb.show{display:block}.fb.ok{background:var(--l4l);color:var(--l4d)}.fb.nope{background:var(--l1l);color:var(--l1d)}
+.fill-item{margin-bottom:16px}
+.fill-sentence{font-size:15px;font-weight:600;color:var(--text);margin-bottom:8px;line-height:1.7}
+.fill-input:focus{border-color:var(--l2)}
+.fill-input.ok{border-color:var(--l4);background:var(--l4l);color:var(--l4d)}
+.fill-input.nope{border-color:var(--l1);background:var(--l1l);color:var(--l1d)}
+.fill-hint{font-size:12px;color:var(--muted);margin-top:4px;font-style:italic}
+.match-wrap{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.match-col-title{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;text-align:center}
+.match-col{display:flex;flex-direction:column;gap:8px}
+.match-item.selected{border-color:var(--l2);background:var(--l2l);color:var(--l2d)}
+.match-item.matched-ok{border-color:var(--l4);background:var(--l4l);color:var(--l4d);pointer-events:none}
+.match-item.matched-err{border-color:var(--l1);background:var(--l1l);color:var(--l1d);animation:shake .3s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.match-score{margin-top:14px;text-align:center;font-size:14px;font-weight:700;color:var(--muted)}
+.score-box{border-radius:16px;padding:24px;text-align:center;margin-top:20px;display:none}
+.score-box.show{display:block}
+.score-emoji{font-size:48px;display:block;margin-bottom:10px}
+.score-msg{font-size:16px;font-weight:800;color:var(--text);margin-bottom:4px}
+.score-sub{font-size:13px;color:var(--muted)}
 </style>
 </head>
 <body>
-
-<div class="mob-nav" id="mobNav"></div>
-<a class="sidebar-back" href="index.html">← Volver al inicio</a>
-
 <div class="app">
-<nav class="sidebar">
-  <div class="sidebar-logo">Français B1<br><span>Module 1</span></div>
-  <button class="nav-btn active" data-lesson="1" onclick="showLesson(1,this)"><span class="nav-icon">🔗</span> Leçon 1 — Qui, que, où <span class="nav-badge">5 ex.</span></button>
-  <button class="nav-btn" data-lesson="2" onclick="showLesson(2,this)"><span class="nav-icon">🔄</span> Leçon 2 — Dont <span class="nav-badge">4 ex.</span></button>
-  <button class="nav-btn" data-lesson="3" onclick="showLesson(3,this)"><span class="nav-icon">📐</span> Leçon 3 — Lequel <span class="nav-badge">4 ex.</span></button>
-  <button class="nav-btn" data-lesson="4" onclick="showLesson(4,this)"><span class="nav-icon">✍️</span> Leçon 4 — Phrases complexes <span class="nav-badge">4 ex.</span></button>
-</nav>
 
-<main class="main">
-<!-- Panneaux pour chaque leçon, avec les ids "panel-1", "panel-2", etc. -->
-<!-- Le contenu est identique à ce que tu avais, mais sans les scripts redondants -->
-</main>
+  <aside class="sidebar">
+    <a class="sidebar-back" href="index.html">← Volver al inicio</a>
+    <div class="sidebar-logo">Module 1 · <span>B1</span></div>
+    <button class="nav-btn active" data-l="1" onclick="showLesson(0,this)">
+      <span class="nav-icon">🔗</span>Qui &amp; Que<span class="nav-badge">5 ex.</span>
+    </button>
+    <button class="nav-btn" data-l="2" onclick="showLesson(1,this)">
+      <span class="nav-icon">📍</span>Où &amp; Quand<span class="nav-badge">5 ex.</span>
+    </button>
+    <button class="nav-btn" data-l="3" onclick="showLesson(2,this)">
+      <span class="nav-icon">🔑</span>Dont<span class="nav-badge">6 ex.</span>
+    </button>
+    <button class="nav-btn" data-l="4" onclick="showLesson(3,this)">
+      <span class="nav-icon">⚙️</span>Lequel / Auquel<span class="nav-badge">5 ex.</span>
+    </button>
+  </aside>
+
+  <main class="main">
+
+    <\!-- ══════════════════════════════════════════
+         LEÇON 0 — QUI & QUE
+         ══════════════════════════════════════════ -->
+    <div class="lesson-panel active" data-lesson="0">
+      <h2 class="lesson-title" style="color:var(--l1);">🔗 Les pronoms relatifs <em>qui</em> et <em>que</em></h2>
+
+      <div class="theory-box">
+        <div class="theory-title">📚 Rappel grammatical</div>
+        <table class="theory-table">
+          <tr><th>Pronom</th><th>Fonction</th><th>Exemple</th></tr>
+          <tr><td><strong>qui</strong></td><td>Sujet du verbe qui suit</td><td><em>C'est l'ami qui parle vite.</em></td></tr>
+          <tr><td><strong>que / qu'</strong></td><td>Complément d'objet direct</td><td><em>Le film que j'ai vu était super.</em></td></tr>
+        </table>
+        <p style="font-size:12px;color:var(--muted);margin-top:10px;">💡 <strong>qui</strong> = sujeto &nbsp;|&nbsp; <strong>que</strong> = complemento directo. Ante vocal, <em>que</em> → <em>qu'</em>.</p>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l1d);">Ejercicio 1 · ¿Qui o que?</div>
+        <div class="ex-instr">Elige el pronombre relativo correcto para cada oración.</div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">1. C'est le professeur ___ enseigne le français. <button class="btn-mini" onclick="speakEL('C\'est le professeur qui enseigne le français.','f')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc0',st0)">qui</button>
+            <button class="opt" data-correct="false" data-correction="qui" onclick="checkQCM(this,false,'sc0',st0)">que</button>
+            <button class="opt" data-correct="false" data-correction="qui" onclick="checkQCM(this,false,'sc0',st0)">dont</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">2. Le livre ___ tu lis est très intéressant. <button class="btn-mini" onclick="speakEL('Le livre que tu lis est très intéressant.','f')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="que" onclick="checkQCM(this,false,'sc0',st0)">qui</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc0',st0)">que</button>
+            <button class="opt" data-correct="false" data-correction="que" onclick="checkQCM(this,false,'sc0',st0)">où</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">3. La chanson ___ elle chante est magnifique. <button class="btn-mini" onclick="speakEL('La chanson qu\'elle chante est magnifique.','f')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="qu'" onclick="checkQCM(this,false,'sc0',st0)">qui</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc0',st0)">qu'</button>
+            <button class="opt" data-correct="false" data-correction="qu'" onclick="checkQCM(this,false,'sc0',st0)">dont</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">4. J'ai rencontré une collègue ___ travaille à Lyon. <button class="btn-mini" onclick="speakEL('J\'ai rencontré une collègue qui travaille à Lyon.','f')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc0',st0)">qui</button>
+            <button class="opt" data-correct="false" data-correction="qui" onclick="checkQCM(this,false,'sc0',st0)">que</button>
+            <button class="opt" data-correct="false" data-correction="qui" onclick="checkQCM(this,false,'sc0',st0)">où</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="score-box" id="sc0">
+          <span class="score-emoji">🎯</span>
+          <div class="score-msg" id="sc0-txt"></div>
+          <div class="score-sub">¡Muy bien\! Continúa con los ejercicios.</div>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l1d);">Ejercicio 2 · Completa con qui, que o qu'</div>
+        <div class="ex-instr">Escribe el pronombre relativo correcto en cada espacio.</div>
+
+        <div class="fill-item">
+          <div class="fill-sentence">1. Le restaurant ___ j'aime est fermé le lundi. <button class="btn-mini" onclick="speakEL('Le restaurant que j\'aime est fermé le lundi.','f')">🔊</button></div>
+          <input class="fill-input" id="f0a" placeholder="qui / que / qu'" oninput="checkFillB1('f0a','que','fb0a',st0f)">
+          <div class="fill-hint" id="fb0a">Pista: ¿El pronombre es sujeto o complemento de <em>aimer</em>?</div>
+        </div>
+
+        <div class="fill-item">
+          <div class="fill-sentence">2. Voici l'ami ___ m'a aidé pendant l'examen. <button class="btn-mini" onclick="speakEL('Voici l\'ami qui m\'a aidé pendant l\'examen.','m')">🔊</button></div>
+          <input class="fill-input" id="f0b" placeholder="qui / que / qu'" oninput="checkFillB1('f0b','qui','fb0b',st0f)">
+          <div class="fill-hint" id="fb0b">Pista: ¿Quién realizó la acción de ayudar?</div>
+        </div>
+
+        <div class="fill-item">
+          <div class="fill-sentence">3. C'est la décision ___ il regrette le plus. <button class="btn-mini" onclick="speakEL('C\'est la décision qu\'il regrette le plus.','m')">🔊</button></div>
+          <input class="fill-input" id="f0c" placeholder="qui / que / qu'" oninput="checkFillB1('f0c','qu\'','fb0c',st0f)">
+          <div class="fill-hint" id="fb0c">Pista: Ante vocal → <em>qu'</em>. La décision es complemento directo.</div>
+        </div>
+
+        <div class="score-box" id="sc0f">
+          <span class="score-emoji">✍️</span>
+          <div class="score-msg" id="sc0f-txt"></div>
+          <div class="score-sub">¡Excelente práctica escrita\!</div>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l1d);">Ejercicio 3 · Conecta las frases</div>
+        <div class="ex-instr">Une cada oración francesa con su traducción española.</div>
+        <div id="match0a"></div>
+        <div class="match-score" id="match0a-score"></div>
+      </div>
+    </div>
+
+    <\!-- ══════════════════════════════════════════
+         LEÇON 1 — OÙ
+         ══════════════════════════════════════════ -->
+    <div class="lesson-panel" data-lesson="1">
+      <h2 class="lesson-title" style="color:var(--l2);">📍 Le pronom relatif <em>où</em></h2>
+
+      <div class="theory-box">
+        <div class="theory-title">📚 Rappel grammatical</div>
+        <table class="theory-table">
+          <tr><th>Pronom</th><th>Remplace</th><th>Exemple</th></tr>
+          <tr><td><strong>où</strong> (lieu)</td><td>Un complément de lieu</td><td><em>La ville où je suis né est belle.</em></td></tr>
+          <tr><td><strong>où</strong> (temps)</td><td>Un complément de temps</td><td><em>Le jour où tu es parti, il a plu.</em></td></tr>
+        </table>
+        <p style="font-size:12px;color:var(--muted);margin-top:10px;">💡 En français, <strong>où</strong> remplace aussi les expressions de temps : <em>le jour, le moment, l'époque…</em> (en español : "cuando" o "en que")</p>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l2d);">Ejercicio 1 · ¿Lugar o tiempo?</div>
+        <div class="ex-instr">Selecciona el pronombre correcto para completar cada frase.</div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">1. La maison ___ j'habite est grande. <button class="btn-mini" onclick="speakEL('La maison où j\'habite est grande.','f')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="où" onclick="checkQCM(this,false,'sc1',st1)">que</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc1',st1)">où</button>
+            <button class="opt" data-correct="false" data-correction="où" onclick="checkQCM(this,false,'sc1',st1)">qui</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">2. Je me souviens du soir ___ nous nous sommes rencontrés. <button class="btn-mini" onclick="speakEL('Je me souviens du soir où nous nous sommes rencontrés.','m')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc1',st1)">où</button>
+            <button class="opt" data-correct="false" data-correction="où" onclick="checkQCM(this,false,'sc1',st1)">que</button>
+            <button class="opt" data-correct="false" data-correction="où" onclick="checkQCM(this,false,'sc1',st1)">dont</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">3. Le pays ___ elle vit est très chaud. <button class="btn-mini" onclick="speakEL('Le pays où elle vit est très chaud.','f')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="où" onclick="checkQCM(this,false,'sc1',st1)">qui</button>
+            <button class="opt" data-correct="false" data-correction="où" onclick="checkQCM(this,false,'sc1',st1)">que</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc1',st1)">où</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">4. L'époque ___ mes parents étaient jeunes était différente. <button class="btn-mini" onclick="speakEL('L\'époque où mes parents étaient jeunes était différente.','f')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="où" onclick="checkQCM(this,false,'sc1',st1)">que</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc1',st1)">où</button>
+            <button class="opt" data-correct="false" data-correction="où" onclick="checkQCM(this,false,'sc1',st1)">dont</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="score-box" id="sc1">
+          <span class="score-emoji">🗺️</span>
+          <div class="score-msg" id="sc1-txt"></div>
+          <div class="score-sub">¡Bien localizado\!</div>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l2d);">Ejercicio 2 · Completa con qui, que ou où</div>
+        <div class="ex-instr">Elige el pronombre relativo correcto.</div>
+
+        <div class="fill-item">
+          <div class="fill-sentence">1. C'est la rue ___ j'ai grandi. <button class="btn-mini" onclick="speakEL('C\'est la rue où j\'ai grandi.','f')">🔊</button></div>
+          <input class="fill-input" id="f1a" placeholder="qui / que / où" oninput="checkFillB1('f1a','où','fb1a',st1f)">
+          <div class="fill-hint" id="fb1a">Pista: ¿Hace referencia a un lugar?</div>
+        </div>
+
+        <div class="fill-item">
+          <div class="fill-sentence">2. Le moment ___ j'ai su la vérité a changé ma vie. <button class="btn-mini" onclick="speakEL('Le moment où j\'ai su la vérité a changé ma vie.','m')">🔊</button></div>
+          <input class="fill-input" id="f1b" placeholder="qui / que / où" oninput="checkFillB1('f1b','où','fb1b',st1f)">
+          <div class="fill-hint" id="fb1b">Pista: Momento temporal → <em>où</em>.</div>
+        </div>
+
+        <div class="fill-item">
+          <div class="fill-sentence">3. Le café ___ nous allons souvent est près de la gare. <button class="btn-mini" onclick="speakEL('Le café où nous allons souvent est près de la gare.','f')">🔊</button></div>
+          <input class="fill-input" id="f1c" placeholder="qui / que / où" oninput="checkFillB1('f1c','où','fb1c',st1f)">
+          <div class="fill-hint" id="fb1c">Pista: Lugar al que van → <em>où</em>.</div>
+        </div>
+
+        <div class="score-box" id="sc1f">
+          <span class="score-emoji">✍️</span>
+          <div class="score-msg" id="sc1f-txt"></div>
+          <div class="score-sub">¡Excelente\!</div>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l2d);">Ejercicio 3 · Traduce al español</div>
+        <div class="ex-instr">Conecta cada frase con su traducción.</div>
+        <div id="match1a"></div>
+        <div class="match-score" id="match1a-score"></div>
+      </div>
+    </div>
+
+    <\!-- ══════════════════════════════════════════
+         LEÇON 2 — DONT
+         ══════════════════════════════════════════ -->
+    <div class="lesson-panel" data-lesson="2">
+      <h2 class="lesson-title" style="color:var(--l3);">🔑 Le pronom relatif <em>dont</em></h2>
+
+      <div class="theory-box">
+        <div class="theory-title">📚 Rappel grammatical</div>
+        <table class="theory-table">
+          <tr><th>Cas</th><th>Explication</th><th>Exemple</th></tr>
+          <tr><td><strong>dont</strong> (verbe + de)</td><td>Remplace <em>de + nom</em> après un verbe</td><td><em>Le sujet dont il parle est complexe.</em><br><small>(parler <u>de</u>)</small></td></tr>
+          <tr><td><strong>dont</strong> (adjectif + de)</td><td>Remplace <em>de + nom</em> après un adjectif</td><td><em>Le film dont je suis fier a gagné.</em><br><small>(être fier <u>de</u>)</small></td></tr>
+          <tr><td><strong>dont</strong> (possession)</td><td>Indique la possession</td><td><em>L'ami dont le père est médecin…</em></td></tr>
+        </table>
+        <p style="font-size:12px;color:var(--muted);margin-top:10px;">💡 Clave: si el verbo o adjectivo pide <strong>de</strong>, usa <strong>dont</strong>. Ej: avoir besoin <u>de</u>, parler <u>de</u>, être content <u>de</u>, se souvenir <u>de</u>…</p>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l3d);">Ejercicio 1 · Usar <em>dont</em> correctamente</div>
+        <div class="ex-instr">Elige el pronombre relativo adecuado.</div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">1. C'est le livre ___ j'ai besoin. <button class="btn-mini" onclick="speakEL('C\'est le livre dont j\'ai besoin.','f')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="dont" onclick="checkQCM(this,false,'sc2',st2)">que</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc2',st2)">dont</button>
+            <button class="opt" data-correct="false" data-correction="dont" onclick="checkQCM(this,false,'sc2',st2)">où</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">2. Voilà le projet ___ je suis vraiment fier. <button class="btn-mini" onclick="speakEL('Voilà le projet dont je suis vraiment fier.','m')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="dont" onclick="checkQCM(this,false,'sc2',st2)">que</button>
+            <button class="opt" data-correct="false" data-correction="dont" onclick="checkQCM(this,false,'sc2',st2)">qui</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc2',st2)">dont</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">3. C'est une histoire ___ tout le monde se souvient. <button class="btn-mini" onclick="speakEL('C\'est une histoire dont tout le monde se souvient.','f')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc2',st2)">dont</button>
+            <button class="opt" data-correct="false" data-correction="dont" onclick="checkQCM(this,false,'sc2',st2)">que</button>
+            <button class="opt" data-correct="false" data-correction="dont" onclick="checkQCM(this,false,'sc2',st2)">où</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">4. J'ai un ami ___ la mère est écrivaine. <button class="btn-mini" onclick="speakEL('J\'ai un ami dont la mère est écrivaine.','m')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="dont" onclick="checkQCM(this,false,'sc2',st2)">qui</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc2',st2)">dont</button>
+            <button class="opt" data-correct="false" data-correction="dont" onclick="checkQCM(this,false,'sc2',st2)">que</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="score-box" id="sc2">
+          <span class="score-emoji">🔑</span>
+          <div class="score-msg" id="sc2-txt"></div>
+          <div class="score-sub">¡Dominas el dont\!</div>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l3d);">Ejercicio 2 · Completa con dont, qui, que ou où</div>
+        <div class="ex-instr">Completa con el pronombre relativo correcto.</div>
+
+        <div class="fill-item">
+          <div class="fill-sentence">1. La personne ___ nous avons parlé n'est pas venue. <button class="btn-mini" onclick="speakEL('La personne dont nous avons parlé n\'est pas venue.','f')">🔊</button></div>
+          <input class="fill-input" id="f2a" placeholder="dont / qui / que / où" oninput="checkFillB1('f2a','dont','fb2a',st2f)">
+          <div class="fill-hint" id="fb2a">Pista: <em>parler de</em> → <em>dont</em>.</div>
+        </div>
+
+        <div class="fill-item">
+          <div class="fill-sentence">2. C'est la ville ___ je suis originaire. <button class="btn-mini" onclick="speakEL('C\'est la ville dont je suis originaire.','f')">🔊</button></div>
+          <input class="fill-input" id="f2b" placeholder="dont / qui / que / où" oninput="checkFillB1('f2b','dont','fb2b',st2f)">
+          <div class="fill-hint" id="fb2b">Pista: <em>être originaire de</em> → <em>dont</em>.</div>
+        </div>
+
+        <div class="fill-item">
+          <div class="fill-sentence">3. Le film ___ tout le monde parle sort vendredi. <button class="btn-mini" onclick="speakEL('Le film dont tout le monde parle sort vendredi.','m')">🔊</button></div>
+          <input class="fill-input" id="f2c" placeholder="dont / qui / que / où" oninput="checkFillB1('f2c','dont','fb2c',st2f)">
+          <div class="fill-hint" id="fb2c">Pista: <em>parler de</em> → <em>dont</em>.</div>
+        </div>
+
+        <div class="fill-item">
+          <div class="fill-sentence">4. C'est une recette ___ les ingrédients sont simples. <button class="btn-mini" onclick="speakEL('C\'est une recette dont les ingrédients sont simples.','f')">🔊</button></div>
+          <input class="fill-input" id="f2d" placeholder="dont / qui / que / où" oninput="checkFillB1('f2d','dont','fb2d',st2f)">
+          <div class="fill-hint" id="fb2d">Pista: Posesión (<em>les ingrédients de la recette</em>) → <em>dont</em>.</div>
+        </div>
+
+        <div class="score-box" id="sc2f">
+          <span class="score-emoji">✍️</span>
+          <div class="score-msg" id="sc2f-txt"></div>
+          <div class="score-sub">¡Muy bien\!</div>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l3d);">Ejercicio 3 · Verbos que usan <em>de</em></div>
+        <div class="ex-instr">Une cada verbo francés con su equivalente español.</div>
+        <div id="match2a"></div>
+        <div class="match-score" id="match2a-score"></div>
+      </div>
+    </div>
+
+    <\!-- ══════════════════════════════════════════
+         LEÇON 3 — LEQUEL / AUQUEL
+         ══════════════════════════════════════════ -->
+    <div class="lesson-panel" data-lesson="3">
+      <h2 class="lesson-title" style="color:var(--l4);">⚙️ Les pronoms relatifs composés</h2>
+
+      <div class="theory-box">
+        <div class="theory-title">📚 Rappel grammatical — lequel / laquelle / lesquels / lesquelles</div>
+        <table class="theory-table">
+          <tr><th>Forme</th><th>Avec <em>à</em></th><th>Avec <em>de</em></th></tr>
+          <tr><td>lequel (m. sg.)</td><td>auquel</td><td>duquel</td></tr>
+          <tr><td>laquelle (f. sg.)</td><td>à laquelle</td><td>de laquelle</td></tr>
+          <tr><td>lesquels (m. pl.)</td><td>auxquels</td><td>desquels</td></tr>
+          <tr><td>lesquelles (f. pl.)</td><td>auxquelles</td><td>desquelles</td></tr>
+        </table>
+        <p style="font-size:12px;color:var(--muted);margin-top:10px;">💡 Se usan tras preposiciones (<em>avec, pour, sur, dans, à, de…</em>) cuando el antecedente es una <strong>cosa</strong>. Con personas, se puede usar <em>qui</em> : <em>la personne avec <u>qui</u> je travaille</em>.</p>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l4d);">Ejercicio 1 · Pronoms composés</div>
+        <div class="ex-instr">Selecciona la forma correcta de <em>lequel</em>.</div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">1. C'est le problème ___ je pensais. <button class="btn-mini" onclick="speakEL('C\'est le problème auquel je pensais.','m')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="auquel" onclick="checkQCM(this,false,'sc3',st3)">lequel</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc3',st3)">auquel</button>
+            <button class="opt" data-correct="false" data-correction="auquel" onclick="checkQCM(this,false,'sc3',st3)">duquel</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">2. Voilà la table sur ___ j'ai posé les clés. <button class="btn-mini" onclick="speakEL('Voilà la table sur laquelle j\'ai posé les clés.','f')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="laquelle" onclick="checkQCM(this,false,'sc3',st3)">lequel</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc3',st3)">laquelle</button>
+            <button class="opt" data-correct="false" data-correction="laquelle" onclick="checkQCM(this,false,'sc3',st3)">lesquels</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">3. Ce sont des résultats sur ___ nous pouvons compter. <button class="btn-mini" onclick="speakEL('Ce sont des résultats sur lesquels nous pouvons compter.','f')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="false" data-correction="lesquels" onclick="checkQCM(this,false,'sc3',st3)">lequel</button>
+            <button class="opt" data-correct="false" data-correction="lesquels" onclick="checkQCM(this,false,'sc3',st3)">laquelle</button>
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc3',st3)">lesquels</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="qcm-item">
+          <div class="qcm-q">4. L'entreprise pour ___ il travaille est internationale. <button class="btn-mini" onclick="speakEL('L\'entreprise pour laquelle il travaille est internationale.','m')">🔊</button></div>
+          <div class="opts">
+            <button class="opt" data-correct="true" onclick="checkQCM(this,true,'sc3',st3)">laquelle</button>
+            <button class="opt" data-correct="false" data-correction="laquelle" onclick="checkQCM(this,false,'sc3',st3)">lequel</button>
+            <button class="opt" data-correct="false" data-correction="laquelle" onclick="checkQCM(this,false,'sc3',st3)">lesquelles</button>
+          </div>
+          <div class="fb"></div>
+        </div>
+
+        <div class="score-box" id="sc3">
+          <span class="score-emoji">⚙️</span>
+          <div class="score-msg" id="sc3-txt"></div>
+          <div class="score-sub">¡Bravo \!</div>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l4d);">Ejercicio 2 · Completa con la forma correcta</div>
+        <div class="ex-instr">Elige entre <em>auquel / à laquelle / auxquels / lequel / laquelle / lesquelles</em>…</div>
+
+        <div class="fill-item">
+          <div class="fill-sentence">1. C'est le cours ___ je m'inscris demain. <button class="btn-mini" onclick="speakEL('C\'est le cours auquel je m\'inscris demain.','m')">🔊</button></div>
+          <input class="fill-input" id="f3a" placeholder="auquel / à laquelle…" oninput="checkFillB1('f3a','auquel','fb3a',st3f)">
+          <div class="fill-hint" id="fb3a">Pista: <em>s'inscrire à</em> + masculino singular → <em>auquel</em>.</div>
+        </div>
+
+        <div class="fill-item">
+          <div class="fill-sentence">2. Voici les raisons pour ___ j'ai choisi ce métier. <button class="btn-mini" onclick="speakEL('Voici les raisons pour lesquelles j\'ai choisi ce métier.','f')">🔊</button></div>
+          <input class="fill-input" id="f3b" placeholder="lesquelles / lequel…" oninput="checkFillB1('f3b','lesquelles','fb3b',st3f)">
+          <div class="fill-hint" id="fb3b">Pista: <em>les raisons</em> → femenino plural → <em>lesquelles</em>.</div>
+        </div>
+
+        <div class="fill-item">
+          <div class="fill-sentence">3. Le bureau dans ___ il travaille est au 3e étage. <button class="btn-mini" onclick="speakEL('Le bureau dans lequel il travaille est au troisième étage.','m')">🔊</button></div>
+          <input class="fill-input" id="f3c" placeholder="lequel / laquelle…" oninput="checkFillB1('f3c','lequel','fb3c',st3f)">
+          <div class="fill-hint" id="fb3c">Pista: <em>le bureau</em> → masculino singular → <em>lequel</em>.</div>
+        </div>
+
+        <div class="score-box" id="sc3f">
+          <span class="score-emoji">✍️</span>
+          <div class="score-msg" id="sc3f-txt"></div>
+          <div class="score-sub">¡Perfecto\!</div>
+        </div>
+      </div>
+
+      <div class="ex-card">
+        <div class="ex-title" style="color:var(--l4d);">Ejercicio 3 · Conecta la forma con el sustantivo</div>
+        <div class="ex-instr">Une cada forma de <em>lequel</em> con el sustantivo correspondiente.</div>
+        <div id="match3a"></div>
+        <div class="match-score" id="match3a-score"></div>
+      </div>
+    </div>
+
+  </main>
 </div>
 
 <script>
-// Données B1 (les mêmes que précédemment)
-const VOICE_F = 'XB0fDUnXU5powFXDhCwa';
-const VOICE_M = 'onwK4e9ZLuTAKqWW03F9';
-// ... toutes les constantes qcm1a, fill1b, dialogueL1, ra1, etc.
-// Puis, dans DOMContentLoaded, appeler :
-buildQCM('ex1a', qcm1a, 'sc1a', 'var(--l1)');
-buildFill('ex1b', fill1b);
-buildMatch('ex1c', match1c, 'sc1c');
-registerDL('dial1', {lines:dialogueL1, qcm:qcmEcoute1});
-buildDialogueListen('dial1', {lines:dialogueL1, qcm:qcmEcoute1}, 'var(--l1)');
-buildReadAloud('ra1', ra1, 'var(--l1)');
-// ... idem pour les autres leçons
+/* ── États score ── */
+const st0  = { score:0, total:4, id:'sc0',  txtId:'sc0-txt'  };
+const st0f = { score:0, total:3, id:'sc0f', txtId:'sc0f-txt' };
+const st1  = { score:0, total:4, id:'sc1',  txtId:'sc1-txt'  };
+const st1f = { score:0, total:3, id:'sc1f', txtId:'sc1f-txt' };
+const st2  = { score:0, total:4, id:'sc2',  txtId:'sc2-txt'  };
+const st2f = { score:0, total:4, id:'sc2f', txtId:'sc2f-txt' };
+const st3  = { score:0, total:4, id:'sc3',  txtId:'sc3-txt'  };
+const st3f = { score:0, total:3, id:'sc3f', txtId:'sc3f-txt' };
+
+/* ── Normalisation accents ── */
+function normalize(s){
+  return s.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/'/g,"'");
+}
+
+/* ── Fill-in avec tolérance ── */
+function checkFillB1(inputId, expected, hintId, state){
+  const inp = document.getElementById(inputId);
+  const hint = document.getElementById(hintId);
+  if(\!inp) return;
+  const val = inp.value;
+  if(normalize(val) === normalize(expected)){
+    inp.classList.remove('nope'); inp.classList.add('ok');
+    hint.textContent = '✅ Correct \! « ' + expected + ' »';
+    hint.style.color = 'var(--l3d)';
+    if(\!inp.dataset.counted){
+      inp.dataset.counted = '1';
+      state.score++;
+      if(state.score >= state.total) showFillScore(state);
+    }
+    inp.disabled = true;
+  } else if(val.length >= expected.length){
+    inp.classList.remove('ok'); inp.classList.add('nope');
+    hint.textContent = '❌ Réponse attendue : « ' + expected + ' »';
+    hint.style.color = 'var(--l1d)';
+  } else {
+    inp.classList.remove('ok','nope');
+  }
+}
+
+function showFillScore(state){
+  const box = document.getElementById(state.id);
+  const txt = document.getElementById(state.txtId);
+  if(\!box || \!txt) return;
+  const pct = Math.round((state.score/state.total)*100);
+  txt.textContent = state.score + '/' + state.total + ' — ' + pct + '%';
+  box.classList.add('show');
+  box.style.background = pct===100 ? 'var(--l3l)' : pct>=70 ? 'var(--l4l)' : 'var(--l1l)';
+}
+
+/* ── QCM score-box (post-vérification) ── */
+const _orig = window.checkQCM;
+window.checkQCM = function(btn, isCorrect, scId, state){
+  if(_orig) _orig(btn, isCorrect, scId, state);
+  const panel = btn.closest('.ex-card');
+  if(\!panel || \!state) return;
+  const questions = panel.querySelectorAll('.qcm-item');
+  const answered  = new Set();
+  panel.querySelectorAll('.opt.correct,.opt.wrong').forEach(o => answered.add(o.closest('.qcm-item')));
+  if(answered.size >= questions.length){
+    const box = document.getElementById(state.id);
+    const txt = document.getElementById(state.txtId);
+    if(box && txt && \!box.classList.contains('show')){
+      const pct = Math.round((state.score/state.total)*100);
+      txt.textContent = state.score + '/' + state.total + ' — ' + pct + '%';
+      box.classList.add('show');
+      box.style.background = pct===100 ? 'var(--l3l)' : pct>=75 ? 'var(--l4l)' : 'var(--l1l)';
+    }
+  }
+};
+
+window.addEventListener('DOMContentLoaded', function(){
+
+  buildMatch('match0a',[
+    ["C'est le médecin qui soigne ma mère.",      "Es el médico que trata a mi madre."],
+    ["Le film que tu recommandes est sorti hier.", "La película que recomiendas salió ayer."],
+    ["J'ai une amie qui parle cinq langues.",      "Tengo una amiga que habla cinco idiomas."],
+    ["C'est le rapport qu'il a préparé.",          "Es el informe que él preparó."],
+  ]);
+
+  buildMatch('match1a',[
+    ["Le village où il est né est petit.",         "El pueblo donde nació es pequeño."],
+    ["L'année où j'ai voyagé était mémorable.",    "El año en que viajé fue memorable."],
+    ["C'est l'hôtel où nous avons dormi.",         "Es el hotel donde dormimos."],
+    ["Je me rappelle le jour où tout a changé.",   "Recuerdo el día en que todo cambió."],
+  ]);
+
+  buildMatch('match2a',[
+    ["avoir besoin de",    "necesitar"],
+    ["parler de",          "hablar de"],
+    ["se souvenir de",     "recordar"],
+    ["être fier/fière de", "estar orgulloso/a de"],
+    ["avoir envie de",     "tener ganas de"],
+  ]);
+
+  buildMatch('match3a',[
+    ["auquel",     "un problème (m. sg.) + à"],
+    ["à laquelle", "une réunion (f. sg.) + à"],
+    ["auxquels",   "des projets (m. pl.) + à"],
+    ["lesquelles", "des décisions (f. pl.) sans prép."],
+  ]);
+
+});
 </script>
 </body>
 </html>
