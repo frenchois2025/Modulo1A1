@@ -1,8 +1,3 @@
-// ===== FRENCHOIS — vocabulaire.js =====
-// Base de données centrale du vocabulaire français / espagnol
-// 1010 entrées — A1 à A2 (B1/B2 à venir)
-// Utilisé par : vocabulaire-expert.html
-
 const DATABASE = [
   /* ╔══════════════════════════════════════════
      ║  NIVEAU A1 — Débutant

@@ -15,6 +15,8 @@
 const EL_VOICES = {
   charlotte: 'XB0fDUnXU5powFXDhCwa',
   daniel:    'onwK4e9ZLuTAKqWW03F9',
+  bill:      'pqHfZKP75CvOlQylNhV4',
+  lily:      'jsCqWAovK2LkecY7zXl4',
 };
 
 const EL_CONFIG = {
@@ -28,9 +30,12 @@ const LS_KEY_VOICE = 'el_voice_id';
 
 (function migrateLegacyKeys() {
   const legacy = localStorage.getItem('elevenlabs_api_key');
-  if (legacy && !localStorage.getItem(LS_KEY_API)) {
-    localStorage.setItem(LS_KEY_API, legacy);
-    console.info('[FRENCHOIS] Clé API migrée : elevenlabs_api_key → el_api_key');
+  if (legacy) {
+    if (!localStorage.getItem(LS_KEY_API)) {
+      localStorage.setItem(LS_KEY_API, legacy);
+      console.info('[FRENCHOIS] Clé API migrée : elevenlabs_api_key → el_api_key');
+    }
+    localStorage.removeItem('elevenlabs_api_key');
   }
 })();
 
@@ -38,9 +43,8 @@ function getELKey()   { return localStorage.getItem(LS_KEY_API)   || ''; }
 function getELVoice() { return localStorage.getItem(LS_KEY_VOICE) || EL_VOICES.charlotte; }
 
 function saveELKey(key, voiceId) {
-  if (key   !== undefined) localStorage.setItem(LS_KEY_API,   key.trim());
+  if (key     !== undefined) localStorage.setItem(LS_KEY_API,   key.trim());
   if (voiceId !== undefined) localStorage.setItem(LS_KEY_VOICE, voiceId);
-  if (key !== undefined) localStorage.setItem('elevenlabs_api_key', key.trim());
   _audioCacheClear();
 }
 
@@ -174,22 +178,22 @@ function buildELModal() {
   const modal = document.createElement('div');
   modal.id = 'el-modal';
   const voiceOptions = Object.entries(EL_VOICES).map(([name, id]) => {
-    const labels = { charlotte: 'Charlotte (féminin)', daniel: 'Daniel (masculin)' };
+    const labels = { charlotte: 'Charlotte (féminin)', daniel: 'Daniel (masculin)', bill: 'Bill (masculin)', lily: 'Lily (féminin)' };
     const selected = id === getELVoice() ? 'selected' : '';
     return `<option value="${id}" ${selected}>${labels[name] || name}</option>`;
   }).join('');
   modal.innerHTML = `
     <div id="el-box">
-      <h2>🎙️ Voz ElevenLabs</h2>
-      <p>Conecta tu cuenta para voz francesa natural.<br>Tu clave se guarda solo en este navegador.</p>
-      <label class="el-label">Clave API</label>
+      <h2>🎙️ Voix ElevenLabs</h2>
+      <p>Connecte ton compte pour une voix française naturelle.<br>Ta clé est enregistrée uniquement dans ce navigateur.</p>
+      <label class="el-label">Clé API</label>
       <input class="el-input" id="el-key-input" type="password" placeholder="sk-..." value="${getELKey()}">
-      <label class="el-label">Voz</label>
+      <label class="el-label">Voix</label>
       <select class="el-select" id="el-voice-select">${voiceOptions}</select>
       <div class="el-btns">
-        <button class="el-btn" style="background:#7c3aed;color:white" onclick="window.FRENCHOIS.saveELModal()">💾 Guardar</button>
-        <button class="el-btn" style="background:#2eaa6b;color:white" onclick="window.FRENCHOIS.testELModal()">▶ Probar</button>
-        <button class="el-btn" style="background:#f7f4ef;border:2px solid #e4ddd4" id="el-close-btn">✕ Cerrar</button>
+        <button class="el-btn" style="background:#7c3aed;color:white" onclick="window.FRENCHOIS.saveELModal()">💾 Enregistrer</button>
+        <button class="el-btn" style="background:#2eaa6b;color:white" onclick="window.FRENCHOIS.testELModal()">▶ Tester</button>
+        <button class="el-btn" style="background:#f7f4ef;border:2px solid #e4ddd4" id="el-close-btn">✕ Fermer</button>
       </div>
       <div class="el-status" id="el-status"></div>
     </div>
@@ -205,10 +209,10 @@ function _updateELStatus() {
   if (!st) return;
   if (getELKey()) {
     st.style.color = '#1d7a4c';
-    st.textContent = '✓ Clave guardada';
+    st.textContent = '✓ Clé enregistrée';
   } else {
     st.style.color = '#e88c1a';
-    st.textContent = '⚠ Sin clave → voz navegador';
+    st.textContent = '⚠ Sans clé → voix navigateur';
   }
 }
 
@@ -225,7 +229,7 @@ window.FRENCHOIS.testELModal = async function() {
   const voiceId = document.getElementById('el-voice-select').value;
   const st = document.getElementById('el-status');
   st.style.color = '#7a7a8c';
-  st.textContent = '⏳ Probando…';
+  st.textContent = '⏳ Test en cours…';
   const result = await testEL(key, voiceId);
   st.style.color = result.ok ? '#1d7a4c' : '#e63946';
   st.textContent = result.message;
@@ -260,7 +264,7 @@ function buildQCM(containerId, questions, scoreId, accentColor) {
     const div = document.createElement('div');
     div.className = 'qcm-item';
     div.innerHTML = `
-      <div class="q-label">Pregunta ${qi+1}</div>
+      <div class="q-label">Question ${qi+1}</div>
       <div class="q-text">${q.q}</div>
       <div class="opts" id="opts_${containerId}_${qi}">
         ${q.opts.map((o, oi) => `<button class="opt" data-correct="${oi === q.ans}" data-correction="${q.opts[q.ans]}">${o}</button>`).join('')}
@@ -281,7 +285,7 @@ function buildQCM(containerId, questions, scoreId, accentColor) {
             const pct = state.score / state.total;
             box.classList.add('show');
             const em = pct >= 0.8 ? '🎉' : pct >= 0.6 ? '👍' : '💪';
-            const msg = pct >= 0.8 ? '¡Excelente!' : pct >= 0.6 ? '¡Bien!' : 'Sigue practicando.';
+            const msg = pct >= 0.8 ? 'Excellent !' : pct >= 0.6 ? 'Bien !' : 'Continue à pratiquer.';
             document.getElementById(scoreId + '-em').textContent = em;
             document.getElementById(scoreId + '-n').textContent = `${state.score} / ${state.total}`;
             document.getElementById(scoreId + '-m').textContent = msg;
@@ -305,7 +309,7 @@ function checkQCM(btn, isCorrect, scoreId, state) {
   const fb = btn.closest('.qcm-item').querySelector('.fb');
   if (fb) {
     fb.classList.add('show', isCorrect ? 'ok' : 'nope');
-    fb.textContent = isCorrect ? '✓ ¡Correcto!' : '✗ ' + (btn.dataset.correction || '');
+    fb.textContent = isCorrect ? '✓ Correct !' : '✗ ' + (btn.dataset.correction || '');
   }
   if (scoreId && state) {
     const el = document.getElementById(scoreId);
@@ -382,7 +386,7 @@ function buildMatch(pairsOrId, containerOrPairs, onComplete) {
   wrap.className = 'match-wrap';
   ['gauche', 'droite'].forEach((side, colIdx) => {
     const colDiv = document.createElement('div');
-    colDiv.innerHTML = `<div class="match-col-title">${side === 'gauche' ? '🇫🇷 Français' : '🇪🇸 Español'}</div>`;
+    colDiv.innerHTML = `<div class="match-col-title">${side === 'gauche' ? '🇫🇷 Français' : '🇪🇸 Espagnol'}</div>`;
     const col = document.createElement('div');
     col.className = 'match-col';
     const items = colIdx === 0 ? lefts : rights;
@@ -429,7 +433,7 @@ function buildMatch(pairsOrId, containerOrPairs, onComplete) {
   const scoreDiv = document.createElement('div');
   scoreDiv.id = 'match-score-' + Math.random();
   scoreDiv.className = 'match-score';
-  scoreDiv.textContent = `0 / ${pairs.length} pares correctos`;
+  scoreDiv.textContent = `0 / ${pairs.length} paires correctes`;
   container.appendChild(scoreDiv);
   return scoreDiv;
 }
@@ -447,17 +451,17 @@ function buildDialogueListen(containerId, data, accentColor) {
   const ph1 = document.createElement('div'); ph1.id = containerId + '_phase1';
   const lb = document.createElement('div'); lb.style.cssText = 'text-align:center;padding:20px 0 24px';
   lb.innerHTML = `
-    <div style="font-size:13px;color:#7a7a8c;margin-bottom:14px;font-style:italic">Escucha el diálogo completo, luego responde las preguntas sin ver el texto.</div>
+    <div style="font-size:13px;color:#7a7a8c;margin-bottom:14px;font-style:italic">Écoute le dialogue complet, puis réponds aux questions sans regarder le texte.</div>
     <button id="${containerId}_listenAll" style="background:${accentColor};color:white;border:none;border-radius:12px;padding:14px 28px;font-size:15px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 16px rgba(0,0,0,.12)">🔊 Écouter le dialogue</button>
     <div id="${containerId}_playing" style="margin-top:10px;font-size:12px;color:${accentColor};font-weight:700;display:none">▶ En cours…</div>`;
   ph1.appendChild(lb);
   const ql = document.createElement('div'); ql.style.cssText = `font-size:12px;font-weight:800;color:${accentColor};text-transform:uppercase;letter-spacing:1px;margin-bottom:10px`;
-  ql.textContent = '🧠 Comprensión — responde sin ver el texto';
+  ql.textContent = '🧠 Compréhension — réponds sans voir le texte';
   ph1.appendChild(ql);
   data.qcm.forEach((q, qi) => {
     const d = document.createElement('div'); d.className = 'qcm-item';
     d.innerHTML = `
-      <div class="q-label">Pregunta ${qi+1}</div>
+      <div class="q-label">Question ${qi+1}</div>
       <div class="q-text">${q.q}</div>
       <div class="opts" id="${containerId}_opts_${qi}">
         ${q.opts.map((o, oi) => `<button class="opt" data-correct="${oi === q.ans}" data-correction="${q.opts[q.ans]}">${o}</button>`).join('')}
@@ -471,7 +475,7 @@ function buildDialogueListen(containerId, data, accentColor) {
   c.appendChild(ph1);
 
   const ph2 = document.createElement('div'); ph2.id = containerId + '_phase2'; ph2.style.display = 'none';
-  ph2.innerHTML = `<div style="font-size:12px;font-weight:800;color:${accentColor};text-transform:uppercase;letter-spacing:1px;margin:18px 0 10px">📖 Transcripción del diálogo</div>`;
+  ph2.innerHTML = `<div style="font-size:12px;font-weight:800;color:${accentColor};text-transform:uppercase;letter-spacing:1px;margin:18px 0 10px">📖 Transcription du dialogue</div>`;
   const dw = document.createElement('div'); dw.style.cssText = 'background:#1a1a2e;border:1.5px solid #2a2a4e;border-radius:14px;padding:16px 18px';
   data.lines.forEach((line, li) => {
     const isF = line.speaker === 'f'; const al = isF ? '#e63946' : '#2a7dd1'; const bl = isF ? '#fdecea' : '#deeeff';
@@ -569,7 +573,7 @@ function answerDLQ(cid, qi, chosen, correct, total) {
     else if (i === chosen && chosen !== correct) b.classList.add('wrong');
   });
   const fb = document.getElementById(cid + '_fb_' + qi);
-  fb.textContent = chosen === correct ? '✅ ¡Correcto!' : '❌ ' + opts[correct].textContent;
+  fb.textContent = chosen === correct ? '✅ Correct !' : '❌ ' + opts[correct].textContent;
   fb.style.cssText = `color:${chosen === correct ? '#1d7a4c' : '#c0392b'};font-size:12px;margin-top:6px;font-weight:700`;
   let answered = 0, good = 0;
   for (let i = 0; i < total; i++) {
@@ -585,7 +589,7 @@ function answerDLQ(cid, qi, chosen, correct, total) {
       const pct = good / total;
       document.getElementById(cid + '_sc_em').textContent = pct >= 0.75 ? '🎉' : pct >= 0.5 ? '👍' : '💪';
       document.getElementById(cid + '_sc_n').textContent = good + ' / ' + total;
-      document.getElementById(cid + '_sc_m').textContent = pct >= 0.75 ? '¡Excelente comprensión!' : pct >= 0.5 ? '¡Bien! Vuelve a escuchar.' : 'Escucha el diálogo otra vez.';
+      document.getElementById(cid + '_sc_m').textContent = pct >= 0.75 ? 'Excellente compréhension !' : pct >= 0.5 ? 'Bien ! Réécoute le dialogue.' : 'Écoute le dialogue à nouveau.';
       sc.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
     setTimeout(() => {
@@ -610,13 +614,13 @@ function buildReadAloud(containerId, phrases, accentColor) {
       <div class="ra-phrase">${p.phrase}</div>
       <div class="ra-translation">${p.translation}</div>
       <div class="ra-controls">
-        <button class="ra-btn" style="background:${accentColor};color:white" data-phrase="${p.phrase.replace(/"/g, '&quot;')}" data-voice="${p.voice || ''}">🔊 Escuchar modelo</button>
-        <button class="ra-btn" style="background:#555;color:white" id="rb_${rid}">🎙️ Grabar mi voz</button>
+        <button class="ra-btn" style="background:${accentColor};color:white" data-phrase="${p.phrase.replace(/"/g, '&quot;')}" data-voice="${p.voice || ''}">🔊 Écouter le modèle</button>
+        <button class="ra-btn" style="background:#555;color:white" id="rb_${rid}">🎙️ Enregistrer ma voix</button>
         <span id="rs_${rid}" class="ra-status"></span>
       </div>
       <div id="rc_${rid}" class="ra-compare">
-        <button class="ra-cmp-btn" data-phrase="${p.phrase.replace(/"/g, '&quot;')}" data-voice="${p.voice || ''}">🇫🇷 Modelo</button>
-        <button class="ra-cmp-btn" data-rec="${rid}">▶ Mi voz</button>
+        <button class="ra-cmp-btn" data-phrase="${p.phrase.replace(/"/g, '&quot;')}" data-voice="${p.voice || ''}">🇫🇷 Modèle</button>
+        <button class="ra-cmp-btn" data-rec="${rid}">▶ Ma voix</button>
       </div>`;
     c.appendChild(div);
     const listenBtn = div.querySelector('.ra-btn:first-child');
@@ -653,16 +657,16 @@ async function recStart(id) {
       _REC[id].blob = new Blob(_REC[id].chunks, { type: mime });
       _REC[id].recording = false;
       stream.getTracks().forEach(t => t.stop());
-      if (statusEl) { statusEl.textContent = '✓ ¡Grabado!'; statusEl.style.color = '#1d7a4c'; }
-      if (btnEl) { btnEl.textContent = '🎙️ Grabar de nuevo'; btnEl.style.background = '#555'; }
+      if (statusEl) { statusEl.textContent = '✓ Enregistré !'; statusEl.style.color = '#1d7a4c'; }
+      if (btnEl) { btnEl.textContent = '🎙️ Enregistrer à nouveau'; btnEl.style.background = '#555'; }
       if (cmpEl) cmpEl.style.display = 'flex';
     };
     _REC[id].recorder.start(100);
-    if (statusEl) { statusEl.textContent = '● Grabando…'; statusEl.style.color = '#e63946'; }
-    if (btnEl) { btnEl.textContent = '⬛ Detener'; btnEl.style.background = '#e63946'; }
+    if (statusEl) { statusEl.textContent = '● Enregistrement…'; statusEl.style.color = '#e63946'; }
+    if (btnEl) { btnEl.textContent = '⬛ Arrêter'; btnEl.style.background = '#e63946'; }
     if (cmpEl) cmpEl.style.display = 'none';
   } catch (err) {
-    if (statusEl) statusEl.textContent = '⚠ Micrófono no disponible';
+    if (statusEl) statusEl.textContent = '⚠ Microphone non disponible';
   }
 }
 
@@ -721,7 +725,7 @@ function showScore(el, score, total) {
   el.innerHTML = `
     <div class="sc-em">${emoji}</div>
     <div class="sc-n">${score} / ${total}</div>
-    <div class="sc-m">${pct === 1 ? '¡Perfecto!' : pct >= 0.8 ? '¡Muy bien!' : pct >= 0.5 ? 'Bien, sigue así.' : 'Practica un poco más.'}</div>
+    <div class="sc-m">${pct === 1 ? 'Parfait !' : pct >= 0.8 ? 'Très bien !' : pct >= 0.5 ? 'Bien, continue !' : 'Pratique encore un peu.'}</div>
   `;
   el.classList.add('show');
 }

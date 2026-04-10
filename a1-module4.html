@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -94,8 +94,7 @@
 <main class="main" id="main-content">
 </main>
 </div>
-<script>function speakWithVoice(t,r,v,el){speak(t,v);}
-
+<script>
 // All content is injected dynamically below
 function showL(n){
   document.querySelectorAll('.lesson-panel').forEach(p=>p.classList.remove('active'));
@@ -104,11 +103,6 @@ function showL(n){
   document.getElementById('panel-'+n).classList.add('active');
   document.querySelectorAll('[data-l="'+n+'"]').forEach(b=>b.classList.add('active'));
 }
-
-const VOICE_F='XB0fDUnXU5powFXDhCwa';
-const VOICE_M='onwK4e9ZLuTAKqWW03F9';
-
-function browserSpeak(t,r){r=r||.82;window.speechSynthesis.cancel();function g(){const u=new SpeechSynthesisUtterance(t);u.lang='fr-FR';u.rate=r;const v=window.speechSynthesis.getVoices().find(x=>x.lang&&x.lang.startsWith('fr'));if(v)u.voice=v;window.speechSynthesis.speak(u);}window.speechSynthesis.getVoices().length===0?(window.speechSynthesis.onvoiceschanged=g):g();}
 
 const REC={};
 async function recStart(id){
@@ -119,15 +113,15 @@ async function recStart(id){
   REC[id].recorder=mime?new MediaRecorder(stream,{mimeType:mime}):new MediaRecorder(stream);
   REC[id].recorder.ondataavailable=e=>{if(e.data&&e.data.size>0)REC[id].chunks.push(e.data);};
   REC[id].recorder.onstop=()=>{REC[id].blob=new Blob(REC[id].chunks,{type:REC[id].recorder.mimeType||'audio/webm'});REC[id].recording=false;stream.getTracks().forEach(t=>t.stop());
-  if(sEl){sEl.textContent='\u2713 Grabado!';sEl.style.color='#1d7a4c';}if(bEl){bEl.textContent='\uD83C\uDF99\uFE0F Grabar de nuevo';bEl.style.background='#555';}
+  if(sEl){sEl.textContent='\u2713 Enregistr\u00E9 !';sEl.style.color='#1d7a4c';}if(bEl){bEl.textContent='\uD83C\uDF99\uFE0F Enregistrer \u00E0 nouveau';bEl.style.background='#555';}
   if(cEl){cEl.style.display='flex';let player=document.getElementById('player_'+id);if(!player){player=document.createElement('audio');player.id='player_'+id;player.controls=true;player.style.cssText='width:100%;margin-top:6px;border-radius:8px;';cEl.parentElement.insertBefore(player,cEl.nextSibling);}player.src=URL.createObjectURL(REC[id].blob);}};
-  REC[id].recorder.start(100);if(sEl){sEl.textContent='\u25CF Grabando\u2026';sEl.style.color='#e63946';}if(bEl){bEl.textContent='\u23F9 Detener';bEl.style.background='#e63946';}if(cEl)cEl.style.display='none';}
-  catch(err){if(sEl){sEl.textContent=err.name==='NotAllowedError'?'\u26A0 Autoriza el micr\u00F3fono':'\u26A0 Micr\u00F3fono no disponible';sEl.style.color='#e63946';}}
+  REC[id].recorder.start(100);if(sEl){sEl.textContent='\u25CF Enregistrement\u2026';sEl.style.color='#e63946';}if(bEl){bEl.textContent='\u23F9 Arr\u00EAter';bEl.style.background='#e63946';}if(cEl)cEl.style.display='none';}
+  catch(err){if(sEl){sEl.textContent=err.name==='NotAllowedError'?'\u26A0 Autorise le microphone':'\u26A0 Microphone non disponible';sEl.style.color='#e63946';}}
 }
 function recStop(id){if(REC[id]&&REC[id].recording&&REC[id].recorder)REC[id].recorder.stop();}
 function recToggle(id){if(REC[id]&&REC[id].recording)recStop(id);else recStart(id);}
 
-function speakRA(btn){const text=btn.dataset.phrase,voice=btn.dataset.voice;if(voice==='f')speakWithVoice(text,1.0,VOICE_F,btn);else if(voice==='m')speakWithVoice(text,1.0,VOICE_M,btn);else speak(text,1.0,btn);}
+function speakRA(btn){const text=btn.dataset.phrase,voice=btn.dataset.voice;speak(text, voice==='f'?FRENCHOIS.EL_VOICES.charlotte:voice==='m'?FRENCHOIS.EL_VOICES.daniel:getELVoice());}
 
 function buildRA(cid,phrases,color){
   const c=document.getElementById(cid);if(!c)return;c.innerHTML='';
@@ -135,8 +129,8 @@ function buildRA(cid,phrases,color){
   item.innerHTML='<div style="font-family:\'Playfair Display\',serif;font-size:17px;font-weight:700;color:#1a1a2e;margin-bottom:4px;line-height:1.4">'+p.phrase+'</div>'+
     '<div style="font-size:12px;color:#8a8a9a;margin-bottom:14px">'+p.translation+'</div>'+
     '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px">'+
-    '<button id="sb_'+rid+'" data-phrase="'+p.phrase.replace(/"/g,'&quot;').replace(/'/g,'\u0027')+'" data-voice="'+(p.voice||'')+'" onclick="speakRA(this);this.style.opacity=\'.6\';setTimeout(()=>this.style.opacity=\'1\',900)" style="background:'+color+';color:white;border:none;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:\'Nunito\',sans-serif">\uD83D\uDD0A Escuchar modelo</button>'+
-    '<button id="rb_'+rid+'" onclick="recToggle(\''+rid+'\')" style="background:#555;color:white;border:none;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:\'Nunito\',sans-serif">\uD83C\uDF99\uFE0F Grabar mi voz</button>'+
+    '<button id="sb_'+rid+'" data-phrase="'+p.phrase.replace(/"/g,'&quot;').replace(/'/g,'\u0027')+'" data-voice="'+(p.voice||'')+'" onclick="speakRA(this);this.style.opacity=\'.6\';setTimeout(()=>this.style.opacity=\'1\',900)" style="background:'+color+';color:white;border:none;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:\'Nunito\',sans-serif">\uD83D\uDD0A \u00C9couter le mod\u00E8le</button>'+
+    '<button id="rb_'+rid+'" onclick="recToggle(\''+rid+'\')" style="background:#555;color:white;border:none;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:\'Nunito\',sans-serif">\uD83C\uDF99\uFE0F Enregistrer ma voix</button>'+
     '<span id="rs_'+rid+'" style="font-size:12px;color:#8a8a9a"></span></div>'+
     '<div id="rc_'+rid+'" style="display:none;gap:8px;flex-wrap:wrap"></div>';
   c.appendChild(item);});
@@ -147,7 +141,7 @@ function buildQCM(cid,questions,scoreId){
   const c=document.getElementById(cid);if(!c)return;
   questions.forEach((q,qi)=>{const id=cid+'_'+qi;qcmState[id]={done:false};const div=document.createElement('div');div.className='qcm-item';
   const sb=q.speak?'<button style="background:none;border:1.5px solid var(--border);border-radius:8px;padding:5px 10px;cursor:pointer;font-size:13px;margin-left:8px" onclick="speak(\''+q.speak.replace(/'/g,"\'")+'\')">\uD83D\uDD0A</button>':'';
-  div.innerHTML='<div class="q-label">Pregunta '+(qi+1)+'</div><div class="q-text">'+q.q+sb+'</div>'+
+  div.innerHTML='<div class="q-label">Question '+(qi+1)+'</div><div class="q-text">'+q.q+sb+'</div>'+
     '<div class="opts" id="opts_'+id+'">'+q.opts.map((o,oi)=>'<button class="opt" onclick="answerQCM(\''+id+'\','+oi+','+q.ans+',\''+scoreId+'\','+questions.length+')">'+o+'</button>').join('')+'</div>'+
     '<div class="fb" id="fb_'+id+'"></div>';
   c.appendChild(div);});
@@ -156,12 +150,12 @@ function answerQCM(id,chosen,correct,scoreId,total){
   if(qcmState[id]&&qcmState[id].done)return;qcmState[id]={done:true};
   const opts=document.querySelectorAll('#opts_'+id+' .opt');
   opts.forEach((b,i)=>{b.disabled=true;if(i===correct)b.classList.add('correct');else if(i===chosen&&chosen!==correct)b.classList.add('wrong');});
-  const fb=document.getElementById('fb_'+id);if(fb){fb.textContent=chosen===correct?'\u2705 \u00A1Correcto!':'\u274C Respuesta: '+opts[correct].textContent;fb.className='fb show '+(chosen===correct?'ok':'nope');}
+  const fb=document.getElementById('fb_'+id);if(fb){fb.textContent=chosen===correct?'\u2705 Correct\u00A0!':'\u274C R\u00E9ponse\u00A0: '+opts[correct].textContent;fb.className='fb show '+(chosen===correct?'ok':'nope');}
   if(!qcmTally[scoreId])qcmTally[scoreId]={n:0,ok:0,total};qcmTally[scoreId].n++;if(chosen===correct)qcmTally[scoreId].ok++;
   if(qcmTally[scoreId].n===total){const box=document.getElementById(scoreId);if(!box)return;box.classList.add('show');const pct=qcmTally[scoreId].ok/total;
   document.getElementById(scoreId+'-em').textContent=pct>=.8?'\uD83C\uDF89':pct>=.6?'\uD83D\uDC4D':'\uD83D\uDCAA';
   document.getElementById(scoreId+'-n').textContent=qcmTally[scoreId].ok+' / '+total;
-  document.getElementById(scoreId+'-m').textContent=pct>=.8?'\u00A1Excelente!':pct>=.6?'\u00A1Bien! Repasa los errores.':'Int\u00E9ntalo de nuevo.';}
+  document.getElementById(scoreId+'-m').textContent=pct>=.8?'Excellent\u00A0!':pct>=.6?'Bien\u00A0! Revois les erreurs.':'R\u00E9essaie.';}
 }
 
 function buildFill(cid,items){
@@ -183,7 +177,7 @@ function matchClick(cid,id,side,pair){
   if(st.selected.side===side){document.getElementById(st.selected.id).classList.remove('selected');el.classList.add('selected');st.selected={id,side,pair};return;}
   const a=st.selected,b={id,side,pair};const match=a.pair===b.pair;
   [a,b].forEach(x=>{const e=document.getElementById(x.id);e.classList.remove('selected');e.classList.add(match?'matched-ok':'matched-err');if(!match)setTimeout(()=>e.classList.remove('matched-err'),400);});
-  if(match){st.matched++;if(st.matched===st.total){const sc=document.getElementById(st.scoreId);if(sc)sc.textContent='\uD83C\uDF89 \u00A1Todas correctas! '+st.total+' / '+st.total;}}st.selected=null;
+  if(match){st.matched++;if(st.matched===st.total){const sc=document.getElementById(st.scoreId);if(sc)sc.textContent='\uD83C\uDF89 Toutes correctes\u00A0! '+st.total+' / '+st.total;}}st.selected=null;
 }
 
 const dlTally={},dlDataStore={};
@@ -193,12 +187,12 @@ function buildDialogueListen(cid,data,color){
   const c=document.getElementById(cid);if(!c)return;c.innerHTML='';
   const ph1=document.createElement('div');ph1.id=cid+'_phase1';
   const lb=document.createElement('div');lb.style.cssText='text-align:center;padding:20px 0 24px';
-  lb.innerHTML='<div style="font-size:13px;color:#7a7a8c;margin-bottom:14px;font-style:italic">Escucha el di\u00E1logo completo, luego responde las preguntas sin ver el texto.</div>'+
+  lb.innerHTML='<div style="font-size:13px;color:#7a7a8c;margin-bottom:14px;font-style:italic">\u00C9coute le dialogue complet, puis r\u00E9ponds aux questions sans regarder le texte.</div>'+
     '<button id="'+cid+'_listenAll" onclick="playDialogueFull(\''+cid+'\',dlDataStore[\''+cid+'\'])" style="background:'+color+';color:white;border:none;border-radius:12px;padding:14px 28px;font-size:15px;font-weight:800;cursor:pointer;font-family:\'Nunito\',sans-serif;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 16px rgba(0,0,0,.12)">\uD83D\uDD0A \u00C9couter le dialogue</button>'+
     '<div id="'+cid+'_playing" style="margin-top:10px;font-size:12px;color:'+color+';font-weight:700;display:none">\u25B6 En cours\u2026</div>';
   ph1.appendChild(lb);
   const ql=document.createElement('div');ql.style.cssText='font-size:12px;font-weight:800;color:'+color+';text-transform:uppercase;letter-spacing:1px;margin-bottom:10px';
-  ql.textContent='\uD83E\uDDE0 Comprensi\u00F3n \u2014 responde sin ver el texto';ph1.appendChild(ql);
+  ql.textContent='\uD83E\uDDE0 Compr\u00E9hension \u2014 r\u00E9ponds sans voir le texte';ph1.appendChild(ql);
   data.qcm.forEach((q,qi)=>{const qd=document.createElement('div');qd.className='qcm-item';
   qd.innerHTML='<div class="q-label">Pregunta '+(qi+1)+'</div><div class="q-text">'+q.q+'</div>'+
     '<div class="opts" id="'+cid+'_opts_'+qi+'">'+q.opts.map((o,oi)=>'<button class="opt" onclick="answerDLQ(\''+cid+'\','+qi+','+oi+','+q.ans+','+data.qcm.length+')">'+o+'</button>').join('')+'</div>'+
@@ -207,7 +201,7 @@ function buildDialogueListen(cid,data,color){
   sc.innerHTML='<div class="score-emoji" id="'+cid+'_sc_em"></div><div class="score-num" id="'+cid+'_sc_n" style="color:'+color+'"></div><div class="score-msg" id="'+cid+'_sc_m"></div>';
   ph1.appendChild(sc);c.appendChild(ph1);
   const ph2=document.createElement('div');ph2.id=cid+'_phase2';ph2.style.display='none';
-  ph2.innerHTML='<div style="font-size:12px;font-weight:800;color:'+color+';text-transform:uppercase;letter-spacing:1px;margin:18px 0 10px">\uD83D\uDCDA Transcripci\u00F3n del di\u00E1logo</div>';
+  ph2.innerHTML='<div style="font-size:12px;font-weight:800;color:'+color+';text-transform:uppercase;letter-spacing:1px;margin:18px 0 10px">\uD83D\uDCDA Transcription du dialogue</div>';
   const dw=document.createElement('div');dw.style.cssText='background:#1a1a2e;border:1.5px solid #2a2a4e;border-radius:14px;padding:16px 18px';
   data.lines.forEach((line,li)=>{const isF=line.voice==='f';const al=isF?'#e63946':'#2a7dd1';const bl=isF?'#fdecea':'#deeeff';
   const words=line.phrase.split(' ');const ws=words.map((w,wi)=>'<span id="'+cid+'_w'+li+'_'+wi+'" style="color:rgba(255,255,255,0.5);transition:color .12s">'+w+'</span>').join(' ');
@@ -221,33 +215,37 @@ function buildDialogueListen(cid,data,color){
 
 async function playDialogueFull(cid,data){
   const btn=document.getElementById(cid+'_listenAll');const ind=document.getElementById(cid+'_playing');if(!data)return;if(btn)btn.disabled=true;if(ind)ind.style.display='block';
-  for(const line of data.lines){await speakPromise(line.phrase,line.voice==='f'?VOICE_F:VOICE_M);await new Promise(r=>setTimeout(r,320));}
+  for(const line of data.lines){await speakPromise(line.phrase,line.voice==='f'?FRENCHOIS.EL_VOICES.charlotte:FRENCHOIS.EL_VOICES.daniel);await new Promise(r=>setTimeout(r,320));}
   if(btn){btn.disabled=false;btn.innerHTML='\uD83D\uDD0A \u00C9couter \u00E0 nouveau';}if(ind)ind.style.display='none';
 }
 function speakPromise(text,voiceId){
-  if(!EL_KEY){return new Promise(res=>{const u=new SpeechSynthesisUtterance(text);u.lang='fr-FR';u.rate=0.88;u.onend=res;window.speechSynthesis.cancel();window.speechSynthesis.speak(u);});}
-  return fetch('https://api.elevenlabs.io/v1/text-to-speech/'+voiceId,{method:'POST',headers:{'xi-api-key':EL_KEY,'Content-Type':'application/json'},body:JSON.stringify({text,model_id:'eleven_multilingual_v2',language_code:'fr',voice_settings:{stability:0.5,similarity_boost:0.75}})})
-  .then(r=>r.blob()).then(blob=>new Promise(res=>{const url=URL.createObjectURL(blob);const a=new Audio(url);a.play();a.onended=()=>{URL.revokeObjectURL(url);res();};})).catch(()=>speakPromise(text,null));
+  return speak(text,voiceId).then(audio=>new Promise(res=>{
+    if(audio){audio.onended=res;}else{setTimeout(res,Math.max(text.split(' ').length*420+400,1500));}
+  }));
 }
 async function playLineKaraoke(cid,li,line,btn){
-  if(!line)return;const words=line.phrase.split(' ');const voiceId=line.voice==='f'?VOICE_F:VOICE_M;btn.disabled=true;
+  if(!line)return;const words=line.phrase.split(' ');
+  const voiceId=line.voice==='f'?FRENCHOIS.EL_VOICES.charlotte:FRENCHOIS.EL_VOICES.daniel;
+  btn.disabled=true;
   words.forEach((_,wi)=>{const s=document.getElementById(cid+'_w'+li+'_'+wi);if(s)s.style.color='rgba(255,255,255,0.5)';});
   const sk=(dur)=>{const ms=(dur*1000)/words.length;words.forEach((_,wi)=>setTimeout(()=>{const s=document.getElementById(cid+'_w'+li+'_'+wi);if(s)s.style.color='#ffd166';},wi*ms));setTimeout(()=>{btn.disabled=false;},dur*1000+200);};
-  if(!EL_KEY){const u=new SpeechSynthesisUtterance(line.phrase);u.lang='fr-FR';u.rate=0.88;window.speechSynthesis.cancel();window.speechSynthesis.speak(u);sk(words.length*0.42);return;}
-  try{const r=await fetch('https://api.elevenlabs.io/v1/text-to-speech/'+voiceId,{method:'POST',headers:{'xi-api-key':EL_KEY,'Content-Type':'application/json'},body:JSON.stringify({text:line.phrase,model_id:'eleven_multilingual_v2',language_code:'fr',voice_settings:{stability:0.5,similarity_boost:0.75}})});
-  const blob=await r.blob();const url=URL.createObjectURL(blob);const audio=new Audio(url);
-  audio.addEventListener('loadedmetadata',()=>sk(audio.duration));audio.play();audio.onended=()=>{URL.revokeObjectURL(url);btn.disabled=false;};}catch{btn.disabled=false;}
+  const audio=await speak(line.phrase,voiceId);
+  if(audio){
+    if(audio.duration&&isFinite(audio.duration)){sk(audio.duration);}
+    else{audio.addEventListener('loadedmetadata',()=>sk(audio.duration));}
+    audio.onended=()=>btn.disabled=false;
+  }else{sk(words.length*0.42);}
 }
 function answerDLQ(cid,qi,chosen,correct,total){
   const key=cid+'_'+qi;if(dlTally[key])return;dlTally[key]={done:true,wasCorrect:chosen===correct};
   const opts=document.querySelectorAll('#'+cid+'_opts_'+qi+' .opt');
   opts.forEach((b,i)=>{b.disabled=true;if(i===correct)b.classList.add('correct');else if(i===chosen&&chosen!==correct)b.classList.add('wrong');});
-  const fb=document.getElementById(cid+'_fb_'+qi);fb.textContent=chosen===correct?'\u2705 \u00A1Correcto!':'\u274C Respuesta: '+opts[correct].textContent;fb.style.cssText='color:'+(chosen===correct?'#1d7a4c':'#c0392b')+';font-size:12px;margin-top:6px;font-weight:700';
+  const fb=document.getElementById(cid+'_fb_'+qi);fb.textContent=chosen===correct?'\u2705 Correct\u00A0!':'\u274C R\u00E9ponse\u00A0: '+opts[correct].textContent;fb.style.cssText='color:'+(chosen===correct?'#1d7a4c':'#c0392b')+';font-size:12px;margin-top:6px;font-weight:700';
   let answered=0,good=0;for(let i=0;i<total;i++){if(dlTally[cid+'_'+i]){answered++;if(dlTally[cid+'_'+i].wasCorrect)good++;}}
   if(answered===total){const sc=document.getElementById(cid+'_score');if(sc){sc.classList.add('show');const pct=good/total;
   document.getElementById(cid+'_sc_em').textContent=pct>=.75?'\uD83C\uDF89':pct>=.5?'\uD83D\uDC4D':'\uD83D\uDCAA';
   document.getElementById(cid+'_sc_n').textContent=good+' / '+total;
-  document.getElementById(cid+'_sc_m').textContent=pct>=.75?'\u00A1Excelente comprensi\u00F3n!':pct>=.5?'\u00A1Bien! Vuelve a escuchar.':'Escucha el di\u00E1logo otra vez.';
+  document.getElementById(cid+'_sc_m').textContent=pct>=.75?'Excellente compr\u00E9hension\u00A0!':pct>=.5?'Bien\u00A0! R\u00E9\u00E9coute le dialogue.':'\u00C9coute le dialogue \u00E0 nouveau.';
   sc.scrollIntoView({behavior:'smooth',block:'nearest'});}
   setTimeout(()=>{const p2=document.getElementById(cid+'_phase2');if(p2){p2.style.display='block';p2.style.animation='fadein .4s ease';p2.scrollIntoView({behavior:'smooth',block:'nearest'});}},900);}
 }
@@ -263,7 +261,7 @@ function addExCard(panel,id,num,title,instr,l,isCheck,checkId){
   const card=document.createElement('div');card.className='ex-card';
   card.innerHTML='<div class="ex-title" style="color:var(--l'+l+')">Ejercicio '+num+' \u2014 '+title+'</div>'+
     '<div class="ex-instr">'+instr+'</div><div id="'+id+'"></div>';
-  if(isCheck){card.innerHTML+='<button class="check-btn" style="background:var(--l'+l+');color:white" onclick="checkFill(\''+id+'\',\''+checkId+'\')">Verificar</button>';}
+  if(isCheck){card.innerHTML+='<button class="check-btn" style="background:var(--l'+l+');color:white" onclick="checkFill(\''+id+'\',\''+checkId+'\')">Vérifier</button>';}
   const scoreBox=document.createElement('div');scoreBox.className='score-box';scoreBox.id=(checkId||id.replace('ex','sc').replace(/\d[a-z]$/,m=>m[0]+m[1]));
   scoreBox.style.background='var(--l'+l+'l)';scoreBox.innerHTML='<div class="score-emoji" id="'+(checkId||id.replace('ex','sc').replace(/\d[a-z]$/,m=>m[0]+m[1]))+'-em"></div><div class="score-num" id="'+(checkId||id.replace('ex','sc').replace(/\d[a-z]$/,m=>m[0]+m[1]))+'-n" style="color:var(--l'+l+'d)"></div><div class="score-msg" id="'+(checkId||id.replace('ex','sc').replace(/\d[a-z]$/,m=>m[0]+m[1]))+'-m"></div>';
   card.appendChild(scoreBox);panel.appendChild(card);
@@ -293,7 +291,7 @@ function addCard(panelId,exId,num,title,instr,l,isCheck,scoreId){
   const card=document.createElement('div');card.className='ex-card';
   let html='<div class="ex-title" style="color:var(--l'+l+')">Ejercicio '+num+' \u2014 '+title+'</div>'+
     '<div class="ex-instr">'+instr+'</div><div id="'+exId+'"></div>';
-  if(isCheck)html+='<button class="check-btn" style="background:var(--l'+l+');color:white" onclick="checkFill(\''+exId+'\',\''+scoreId+'\')">Verificar</button>';
+  if(isCheck)html+='<button class="check-btn" style="background:var(--l'+l+');color:white" onclick="checkFill(\''+exId+'\',\''+scoreId+'\')">Vérifier</button>';
   const sc=document.createElement('div');sc.className='score-box';sc.id=scoreId;sc.style.background='var(--l'+l+'l)';
   sc.innerHTML='<div class="score-emoji" id="'+scoreId+'-em"></div><div class="score-num" id="'+scoreId+'-n" style="color:var(--l'+l+'d)"></div><div class="score-msg" id="'+scoreId+'-m"></div>';
   card.innerHTML=html;card.appendChild(sc);panel.appendChild(card);
@@ -364,43 +362,43 @@ function buildMobNav(){
 document.addEventListener('DOMContentLoaded',()=>{
   window.speechSynthesis.getVoices();
   buildPanels();
-  buildELModal();buildMobNav();
+  buildMobNav();
   // L1
   addCard('panel-1','ex1a',1,'La estructura de la fecha','Elige la opci\u00F3n correcta para expresar la fecha en franc\u00E9s.',1,false,'sc1a');buildQCM('ex1a',qcm1a,'sc1a');
   addCard('panel-1','ex1b',2,'La hora','Elige c\u00F3mo se dice correctamente la hora en franc\u00E9s.',1,false,'sc1b');buildQCM('ex1b',qcm1b,'sc1b');
   addCard('panel-1','ex1c',3,'Completa la fecha o la hora','Escribe la palabra que falta en cada frase.',1,true,'sc1c');buildFill('ex1c',fill1c);
   addCard('panel-1','ex1d',4,'Une el mes con la estaci\u00F3n','Asocia cada mes con la estaci\u00F3n correspondiente.',1,false,'sc1d');buildMatch('ex1d',match1d,'sc1d');
-  addCard('panel-1','dl1',5,'\uD83C\uDFA7 Comprensi\u00F3n oral','Escucha el di\u00E1logo y responde las preguntas sin ver el texto.',1,false,'sc1e');buildDialogueListen('dl1',dl1,'var(--l1)');registerDL('dl1',dl1);
+  addCard('panel-1','dl1',5,'\uD83C\uDFA7 Compr\u00E9hension orale','\u00C9coute le dialogue et r\u00E9ponds aux questions sans voir le texte.',1,false,'sc1e');buildDialogueListen('dl1',dl1,'var(--l1)');registerDL('dl1',dl1);
   addCard('panel-1','ra1',6,'\uD83C\uDF99\uFE0F Pronuncia','Escucha el modelo y graba tu voz.',1,false,'sc1f');buildRA('ra1',ra1,'var(--l1)');
   // L2
   addCard('panel-2','ex2a',1,'ce, cet, cette ou ces ?','Elige el adjetivo demostrativo correcto seg\u00FAn el g\u00E9nero y n\u00FAmero.',2,false,'sc2a');buildQCM('ex2a',qcm2a,'sc2a');
   addCard('panel-2','ex2b',2,'Completa con el demostrativo','Escribe ce, cet, cette o ces seg\u00FAn el sustantivo.',2,true,'sc2b');buildFill('ex2b',fill2b);
   addCard('panel-2','ex2c',3,'Vocabulario: lugares de la ciudad','Une el lugar en franc\u00E9s con su traducci\u00F3n en espa\u00F1ol.',2,false,'sc2c');buildMatch('ex2c',match2c,'sc2c');
   addCard('panel-2','ex2d',4,'\u00BFMasculino o femenino?','Indica si el lugar usa ce/cet (masculino) o cette (femenino).',2,false,'sc2d');buildQCM('ex2d',qcm2d,'sc2d');
-  addCard('panel-2','dl2',5,'\uD83C\uDFA7 Comprensi\u00F3n oral','Escucha el di\u00E1logo y responde las preguntas sin ver el texto.',2,false,'sc2e');buildDialogueListen('dl2',dl2,'var(--l2)');registerDL('dl2',dl2);
+  addCard('panel-2','dl2',5,'\uD83C\uDFA7 Compr\u00E9hension orale','\u00C9coute le dialogue et r\u00E9ponds aux questions sans voir le texte.',2,false,'sc2e');buildDialogueListen('dl2',dl2,'var(--l2)');registerDL('dl2',dl2);
   addCard('panel-2','ra2',6,'\uD83C\uDF99\uFE0F Pronuncia','Escucha y graba estas frases con los demostrativos.',2,false,'sc2f');buildRA('ra2',ra2,'var(--l2)');
   // L3
   addCard('panel-3','ex3a',1,'\u00BFQu\u00E9 preposici\u00F3n?','Elige la preposici\u00F3n de lugar correcta para cada situaci\u00F3n.',3,false,'sc3a');buildQCM('ex3a',qcm3a,'sc3a');
   addCard('panel-3','ex3b',2,'Traduce la preposici\u00F3n','Une la preposici\u00F3n francesa con su equivalente en espa\u00F1ol.',3,false,'sc3b');buildMatch('ex3b',match3b,'sc3b');
   addCard('panel-3','ex3c',3,'Completa con la preposici\u00F3n','Escribe la preposici\u00F3n que falta en cada frase.',3,true,'sc3c');buildFill('ex3c',fill3c);
   addCard('panel-3','ex3d',4,'Las habitaciones de la casa','Une la habitaci\u00F3n en franc\u00E9s con su traducci\u00F3n en espa\u00F1ol.',3,false,'sc3d');buildMatch('ex3d',match3d,'sc3d');
-  addCard('panel-3','dl3',5,'\uD83C\uDFA7 Comprensi\u00F3n oral','Escucha el di\u00E1logo y responde las preguntas sin ver el texto.',3,false,'sc3e');buildDialogueListen('dl3',dl3,'var(--l3)');registerDL('dl3',dl3);
+  addCard('panel-3','dl3',5,'\uD83C\uDFA7 Compr\u00E9hension orale','\u00C9coute le dialogue et r\u00E9ponds aux questions sans voir le texte.',3,false,'sc3e');buildDialogueListen('dl3',dl3,'var(--l3)');registerDL('dl3',dl3);
   addCard('panel-3','ra3',6,'\uD83C\uDF99\uFE0F Pronuncia','Escucha y graba estas frases con preposiciones de lugar.',3,false,'sc3f');buildRA('ra3',ra3,'var(--l3)');
   // L4
   addCard('panel-4','ex4a',1,'\u00BFC\u00F3mo pido el camino?','Elige la expresi\u00F3n correcta para cada situaci\u00F3n.',4,false,'sc4a');buildQCM('ex4a',qcm4a,'sc4a');
   addCard('panel-4','ex4b',2,'Vocabulario de orientaci\u00F3n','Une la expresi\u00F3n francesa con su traducci\u00F3n en espa\u00F1ol.',4,false,'sc4b');buildMatch('ex4b',match4b,'sc4b');
   addCard('panel-4','ex4c',3,'Completa las indicaciones','Escribe la palabra que falta en cada indicaci\u00F3n.',4,true,'sc4c');buildFill('ex4c',fill4c);
   addCard('panel-4','ex4d',4,'Vocabulario de la calle','Une el elemento de la calle con su traducci\u00F3n.',4,false,'sc4d');buildMatch('ex4d',match4d,'sc4d');
-  addCard('panel-4','dl4',5,'\uD83C\uDFA7 Comprensi\u00F3n oral','Escucha el di\u00E1logo y responde las preguntas sin ver el texto.',4,false,'sc4e');buildDialogueListen('dl4',dl4,'var(--l4)');registerDL('dl4',dl4);
+  addCard('panel-4','dl4',5,'\uD83C\uDFA7 Compr\u00E9hension orale','\u00C9coute le dialogue et r\u00E9ponds aux questions sans voir le texte.',4,false,'sc4e');buildDialogueListen('dl4',dl4,'var(--l4)');registerDL('dl4',dl4);
   addCard('panel-4','ra4',6,'\uD83C\uDF99\uFE0F Pide el camino','Escucha y graba estas frases para pedir indicaciones.',4,false,'sc4f');buildRA('ra4',ra4,'var(--l4)');
   // L5
   addCard('panel-5','ex5a',1,'\u00E0 ou en ?','Elige la preposici\u00F3n correcta para cada medio de transporte.',5,false,'sc5a');buildQCM('ex5a',qcm5a,'sc5a');
   addCard('panel-5','ex5b',2,'Vocabulario de transportes','Une el medio de transporte en franc\u00E9s con su traducci\u00F3n.',5,false,'sc5b');buildMatch('ex5b',match5b,'sc5b');
   addCard('panel-5','ex5c',3,'Completa con aller ou prendre','Escribe la forma correcta del verbo en cada frase.',5,true,'sc5c');buildFill('ex5c',fill5c);
   addCard('panel-5','ex5d',4,'Preguntas sobre los transportes','Elige la respuesta m\u00E1s natural a cada pregunta.',5,false,'sc5d');buildQCM('ex5d',qcm5d,'sc5d');
-  addCard('panel-5','dl5',5,'\uD83C\uDFA7 Comprensi\u00F3n oral','Escucha el di\u00E1logo y responde las preguntas sin ver el texto.',5,false,'sc5e');buildDialogueListen('dl5',dl5,'var(--l5)');registerDL('dl5',dl5);
+  addCard('panel-5','dl5',5,'\uD83C\uDFA7 Compr\u00E9hension orale','\u00C9coute le dialogue et r\u00E9ponds aux questions sans voir le texte.',5,false,'sc5e');buildDialogueListen('dl5',dl5,'var(--l5)');registerDL('dl5',dl5);
   addCard('panel-5','ra5',6,'\uD83C\uDF99\uFE0F Habla de tus desplazamientos','Escucha y graba estas frases sobre los medios de transporte.',5,false,'sc5f');buildRA('ra5',ra5,'var(--l5)');
 });
 </script>
 </body>
-</html>
+</html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  

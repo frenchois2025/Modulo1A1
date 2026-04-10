@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -436,7 +436,7 @@
     <div class="ex-title" style="color:var(--l0)">Ejercicio 2 — Completa la presentación</div>
     <div class="ex-instr">Escribe la palabra correcta en cada espacio. Pista entre paréntesis.</div>
     <div id="ex1b"></div>
-    <button class="check-btn" style="background:var(--l0);color:white" onclick="checkFill('ex1b','sc1b')">Verificar respuestas</button>
+    <button class="check-btn" style="background:var(--l0);color:white" onclick="checkFill('ex1b','sc1b')">Vérifier les réponses</button>
     <div class="score-box" id="sc1b" style="background:var(--l0l)">
       <div class="score-emoji" id="sc1b-em"></div>
       <div class="score-num" id="sc1b-n" style="color:var(--l0d)"></div>
@@ -503,7 +503,7 @@
     <div class="ex-title" style="color:var(--l2)">Ejercicio 2 — Completa con el pronombre correcto</div>
     <div class="ex-instr">Escribe el pronombre que corresponde a cada frase.</div>
     <div id="ex2b"></div>
-    <button class="check-btn" style="background:var(--l2);color:white" onclick="checkFill('ex2b','sc2b')">Verificar</button>
+    <button class="check-btn" style="background:var(--l2);color:white" onclick="checkFill('ex2b','sc2b')">Vérifier</button>
     <div class="score-box" id="sc2b" style="background:var(--l2l)">
       <div class="score-emoji" id="sc2b-em"></div>
       <div class="score-num" id="sc2b-n" style="color:var(--l2d)"></div>
@@ -584,7 +584,7 @@
     <div class="ex-title" style="color:var(--l3)">Ejercicio 3 — Une el color francés con su traducción</div>
     <div class="ex-instr">Haz clic en un color francés y luego en su traducción española.</div>
     <div id="ex3c"></div>
-    <button class="check-btn" style="background:var(--l3);color:white" onclick="checkFillColors()">Verificar</button>
+    <button class="check-btn" style="background:var(--l3);color:white" onclick="checkFillColors()">Vérifier</button>
     <div class="score-box" id="sc3c" style="background:var(--l3l)">
       <div class="score-emoji" id="sc3c-em"></div>
       <div class="score-num" id="sc3c-n" style="color:var(--l3d)"></div>
@@ -609,7 +609,7 @@
     <div class="ex-title" style="color:var(--l3)">Ejercicio 5 — Escribe el número en francés</div>
     <div class="ex-instr">Escribe el número indicado entre paréntesis en letras.</div>
     <div id="ex3e"></div>
-    <button class="check-btn" style="background:var(--l3);color:white" onclick="checkFill('ex3e','sc3e')">Verificar</button>
+    <button class="check-btn" style="background:var(--l3);color:white" onclick="checkFill('ex3e','sc3e')">Vérifier</button>
     <div class="score-box" id="sc3e" style="background:var(--l3l)">
       <div class="score-emoji" id="sc3e-em"></div>
       <div class="score-num" id="sc3e-n" style="color:var(--l3d)"></div>
@@ -636,7 +636,7 @@
     <div class="ex-title" style="color:var(--l3)">Ejercicio 8 — 🎧 Dictée de nombres</div>
     <div class="ex-instr">Escucha el número en francés y escríbelo en cifras.</div>
     <div id="ex3dictee"></div>
-    <button class="check-btn" style="background:var(--l3);color:white" onclick="checkFill('ex3dictee','sc3dictee')">Verificar</button>
+    <button class="check-btn" style="background:var(--l3);color:white" onclick="checkFill('ex3dictee','sc3dictee')">Vérifier</button>
     <div class="score-box" id="sc3dictee" style="background:var(--l3l)">
       <div class="score-emoji" id="sc3dictee-em"></div>
       <div class="score-num" id="sc3dictee-n" style="color:var(--l3d)"></div>
@@ -666,7 +666,7 @@
   <!-- Ex 4B: Fill formulaire -->
   <div class="ex-card">
     <div class="ex-title" style="color:var(--l4)">Ejercicio 2 — Escucha y rellena el formulario</div>
-    <div class="ex-instr">Escucha el diálogo y completa el formulario con la información que escuchas.</div>
+    <div class="ex-instr">Écoute le dialogue et complète le formulaire avec les informations que tu entends.</div>
     
     <!-- Dialogue player -->
     <div id="dialogue4b" style="margin-bottom:20px;"></div>
@@ -701,7 +701,7 @@
       </div>
     </div>
     
-    <button class="check-btn" style="background:var(--l4);color:white" onclick="checkDialogueForm('form4b','sc4b')">Verificar</button>
+    <button class="check-btn" style="background:var(--l4);color:white" onclick="checkDialogueForm('form4b','sc4b')">Vérifier</button>
     <div class="score-box" id="sc4b" style="background:var(--l4l)">
       <div class="score-emoji" id="sc4b-em"></div>
       <div class="score-num" id="sc4b-n" style="color:var(--l4d)"></div>
@@ -745,36 +745,21 @@
 </div><!-- /app -->
 
 
-<script>function speakWithVoice(t,r,v,el){speak(t,v);}
-
+<script>
 // ══════════════════════════════════════
 // NAVIGATION
 // ══════════════════════════════════════
 
-
-// ══════════════════════════════════════
-// SPEECH — robuste avec retry
-// ══════════════════════════════════════
-// ══ ElevenLabs TTS Engine ══
-
-function browserSpeak(t,r){r=r||.82;window.speechSynthesis.cancel();function g(){const u=new SpeechSynthesisUtterance(t);u.lang='fr-FR';u.rate=r;const v=window.speechSynthesis.getVoices().find(x=>x.lang&&x.lang.startsWith('fr'));if(v)u.voice=v;window.speechSynthesis.speak(u);}window.speechSynthesis.getVoices().length===0?(window.speechSynthesis.onvoiceschanged=g):g();}
-
-// Charlotte ID and Daniel ID
-const VOICE_F = 'XB0fDUnXU5powFXDhCwa'; // Charlotte
-const VOICE_M = 'onwK4e9ZLuTAKqWW03F9'; // Daniel
-
 function getVoiceForText(text){
-  // If text contains feminine subject indicators → Charlotte
   const femPatterns = /\b(elle|elles|madame|marie|sophie|femme|fille|mère|sœur|dame)\b/i;
   const mascPatterns = /\b(il|ils|monsieur|paul|pierre|homme|garçon|père|frère)\b/i;
-  if(femPatterns.test(text)) return VOICE_F;
-  if(mascPatterns.test(text)) return VOICE_M;
-  return EL_VOICE; // default to user selection
+  if(femPatterns.test(text)) return FRENCHOIS.EL_VOICES.charlotte;
+  if(mascPatterns.test(text)) return FRENCHOIS.EL_VOICES.daniel;
+  return getELVoice();
 }
 
-function speakGendered(text, rate, triggerEl){
-  const voice = getVoiceForText(text);
-  speakWithVoice(text, rate, triggerEl, voice);
+function speakGendered(text){
+  speak(text, getVoiceForText(text));
 }
 
 // ══════════════════════════════════════
@@ -800,19 +785,19 @@ async function recStart(id){
       REC[id].blob = new Blob(REC[id].chunks, {type: REC[id].recorder.mimeType||'audio/webm'});
       REC[id].recording = false;
       stream.getTracks().forEach(t=>t.stop());
-      if(statusEl) { statusEl.textContent='✓ ¡Grabado!'; statusEl.style.color='#1d7a4c'; }
-      if(btnEl)    { btnEl.textContent='🎙️ Grabar de nuevo'; btnEl.style.background='#555'; }
+      if(statusEl) { statusEl.textContent='✓ Enregistré !'; statusEl.style.color='#1d7a4c'; }
+      if(btnEl)    { btnEl.textContent='🎙️ Enregistrer à nouveau'; btnEl.style.background='#555'; }
       if(cmpEl)    { cmpEl.style.display='flex'; }
     };
     REC[id].recorder.start(100); // collect every 100ms
-    if(statusEl) { statusEl.textContent='● Grabando…'; statusEl.style.color='#e63946'; }
-    if(btnEl)    { btnEl.textContent='⬛ Detener'; btnEl.style.background='#e63946'; }
+    if(statusEl) { statusEl.textContent='● Enregistrement…'; statusEl.style.color='#e63946'; }
+    if(btnEl)    { btnEl.textContent='⬛ Arrêter'; btnEl.style.background='#e63946'; }
     if(cmpEl)    { cmpEl.style.display='none'; }
   } catch(err) {
     if(statusEl) {
       statusEl.textContent = err.name==='NotAllowedError'
         ? '⚠ Autoriza el micrófono en tu navegador'
-        : '⚠ Micrófono no disponible';
+        : '⚠ Microphone non disponible';
       statusEl.style.color='#e63946';
     }
   }
@@ -862,7 +847,7 @@ function buildWordCards(containerId, words, accentColor, bgColor){
         </button>
         <button id="rb_${rid}" onclick="recToggle('${rid}')"
           style="background:#555;color:white;border:none;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif">
-          🎙️ Grabar
+          🎙️ Enregistrer
         </button>
       </div>
       <div id="rs_${rid}" style="font-size:11px;min-height:16px;margin-bottom:6px"></div>
@@ -886,8 +871,8 @@ function buildWordCards(containerId, words, accentColor, bgColor){
 function speakRA(btn){
   const text = btn.getAttribute('data-phrase') || '';
   const v = btn.getAttribute('data-voice') || '';
-  const voice = v==='f' ? VOICE_F : v==='m' ? VOICE_M : EL_VOICE;
-  speakWithVoice(text, 1.0, voice);
+  const voice = v==='f' ? FRENCHOIS.EL_VOICES.charlotte : v==='m' ? FRENCHOIS.EL_VOICES.daniel : getELVoice();
+  speak(text, voice);
 }
 function buildReadAloud(containerId, phrases, accentColor){
   const c = document.getElementById(containerId);
@@ -905,18 +890,18 @@ function buildReadAloud(containerId, phrases, accentColor){
       <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px">
         <button id="sb_${rid}" data-phrase="${p.phrase.replace(/"/g,'&quot;')}" data-voice="${p.voice||''}" onclick="speakRA(this);this.style.opacity='.6';setTimeout(()=>this.style.opacity='1',900)"
           style="background:${accentColor};color:white;border:none;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif">
-          🔊 Escuchar modelo
+          🔊 Écouter le modèle
         </button>
         <button id="rb_${rid}" onclick="recToggle('${rid}')"
           style="background:#555;color:white;border:none;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif">
-          🎙️ Grabar mi voz
+          🎙️ Enregistrer ma voix
         </button>
         <span id="rs_${rid}" style="font-size:12px;color:#8a8a9a"></span>
       </div>
       <div id="rc_${rid}" style="display:none;gap:8px;flex-wrap:wrap">
         <button id="sb_${rid}" data-phrase="${p.phrase.replace(/"/g,'&quot;')}" data-voice="${p.voice||''}" onclick="speakRA(this);this.style.opacity='.6';setTimeout(()=>this.style.opacity='1',900)"
           style="background:white;border:1.5px solid #e8e2d9;border-radius:8px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif">
-          🇫🇷 Escuchar modelo
+          🇫🇷 Écouter le modèle
         </button>
         <button onclick="recPlayback('${rid}')"
           style="background:white;border:1.5px solid #e8e2d9;border-radius:8px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif">
@@ -964,7 +949,7 @@ function answerQCM(id,chosen,correct,scoreId,total){
   });
   const ok=chosen===correct;
   const correctText=opts.querySelectorAll('.opt')[correct].textContent;
-  fb.textContent=(ok?'✓ ¡Correcto! ':'✗ Incorrecto → ')+correctText;
+  fb.textContent=(ok?'✓ Correct ! ':'✗ Incorrect → ')+correctText;
   fb.className='fb show '+(ok?'ok':'nope');
   if(!qcmTally[scoreId]) qcmTally[scoreId]={score:0,done:0};
   if(ok) qcmTally[scoreId].score++;
@@ -977,7 +962,7 @@ function showQCMScore(id,score,total){
   if(!box) return;
   box.classList.add('show');
   const em=pct>=.8?'🎉':pct>=.6?'👍':'💪';
-  const msg=pct>=.8?'¡Excelente! Dominas este tema.':pct>=.6?'¡Bien! Repasa los errores.':'Sigue practicando, ¡tú puedes!';
+  const msg=pct>=.8?'Excellent ! Tu maîtrises ce sujet.':pct>=.6?'Bien ! Revois les erreurs.':'Continue à pratiquer, tu peux y arriver !';
   document.getElementById(id+'-em').textContent=em;
   document.getElementById(id+'-n').textContent=score+' / '+total;
   document.getElementById(id+'-m').textContent=msg;
@@ -1026,7 +1011,7 @@ function pickMatch(cid, side, idx, scoreId, total){
   }
   st.selected=null;
   const sc=document.getElementById(scoreId);
-  if(sc) sc.textContent=st.score+' / '+st.total+' pares correctos';
+  if(sc) sc.textContent=st.score+' / '+st.total+' paires correctes';
 }
 
 // ══════════════════════════════════════
@@ -1057,7 +1042,7 @@ function buildAlphabet(){
     const b=document.createElement('button');
     b.style.cssText='width:42px;height:42px;border-radius:8px;border:1.5px solid #e8e2d9;background:#faf7f2;font-family:"Playfair Display",serif;font-size:18px;font-weight:700;cursor:pointer;transition:all .15s;color:#6d28d9;';
     b.textContent=l;
-    b.onclick=()=>{ browserSpeak(ALPHA_FR[l]||l,0.7); b.style.background='#ede9fe'; setTimeout(()=>b.style.background='#faf7f2',900); };
+    b.onclick=()=>{ bSpeak(ALPHA_FR[l]||l); b.style.background='#ede9fe'; setTimeout(()=>b.style.background='#faf7f2',900); };
     grid.appendChild(b);
   });
   c.appendChild(grid);
@@ -1361,43 +1346,23 @@ function buildDialogue4b(){
 let dialoguePlaying = false;
 let dialogueIdx = 0;
 
-async function playLineL4(i){
+function playLineL4(i){
   const line = dialogueL4[i];
-  const voice = line.speaker === 'f' ? VOICE_F : VOICE_M;
-  speakWithVoice(line.text, 1.0, voice);
+  const voice = line.speaker === 'f' ? FRENCHOIS.EL_VOICES.charlotte : FRENCHOIS.EL_VOICES.daniel;
+  speak(line.text, voice);
 }
 
-function playDialogueL4(i, btn){
-  if(i >= dialogueL4.length){ 
+async function playDialogueL4(i, btn){
+  if(i >= dialogueL4.length){
     if(btn) btn.innerHTML = '▶ Escuchar el diálogo completo';
-    return; 
+    return;
   }
   if(btn) btn.innerHTML = '⏸ Reproduciendo...';
   const line = dialogueL4[i];
-  const voice = line.speaker === 'f' ? VOICE_F : VOICE_M;
-  const cacheKey = line.text + '||' + voice;
-  
-  if(AUDIO_CACHE.has(cacheKey)){
-    const audio = new Audio(AUDIO_CACHE.get(cacheKey));
-    audio.onended = () => setTimeout(() => playDialogueL4(i+1, btn), 400);
-    audio.play();
-  } else if(EL_KEY) {
-    fetch('https://api.elevenlabs.io/v1/text-to-speech/' + voice, {
-      method:'POST',
-      headers:{'xi-api-key': EL_KEY, 'Content-Type':'application/json'},
-      body: JSON.stringify({text: line.text, model_id:'eleven_multilingual_v2', language_code:'fr',
-        voice_settings:{stability:0.5, similarity_boost:0.75}})
-    }).then(r=>r.blob()).then(blob=>{
-      const url = URL.createObjectURL(blob);
-      AUDIO_CACHE.set(cacheKey, url);
-      const audio = new Audio(url);
-      audio.onended = () => setTimeout(() => playDialogueL4(i+1, btn), 400);
-      audio.play();
-    });
-  } else {
-    browserSpeak(line.text);
-    setTimeout(() => playDialogueL4(i+1, btn), 2000);
-  }
+  const voice = line.speaker === 'f' ? FRENCHOIS.EL_VOICES.charlotte : FRENCHOIS.EL_VOICES.daniel;
+  const next = () => setTimeout(() => playDialogueL4(i+1, btn), 400);
+  const audio = await speak(line.text, voice);
+  if(audio) { audio.onended = next; } else { setTimeout(next, 2200); }
 }
 
 function checkDialogueForm(formId, scoreId){
@@ -1419,7 +1384,7 @@ function checkDialogueForm(formId, scoreId){
   if(sc){ sc.style.display='block'; }
   if(em){ em.textContent = correct===total ? '🎉' : correct >= total/2 ? '👍' : '💪'; }
   if(num){ num.textContent = correct+'/'+total; }
-  if(msg){ msg.textContent = correct===total ? '¡Perfecto!' : '¡Sigue intentando!'; }
+  if(msg){ msg.textContent = correct===total ? 'Parfait !' : 'Continue à essayer !'; }
 }
 
 // ════════════════════════════════════
@@ -1474,12 +1439,12 @@ function answerEE(i,chosen){
   const cBtn=item.type==='cerrado'?btnCe:btnAb;cBtn.style.cssText+=';background:var(--l4l);border-color:var(--l4);color:var(--l4d)';
   if(!correct){const wBtn=chosen==='cerrado'?btnCe:btnAb;wBtn.style.cssText+=';background:var(--l1l);border-color:var(--l1);color:var(--l1d)';}
   fbEl.style.display='block';fbEl.style.color=correct?'var(--l4d)':'var(--l1d)';
-  fbEl.textContent=correct?'✅ ¡Correcto! "'+item.word+'" → '+item.type:'❌ Es '+item.type+' → "'+item.word+'"';
+  fbEl.textContent=correct?'✅ Correct ! "'+item.word+'" → '+item.type:'❌ Es '+item.type+' → "'+item.word+'"';
   if(eeState.answered<eeState.total){eeState.answered++;if(correct)eeState.correct++;
     if(eeState.answered===eeState.total){const box=document.getElementById('sc5ev');if(box){box.classList.add('show');const pct=eeState.correct/eeState.total;
       document.getElementById('sc5ev-em').textContent=pct>=.8?'🎉':pct>=.6?'👍':'💪';
       document.getElementById('sc5ev-n').textContent=eeState.correct+' / '+eeState.total;
-      document.getElementById('sc5ev-m').textContent=pct>=.8?'¡Tienes buen oído!':pct>=.6?'¡Bien! Sigue entrenando.':'Practica más escuchando los dos sonidos.';
+      document.getElementById('sc5ev-m').textContent=pct>=.8?'Tu as l'''oreille fine !':pct>=.6?'Bien ! Continue l'''entraînement.':'Pratique encore en écoutant les deux sons.';
       box.scrollIntoView({behavior:'smooth',block:'nearest'});}}}
 }
 
@@ -1548,33 +1513,21 @@ function buildDial5(){
 
 function playDial5Line(i){
   const line = dial5Data[i];
-  const voice = line.voice === 'f' ? VOICE_F : VOICE_M;
-  speakWithVoice(line.text, 1.0, voice);
+  const voice = line.voice === 'f' ? FRENCHOIS.EL_VOICES.charlotte : FRENCHOIS.EL_VOICES.daniel;
+  speak(line.text, voice);
 }
 
-function playDial5(i, btn){
+async function playDial5(i, btn){
   if(i >= dial5Data.length){
     if(btn) btn.innerHTML = '🔊 Écouter à nouveau';
     return;
   }
   if(btn) btn.innerHTML = '▶ En cours…';
   const line = dial5Data[i];
-  const voice = line.voice === 'f' ? VOICE_F : VOICE_M;
-  const k = line.text + '||' + voice;
+  const voice = line.voice === 'f' ? FRENCHOIS.EL_VOICES.charlotte : FRENCHOIS.EL_VOICES.daniel;
   const next = () => setTimeout(() => playDial5(i+1, btn), 350);
-  if(AUDIO_CACHE.has(k)){
-    const a = new Audio(AUDIO_CACHE.get(k)); a.onended = next; a.play();
-  } else if(EL_KEY){
-    fetch('https://api.elevenlabs.io/v1/text-to-speech/' + voice, {
-      method:'POST', headers:{'xi-api-key':EL_KEY,'Content-Type':'application/json'},
-      body: JSON.stringify({text: line.text, model_id:'eleven_multilingual_v2', language_code:'fr', voice_settings:{stability:0.5,similarity_boost:0.75}})
-    }).then(r=>r.blob()).then(blob=>{
-      const url = URL.createObjectURL(blob); AUDIO_CACHE.set(k, url);
-      const a = new Audio(url); a.onended = next; a.play();
-    }).catch(()=>{ browserSpeak(line.text); setTimeout(next, 2200); });
-  } else {
-    browserSpeak(line.text); setTimeout(next, line.text.split(' ').length * 350 + 800);
-  }
+  const audio = await speak(line.text, voice);
+  if(audio) { audio.onended = next; } else { setTimeout(next, 2200); }
 }
 
 // Ex 12 — RA final (phrases difficiles)
@@ -1620,7 +1573,7 @@ function answerLiaison(i, chosen){
       sc.classList.add('show');
       document.getElementById('sc2d-em').textContent = pct>=.8?'🎉':pct>=.6?'👍':'💪';
       document.getElementById('sc2d-n').textContent = s + ' / ' + t;
-      document.getElementById('sc2d-m').textContent = pct>=.8?'¡Excelente oído!':pct>=.6?'¡Bien! Sigue practicando.':'Vuelve a escuchar con atención.';
+      document.getElementById('sc2d-m').textContent = pct>=.8?'Excellente oreille !':pct>=.6?'Bien ! Continue à pratiquer.':'Réécoute attentivement.';
       sc.scrollIntoView({behavior:'smooth',block:'nearest'});
     }
   }
@@ -1642,7 +1595,7 @@ function checkFillColors(){
       const hint = document.getElementById('ex3c_hint_' + Array.from(inputs).indexOf(inp));
       if(v && seen2.includes(v)){
         inp.style.cssText = 'border-color:#e88c1a;background:#fff3dc;color:#b86a00;';
-        if(hint){ hint.textContent = '⚠ ¡No puedes usar el mismo color dos veces!'; hint.style.color='#b86a00'; }
+        if(hint){ hint.textContent = '⚠ Tu ne peux pas utiliser la même couleur deux fois !'; hint.style.color='#b86a00'; }
       } else {
         inp.style.cssText = '';
         if(hint) hint.textContent = '';
@@ -1747,8 +1700,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   buildReadAloud('ra5final', raFinal, 'var(--l5)');
 
   buildMobNav();
-  buildELModal();
 });
 </script>
 </body>
-</html>
+</html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     

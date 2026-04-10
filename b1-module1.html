@@ -1,69 +1,51 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Français B1 · Module 1</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<title>Français B1 · Module 1 — Pronoms relatifs</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="auth.js"></script>
-<script src="moteur.js" defer></script>
+<script src="moteur.js"></script>
 <style>
-/* (le même style que dans ton A1 module 1) */
-* { box-sizing: border-box; margin:0; padding:0; }
-.sidebar-logo span { color: var(--l1); }
-.nav-btn:hover { background: var(--bg); color: var(--text); }
-.nav-btn.active { color: var(--white); }
-.nav-btn .nav-icon { font-size: 18px; width: 24px; text-align: center; }
-.nav-btn[data-lesson="1"].active { background: var(--l1); }
-.nav-btn[data-lesson="2"].active { background: var(--l2); }
-.nav-btn[data-lesson="3"].active { background: var(--l3); }
-.nav-btn[data-lesson="4"].active { background: var(--l4); }
-.nav-btn[data-lesson="1"]:not(.active):hover { background: var(--l1l); color: var(--l1d); }
-.nav-btn[data-lesson="2"]:not(.active):hover { background: var(--l2l); color: var(--l2d); }
-.nav-btn[data-lesson="3"]:not(.active):hover { background: var(--l3l); color: var(--l3d); }
-.nav-btn[data-lesson="4"]:not(.active):hover { background: var(--l4l); color: var(--l4d); }
-.lesson-panel { display: none; }
-.lesson-panel.active { display: block; animation: fadeIn .3s ease; }
-@keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
-.lesson-meta { flex: 1; }
-/* ... tout le reste du style de ton a1-module1.html ... */
-</style>
-</head>
-<body>
-
-<div class="mob-nav" id="mobNav"></div>
-<a class="sidebar-back" href="index.html">← Volver al inicio</a>
-
-<div class="app">
-<nav class="sidebar">
-  <div class="sidebar-logo">Français B1<br><span>Module 1</span></div>
-  <button class="nav-btn active" data-lesson="1" onclick="showLesson(1,this)"><span class="nav-icon">🔗</span> Leçon 1 — Qui, que, où <span class="nav-badge">5 ex.</span></button>
-  <button class="nav-btn" data-lesson="2" onclick="showLesson(2,this)"><span class="nav-icon">🔄</span> Leçon 2 — Dont <span class="nav-badge">4 ex.</span></button>
-  <button class="nav-btn" data-lesson="3" onclick="showLesson(3,this)"><span class="nav-icon">📐</span> Leçon 3 — Lequel <span class="nav-badge">4 ex.</span></button>
-  <button class="nav-btn" data-lesson="4" onclick="showLesson(4,this)"><span class="nav-icon">✍️</span> Leçon 4 — Phrases complexes <span class="nav-badge">4 ex.</span></button>
-</nav>
-
-<main class="main">
-<!-- Panneaux pour chaque leçon, avec les ids "panel-1", "panel-2", etc. -->
-<!-- Le contenu est identique à ce que tu avais, mais sans les scripts redondants -->
-</main>
-</div>
-
-<script>
-// Données B1 (les mêmes que précédemment)
-const VOICE_F = 'XB0fDUnXU5powFXDhCwa';
-const VOICE_M = 'onwK4e9ZLuTAKqWW03F9';
-// ... toutes les constantes qcm1a, fill1b, dialogueL1, ra1, etc.
-// Puis, dans DOMContentLoaded, appeler :
-buildQCM('ex1a', qcm1a, 'sc1a', 'var(--l1)');
-buildFill('ex1b', fill1b);
-buildMatch('ex1c', match1c, 'sc1c');
-registerDL('dial1', {lines:dialogueL1, qcm:qcmEcoute1});
-buildDialogueListen('dial1', {lines:dialogueL1, qcm:qcmEcoute1}, 'var(--l1)');
-buildReadAloud('ra1', ra1, 'var(--l1)');
-// ... idem pour les autres leçons
-</script>
-</body>
-</html>
+*{box-sizing:border-box;margin:0;padding:0}
+.sidebar-logo span{color:var(--l1)}
+.nav-btn .nav-icon{font-size:16px;width:22px;text-align:center}
+.nav-btn[data-l="1"].active{background:var(--l1);color:white}
+.nav-btn[data-l="2"].active{background:var(--l2);color:white}
+.nav-btn[data-l="3"].active{background:var(--l3);color:white}
+.nav-btn[data-l="4"].active{background:var(--l4);color:white}
+.nav-btn[data-l="1"]:not(.active):hover{background:var(--l1l);color:var(--l1d)}
+.nav-btn[data-l="2"]:not(.active):hover{background:var(--l2l);color:var(--l2d)}
+.nav-btn[data-l="3"]:not(.active):hover{background:var(--l3l);color:var(--l3d)}
+.nav-btn[data-l="4"]:not(.active):hover{background:var(--l4l);color:var(--l4d)}
+.lesson-panel{display:none}.lesson-panel.active{display:block;animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.qcm-item{margin-bottom:22px}
+.q-label{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;opacity:.6}
+.q-text{font-size:15px;font-weight:700;color:var(--text);margin-bottom:12px;line-height:1.5}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt:hover:not(:disabled){border-color:var(--text);background:var(--white)}
+.opt:disabled{cursor:default}
+.opt.correct{border-color:var(--l4);background:var(--l4l);color:var(--l4d)}
+.opt.wrong{border-color:var(--l1);background:var(--l1l);color:var(--l1d)}
+.fb{margin-top:8px;padding:8px 14px;border-radius:8px;font-size:13px;font-weight:600;display:none}
+.fb.show{display:block}.fb.ok{background:var(--l4l);color:var(--l4d)}.fb.nope{background:var(--l1l);color:var(--l1d)}
+.fill-item{margin-bottom:16px}
+.fill-sentence{font-size:15px;font-weight:600;color:var(--text);margin-bottom:8px;line-height:1.7}
+.fill-input:focus{border-color:var(--l2)}
+.fill-input.ok{border-color:var(--l4);background:var(--l4l);color:var(--l4d)}
+.fill-input.nope{border-color:var(--l1);background:var(--l1l);color:var(--l1d)}
+.fill-hint{font-size:12px;color:var(--muted);margin-top:4px;font-style:italic}
+.match-wrap{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.match-col-title{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;text-align:center}
+.match-col{display:flex;flex-direction:column;gap:8px}
+.match-item.selected{border-color:var(--l2);background:var(--l2l);color:var(--l2d)}
+.match-item.matched-ok{border-color:var(--l4);background:var(--l4l);color:var(--l4d);pointer-events:none}
+.match-item.matched-err{border-color:var(--l1);background:var(--l1l);color:var(--l1d);animation:shake .3s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.match-score{margin-top:14px;text-align:center;font-size:14px;font-weight:700;color:var(--muted)}
+.score-box{border-radius:16px;padding:24px;text-align:center;margin-top:20px;display:none}
+.score-box.show{display:blo

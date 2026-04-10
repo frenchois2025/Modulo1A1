@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Prononciation · Français</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="auth.js"></script>
+<script src="moteur.js" defer></script>
 <style>
 :root{
   --bg:#f7f4ef;--white:#fff;--text:#1c1c2e;--muted:#7a7a8c;--border:#e4ddd4;
@@ -160,44 +164,14 @@ function showS(n){
   btns.forEach(b=>{ b.classList.add('active'); b.style.background=SECTION_COLORS[n]; b.style.color='white'; });
 }
 
-// ── ElevenLabs ──
-const AUDIO_CACHE=new Map();
-const EL_VOICES=[{id:'XB0fDUnXU5powFXDhCwa',name:'Charlotte (féminin)'},{id:'onwK4e9ZLuTAKqWW03F9',name:'Daniel (masculin)'},{id:'pqHfZKP75CvOlQylNhV4',name:'Bill (masculin)'},{id:'jsCqWAovK2LkecY7zXl4',name:'Lily (féminin)'}];
-let EL_KEY=localStorage.getItem('el_api_key')||'';
-let EL_VOICE=localStorage.getItem('el_voice_id')||EL_VOICES[0].id;
-const VOICE_F='XB0fDUnXU5powFXDhCwa', VOICE_M='onwK4e9ZLuTAKqWW03F9';
-
-function browserSpeak(t,r){r=r||.82;window.speechSynthesis.cancel();function g(){const u=new SpeechSynthesisUtterance(t);u.lang='fr-FR';u.rate=r;const v=window.speechSynthesis.getVoices().find(x=>x.lang&&x.lang.startsWith('fr'));if(v)u.voice=v;window.speechSynthesis.speak(u);}window.speechSynthesis.getVoices().length===0?(window.speechSynthesis.onvoiceschanged=g):g();}
-
-function speakWithVoice(text,rate,voice,btn){
-  rate=rate||1.0;if(!EL_KEY){browserSpeak(text,rate*0.82);return;}
-  const k=text+'||'+voice;if(AUDIO_CACHE.has(k)){new Audio(AUDIO_CACHE.get(k)).play();return;}
-  if(btn)btn.classList.add('speaking');
-  fetch('https://api.elevenlabs.io/v1/text-to-speech/'+voice,{method:'POST',headers:{'xi-api-key':EL_KEY,'Content-Type':'application/json'},body:JSON.stringify({text:'<speak><s xml:lang="fr-FR">'+text+'</s></speak>',model_id:'eleven_multilingual_v2',language_code:'fr',voice_settings:{stability:0.5,similarity_boost:0.75}})})
-  .then(r=>r.blob()).then(blob=>{const url=URL.createObjectURL(blob);AUDIO_CACHE.set(k,url);new Audio(url).play();if(btn)btn.classList.remove('speaking');})
-  .catch(()=>{browserSpeak(text,rate*0.82);if(btn)btn.classList.remove('speaking');});
+// ── speakWithVoice : wrapper autour de moteur.js speak() ──
+function speakWithVoice(text, rate, voice, btn) {
+  if (btn) btn.classList.add('speaking');
+  speak(text, voice).then(audio => {
+    if (audio) audio.onended = () => btn && btn.classList.remove('speaking');
+    else setTimeout(() => btn && btn.classList.remove('speaking'), 1500);
+  }).catch(() => btn && btn.classList.remove('speaking'));
 }
-async function speak(text,rate,btn){
-  rate=rate||1.0;if(!EL_KEY){browserSpeak(text,rate*0.82);return;}
-  const k=text+'||'+EL_VOICE;if(AUDIO_CACHE.has(k)){new Audio(AUDIO_CACHE.get(k)).play();return;}
-  if(btn)btn.classList.add('speaking');
-  try{const res=await fetch('https://api.elevenlabs.io/v1/text-to-speech/'+EL_VOICE,{method:'POST',headers:{'xi-api-key':EL_KEY,'Content-Type':'application/json'},body:JSON.stringify({text:'<speak><s xml:lang="fr-FR">'+text+'</s></speak>',model_id:'eleven_multilingual_v2',language_code:'fr',voice_settings:{stability:0.5,similarity_boost:0.75}})});
-  if(!res.ok)throw new Error(res.status);const blob=await res.blob();const url=URL.createObjectURL(blob);AUDIO_CACHE.set(k,url);new Audio(url).play();}
-  catch{browserSpeak(text,rate*0.82);}finally{if(btn)setTimeout(()=>btn.classList.remove('speaking'),400);}
-}
-
-function buildELPanel(){
-  const fab=document.createElement('button');fab.id='el-fab';fab.title='Configurar voz';fab.textContent='🎙';fab.onclick=()=>document.getElementById('el-modal').classList.add('open');document.body.appendChild(fab);
-  const modal=document.createElement('div');modal.id='el-modal';const box=document.createElement('div');box.id='el-box';
-  box.innerHTML='<h2>🎙️ Voz ElevenLabs</h2><p>Conecta tu cuenta para voz francesa natural.</p><label class="el-label">Clave API</label><input class="el-input" id="el-key-input" type="password" placeholder="sk-..."><label class="el-label">Voz</label><select class="el-select" id="el-voice-select"></select><div class="el-btns"><button class="el-btn" style="background:#7c3aed;color:white" onclick="saveEL()">💾 Guardar</button><button class="el-btn" style="background:#2eaa6b;color:white" onclick="testEL()">▶ Probar</button><button class="el-btn" style="background:#f7f4ef;border:2px solid #e4ddd4" id="el-close-btn">✕ Cerrar</button></div><div class="el-status" id="el-status"></div>';
-  modal.appendChild(box);modal.onclick=e=>{if(e.target===modal)modal.classList.remove('open');};document.body.appendChild(modal);
-  document.getElementById('el-close-btn').onclick=()=>modal.classList.remove('open');
-  const sel=document.getElementById('el-voice-select');EL_VOICES.forEach(v=>{const o=document.createElement('option');o.value=v.id;o.textContent=v.name;if(v.id===EL_VOICE)o.selected=true;sel.appendChild(o);});
-  document.getElementById('el-key-input').value=EL_KEY;const st=document.getElementById('el-status');st.style.color=EL_KEY?'#1d7a4c':'#e88c1a';st.textContent=EL_KEY?'✓ Clave guardada':'⚠ Sin clave → voz navegador';
-}
-function saveEL(){EL_KEY=document.getElementById('el-key-input').value.trim();EL_VOICE=document.getElementById('el-voice-select').value;localStorage.setItem('el_api_key',EL_KEY);localStorage.setItem('el_voice_id',EL_VOICE);AUDIO_CACHE.clear();document.getElementById('el-status').textContent=EL_KEY?'✓ Guardado':'⚠ Sin clave';document.getElementById('el-status').style.color=EL_KEY?'#1d7a4c':'#e88c1a';}
-async function testEL(){const key=document.getElementById('el-key-input').value.trim();const voice=document.getElementById('el-voice-select').value;const st=document.getElementById('el-status');st.textContent='⏳ Probando...';
-  try{const res=await fetch('https://api.elevenlabs.io/v1/text-to-speech/'+voice,{method:'POST',headers:{'xi-api-key':key,'Content-Type':'application/json'},body:JSON.stringify({text:'Bonjour !',model_id:'eleven_multilingual_v2',language_code:'fr',voice_settings:{stability:0.5,similarity_boost:0.75}})});if(!res.ok)throw new Error(res.status);new Audio(URL.createObjectURL(await res.blob())).play();EL_KEY=key;EL_VOICE=voice;localStorage.setItem('el_api_key',key);localStorage.setItem('el_voice_id',voice);st.style.color='#1d7a4c';st.textContent='✓ ¡Perfecto!';}catch(err){st.style.color='#e63946';st.textContent='✗ '+err.message;}}
 
 // ── Recorder ──
 const REC={};
@@ -209,10 +183,10 @@ async function recStart(id){
   REC[id].recorder=new MediaRecorder(stream,{mimeType:mime});
   REC[id].recorder.ondataavailable=e=>{if(e.data&&e.data.size>0)REC[id].chunks.push(e.data);};
   REC[id].recorder.onstop=()=>{REC[id].blob=new Blob(REC[id].chunks,{type:REC[id].recorder.mimeType});REC[id].recording=false;stream.getTracks().forEach(t=>t.stop());
-    if(sEl){sEl.textContent='✓ ¡Grabado!';sEl.style.color='#1d7a4c';}if(bEl){bEl.textContent='🎙️ Grabar de nuevo';bEl.style.background='#555';}
+    if(sEl){sEl.textContent='✓ Enregistré !';sEl.style.color='#1d7a4c';}if(bEl){bEl.textContent='🎙️ Enregistrer à nouveau';bEl.style.background='#555';}
     if(cEl){cEl.style.display='flex';let p=document.getElementById('player_'+id);if(!p){p=document.createElement('audio');p.id='player_'+id;p.controls=true;p.style.cssText='width:100%;margin-top:6px;border-radius:8px;';cEl.parentElement.insertBefore(p,cEl.nextSibling);}p.src=URL.createObjectURL(REC[id].blob);}};
-  REC[id].recorder.start(100);if(sEl){sEl.textContent='● Grabando…';sEl.style.color='#e63946';}if(bEl){bEl.textContent='⬛ Detener';bEl.style.background='#e63946';}if(cEl)cEl.style.display='none';}
-  catch(err){if(sEl){sEl.textContent=err.name==='NotAllowedError'?'⚠ Autoriza el micrófono':'⚠ Micrófono no disponible';sEl.style.color='#e63946';}}
+  REC[id].recorder.start(100);if(sEl){sEl.textContent='● Enregistrement…';sEl.style.color='#e63946';}if(bEl){bEl.textContent='⬛ Arrêter';bEl.style.background='#e63946';}if(cEl)cEl.style.display='none';}
+  catch(err){if(sEl){sEl.textContent=err.name==='NotAllowedError'?'⚠ Autorise le microphone':'⚠ Microphone non disponible';sEl.style.color='#e63946';}}
 }
 function recStop(id){if(REC[id]&&REC[id].recording)REC[id].recorder.stop();}
 function recToggle(id){if(REC[id]&&REC[id].recording)recStop(id);else recStart(id);}
@@ -232,51 +206,21 @@ function buildPhoneCards(cid, words, accent){
   });
 }
 
-// ── QCM ──
-const qcmState={},qcmTally={};
-function buildQCM(cid,questions,scoreId,color){
-  const c=document.getElementById(cid);if(!c)return;
-  questions.forEach((q,qi)=>{qcmState[cid+'_'+qi]={done:false};const d=document.createElement('div');d.className='qcm-item';
-  const sb=q.speak?'<button style="background:none;border:1.5px solid var(--border);border-radius:8px;padding:4px 10px;cursor:pointer;font-size:13px;margin-left:8px" onclick="speak(\''+q.speak.replace(/'/g,"\\'")+'\')" >🔊</button>':'';
-  d.innerHTML='<div class="q-label">Pregunta '+(qi+1)+'</div><div class="q-text">'+q.q+sb+'</div><div class="opts" id="opts_'+cid+'_'+qi+'">'+q.opts.map((o,oi)=>'<button class="opt" onclick="answerQCM(\''+cid+'_'+qi+'\','+oi+','+q.ans+',\''+scoreId+'\','+questions.length+')">'+o+'</button>').join('')+'</div><div class="fb" id="fb_'+cid+'_'+qi+'"></div>';
-  c.appendChild(d);});
-}
-function answerQCM(id,chosen,correct,scoreId,total){
-  if(qcmState[id]&&qcmState[id].done)return;qcmState[id]={done:true};
-  const opts=document.querySelectorAll('#opts_'+id+' .opt');opts.forEach((b,i)=>{b.disabled=true;if(i===correct)b.classList.add('correct');else if(i===chosen&&chosen!==correct)b.classList.add('wrong');});
-  const fb=document.getElementById('fb_'+id);if(fb){fb.textContent=chosen===correct?'✅ ¡Correcto!':'❌ '+opts[correct].textContent;fb.className='fb show '+(chosen===correct?'ok':'nope');}
-  if(!qcmTally[scoreId])qcmTally[scoreId]={n:0,ok:0,total};qcmTally[scoreId].n++;if(chosen===correct)qcmTally[scoreId].ok++;
-  if(qcmTally[scoreId].n===total){const box=document.getElementById(scoreId);if(!box)return;box.classList.add('show');const pct=qcmTally[scoreId].ok/total;
-  document.getElementById(scoreId+'-em').textContent=pct>=.8?'🎉':pct>=.6?'👍':'💪';document.getElementById(scoreId+'-n').textContent=qcmTally[scoreId].ok+' / '+total;document.getElementById(scoreId+'-m').textContent=pct>=.8?'¡Excelente!':pct>=.6?'¡Bien! Sigue entrenando.':'Escucha más y vuelve a intentarlo.';}
-}
-
-// ── Fill ──
-function buildFill(cid,items){
-  const c=document.getElementById(cid);if(!c)return;
-  items.forEach((item,i)=>{const d=document.createElement('div');d.className='fill-item';
-  d.innerHTML='<div class="fill-sentence">'+item.sentence+'</div><input class="fill-input" id="'+cid+'_'+i+'" placeholder="Tu respuesta…" data-answer="'+item.answer+'" data-translation="'+(item.translation||'')+'" autocomplete="off" autocorrect="off" spellcheck="false"><div class="fill-hint" id="'+cid+'_hint_'+i+'" style="color:var(--muted);font-style:italic">'+(item.hint||'')+'</div>';
-  c.appendChild(d);});
-}
-function checkFill(cid,scoreId){
-  const inputs=document.querySelectorAll('#'+cid+' .fill-input');let ok=0;
-  inputs.forEach((inp,i)=>{const val=inp.value.trim().toLowerCase();const answers=inp.dataset.answer.split('|').map(a=>a.toLowerCase().trim());const correct=answers.some(a=>val===a);
-  inp.className='fill-input '+(correct?'ok':'nope');inp.disabled=true;const hint=document.getElementById(cid+'_hint_'+i);const tr=inp.dataset.translation||'';
-  if(!correct){hint.style.cssText='color:#c0392b;font-style:normal;font-size:12px;margin-top:4px';hint.innerHTML='→ <strong>'+inp.dataset.answer.split('|')[0]+'</strong>'+(tr?'<br><span style="color:var(--muted);font-size:11px;font-style:italic">'+tr+'</span>':'');}
-  else{ok++;hint.style.cssText='color:var(--s4d);font-style:italic;font-size:11px;margin-top:4px';hint.innerHTML=tr||'';}});
-  const box=document.getElementById(scoreId);if(!box)return;box.classList.add('show');const pct=ok/inputs.length;
-  document.getElementById(scoreId+'-em').textContent=pct>=.8?'🎉':pct>=.6?'👍':'💪';document.getElementById(scoreId+'-n').textContent=ok+' / '+inputs.length;document.getElementById(scoreId+'-m').textContent=pct>=.8?'¡Excelente!':pct>=.6?'¡Bien!':'Sigue practicando.';
-  box.scrollIntoView({behavior:'smooth',block:'nearest'});
-}
+// buildQCM → moteur.js
 
 // ── RA ──
-function speakRA(btn){const voice=btn.dataset.voice;if(voice==='f')speakWithVoice(btn.dataset.phrase,1.0,VOICE_F,btn);else if(voice==='m')speakWithVoice(btn.dataset.phrase,1.0,VOICE_M,btn);else speak(btn.dataset.phrase,1.0,btn);}
+function speakRA(btn){
+  const voice=btn.dataset.voice;
+  const vid=voice==='f'?FRENCHOIS.EL_VOICES.charlotte:voice==='m'?FRENCHOIS.EL_VOICES.daniel:getELVoice();
+  speakWithVoice(btn.dataset.phrase,1.0,vid,btn);
+}
 function buildRA(cid,phrases,color){
   const c=document.getElementById(cid);if(!c)return;c.innerHTML='';
   phrases.forEach((p,i)=>{const rid=cid+'_p'+i;const d=document.createElement('div');d.className='ra-item';
   d.innerHTML='<div class="ra-phrase">'+p.phrase+'</div><div class="ra-trad">'+p.translation+'</div>'+
     '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px">'+
-    '<button id="sb_'+rid+'" data-phrase="'+p.phrase.replace(/"/g,'&quot;').replace(/'/g,'&#39;')+'" data-voice="'+(p.voice||'')+'" onclick="speakRA(this);this.style.opacity=.6;setTimeout(()=>this.style.opacity=1,900)" style="background:'+color+';color:white;border:none;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:\'Nunito\',sans-serif">🔊 Escuchar modelo</button>'+
-    '<button id="rb_'+rid+'" onclick="recToggle(\''+rid+'\')" style="background:#555;color:white;border:none;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:\'Nunito\',sans-serif">🎙️ Grabar mi voz</button>'+
+    '<button id="sb_'+rid+'" data-phrase="'+p.phrase.replace(/"/g,'&quot;').replace(/'/g,'&#39;')+'" data-voice="'+(p.voice||'')+'" onclick="speakRA(this);this.style.opacity=.6;setTimeout(()=>this.style.opacity=1,900)" style="background:'+color+';color:white;border:none;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:\'Nunito\',sans-serif">🔊 Écouter le modèle</button>'+
+    '<button id="rb_'+rid+'" onclick="recToggle(\''+rid+'\')" style="background:#555;color:white;border:none;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:\'Nunito\',sans-serif">🎙️ Enregistrer ma voix</button>'+
     '<span id="rs_'+rid+'" style="font-size:12px;color:#8a8a9a"></span></div>'+
     '<div id="rc_'+rid+'" style="display:none;gap:8px;flex-wrap:wrap"></div>';
   c.appendChild(d);});
@@ -321,12 +265,12 @@ function answerEE(i,chosen){
   const cBtn=item.type==='cerrado'?ceBtn:abBtn;cBtn.style.background='var(--s4l)';cBtn.style.borderColor='var(--s4)';cBtn.style.color='var(--s4d)';
   if(!ok){const wBtn=chosen==='cerrado'?ceBtn:abBtn;wBtn.style.background='var(--s2l)';wBtn.style.borderColor='var(--s2)';wBtn.style.color='var(--s2d)';}
   fbEl.style.display='block';fbEl.style.color=ok?'var(--s4d)':'var(--s2d)';fbEl.textContent=ok?'✅ "'+item.word+'" → sonido cerrado [e]'.replace('cerrado',item.type==='cerrado'?'cerrado':'abierto')+'✅ "'+item.word+'" → '+item.type:'❌ Es '+item.type+' → "'+item.word+'"';
-  fbEl.textContent=ok?'✅ ¡Correcto! "'+item.word+'" → '+item.type:'❌ Es '+item.type+' → "'+item.word+'"';
+  fbEl.textContent=ok?'✅ Correct ! "'+item.word+'" → '+item.type:'❌ Es '+item.type+' → "'+item.word+'"';
   if(eeState.answered<eeState.total){eeState.answered++;if(ok)eeState.correct++;
     if(eeState.answered===eeState.total){const box=document.getElementById('sc-ee');if(box){box.classList.add('show');const pct=eeState.correct/eeState.total;
       document.getElementById('sc-ee-em').textContent=pct>=.8?'🎉':pct>=.6?'👍':'💪';
       document.getElementById('sc-ee-n').textContent=eeState.correct+' / '+eeState.total;
-      document.getElementById('sc-ee-m').textContent=pct>=.8?'¡Tienes buen oído!':pct>=.6?'¡Bien! Sigue entrenando.':'Escucha más y vuelve a intentarlo.';
+      document.getElementById('sc-ee-m').textContent=pct>=.8?'Tu as l'''oreille fine !':pct>=.6?'Bien ! Continue l'''entraînement.':'Écoute davantage et réessaie.';
       box.scrollIntoView({behavior:'smooth',block:'nearest'});}}}
 }
 
@@ -757,7 +701,7 @@ function injectS9(){
 document.addEventListener('DOMContentLoaded',()=>{
   window.speechSynthesis.getVoices();
   buildAllPanels();
-  buildELPanel();
+  // buildELModal() appelé automatiquement par moteur.js
   buildMobNav();
   // Inject all section content
   injectS1();injectS2();injectS3();injectS4();injectS5();
@@ -768,3 +712,4 @@ document.addEventListener('DOMContentLoaded',()=>{
 </script>
 </body>
 </html>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     

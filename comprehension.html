@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Compréhension de texte · Frenchois</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="auth.js"></script>
+<script src="moteur.js" defer></script>
 <style>
 :root{--bg:#f7f4ef;--white:#fff;--text:#1c1c2e;--muted:#7a7a8c;--border:#e4ddd4;
 --a1:#2a7dd1;--a1l:#deeeff;--a1d:#1a5fa0;
@@ -189,63 +191,8 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 </div>
 
 <script>
-const AUDIO_CACHE=new Map();
-const EL_VOICES=[{id:'XB0fDUnXU5powFXDhCwa',name:'Charlotte (f&#233;minin)'},{id:'onwK4e9ZLuTAKqWW03F9',name:'Daniel (masculin)'}];
-let EL_KEY=localStorage.getItem('el_api_key')||'';
-let EL_VOICE=localStorage.getItem('el_voice_id')||EL_VOICES[0].id;
-const VF='XB0fDUnXU5powFXDhCwa',VM='onwK4e9ZLuTAKqWW03F9';
-
-// Global audio player — one at a time, pauseable
-let CURRENT_AUDIO=null;
-
-function stopAll(){
-  if(CURRENT_AUDIO){CURRENT_AUDIO.pause();CURRENT_AUDIO.currentTime=0;CURRENT_AUDIO=null;}
-  window.speechSynthesis.cancel();
-}
-
-function bSpeak(t){
-  stopAll();
-  const u=new SpeechSynthesisUtterance(t);u.lang='fr-FR';u.rate=.85;
-  const v=window.speechSynthesis.getVoices().find(x=>x.lang&&x.lang.startsWith('fr'));if(v)u.voice=v;
-  window.speechSynthesis.speak(u);
-}
-
-async function speak(text,vid){
-  vid=vid||EL_VOICE;
-  // If same audio is playing, toggle pause/resume
-  if(CURRENT_AUDIO&&!CURRENT_AUDIO.paused){
-    CURRENT_AUDIO.pause();return;
-  }
-  if(CURRENT_AUDIO&&CURRENT_AUDIO.paused&&AUDIO_CACHE.get(text+'||'+vid)===CURRENT_AUDIO.src){
-    CURRENT_AUDIO.play();return;
-  }
-  stopAll();
-  if(!EL_KEY){bSpeak(text);return;}
-  const k=text+'||'+vid;
-  if(AUDIO_CACHE.has(k)){
-    CURRENT_AUDIO=new Audio(AUDIO_CACHE.get(k));
-    CURRENT_AUDIO.play();
-    return;
-  }
-  try{
-    const r=await fetch('https://api.elevenlabs.io/v1/text-to-speech/'+vid,{method:'POST',headers:{'xi-api-key':EL_KEY,'Content-Type':'application/json'},body:JSON.stringify({text:'<speak><s xml:lang="fr-FR">'+text+'</s></speak>',model_id:'eleven_multilingual_v2',language_code:'fr',voice_settings:{stability:0.5,similarity_boost:0.75}})});
-    if(!r.ok)throw 0;
-    const b=await r.blob();const url=URL.createObjectURL(b);AUDIO_CACHE.set(k,url);
-    CURRENT_AUDIO=new Audio(url);CURRENT_AUDIO.play();
-  }catch{bSpeak(text);}
-}
-function buildEL(){
-  const fab=document.createElement('button');fab.id='el-fab';fab.textContent='&#127897;';fab.onclick=()=>document.getElementById('el-modal').classList.add('open');document.body.appendChild(fab);
-  const modal=document.createElement('div');modal.id='el-modal';const box=document.createElement('div');box.id='el-box';
-  box.innerHTML='<h2>&#127897;&#65039; Voz ElevenLabs</h2><p>Conecta tu cuenta para voz francesa natural.</p><label class="el-label">Clave API</label><input class="el-input" id="el-key-input" type="password" placeholder="sk-..."><label class="el-label">Voz</label><select class="el-select" id="el-voice-select"></select><div class="el-btns"><button class="el-btn" style="background:#7c3aed;color:white" onclick="saveEL()">&#128190; Guardar</button><button class="el-btn" style="background:#2eaa6b;color:white" onclick="testEL()">&#9654; Probar</button><button class="el-btn" style="background:#f7f4ef;border:2px solid #e4ddd4" id="el-close-btn">&#x2715; Cerrar</button></div><div class="el-status" id="el-status"></div>';
-  modal.appendChild(box);modal.onclick=e=>{if(e.target===modal)modal.classList.remove('open');};document.body.appendChild(modal);
-  document.getElementById('el-close-btn').onclick=()=>modal.classList.remove('open');
-  const sel=document.getElementById('el-voice-select');EL_VOICES.forEach(v=>{const o=document.createElement('option');o.value=v.id;o.textContent=v.name;if(v.id===EL_VOICE)o.selected=true;sel.appendChild(o);});
-  document.getElementById('el-key-input').value=EL_KEY;const st=document.getElementById('el-status');st.style.color=EL_KEY?'#1d7a4c':'#e88c1a';st.textContent=EL_KEY?'&#x2713; Clave guardada':'&#x26A0; Sin clave &#8594; voz navegador';
-}
-function saveEL(){EL_KEY=document.getElementById('el-key-input').value.trim();EL_VOICE=document.getElementById('el-voice-select').value;localStorage.setItem('el_api_key',EL_KEY);localStorage.setItem('el_voice_id',EL_VOICE);AUDIO_CACHE.clear();}
-async function testEL(){const key=document.getElementById('el-key-input').value.trim();const voice=document.getElementById('el-voice-select').value;const st=document.getElementById('el-status');st.textContent='&#x23F3; Probando...';
-  try{const r=await fetch('https://api.elevenlabs.io/v1/text-to-speech/'+voice,{method:'POST',headers:{'xi-api-key':key,'Content-Type':'application/json'},body:JSON.stringify({text:'Bonjour !',model_id:'eleven_multilingual_v2',language_code:'fr',voice_settings:{stability:0.5,similarity_boost:0.75}})});if(!r.ok)throw new Error(r.status);new Audio(URL.createObjectURL(await r.blob())).play();EL_KEY=key;EL_VOICE=voice;localStorage.setItem('el_api_key',key);localStorage.setItem('el_voice_id',voice);st.style.color='#1d7a4c';st.textContent='&#x2713; &#161;Perfecto!';}catch(e){st.style.color='#e63946';st.textContent='&#x2717; '+e.message;}}
+// Cache local uniquement pour le lecteur plein-texte (p1) — géré par audioEl dédié
+const TEXT_CACHE = new Map();
 
 const COL={A1:{c:'var(--a1)',l:'var(--a1l)',d:'var(--a1d)'},A2:{c:'var(--a2)',l:'var(--a2l)',d:'var(--a2d)'},B1:{c:'var(--b1)',l:'var(--b1l)',d:'var(--b1d)'}};
 const CFG={
@@ -343,7 +290,7 @@ function p1(c,t,col){
   instr.textContent='Lee el texto. Pasa el cursor por las palabras subrayadas para ver su traducci\u00F3n. Usa el bot\u00F3n \uD83D\uDD0A para escuchar.';c.appendChild(instr);
   // Audio button with manual state flag — most reliable approach
   const audioWrap=document.createElement('div');audioWrap.style.cssText='margin-bottom:20px';
-  const loadBtn=document.createElement('button');loadBtn.className='listen-btn';loadBtn.style.cssText='background:'+col.c+';color:white';loadBtn.innerHTML='\uD83D\uDD0A Escuchar el texto';
+  const loadBtn=document.createElement('button');loadBtn.className='listen-btn';loadBtn.style.cssText='background:'+col.c+';color:white';loadBtn.innerHTML='\uD83D\uDD0A Écouter le texte';
   const audioEl=document.createElement('audio');
   audioWrap.appendChild(loadBtn);
   
@@ -371,27 +318,28 @@ function p1(c,t,col){
     // idle or ended
     loadBtn.innerHTML='\u23F3 Cargando\u2026';
     const txt=t.paragraphs.map(p=>p.map(w=>typeof w==='object'?w.word:w).join(' ')).join(' ');
-    const vid=CL==='A1'?VF:VM;const k=txt+'||'+vid;
+    const vid=CL==='A1'?FRENCHOIS.EL_VOICES.charlotte:FRENCHOIS.EL_VOICES.daniel;const k=txt+'||'+vid;
     let url;
-    if(AUDIO_CACHE.has(k)){
-      url=AUDIO_CACHE.get(k);
+    if(TEXT_CACHE.has(k)){
+      url=TEXT_CACHE.get(k);
     } else {
-      if(!EL_KEY){bSpeak(txt);state='idle';loadBtn.disabled=false;loadBtn.innerHTML='\uD83D\uDD0A Escuchar el texto';return;}
+      const elKey=getELKey();
+      if(!elKey){bSpeak(txt);state='idle';loadBtn.disabled=false;loadBtn.innerHTML='\uD83D\uDD0A Écouter le texte';return;}
       try{
         const r=await fetch('https://api.elevenlabs.io/v1/text-to-speech/'+vid,{
-          method:'POST',headers:{'xi-api-key':EL_KEY,'Content-Type':'application/json'},
+          method:'POST',headers:{'xi-api-key':elKey,'Content-Type':'application/json'},
           body:JSON.stringify({text:'<speak><s xml:lang="fr-FR">'+txt+'</s></speak>',model_id:'eleven_multilingual_v2',language_code:'fr',voice_settings:{stability:0.5,similarity_boost:0.75}})
         });
         if(!r.ok)throw 0;
-        const blob=await r.blob();url=URL.createObjectURL(blob);AUDIO_CACHE.set(k,url);
-      }catch{state='idle';loadBtn.disabled=false;loadBtn.innerHTML='\uD83D\uDD0A Escuchar el texto';return;}
+        const blob=await r.blob();url=URL.createObjectURL(blob);TEXT_CACHE.set(k,url);
+      }catch{state='idle';loadBtn.disabled=false;loadBtn.innerHTML='\uD83D\uDD0A Écouter le texte';return;}
     }
     audioEl.src=url;
     await audioEl.play(); // wait for play to actually start
     state='playing';
     loadBtn.innerHTML='\u23F8\uFE0F Pausar';
     loadBtn.disabled=false;
-    audioEl.onended=()=>{state='ended';loadBtn.disabled=false;loadBtn.innerHTML='\uD83D\uDD0A Escuchar de nuevo';};
+    audioEl.onended=()=>{state='ended';loadBtn.disabled=false;loadBtn.innerHTML='\uD83D\uDD0A Écouter à nouveau';};
   };
   c.appendChild(audioWrap);
   const box=document.createElement('div');box.className='text-box';
@@ -466,7 +414,7 @@ function p3(c,t,col){
       '<div class="vword" id="vw'+i+'" style="display:none;margin-top:6px;color:var(--okd)"></div>';
     card.appendChild(item);
   });
-  const cb=document.createElement('button');cb.className='btn-p';cb.style.cssText='background:'+col.c+';color:white;margin-top:16px';cb.textContent='Verificar';
+  const cb=document.createElement('button');cb.className='btn-p';cb.style.cssText='background:'+col.c+';color:white;margin-top:16px';cb.textContent='Vérifier';
   cb.onclick=()=>checkV(t,col);card.appendChild(cb);
   const sc=document.createElement('div');sc.className='score-box';sc.id='sc3';sc.style.background=col.l;
   sc.innerHTML='<div class="sc-em" id="s3em"></div><div class="sc-n" id="s3n" style="color:'+col.d+'"></div><div class="sc-m" id="s3m"></div>'+
@@ -564,8 +512,9 @@ function downloadPDF(){
 
 document.addEventListener('DOMContentLoaded',()=>{
   window.speechSynthesis.getVoices();
-  buildEL();
+  // buildELModal() est appelé automatiquement par moteur.js
 });
 </script>
 </body>
 </html>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             

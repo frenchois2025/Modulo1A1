@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -91,8 +91,7 @@
 <main class="main" id="main-content"></main>
 </div>
 
-<script>function speakWithVoice(t,r,v,el){speak(t,v);}
-
+<script>
 function showL(n){
   document.querySelectorAll('.lesson-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('[data-l]').forEach(b=>b.classList.remove('active'));
@@ -100,11 +99,6 @@ function showL(n){
   document.getElementById('panel-'+n).classList.add('active');
   document.querySelectorAll('[data-l="'+n+'"]').forEach(b=>b.classList.add('active'));
 }
-
-// ── ElevenLabs ──
-const VOICE_F='XB0fDUnXU5powFXDhCwa', VOICE_M='onwK4e9ZLuTAKqWW03F9';
-
-function browserSpeak(t,r){r=r||.82;window.speechSynthesis.cancel();function g(){const u=new SpeechSynthesisUtterance(t);u.lang='fr-FR';u.rate=r;const v=window.speechSynthesis.getVoices().find(x=>x.lang&&x.lang.startsWith('fr'));if(v)u.voice=v;window.speechSynthesis.speak(u);}window.speechSynthesis.getVoices().length===0?(window.speechSynthesis.onvoiceschanged=g):g();}
 
 // ── Recorder ──
 const REC={};
@@ -116,24 +110,24 @@ async function recStart(id){
   REC[id].recorder=new MediaRecorder(stream,mime?{mimeType:mime}:{});
   REC[id].recorder.ondataavailable=e=>{if(e.data&&e.data.size>0)REC[id].chunks.push(e.data);};
   REC[id].recorder.onstop=()=>{REC[id].blob=new Blob(REC[id].chunks,{type:REC[id].recorder.mimeType||'audio/webm'});REC[id].recording=false;stream.getTracks().forEach(t=>t.stop());
-    if(sEl){sEl.textContent='✓ ¡Grabado!';sEl.style.color='#1d7a4c';}if(bEl){bEl.textContent='🎙️ Grabar de nuevo';bEl.style.background='#555';}
+    if(sEl){sEl.textContent='✓ Enregistré !';sEl.style.color='#1d7a4c';}if(bEl){bEl.textContent='🎙️ Enregistrer à nouveau';bEl.style.background='#555';}
     if(cEl){cEl.style.display='flex';let p=document.getElementById('player_'+id);if(!p){p=document.createElement('audio');p.id='player_'+id;p.controls=true;p.style.cssText='width:100%;margin-top:6px;border-radius:8px;';cEl.parentElement.insertBefore(p,cEl.nextSibling);}p.src=URL.createObjectURL(REC[id].blob);}};
-  REC[id].recorder.start(100);if(sEl){sEl.textContent='● Grabando…';sEl.style.color='#e63946';}if(bEl){bEl.textContent='⬛ Detener';bEl.style.background='#e63946';}if(cEl)cEl.style.display='none';}
-  catch(err){if(sEl){sEl.textContent=err.name==='NotAllowedError'?'⚠ Autoriza el micrófono':'⚠ Micrófono no disponible';sEl.style.color='#e63946';}}
+  REC[id].recorder.start(100);if(sEl){sEl.textContent='● Enregistrement…';sEl.style.color='#e63946';}if(bEl){bEl.textContent='⬛ Arrêter';bEl.style.background='#e63946';}if(cEl)cEl.style.display='none';}
+  catch(err){if(sEl){sEl.textContent=err.name==='NotAllowedError'?'⚠ Autorise le microphone':'⚠ Microphone non disponible';sEl.style.color='#e63946';}}
 }
 function recStop(id){if(REC[id]&&REC[id].recording)REC[id].recorder.stop();}
 function recToggle(id){if(REC[id]&&REC[id].recording)recStop(id);else recStart(id);}
 
 // ── Read-Aloud ──
-function speakRA(btn){const voice=btn.dataset.voice;if(voice==='f')speakWithVoice(btn.dataset.phrase,1.0,VOICE_F,btn);else if(voice==='m')speakWithVoice(btn.dataset.phrase,1.0,VOICE_M,btn);else speak(btn.dataset.phrase,1.0,btn);}
+function speakRA(btn){const voice=btn.dataset.voice;speak(btn.dataset.phrase,voice==='f'?FRENCHOIS.EL_VOICES.charlotte:voice==='m'?FRENCHOIS.EL_VOICES.daniel:getELVoice());}
 function buildRA(cid,phrases,color){
   const c=document.getElementById(cid);if(!c)return;c.innerHTML='';
   phrases.forEach((p,i)=>{const rid=cid+'_p'+i;const d=document.createElement('div');d.style.cssText='background:#faf7f2;border:1.5px solid #e8e2d9;border-radius:14px;padding:18px 20px;margin-bottom:12px;';
   d.innerHTML='<div style="font-family:\'Playfair Display\',serif;font-size:17px;font-weight:700;color:#1a1a2e;margin-bottom:4px;line-height:1.4">'+p.phrase+'</div>'+
     '<div style="font-size:12px;color:#8a8a9a;margin-bottom:14px">'+p.translation+'</div>'+
     '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px">'+
-    '<button id="sb_'+rid+'" data-phrase="'+p.phrase.replace(/"/g,"&quot;").replace(/'/g,"&#39;")+'" data-voice="'+(p.voice||'')+'" onclick="speakRA(this);this.style.opacity=.6;setTimeout(()=>this.style.opacity=1,900)" style="background:'+color+';color:white;border:none;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:\'Nunito\',sans-serif">🔊 Escuchar modelo</button>'+
-    '<button id="rb_'+rid+'" onclick="recToggle(\''+rid+'\')" style="background:#555;color:white;border:none;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:\'Nunito\',sans-serif">🎙️ Grabar mi voz</button>'+
+    '<button id="sb_'+rid+'" data-phrase="'+p.phrase.replace(/"/g,"&quot;").replace(/'/g,"&#39;")+'" data-voice="'+(p.voice||'')+'" onclick="speakRA(this);this.style.opacity=.6;setTimeout(()=>this.style.opacity=1,900)" style="background:'+color+';color:white;border:none;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:\'Nunito\',sans-serif">🔊 Écouter le modèle</button>'+
+    '<button id="rb_'+rid+'" onclick="recToggle(\''+rid+'\')" style="background:#555;color:white;border:none;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:\'Nunito\',sans-serif">🎙️ Enregistrer ma voix</button>'+
     '<span id="rs_'+rid+'" style="font-size:12px;color:#8a8a9a"></span></div><div id="rc_'+rid+'" style="display:none;gap:8px;flex-wrap:wrap"></div>';
   c.appendChild(d);});
 }
@@ -144,16 +138,16 @@ function buildQCM(cid,questions,scoreId){
   const c=document.getElementById(cid);if(!c)return;
   questions.forEach((q,qi)=>{qcmState[cid+'_'+qi]={done:false};const d=document.createElement('div');d.className='qcm-item';
   const sb=q.speak?'<button style="background:none;border:1.5px solid var(--border);border-radius:8px;padding:4px 10px;cursor:pointer;font-size:13px;margin-left:8px" onclick="speak(\''+q.speak.replace(/'/g,"\'")+'\')">🔊</button>':'';
-  d.innerHTML='<div class="q-label">Pregunta '+(qi+1)+'</div><div class="q-text">'+q.q+sb+'</div><div class="opts" id="opts_'+cid+'_'+qi+'">'+q.opts.map((o,oi)=>'<button class="opt" onclick="answerQCM(\''+cid+'_'+qi+'\','+oi+','+q.ans+',\''+scoreId+'\','+questions.length+')">'+o+'</button>').join('')+'</div><div class="fb" id="fb_'+cid+'_'+qi+'"></div>';
+  d.innerHTML='<div class="q-label">Question '+(qi+1)+'</div><div class="q-text">'+q.q+sb+'</div><div class="opts" id="opts_'+cid+'_'+qi+'">'+q.opts.map((o,oi)=>'<button class="opt" onclick="answerQCM(\''+cid+'_'+qi+'\','+oi+','+q.ans+',\''+scoreId+'\','+questions.length+')">'+o+'</button>').join('')+'</div><div class="fb" id="fb_'+cid+'_'+qi+'"></div>';
   c.appendChild(d);});
 }
 function answerQCM(id,chosen,correct,scoreId,total){
   if(qcmState[id]&&qcmState[id].done)return;qcmState[id]={done:true};
   const opts=document.querySelectorAll('#opts_'+id+' .opt');opts.forEach((b,i)=>{b.disabled=true;if(i===correct)b.classList.add('correct');else if(i===chosen&&chosen!==correct)b.classList.add('wrong');});
-  const fb=document.getElementById('fb_'+id);if(fb){fb.textContent=chosen===correct?'✅ ¡Correcto!':'❌ Respuesta: '+opts[correct].textContent;fb.className='fb show '+(chosen===correct?'ok':'nope');}
+  const fb=document.getElementById('fb_'+id);if(fb){fb.textContent=chosen===correct?'✅ Correct !':'❌ Réponse : '+opts[correct].textContent;fb.className='fb show '+(chosen===correct?'ok':'nope');}
   if(!qcmTally[scoreId])qcmTally[scoreId]={n:0,ok:0,total};qcmTally[scoreId].n++;if(chosen===correct)qcmTally[scoreId].ok++;
   if(qcmTally[scoreId].n===total){const box=document.getElementById(scoreId);if(!box)return;box.classList.add('show');const pct=qcmTally[scoreId].ok/total;
-  document.getElementById(scoreId+'-em').textContent=pct>=.8?'🎉':pct>=.6?'👍':'💪';document.getElementById(scoreId+'-n').textContent=qcmTally[scoreId].ok+' / '+total;document.getElementById(scoreId+'-m').textContent=pct>=.8?'¡Excelente!':pct>=.6?'¡Bien! Repasa los errores.':'Inténtalo de nuevo.';}
+  document.getElementById(scoreId+'-em').textContent=pct>=.8?'🎉':pct>=.6?'👍':'💪';document.getElementById(scoreId+'-n').textContent=qcmTally[scoreId].ok+' / '+total;document.getElementById(scoreId+'-m').textContent=pct>=.8?'Excellent !':pct>=.6?'Bien ! Revois les erreurs.':'Réessaie.';}
 }
 
 // ── Fill ──
@@ -173,7 +167,7 @@ function matchClick(cid,id,side,pair){
   if(st.selected.side===side){document.getElementById(st.selected.id).classList.remove('selected');el.classList.add('selected');st.selected={id,side,pair};return;}
   const a=st.selected,b={id,side,pair};const match=a.pair===b.pair;
   [a,b].forEach(x=>{const e=document.getElementById(x.id);e.classList.remove('selected');e.classList.add(match?'matched-ok':'matched-err');if(!match)setTimeout(()=>e.classList.remove('matched-err'),400);});
-  if(match){st.matched++;if(st.matched===st.total){const sc=document.getElementById(st.scoreId);if(sc)sc.textContent='🎉 ¡Todas correctas! '+st.total+' / '+st.total;}}st.selected=null;
+  if(match){st.matched++;if(st.matched===st.total){const sc=document.getElementById(st.scoreId);if(sc)sc.textContent='🎉 Toutes correctes ! '+st.total+' / '+st.total;}}st.selected=null;
 }
 
 // ── Dialogue Listen ──
@@ -187,10 +181,10 @@ function buildDialogueListen(cid,data,color){
     '<button id="'+cid+'_listenAll" onclick="playDialogueFull(\''+cid+'\',dlDataStore[\''+cid+'\'])" style="background:'+color+';color:white;border:none;border-radius:12px;padding:14px 28px;font-size:15px;font-weight:800;cursor:pointer;font-family:\'Nunito\',sans-serif;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 16px rgba(0,0,0,.12)">🔊 Écouter le dialogue</button>'+
     '<div id="'+cid+'_playing" style="margin-top:10px;font-size:12px;color:'+color+';font-weight:700;display:none">▶ En cours…</div>';
   ph1.appendChild(lb);
-  const ql=document.createElement('div');ql.style.cssText='font-size:12px;font-weight:800;color:'+color+';text-transform:uppercase;letter-spacing:1px;margin-bottom:10px';ql.textContent='🧠 Comprensión — responde sin ver el texto';ph1.appendChild(ql);
-  data.qcm.forEach((q,qi)=>{const d=document.createElement('div');d.className='qcm-item';d.innerHTML='<div class="q-label">Pregunta '+(qi+1)+'</div><div class="q-text">'+q.q+'</div><div class="opts" id="'+cid+'_opts_'+qi+'">'+q.opts.map((o,oi)=>'<button class="opt" onclick="answerDLQ(\''+cid+'\','+qi+','+oi+','+q.ans+','+data.qcm.length+')">'+o+'</button>').join('')+'</div><div class="fb" id="'+cid+'_fb_'+qi+'"></div>';ph1.appendChild(d);});
+  const ql=document.createElement('div');ql.style.cssText='font-size:12px;font-weight:800;color:'+color+';text-transform:uppercase;letter-spacing:1px;margin-bottom:10px';ql.textContent='🧠 Compréhension — réponds sans voir le texte';ph1.appendChild(ql);
+  data.qcm.forEach((q,qi)=>{const d=document.createElement('div');d.className='qcm-item';d.innerHTML='<div class="q-label">Question '+(qi+1)+'</div><div class="q-text">'+q.q+'</div><div class="opts" id="'+cid+'_opts_'+qi+'">'+q.opts.map((o,oi)=>'<button class="opt" onclick="answerDLQ(\''+cid+'\','+qi+','+oi+','+q.ans+','+data.qcm.length+')">'+o+'</button>').join('')+'</div><div class="fb" id="'+cid+'_fb_'+qi+'"></div>';ph1.appendChild(d);});
   const sc=document.createElement('div');sc.className='score-box';sc.id=cid+'_score';sc.style.background=color+'22';sc.innerHTML='<div class="score-emoji" id="'+cid+'_sc_em"></div><div class="score-num" id="'+cid+'_sc_n" style="color:'+color+'"></div><div class="score-msg" id="'+cid+'_sc_m"></div>';ph1.appendChild(sc);c.appendChild(ph1);
-  const ph2=document.createElement('div');ph2.id=cid+'_phase2';ph2.style.display='none';ph2.innerHTML='<div style="font-size:12px;font-weight:800;color:'+color+';text-transform:uppercase;letter-spacing:1px;margin:18px 0 10px">📖 Transcripción del diálogo</div>';
+  const ph2=document.createElement('div');ph2.id=cid+'_phase2';ph2.style.display='none';ph2.innerHTML='<div style="font-size:12px;font-weight:800;color:'+color+';text-transform:uppercase;letter-spacing:1px;margin:18px 0 10px">📖 Transcription du dialogue</div>';
   const dw=document.createElement('div');dw.style.cssText='background:#1a1a2e;border:1.5px solid #2a2a4e;border-radius:14px;padding:16px 18px';
   data.lines.forEach((line,li)=>{const isF=line.voice==='f';const al=isF?'#e63946':'#2a7dd1';const bl=isF?'#fdecea':'#deeeff';
   const words=line.phrase.split(' ');const ws=words.map((w,wi)=>'<span id="'+cid+'_w'+li+'_'+wi+'" style="color:rgba(255,255,255,0.5);transition:color .12s">'+w+'</span>').join(' ');
@@ -199,29 +193,32 @@ function buildDialogueListen(cid,data,color){
 }
 async function playDialogueFull(cid,data){
   const btn=document.getElementById(cid+'_listenAll');const ind=document.getElementById(cid+'_playing');if(!data)return;if(btn)btn.disabled=true;if(ind)ind.style.display='block';
-  for(const line of data.lines){await speakPromise(line.phrase,line.voice==='f'?VOICE_F:VOICE_M);await new Promise(r=>setTimeout(r,320));}
+  for(const line of data.lines){await speakPromise(line.phrase,line.voice==='f'?FRENCHOIS.EL_VOICES.charlotte:FRENCHOIS.EL_VOICES.daniel);await new Promise(r=>setTimeout(r,320));}
   if(btn){btn.disabled=false;btn.innerHTML='🔊 Écouter à nouveau';}if(ind)ind.style.display='none';
 }
 function speakPromise(text,voiceId){
-  if(!EL_KEY){return new Promise(res=>{const u=new SpeechSynthesisUtterance(text);u.lang='fr-FR';u.rate=0.88;u.onend=res;window.speechSynthesis.cancel();window.speechSynthesis.speak(u);});}
-  return fetch('https://api.elevenlabs.io/v1/text-to-speech/'+voiceId,{method:'POST',headers:{'xi-api-key':EL_KEY,'Content-Type':'application/json'},body:JSON.stringify({text,model_id:'eleven_multilingual_v2',language_code:'fr',voice_settings:{stability:0.5,similarity_boost:0.75}})})
-  .then(r=>r.blob()).then(blob=>new Promise(res=>{const url=URL.createObjectURL(blob);const a=new Audio(url);a.play();a.onended=()=>{URL.revokeObjectURL(url);res();};})).catch(()=>speakPromise(text,null));
+  return speak(text,voiceId).then(audio=>new Promise(res=>{
+    if(audio){audio.onended=res;}else{setTimeout(res,Math.max(text.split(' ').length*420+400,1500));}
+  }));
 }
 async function playLineKaraoke(cid,li,line,btn){
   if(!line)return;const words=line.phrase.split(' ');btn.disabled=true;
   words.forEach((_,wi)=>{const s=document.getElementById(cid+'_w'+li+'_'+wi);if(s)s.style.color='rgba(255,255,255,0.5)';});
   const sk=dur=>{const ms=(dur*1000)/words.length;words.forEach((_,wi)=>setTimeout(()=>{const s=document.getElementById(cid+'_w'+li+'_'+wi);if(s)s.style.color='#ffd166';},wi*ms));setTimeout(()=>btn.disabled=false,dur*1000+200);};
-  const voiceId=line.voice==='f'?VOICE_F:VOICE_M;
-  if(!EL_KEY){const u=new SpeechSynthesisUtterance(line.phrase);u.lang='fr-FR';u.rate=0.88;window.speechSynthesis.cancel();window.speechSynthesis.speak(u);sk(words.length*0.42);return;}
-  try{const r=await fetch('https://api.elevenlabs.io/v1/text-to-speech/'+voiceId,{method:'POST',headers:{'xi-api-key':EL_KEY,'Content-Type':'application/json'},body:JSON.stringify({text:line.phrase,model_id:'eleven_multilingual_v2',language_code:'fr',voice_settings:{stability:0.5,similarity_boost:0.75}})});
-  const blob=await r.blob();const url=URL.createObjectURL(blob);const audio=new Audio(url);audio.addEventListener('loadedmetadata',()=>sk(audio.duration));audio.play();audio.onended=()=>{URL.revokeObjectURL(url);btn.disabled=false;};}catch{btn.disabled=false;}
+  const voiceId=line.voice==='f'?FRENCHOIS.EL_VOICES.charlotte:FRENCHOIS.EL_VOICES.daniel;
+  const audio=await speak(line.phrase,voiceId);
+  if(audio){
+    if(audio.duration&&isFinite(audio.duration)){sk(audio.duration);}
+    else{audio.addEventListener('loadedmetadata',()=>sk(audio.duration));}
+    audio.onended=()=>btn.disabled=false;
+  }else{sk(words.length*0.42);}
 }
 function answerDLQ(cid,qi,chosen,correct,total){
   const key=cid+'_'+qi;if(dlTally[key])return;dlTally[key]={done:true,wasCorrect:chosen===correct};
   const opts=document.querySelectorAll('#'+cid+'_opts_'+qi+' .opt');opts.forEach((b,i)=>{b.disabled=true;if(i===correct)b.classList.add('correct');else if(i===chosen&&chosen!==correct)b.classList.add('wrong');});
-  const fb=document.getElementById(cid+'_fb_'+qi);fb.textContent=chosen===correct?'✅ ¡Correcto!':'❌ '+opts[correct].textContent;fb.style.cssText='color:'+(chosen===correct?'#1d7a4c':'#c0392b')+';font-size:12px;margin-top:6px;font-weight:700';
+  const fb=document.getElementById(cid+'_fb_'+qi);fb.textContent=chosen===correct?'✅ Correct !':'❌ '+opts[correct].textContent;fb.style.cssText='color:'+(chosen===correct?'#1d7a4c':'#c0392b')+';font-size:12px;margin-top:6px;font-weight:700';
   let answered=0,good=0;for(let i=0;i<total;i++){if(dlTally[cid+'_'+i]){answered++;if(dlTally[cid+'_'+i].wasCorrect)good++;}}
-  if(answered===total){const sc=document.getElementById(cid+'_score');if(sc){sc.classList.add('show');const pct=good/total;document.getElementById(cid+'_sc_em').textContent=pct>=.75?'🎉':pct>=.5?'👍':'💪';document.getElementById(cid+'_sc_n').textContent=good+' / '+total;document.getElementById(cid+'_sc_m').textContent=pct>=.75?'¡Excelente comprensión!':pct>=.5?'¡Bien! Vuelve a escuchar.':'Escucha el diálogo otra vez.';sc.scrollIntoView({behavior:'smooth',block:'nearest'});}
+  if(answered===total){const sc=document.getElementById(cid+'_score');if(sc){sc.classList.add('show');const pct=good/total;document.getElementById(cid+'_sc_em').textContent=pct>=.75?'🎉':pct>=.5?'👍':'💪';document.getElementById(cid+'_sc_n').textContent=good+' / '+total;document.getElementById(cid+'_sc_m').textContent=pct>=.75?'Excellente compréhension !':pct>=.5?'Bien ! Réécoute le dialogue.':'Écoute le dialogue à nouveau.';sc.scrollIntoView({behavior:'smooth',block:'nearest'});}
   setTimeout(()=>{const p2=document.getElementById(cid+'_phase2');if(p2){p2.style.display='block';p2.style.animation='fadein .4s ease';p2.scrollIntoView({behavior:'smooth',block:'nearest'});}},900);}
 }
 
@@ -236,7 +233,7 @@ function buildPanels(){
 function addCard(panelId,exId,num,title,instr,l,isCheck,scoreId){
   const panel=document.getElementById(panelId);if(!panel)return;const card=document.createElement('div');card.className='ex-card';
   let html='<div class="ex-title" style="color:var(--l'+l+')">Ejercicio '+num+' — '+title+'</div><div class="ex-instr">'+instr+'</div><div id="'+exId+'"></div>';
-  if(isCheck)html+='<button class="check-btn" style="background:var(--l'+l+');color:white" onclick="checkFill(\''+exId+'\',\''+scoreId+'\')">Verificar</button>';
+  if(isCheck)html+='<button class="check-btn" style="background:var(--l'+l+');color:white" onclick="checkFill(\''+exId+'\',\''+scoreId+'\')">Vérifier</button>';
   const sc=document.createElement('div');sc.className='score-box';sc.id=scoreId;sc.style.background='var(--l'+l+'l)';sc.innerHTML='<div class="score-emoji" id="'+scoreId+'-em"></div><div class="score-num" id="'+scoreId+'-n" style="color:var(--l'+l+'d)"></div><div class="score-msg" id="'+scoreId+'-m"></div>';
   card.innerHTML=html;card.appendChild(sc);panel.appendChild(card);
 }
@@ -426,14 +423,14 @@ const ra4=[
 // ════════════════════════════════════
 document.addEventListener('DOMContentLoaded',()=>{
   window.speechSynthesis.getVoices();
-  buildPanels();buildELModal();buildMobNav();
+  buildPanels();buildMobNav();
 
   // L1
   addCard('panel-1','ex1a',1,'J\'ai mal à… — la structure','Elige la opción correcta para expresar el dolor.',1,false,'sc1a');buildQCM('ex1a',qcm1a,'sc1a');
   addCard('panel-1','ex1b',2,'Le visage — vocabulario','Une cada parte del rostro con su traducción.',1,false,'sc1b');buildMatch('ex1b',match1b,'sc1b');
   addCard('panel-1','ex1c',3,'Completa con la preposición correcta','Escribe à la, au o aux según el sustantivo.',1,true,'sc1c');buildFill('ex1c',fill1c);
   addCard('panel-1','ex1d',4,'Le corps — vocabulario','Une cada parte del cuerpo con su traducción.',1,false,'sc1d');buildMatch('ex1d',match1d,'sc1d');
-  addCard('panel-1','dl1',5,'🎧 Comprensión oral','Escucha el diálogo y responde las preguntas sin ver el texto.',1,false,'sc1e');buildDialogueListen('dl1',dl1,'var(--l1)');registerDL('dl1',dl1);
+  addCard('panel-1','dl1',5,'🎧 Compréhension orale','Écoute le dialogue et réponds aux questions sans regarder le texte.',1,false,'sc1e');buildDialogueListen('dl1',dl1,'var(--l1)');registerDL('dl1',dl1);
   addCard('panel-1','ra1',6,'🎙️ Pronuncia','Escucha el modelo y graba tu voz.',1,false,'sc1f');buildRA('ra1',ra1,'var(--l1)');
 
   // L2
@@ -477,4 +474,4 @@ document.addEventListener('DOMContentLoaded',()=>{
 });
 </script>
 </body>
-</html>
+</html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
