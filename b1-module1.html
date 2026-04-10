@@ -1,4 +1,4 @@
-<\!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -80,7 +80,7 @@
 
   <main class="main">
 
-    <\!-- ══════════════════════════════════════════
+    <!-- ══════════════════════════════════════════
          LEÇON 0 — QUI & QUE
          ══════════════════════════════════════════ -->
     <div class="lesson-panel active" data-lesson="0">
@@ -143,7 +143,7 @@
         <div class="score-box" id="sc0">
           <span class="score-emoji">🎯</span>
           <div class="score-msg" id="sc0-txt"></div>
-          <div class="score-sub">¡Muy bien\! Continúa con los ejercicios.</div>
+          <div class="score-sub">¡Muy bien! Continúa con los ejercicios.</div>
         </div>
       </div>
 
@@ -172,7 +172,7 @@
         <div class="score-box" id="sc0f">
           <span class="score-emoji">✍️</span>
           <div class="score-msg" id="sc0f-txt"></div>
-          <div class="score-sub">¡Excelente práctica escrita\!</div>
+          <div class="score-sub">¡Excelente práctica escrita!</div>
         </div>
       </div>
 
@@ -184,7 +184,7 @@
       </div>
     </div>
 
-    <\!-- ══════════════════════════════════════════
+    <!-- ══════════════════════════════════════════
          LEÇON 1 — OÙ
          ══════════════════════════════════════════ -->
     <div class="lesson-panel" data-lesson="1">
@@ -247,7 +247,7 @@
         <div class="score-box" id="sc1">
           <span class="score-emoji">🗺️</span>
           <div class="score-msg" id="sc1-txt"></div>
-          <div class="score-sub">¡Bien localizado\!</div>
+          <div class="score-sub">¡Bien localizado!</div>
         </div>
       </div>
 
@@ -276,7 +276,7 @@
         <div class="score-box" id="sc1f">
           <span class="score-emoji">✍️</span>
           <div class="score-msg" id="sc1f-txt"></div>
-          <div class="score-sub">¡Excelente\!</div>
+          <div class="score-sub">¡Excelente!</div>
         </div>
       </div>
 
@@ -288,7 +288,7 @@
       </div>
     </div>
 
-    <\!-- ══════════════════════════════════════════
+    <!-- ══════════════════════════════════════════
          LEÇON 2 — DONT
          ══════════════════════════════════════════ -->
     <div class="lesson-panel" data-lesson="2">
@@ -352,7 +352,7 @@
         <div class="score-box" id="sc2">
           <span class="score-emoji">🔑</span>
           <div class="score-msg" id="sc2-txt"></div>
-          <div class="score-sub">¡Dominas el dont\!</div>
+          <div class="score-sub">¡Dominas el dont!</div>
         </div>
       </div>
 
@@ -387,7 +387,7 @@
         <div class="score-box" id="sc2f">
           <span class="score-emoji">✍️</span>
           <div class="score-msg" id="sc2f-txt"></div>
-          <div class="score-sub">¡Muy bien\!</div>
+          <div class="score-sub">¡Muy bien!</div>
         </div>
       </div>
 
@@ -399,7 +399,7 @@
       </div>
     </div>
 
-    <\!-- ══════════════════════════════════════════
+    <!-- ══════════════════════════════════════════
          LEÇON 3 — LEQUEL / AUQUEL
          ══════════════════════════════════════════ -->
     <div class="lesson-panel" data-lesson="3">
@@ -464,7 +464,7 @@
         <div class="score-box" id="sc3">
           <span class="score-emoji">⚙️</span>
           <div class="score-msg" id="sc3-txt"></div>
-          <div class="score-sub">¡Bravo \!</div>
+          <div class="score-sub">¡Bravo !</div>
         </div>
       </div>
 
@@ -493,7 +493,7 @@
         <div class="score-box" id="sc3f">
           <span class="score-emoji">✍️</span>
           <div class="score-msg" id="sc3f-txt"></div>
-          <div class="score-sub">¡Perfecto\!</div>
+          <div class="score-sub">¡Perfecto!</div>
         </div>
       </div>
 
@@ -528,13 +528,13 @@ function normalize(s){
 function checkFillB1(inputId, expected, hintId, state){
   const inp = document.getElementById(inputId);
   const hint = document.getElementById(hintId);
-  if(\!inp) return;
+  if(!inp) return;
   const val = inp.value;
   if(normalize(val) === normalize(expected)){
     inp.classList.remove('nope'); inp.classList.add('ok');
-    hint.textContent = '✅ Correct \! « ' + expected + ' »';
+    hint.textContent = '✅ Correct ! « ' + expected + ' »';
     hint.style.color = 'var(--l3d)';
-    if(\!inp.dataset.counted){
+    if(!inp.dataset.counted){
       inp.dataset.counted = '1';
       state.score++;
       if(state.score >= state.total) showFillScore(state);
@@ -552,7 +552,7 @@ function checkFillB1(inputId, expected, hintId, state){
 function showFillScore(state){
   const box = document.getElementById(state.id);
   const txt = document.getElementById(state.txtId);
-  if(\!box || \!txt) return;
+  if(!box || !txt) return;
   const pct = Math.round((state.score/state.total)*100);
   txt.textContent = state.score + '/' + state.total + ' — ' + pct + '%';
   box.classList.add('show');
@@ -564,14 +564,14 @@ const _orig = window.checkQCM;
 window.checkQCM = function(btn, isCorrect, scId, state){
   if(_orig) _orig(btn, isCorrect, scId, state);
   const panel = btn.closest('.ex-card');
-  if(\!panel || \!state) return;
+  if(!panel || !state) return;
   const questions = panel.querySelectorAll('.qcm-item');
   const answered  = new Set();
   panel.querySelectorAll('.opt.correct,.opt.wrong').forEach(o => answered.add(o.closest('.qcm-item')));
   if(answered.size >= questions.length){
     const box = document.getElementById(state.id);
     const txt = document.getElementById(state.txtId);
-    if(box && txt && \!box.classList.contains('show')){
+    if(box && txt && !box.classList.contains('show')){
       const pct = Math.round((state.score/state.total)*100);
       txt.textContent = state.score + '/' + state.total + ' — ' + pct + '%';
       box.classList.add('show');
