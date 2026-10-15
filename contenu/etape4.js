@@ -1,0 +1,1 @@
+window.LESSON_DATA={stage:4,title:"Poser des questions / vie quotidienne",lessons:[{id:1,title:'TODO',objective:'TODO — contenu non fourni',explanation:'Squelette vide : contenu pédagogique à fournir.',exercises:[]}]};

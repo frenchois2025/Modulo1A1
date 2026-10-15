@@ -1,0 +1,1 @@
+window.LESSON_DATA={stage:3,title:"Phrases simples (\u00eatre/avoir/n\u00e9gation)",lessons:[{id:1,title:'TODO',objective:'TODO — contenu non fourni',explanation:'Squelette vide : contenu pédagogique à fournir.',exercises:[]}]};
