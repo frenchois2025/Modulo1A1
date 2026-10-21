@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dialogues · Frenchois</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="auth.js"></script>
+<script src="moteur.js" defer></script>
+<style>
+:root{
+  --bg:#f7f4ef;--white:#fff;--text:#1c1c2e;--muted:#7a7a8c;--border:#e4ddd4;
+  --navy:#1B2744;--bordeaux:#861818;--cream:#F5F1EB;
+  --a1:#2a7dd1;--a1l:#deeeff;--a1d:#1a5fa0;
+  --a2:#e88c1a;--a2l:#fff3dc;--a2d:#b86a00;
+  --b1:#7c3aed;--b1l:#f3e8ff;--b1d:#5b21b6;
+  --ok:#2eaa6b;--okl:#dcf5ea;--okd:#1d7a4c;
+  --err:#e63946;--errl:#fdecea;--errd:#b02030;
+  --shadow:0 4px 24px rgba(0,0,0,.08)
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+/* ── LAYOUT ── */
+.app{display:flex;min-height:100vh}
+.sidebar{width:270px;flex-shrink:0;background:var(--white);border-right:1px solid var(--border);padding:24px 16px;position:sticky;top:0;height:100vh;overflow-y:auto;display:flex;flex-direction:column;gap:4px}
+.sidebar-logo{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;padding:0 8px 16px;border-bottom:1px solid var(--border);margin-bottom:10px;line-height:1.4}
+.sidebar-logo span{color:var(--bordeaux)}
+.sidebar-back{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;border:1.5px solid var(--border);background:var(--bg);color:var(--muted);font-size:12px;font-weight:700;cursor:pointer;text-decoration:none;margin-bottom:12px;transition:all .15s}
+.sidebar-back:hover{border-color:var(--text);color:var(--text)}
+.nav-section{font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);padding:8px 12px 4px;margin-top:8px}
+.nav-btn{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;border:none;background:transparent;color:var(--muted);font-family:'Nunito',sans-serif;font-size:13px;font-weight:600;cursor:pointer;text-align:left;transition:all .18s;width:100%}
+.nav-btn:hover{background:var(--bg)}
+.nav-btn.active{color:white}
+
+.main{flex:1;padding:40px 36px;max-width:900px}
+.view{display:none}.view.active{display:block;animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ── HOME ── */
+.level-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:40px}
+.level-card{border-radius:18px;padding:28px 22px;cursor:pointer;border:2px solid transparent;transition:all .2s;text-align:center}
+.level-card:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,.1)}
+.level-emoji{font-size:36px;margin-bottom:10px}
+.level-name{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin-bottom:4px}
+.level-desc{font-size:12px;opacity:.75;line-height:1.5}
+
+/* ── SELECTION ── */
+.gen-section{margin-bottom:24px}
+.gen-title{font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.chip-grid{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:10px 18px;border-radius:20px;border:1.5px solid var(--border);background:var(--white);color:var(--text);font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:6px}
+.chip:hover{border-color:var(--text)}
+.chip.sel{color:white;border-color:transparent}
+.gen-btn{width:100%;padding:16px;border-radius:14px;border:none;font-family:'Nunito',sans-serif;font-size:15px;font-weight:800;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:10px;margin-top:24px}
+.gen-btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.15)}
+.gen-btn:disabled{cursor:default}
+
+/* ── LOADING ── */
+.loading-card{background:var(--white);border:1px solid var(--border);border-radius:18px;padding:60px 40px;text-align:center;box-shadow:var(--shadow)}
+.spin{display:inline-block;font-size:48px;margin-bottom:16px;animation:rot 1.5s linear infinite}
+@keyframes rot{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.loading-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin-bottom:8px}
+.loading-sub{font-size:14px;color:var(--muted);line-height:1.7}
+
+/* ── READER ── */
+.btn-s{padding:11px 22px;border-radius:10px;border:1.5px solid var(--border);background:var(--white);font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;cursor:pointer;color:var(--muted);transition:all .15s}
+.btn-s:hover{border-color:var(--text);color:var(--text)}
+.dlg-header{margin-bottom:24px}
+.dlg-title{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;line-height:1.2;margin-bottom:6px}
+.dlg-title-es{font-size:14px;color:var(--muted);font-style:italic;margin-bottom:14px}
+.dlg-context{background:var(--white);border:1px solid var(--border);border-left:4px solid var(--bordeaux);border-radius:12px;padding:16px 20px;font-size:14px;line-height:1.6;color:var(--text);margin-bottom:24px;font-style:italic}
+.dlg-context strong{font-style:normal;font-weight:800;color:var(--bordeaux);text-transform:uppercase;letter-spacing:1px;font-size:11px;display:block;margin-bottom:6px}
+
+/* ── VOCAB PRE-LISTEN ── */
+.vocab-section{background:var(--white);border:1px solid var(--border);border-radius:18px;padding:22px 26px;margin-bottom:24px;box-shadow:var(--shadow)}
+.vocab-label{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.vocab-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.vocab-card{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;border:1.5px solid var(--border);background:var(--bg);cursor:pointer;transition:all .15s}
+.vocab-card:hover{border-color:var(--text)}
+.vocab-card-play{flex-shrink:0;width:32px;height:32px;border-radius:50%;border:none;background:var(--bordeaux);color:white;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.vocab-card-fr{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;line-height:1.2}
+.vocab-card-es{font-size:11px;color:var(--muted);margin-top:2px}
+
+/* ── DIALOGUE CONTAINER (réutilise les styles de moteur.js) ── */
+#dialogue-container{margin-bottom:24px}
+.qcm-item{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin-bottom:12px;box-shadow:var(--shadow)}
+.q-label{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.q-text{font-size:15px;font-weight:700;margin-bottom:10px;line-height:1.5}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{padding:11px 16px;border-radius:10px;border:1.5px solid var(--border);background:var(--bg);color:var(--text);font-size:14px;font-weight:600;cursor:pointer;text-align:left;font-family:'Nunito',sans-serif;transition:all .15s}
+.opt:hover:not(:disabled){border-color:var(--text);background:var(--white)}
+.opt:disabled{cursor:default}
+.opt.correct{border-color:var(--ok);background:var(--okl);color:var(--okd)}
+.opt.wrong{border-color:var(--err);background:var(--errl);color:var(--errd)}
+.fb{margin-top:6px;padding:8px 14px;border-radius:8px;font-size:13px;font-weight:600}
+.score-box{border-radius:16px;padding:24px;text-align:center;margin-top:16px;display:none}
+.score-box.show{display:block}
+.score-emoji{font-size:40px;margin-bottom:8px}
+.score-num{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;margin-bottom:4px}
+.score-msg{font-size:14px;color:var(--muted)}
+
+/* ── INFO BOX ── */
+.info-box{background:var(--a1l);border:1px solid var(--a1);border-radius:12px;padding:14px 18px;margin-bottom:20px;font-size:13px;color:var(--a1d);display:flex;gap:10px;align-items:flex-start}
+.info-box-icon{font-size:18px;flex-shrink:0}
+
+/* ── RESPONSIVE ── */
+@media(max-width:700px){
+  .sidebar{display:none}
+  .main{padding:20px 16px}
+  .level-grid{grid-template-columns:1fr}
+  .vocab-grid{grid-template-columns:1fr}
+  .dlg-title{font-size:22px}
+}
+
+/* ── ELEVENLABS MODAL (cohérence visuelle) ── */
+#el-fab{position:fixed;bottom:22px;right:22px;width:46px;height:46px;border-radius:50%;background:var(--bordeaux);color:white;border:none;font-size:20px;cursor:pointer;z-index:9999;box-shadow:0 4px 18px rgba(134,24,24,.45);display:flex;align-items:center;justify-content:center;transition:all .2s}
+#el-fab:hover{transform:scale(1.1)}
+#el-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:10000;align-items:center;justify-content:center}
+#el-modal.open{display:flex}
+#el-box{background:#fff;border-radius:20px;padding:28px;width:min(480px,94vw);box-shadow:0 20px 60px rgba(0,0,0,.2);font-family:'Nunito',sans-serif}
+#el-box h2{font-family:'Playfair Display',serif;font-size:20px;margin-bottom:4px}
+#el-box p{font-size:12px;color:#7a7a8c;margin-bottom:20px;line-height:1.5}
+.el-label{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#7a7a8c;margin-bottom:6px;display:block}
+.el-input{width:100%;border:2px solid #e4ddd4;border-radius:10px;padding:10px 14px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:600;outline:none;margin-bottom:14px}
+.el-select{width:100%;border:2px solid #e4ddd4;border-radius:10px;padding:10px 14px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:600;outline:none;margin-bottom:18px;background:#f7f4ef}
+.el-btns{display:flex;gap:8px;flex-wrap:wrap}
+.el-btn{padding:10px 18px;border-radius:10px;border:none;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer}
+.el-status{margin-top:12px;font-size:13px;font-weight:700;min-height:20px;text-align:center}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- ════════════════════════════════════════════════════════════════
+     SIDEBAR
+     ════════════════════════════════════════════════════════════════ -->
+<nav class="sidebar">
+  <div class="sidebar-logo">Dialogues<br><span>en français</span></div>
+  <a href="index.html" class="sidebar-back">← Volver al inicio</a>
+  <div class="nav-section">Niveaux</div>
+  <button class="nav-btn" id="nav-a1" onclick="showGen('A1')">🌱 Niveau A1</button>
+  <button class="nav-btn" id="nav-a2" onclick="showGen('A2')">🌿 Niveau A2</button>
+  <button class="nav-btn" id="nav-b1" onclick="showGen('B1')">🌳 Niveau B1</button>
+  <div style="margin-top:auto;padding:14px 8px 0;border-top:1px solid var(--border)">
+    <div style="font-size:11px;color:var(--muted);line-height:1.7">
+      ✨ Cada diálogo es generado por IA — único cada vez. Voces masculinas y femeninas naturales.
+    </div>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════════════════════════════════
+     MAIN
+     ════════════════════════════════════════════════════════════════ -->
+<main class="main">
+
+  <!-- VUE HOME : choix du niveau -->
+  <div class="view active" id="view-home">
+    <div style="margin-bottom:32px">
+      <div style="font-family:'Playfair Display',serif;font-size:32px;font-weight:700;margin-bottom:10px">Dialogues<br>en français</div>
+      <div style="font-size:14px;color:var(--muted);line-height:1.7;max-width:540px">
+        Elige tu nivel y una situación — la IA genera un diálogo único entre dos personajes en francés, con vocabulario, audio y ejercicios de comprensión.
+      </div>
+    </div>
+    <div class="level-grid">
+      <div class="level-card" style="background:var(--a1l)" onclick="showGen('A1')">
+        <div class="level-emoji">🌱</div>
+        <div class="level-name" style="color:var(--a1d)">A1</div>
+        <div class="level-desc" style="color:var(--a1d)">Situaciones cotidianas<br>Frases simples · Presente</div>
+      </div>
+      <div class="level-card" style="background:var(--a2l)" onclick="showGen('A2')">
+        <div class="level-emoji">🌿</div>
+        <div class="level-name" style="color:var(--a2d)">A2</div>
+        <div class="level-desc" style="color:var(--a2d)">Conversaciones extendidas<br>Pasado · Futuro próximo</div>
+      </div>
+      <div class="level-card" style="background:var(--b1l)" onclick="showGen('B1')">
+        <div class="level-emoji">🌳</div>
+        <div class="level-name" style="color:var(--b1d)">B1</div>
+        <div class="level-desc" style="color:var(--b1d)">Debates y opiniones<br>Subjuntivo · Condicional</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VUE GEN : choix de la catégorie + registre -->
+  <div class="view" id="view-gen">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:28px">
+      <button class="btn-s" onclick="showHome()">← Volver</button>
+      <div id="gen-title" style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700"></div>
+    </div>
+    <div class="gen-section">
+      <div class="gen-title">Situación</div>
+      <div class="chip-grid" id="chips-cat"></div>
+    </div>
+    <div class="gen-section">
+      <div class="gen-title">Registro</div>
+      <div class="chip-grid" id="chips-reg"></div>
+    </div>
+    <button class="gen-btn" id="gen-btn" onclick="generateDialogue()" disabled>
+      ✨ <span id="gen-lbl">Elige una situación y un registro</span>
+    </button>
+  </div>
+
+  <!-- VUE LOADING -->
+  <div class="view" id="view-loading">
+    <div class="loading-card">
+      <div class="spin">⚙️</div>
+      <div class="loading-title">Generando tu diálogo…</div>
+      <div class="loading-sub">La IA está escribiendo una conversación original<br>con dos personajes y sus ejercicios. Un momento…</div>
+    </div>
+  </div>
+
+  <!-- VUE READER : dialogue généré -->
+  <div class="view" id="view-reader">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px">
+      <button class="btn-s" onclick="showGen(CL)">← Nuevo diálogo</button>
+      <div id="rtag"></div>
+    </div>
+    <div id="reader-content"></div>
+  </div>
+
+</main>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   FRENCHOIS — DIALOGUES GÉNÉRATIFS
+   v1.0 · Mai 2026
+   --------------------------------------------------------------
+   Architecture :
+   - Sélection : niveau → catégorie → registre
+   - Génération : appel à /api/generate avec prompt structuré
+   - Affichage : réutilise buildDialogueListen() de moteur.js
+                 (phase 1 = écoute aveugle + QCM,
+                  phase 2 = transcription karaoké)
+   - Audio : ElevenLabs via speak() (Charlotte F + Daniel M)
+   ═══════════════════════════════════════════════════════════════ */
+
+const COL = {
+  A1: { c: 'var(--a1)', l: 'var(--a1l)', d: 'var(--a1d)' },
+  A2: { c: 'var(--a2)', l: 'var(--a2l)', d: 'var(--a2d)' },
+  B1: { c: 'var(--b1)', l: 'var(--b1l)', d: 'var(--b1d)' }
+};
+
+/* ──────────────────────────────────────────────────────────────
+   CATÉGORIES PAR NIVEAU
+   --------------------------------------------------------------
+   Format : { emoji, label_fr, label_es, prompt_hint }
+   Le prompt_hint donne à l'IA un contexte précis pour générer
+   un dialogue pertinent et calibré pédagogiquement.
+   ────────────────────────────────────────────────────────────── */
+
+const CATEGORIES = {
+  A1: [
+    { emoji: '🥖', label_fr: 'Commerces & alimentation', label_es: 'Comercios y comida',
+      hint: 'a bakery, café, market, or restaurant scene with simple ordering and prices' },
+    { emoji: '🚌', label_fr: 'Transports & déplacements', label_es: 'Transportes',
+      hint: 'asking for directions, buying a metro ticket, or a taxi/train interaction' },
+    { emoji: '👥', label_fr: 'Rencontres & présentations', label_es: 'Encuentros',
+      hint: 'introducing oneself, basic small talk, exchanging names/origins/jobs' },
+    { emoji: '🏨', label_fr: 'Logement & hôtel', label_es: 'Alojamiento',
+      hint: 'checking in at a hotel, asking about a room, simple lodging request' },
+    { emoji: '🏥', label_fr: 'Services & santé', label_es: 'Servicios y salud',
+      hint: 'pharmacy, doctor reception, post office, or simple administrative service' },
+    { emoji: '📞', label_fr: 'Téléphone & rendez-vous', label_es: 'Teléfono y citas',
+      hint: 'making an appointment by phone, leaving a simple message' }
+  ],
+  A2: [
+    { emoji: '🎬', label_fr: 'Loisirs & sorties', label_es: 'Ocio y salidas',
+      hint: 'planning a movie/concert outing, discussing weekend plans' },
+    { emoji: '💼', label_fr: 'Travail & études', label_es: 'Trabajo y estudios',
+      hint: 'job interview basics, talking about studies or workday with a colleague' },
+    { emoji: '🌡️', label_fr: 'Santé & bien-être', label_es: 'Salud y bienestar',
+      hint: 'describing symptoms to a doctor, gym registration, healthy habits' },
+    { emoji: '✈️', label_fr: 'Voyage & vacances', label_es: 'Viaje y vacaciones',
+      hint: 'travel agency booking, airport check-in, recounting a recent trip' },
+    { emoji: '🛍️', label_fr: 'Shopping & mode', label_es: 'Compras y moda',
+      hint: 'clothing store, asking sizes/colors, comparing items, returning a product' },
+    { emoji: '👨‍👩‍👧', label_fr: 'Famille & relations', label_es: 'Familia y relaciones',
+      hint: 'family conversation, friend catch-up, describing relationships and feelings' }
+  ],
+  B1: [
+    { emoji: '🗞️', label_fr: 'Actualité & société', label_es: 'Actualidad y sociedad',
+      hint: 'discussing a recent news topic, social trends, generational differences' },
+    { emoji: '💬', label_fr: 'Opinions & débats', label_es: 'Opiniones y debates',
+      hint: 'two people debating a topic with nuance, using subjunctive and conditional' },
+    { emoji: '🎭', label_fr: 'Culture & arts', label_es: 'Cultura y artes',
+      hint: 'film review discussion, museum visit, opinions on a book or exhibition' },
+    { emoji: '💡', label_fr: 'Innovation & technologie', label_es: 'Innovación y tecnología',
+      hint: 'discussing AI, social media impact, or new tech with critical perspective' },
+    { emoji: '🌍', label_fr: 'Environnement & écologie', label_es: 'Medio ambiente',
+      hint: 'climate change discussion, eco-friendly habits, recycling debate' },
+    { emoji: '⚖️', label_fr: 'Vie professionnelle', label_es: 'Vida profesional',
+      hint: 'salary negotiation, professional disagreement, career change conversation' }
+  ]
+};
+
+const REGISTERS = [
+  { key: 'tu',   emoji: '😊', label_fr: 'Informel (tu)', label_es: 'Informal (tú)' },
+  { key: 'vous', emoji: '🎩', label_fr: 'Formel (vous)', label_es: 'Formal (usted)' }
+];
+
+/* ──────────────────────────────────────────────────────────────
+   ÉTAT GLOBAL
+   ────────────────────────────────────────────────────────────── */
+let CL = 'A1';        // niveau courant
+let SCAT = null;      // catégorie sélectionnée (objet)
+let SREG = null;      // registre sélectionné ('tu' | 'vous')
+let CD = null;        // dialogue courant (data)
+
+/* ──────────────────────────────────────────────────────────────
+   NAVIGATION
+   ────────────────────────────────────────────────────────────── */
+function showView(id) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'instant' });
+}
+
+function showHome() {
+  showView('view-home');
+  document.querySelectorAll('.nav-btn').forEach(b => {
+    b.classList.remove('active');
+    b.style.background = '';
+    b.style.color = '';
+  });
+}
+
+function showGen(lv) {
+  CL = lv;
+  SCAT = null;
+  SREG = null;
+  const col = COL[lv];
+
+  // Nav active
+  document.querySelectorAll('.nav-btn').forEach(b => {
+    b.classList.remove('active');
+    b.style.background = '';
+    b.style.color = '';
+  });
+  const nb = document.getElementById('nav-' + lv.toLowerCase());
+  if (nb) {
+    nb.classList.add('active');
+    nb.style.background = col.c;
+    nb.style.color = 'white';
+  }
+
+  // Titre
+  const titles = { A1: '🌱 Niveau A1 — Débutant', A2: '🌿 Niveau A2 — Intermédiaire', B1: '🌳 Niveau B1 — Avancé' };
+  document.getElementById('gen-title').textContent = titles[lv];
+
+  // Catégories
+  const ccat = document.getElementById('chips-cat');
+  ccat.innerHTML = '';
+  CATEGORIES[lv].forEach(cat => {
+    const c = document.createElement('button');
+    c.className = 'chip';
+    c.innerHTML = `<span>${cat.emoji}</span><span>${cat.label_es}</span>`;
+    c.onclick = () => pickChip('cat', cat, col.c, c, ccat);
+    ccat.appendChild(c);
+  });
+
+  // Registres
+  const creg = document.getElementById('chips-reg');
+  creg.innerHTML = '';
+  REGISTERS.forEach(reg => {
+    const c = document.createElement('button');
+    c.className = 'chip';
+    c.innerHTML = `<span>${reg.emoji}</span><span>${reg.label_es}</span>`;
+    c.onclick = () => pickChip('reg', reg, col.c, c, creg);
+    creg.appendChild(c);
+  });
+
+  updBtn(col);
+  showView('view-gen');
+}
+
+function pickChip(kind, value, color, el, parent) {
+  parent.querySelectorAll('.chip').forEach(c => {
+    c.classList.remove('sel');
+    c.style.background = '';
+    c.style.color = '';
+    c.style.borderColor = '';
+  });
+  el.classList.add('sel');
+  el.style.background = color;
+  el.style.color = 'white';
+  el.style.borderColor = color;
+  if (kind === 'cat') SCAT = value;
+  else if (kind === 'reg') SREG = value;
+  updBtn(COL[CL]);
+}
+
+function updBtn(col) {
+  const btn = document.getElementById('gen-btn');
+  const ok = SCAT && SREG;
+  btn.disabled = !ok;
+  btn.style.background = ok ? col.c : 'var(--border)';
+  btn.style.color = ok ? 'white' : 'var(--muted)';
+  document.getElementById('gen-lbl').textContent = ok
+    ? `Generar: ${SCAT.label_es} · ${SREG.label_es}`
+    : 'Elige una situación y un registro';
+}
+
+/* ──────────────────────────────────────────────────────────────
+   GÉNÉRATION DU DIALOGUE
+   --------------------------------------------------------------
+   Appel à /api/generate (même endpoint que comprehension.html).
+   Le prompt est calibré pour produire un JSON compatible avec
+   buildDialogueListen() de moteur.js, soit :
+     { lines: [{speaker:'f'|'m', name, text, translation}],
+       qcm:   [{q, opts, ans}] }
+   + champs additionnels : title, title_es, context_es, vocab.
+   ────────────────────────────────────────────────────────────── */
+
+const LEVEL_RULES = {
+  A1: {
+    grammar: 'present indicative ONLY, very basic passé composé for "j\'ai pris/j\'ai vu" allowed, NO subjunctive, NO conditional, NO future simple',
+    sentence: 'short sentences (5-10 words), one idea per sentence',
+    vocab: 'most common 500 French words, no idioms, no abstract terms',
+    lines: '8 to 10 turns total, alternating speakers',
+    questions: '3 multiple choice questions in Spanish, 3 options each, factual content questions'
+  },
+  A2: {
+    grammar: 'present, passé composé, imparfait basics, futur proche, NO subjunctive yet, simple negation',
+    sentence: 'sentences 8-15 words, can include "parce que", "quand", "si"',
+    vocab: 'most common 1500 French words, common expressions, light idioms',
+    lines: '10 to 14 turns total, alternating speakers',
+    questions: '4 multiple choice questions in Spanish, 3 options each, mix factual and inferential'
+  },
+  B1: {
+    grammar: 'all indicative tenses, subjunctive after "il faut que / je veux que / bien que", conditional present, complex negation',
+    sentence: 'sentences up to 20 words, subordinate clauses, connectors (cependant, en revanche, par contre)',
+    vocab: 'broader vocabulary including idioms, register-specific terms, abstract concepts',
+    lines: '12 to 16 turns total, alternating speakers',
+    questions: '4 multiple choice questions in Spanish, 3 options each, mix factual, inferential, and pragmatic'
+  }
+};
+
+async function generateDialogue() {
+  showView('view-loading');
+
+  const rules = LEVEL_RULES[CL];
+  const registerInstr = SREG.key === 'tu'
+    ? 'INFORMAL register: characters use TU. Casual but polite.'
+    : 'FORMAL register: characters use VOUS. Polite, professional.';
+
+  const prompt = `You are a French teacher creating a dialogue exercise for SPANISH-SPEAKING learners. Level: ${CL}. Situation: ${SCAT.hint}. ${registerInstr}
+
+LEVEL RULES (${CL}):
+- Grammar: ${rules.grammar}
+- Sentences: ${rules.sentence}
+- Vocabulary: ${rules.vocab}
+- Length: ${rules.lines}
+- Questions: ${rules.questions}
+
+DIALOGUE QUALITY REQUIREMENTS:
+- Authentic French: use natural conversational fillers (eh bien, alors, écoutez, en fait) appropriately for the level
+- Avoid translations from Spanish/English. No calques.
+- Each turn must be plausible spoken French, NOT formal written French.
+- The two characters must have DIFFERENT speaking styles (e.g. one more reserved, one more enthusiastic).
+- Use both genders: speaker "f" (female) and speaker "m" (male). Pick character names appropriate to the scene.
+
+Respond ONLY with valid JSON, no markdown, no explanation, this exact structure:
+
+{
+  "title": "title in French (3-6 words)",
+  "title_es": "Spanish translation of title",
+  "context_es": "ONE sentence in Spanish describing the scene to set up the dialogue (max 25 words)",
+  "lines": [
+    {"speaker": "f", "name": "FrenchName", "text": "French dialogue line", "translation": "Spanish translation"},
+    {"speaker": "m", "name": "FrenchName", "text": "French dialogue line", "translation": "Spanish translation"}
+  ],
+  "vocab": [
+    {"word": "le mot français (with article if noun)", "es": "spanish translation"}
+  ],
+  "qcm": [
+    {"q": "Question in Spanish about dialogue content", "opts": ["option A", "option B", "option C"], "ans": 0}
+  ]
+}
+
+Rules: vocab=4 to 6 key words/expressions from the dialogue. qcm=${CL === 'A1' ? '3' : '4'} questions. Pure JSON only.`;
+
+  try {
+    const res = await fetch('/api/generate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 2500,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+
+    if (!res.ok) {
+      const e = await res.json().catch(() => ({}));
+      throw new Error(e.error?.message || 'HTTP ' + res.status);
+    }
+
+    const data = await res.json();
+    const raw = data.content.filter(b => b.type === 'text').map(b => b.text).join('');
+    console.log('DIALOGUE RAW (first 300):', raw.substring(0, 300));
+
+    // Nettoyage du JSON (extraction robuste)
+    let clean = raw.replace(/```json|```/g, '').trim();
+    const jsonStart = clean.indexOf('{');
+    const jsonEnd = clean.lastIndexOf('}');
+    if (jsonStart < 0 || jsonEnd < 0) throw new Error('No JSON found in response');
+    clean = clean.slice(jsonStart, jsonEnd + 1);
+
+    CD = JSON.parse(clean);
+
+    // Validation minimale
+    if (!CD.lines || !Array.isArray(CD.lines) || CD.lines.length < 4) {
+      throw new Error('Estructura inválida: faltan líneas de diálogo');
+    }
+    if (!CD.qcm || !Array.isArray(CD.qcm)) {
+      throw new Error('Estructura inválida: faltan preguntas');
+    }
+
+    renderDialogue();
+    showView('view-reader');
+  } catch (err) {
+    console.error('Error generating dialogue:', err);
+    showView('view-gen');
+    alert('Error al generar el diálogo: ' + err.message + '\nIntenta de nuevo.');
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────
+   AFFICHAGE DU DIALOGUE
+   ────────────────────────────────────────────────────────────── */
+
+function renderDialogue() {
+  const t = CD;
+  const col = COL[CL];
+
+  // Badge niveau
+  document.getElementById('rtag').innerHTML = `
+    <span style="background:${col.l};color:${col.d};font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:4px 12px;border-radius:20px">
+      ${CL} · ${SCAT.label_fr} · ${SREG.label_fr}
+    </span>`;
+
+  const c = document.getElementById('reader-content');
+  c.innerHTML = '';
+
+  // ── HEADER : titre + contexte ──
+  const header = document.createElement('div');
+  header.className = 'dlg-header';
+  header.innerHTML = `
+    <div class="dlg-title">${escapeHtml(t.title || 'Dialogue')}</div>
+    ${t.title_es ? `<div class="dlg-title-es">${escapeHtml(t.title_es)}</div>` : ''}
+    ${t.context_es ? `<div class="dlg-context"><strong>📍 Contexto</strong>${escapeHtml(t.context_es)}</div>` : ''}
+  `;
+  c.appendChild(header);
+
+  // ── INFO BOX si pas de clé EL ──
+  if (!getELKey()) {
+    const info = document.createElement('div');
+    info.className = 'info-box';
+    info.innerHTML = `
+      <span class="info-box-icon">💡</span>
+      <div>Para una experiencia óptima con voces naturales, configura tu clave ElevenLabs (botón 🎙 abajo a la derecha). Sin clave, se usa la voz del navegador.</div>
+    `;
+    c.appendChild(info);
+  }
+
+  // ── VOCABULAIRE PRÉ-ÉCOUTE ──
+  if (t.vocab && t.vocab.length) {
+    const vocab = document.createElement('div');
+    vocab.className = 'vocab-section';
+    vocab.innerHTML = `
+      <div class="vocab-label" style="color:${col.d}">
+        <span>📝</span><span>Vocabulario clave — escucha antes</span>
+      </div>
+      <div class="vocab-grid" id="vocab-grid"></div>
+    `;
+    c.appendChild(vocab);
+
+    const grid = document.getElementById('vocab-grid');
+    t.vocab.forEach((v, i) => {
+      const card = document.createElement('div');
+      card.className = 'vocab-card';
+      card.innerHTML = `
+        <button class="vocab-card-play" data-word="${escapeAttr(v.word)}" title="Escuchar">▶</button>
+        <div>
+          <div class="vocab-card-fr">${escapeHtml(v.word)}</div>
+          <div class="vocab-card-es">${escapeHtml(v.es)}</div>
+        </div>
+      `;
+      grid.appendChild(card);
+      const btn = card.querySelector('.vocab-card-play');
+      btn.style.background = col.c;
+      btn.onclick = (e) => {
+        e.stopPropagation();
+        speak(v.word, EL_VOICES.charlotte);
+      };
+      // Clic sur la carte = écouter
+      card.onclick = () => speak(v.word, EL_VOICES.charlotte);
+    });
+  }
+
+  // ── DIALOGUE (réutilise buildDialogueListen) ──
+  const dlgWrap = document.createElement('div');
+  dlgWrap.id = 'dialogue-container';
+  c.appendChild(dlgWrap);
+
+  // Préparation du data : on ajoute une couleur d'accent par niveau
+  const accentColor = col.d.replace('var(--', '').replace(')', '');
+  const cssVar = getComputedStyle(document.documentElement).getPropertyValue('--' + accentColor).trim();
+  const accent = cssVar || '#1a5fa0';
+
+  // moteur.js attend : data = { lines, qcm }
+  const dlgData = {
+    lines: t.lines,
+    qcm: t.qcm
+  };
+
+  // Enregistre les data pour playLineKaraoke (voir moteur.js)
+  registerDL('dialogue-container', dlgData);
+
+  // Construit l'UI dialogue + QCM (phase 1 + phase 2 transcription)
+  buildDialogueListen('dialogue-container', dlgData, accent);
+
+  // Branche manuellement les options du QCM (le moteur.js attend answerDLQ)
+  setTimeout(() => {
+    t.qcm.forEach((q, qi) => {
+      const optsEl = document.getElementById(`dialogue-container_opts_${qi}`);
+      if (!optsEl) return;
+      const buttons = optsEl.querySelectorAll('.opt');
+      buttons.forEach((btn, oi) => {
+        btn.onclick = () => answerDLQ('dialogue-container', qi, oi, q.ans, t.qcm.length);
+      });
+    });
+  }, 50);
+}
+
+/* ──────────────────────────────────────────────────────────────
+   UTILITAIRES
+   ────────────────────────────────────────────────────────────── */
+function escapeHtml(s) {
+  if (s == null) return '';
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function escapeAttr(s) {
+  if (s == null) return '';
+  return String(s).replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+/* ──────────────────────────────────────────────────────────────
+   INITIALISATION
+   ────────────────────────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', () => {
+  window.speechSynthesis.getVoices();
+  // buildELModal() est appelé automatiquement par moteur.js
+});
+</script>
+</body>
+</html>

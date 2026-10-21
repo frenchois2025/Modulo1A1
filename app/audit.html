@@ -1,0 +1,38 @@
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  // Connexion aux identifiants de votre projet
+  const sb = supabase.createClient('https://mvfrirxbhbtenunogdpj.supabase.co', 'sb_publishable_oT738uTwT-dtpbMpWGgFkg_LvODS1a-');
+
+  async function lancerAudit() {
+    const codeAverifier = document.getElementById('code-exercice').value;
+    
+    // Récupération du token de session requis par votre version production
+    const { data: { session } } = await sb.auth.getSession();
+    
+    if (!session) {
+      alert("Veuillez vous connecter d'abord sur login.html");
+      return;
+    }
+
+    // Instruction de l'Agent (Le System Prompt)
+    const promptAgent = `Tu es un expert QA. Analyse ce code d'exercice FLE pour hispanophones. 
+    Cherche les erreurs de français, les mauvaises traductions espagnoles et les bugs de code. 
+    Code à vérifier : ${codeAverifier}`;
+
+    const response = await fetch('/api/generate', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + session.access_token // Connexion sécurisée au backend
+      },
+      body: JSON.stringify({ prompt: promptAgent })
+    });
+
+    const resultat = await response.json();
+    document.getElementById('rapport').innerText = resultat.content[0].text;
+  }
+</script>
+
+<textarea id="code-exercice" placeholder="Collez ici le code de votre exercice..."></textarea>
+<button onclick="lancerAudit()">Lancer l'Agent Testeur</button>
+<div id="rapport"></div>

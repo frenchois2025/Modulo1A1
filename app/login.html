@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Connexion · Frenchois</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:#f7f4ef;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.card{background:#fff;border-radius:24px;padding:48px 40px;width:min(440px,100%);box-shadow:0 8px 40px rgba(0,0,0,.1)}
+.logo{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;text-align:center;margin-bottom:6px;color:#1c1c2e}
+.logo span{color:#7c3aed}
+.subtitle{font-size:13px;color:#7a7a8c;text-align:center;margin-bottom:36px;line-height:1.6}
+.form-label{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#7a7a8c;margin-bottom:6px;display:block}
+.form-input{width:100%;border:2px solid #e4ddd4;border-radius:12px;padding:14px 16px;font-family:'Nunito',sans-serif;font-size:15px;font-weight:600;outline:none;transition:border-color .15s;color:#1c1c2e;background:#f7f4ef}
+.form-input:focus{border-color:#7c3aed;background:#fff}
+.field{margin-bottom:16px}
+.submit-btn{width:100%;padding:15px;border-radius:12px;border:none;background:#7c3aed;color:white;font-family:'Nunito',sans-serif;font-size:15px;font-weight:800;cursor:pointer;transition:all .18s;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:8px}
+.submit-btn:hover{background:#6d28d9;transform:translateY(-1px)}
+.submit-btn:disabled{opacity:.6;cursor:default;transform:none}
+.msg{margin-top:16px;padding:14px 18px;border-radius:12px;font-size:13px;font-weight:700;text-align:center;display:none;line-height:1.6}
+.msg.error{background:#fdecea;color:#b02030;display:block}
+.msg.ok{background:#e6f7ee;color:#1a7a45;display:block}
+.link-btn{background:none;border:none;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;color:#7c3aed;cursor:pointer;margin-top:18px;display:block;width:100%;text-align:center}
+.link-btn:hover{text-decoration:underline}
+.pw-wrap{position:relative}
+.pw-wrap .form-input{padding-right:48px}
+.pw-toggle{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:18px;padding:4px}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">Frenchois<span>.</span></div>
+  <div class="subtitle">Tu curso de franc&eacute;s en l&iacute;nea</div>
+
+  <!-- CONNEXION -->
+  <div id="login-form">
+    <div class="field">
+      <label class="form-label">Tu email</label>
+      <input class="form-input" type="email" id="email" placeholder="tu@email.com" autocomplete="email">
+    </div>
+    <div class="field">
+      <label class="form-label">Contrase&ntilde;a</label>
+      <div class="pw-wrap">
+        <input class="form-input" type="password" id="password" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" autocomplete="current-password" onkeydown="if(event.key==='Enter')signIn()">
+        <button class="pw-toggle" type="button" onclick="togglePw()" aria-label="Mostrar contrase&ntilde;a">&#128065;</button>
+      </div>
+    </div>
+    <button class="submit-btn" id="submit-btn" onclick="signIn()">Entrar</button>
+    <button class="link-btn" onclick="showReset()">&iquest;Olvidaste tu contrase&ntilde;a?</button>
+    <div class="msg" id="msg"></div>
+  </div>
+
+  <!-- MOT DE PASSE OUBLIÉ -->
+  <div id="reset-form" style="display:none">
+    <div class="field">
+      <label class="form-label">Tu email</label>
+      <input class="form-input" type="email" id="reset-email" placeholder="tu@email.com" onkeydown="if(event.key==='Enter')sendReset()">
+    </div>
+    <button class="submit-btn" id="reset-btn" onclick="sendReset()">Enviar enlace de recuperaci&oacute;n</button>
+    <button class="link-btn" onclick="showLogin()">&larr; Volver</button>
+    <div class="msg" id="reset-msg"></div>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://mvfrirxbhbtenunogdpj.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_oT738uTwT-dtpbMpWGgFkg_LvODS1a-';
+const { createClient } = supabase;
+const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// Déjà connecté → direction l'accueil
+sb.auth.getSession().then(({ data }) => {
+  if (data.session) window.location.href = 'index.html';
+});
+
+function togglePw() {
+  const i = document.getElementById('password');
+  i.type = i.type === 'password' ? 'text' : 'password';
+}
+
+async function signIn() {
+  const email    = document.getElementById('email').value.trim().toLowerCase();
+  const password = document.getElementById('password').value;
+  const btn = document.getElementById('submit-btn');
+  const msg = document.getElementById('msg');
+
+  if (!email || !email.includes('@') || !password) {
+    msg.className = 'msg error';
+    msg.textContent = 'Introduce tu email y tu contrase\u00F1a.';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Conectando\u2026';
+  msg.className = 'msg';
+
+  const { error } = await sb.auth.signInWithPassword({ email, password });
+
+  btn.disabled = false;
+  btn.textContent = 'Entrar';
+
+  if (error) {
+    msg.className = 'msg error';
+    const m = error.message.toLowerCase();
+    if (m.includes('invalid login')) {
+      msg.textContent = 'Email o contrase\u00F1a incorrectos.';
+    } else if (m.includes('not confirmed')) {
+      msg.textContent = 'Tu email no est\u00E1 confirmado. Contacta a tu profesor Dylan.';
+    } else {
+      msg.textContent = 'Error: ' + error.message;
+    }
+    return;
+  }
+
+  window.location.href = 'index.html';
+}
+
+function showReset() {
+  document.getElementById('login-form').style.display = 'none';
+  document.getElementById('reset-form').style.display = 'block';
+  document.getElementById('reset-email').value = document.getElementById('email').value;
+}
+function showLogin() {
+  document.getElementById('reset-form').style.display = 'none';
+  document.getElementById('login-form').style.display = 'block';
+}
+
+async function sendReset() {
+  const email = document.getElementById('reset-email').value.trim().toLowerCase();
+  const btn = document.getElementById('reset-btn');
+  const msg = document.getElementById('reset-msg');
+
+  if (!email || !email.includes('@')) {
+    msg.className = 'msg error';
+    msg.textContent = 'Introduce un email v\u00E1lido.';
+    return;
+  }
+
+  btn.disabled = true;
+  const { error } = await sb.auth.resetPasswordForEmail(email, {
+    redirectTo: 'https://exercies-francais.vercel.app/reset-password.html'
+  });
+  btn.disabled = false;
+
+  if (error) {
+    msg.className = 'msg error';
+    msg.textContent = 'Error: ' + error.message;
+    return;
+  }
+  msg.className = 'msg ok';
+  msg.textContent = 'Si el email existe, recibir\u00E1s un enlace para crear una nueva contrase\u00F1a.';
+}
+</script>
+</body>
+</html>
