@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Frenchois · Aprende francés desde el español</title>
+<meta name="description" content="Aprende francés desde el español: ejercicios interactivos, clases individuales, práctica de conversación y escritura, y trabajo de pronunciación.">
+<style>
+  :root{
+    --bleu:#1f3a8a;
+    --bleu-clair:#e8eefc;
+    --rouge:#e11d48;
+    --texte:#1e293b;
+    --gris:#64748b;
+    --fond:#ffffff;
+    --fond-alt:#f8fafc;
+    --rayon:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--texte);background:var(--fond);line-height:1.6}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+
+  /* En-tête */
+  header{position:sticky;top:0;background:rgba(255,255,255,.95);backdrop-filter:blur(6px);border-bottom:1px solid #e2e8f0;z-index:10}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .logo{font-size:1.5rem;font-weight:800;color:var(--bleu)}
+  .logo span{color:var(--rouge)}
+  nav ul{display:flex;gap:24px;list-style:none;align-items:center}
+  nav a.lien{color:var(--gris);font-weight:500}
+  nav a.lien:hover{color:var(--bleu)}
+  .btn{display:inline-block;padding:12px 22px;border-radius:999px;font-weight:600;border:2px solid transparent;transition:.15s}
+  .btn-primaire{background:var(--bleu);color:#fff}
+  .btn-primaire:hover{background:#172c6b}
+  .btn-contour{border-color:var(--bleu);color:var(--bleu)}
+  .btn-contour:hover{background:var(--bleu-clair)}
+  .nav .btn{padding:8px 18px}
+
+  /* Accroche */
+  .hero{padding:80px 0 70px;background:linear-gradient(180deg,var(--bleu-clair),#fff)}
+  .hero h1{font-size:clamp(2rem,5vw,3.2rem);line-height:1.15;color:var(--bleu);max-width:760px}
+  .hero h1 em{font-style:normal;color:var(--rouge)}
+  .hero p{margin-top:20px;font-size:1.15rem;color:var(--gris);max-width:620px}
+  .hero .actions{margin-top:32px;display:flex;gap:14px;flex-wrap:wrap}
+  .bonjour{display:inline-block;margin-bottom:16px;padding:6px 14px;background:#fff;border:1px solid #cbd5e1;border-radius:999px;font-size:.9rem;color:var(--gris)}
+
+  /* Sections */
+  section{padding:70px 0}
+  section.alt{background:var(--fond-alt)}
+  h2{font-size:clamp(1.6rem,3.5vw,2.2rem);color:var(--bleu);margin-bottom:12px}
+  .intro{color:var(--gris);max-width:640px;margin-bottom:40px}
+  .grille{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px}
+  .carte{background:#fff;border:1px solid #e2e8f0;border-radius:var(--rayon);padding:26px}
+  section.alt .carte{background:#fff}
+  .carte .icone{font-size:1.8rem;margin-bottom:10px}
+  .carte h3{font-size:1.15rem;margin-bottom:8px;color:var(--bleu)}
+  .carte p{color:var(--gris);font-size:.97rem}
+
+  /* Étapes */
+  .etapes{counter-reset:e}
+  .etape{position:relative;padding-left:64px;margin-bottom:28px}
+  .etape::before{counter-increment:e;content:counter(e);position:absolute;left:0;top:0;width:44px;height:44px;border-radius:50%;background:var(--bleu);color:#fff;font-weight:700;font-size:1.2rem;display:flex;align-items:center;justify-content:center}
+  .etape h3{color:var(--bleu);margin-bottom:4px}
+  .etape p{color:var(--gris)}
+
+  /* Niveaux */
+  .niveaux{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px}
+  .niveau{background:#fff;border:1px solid #e2e8f0;border-radius:var(--rayon);padding:22px;text-align:center}
+  .niveau strong{display:block;font-size:1.8rem;color:var(--rouge)}
+  .niveau span{color:var(--gris);font-size:.92rem}
+
+  /* À propos */
+  .apropos{display:grid;grid-template-columns:200px 1fr;gap:36px;align-items:center}
+  .photo{width:200px;height:200px;border-radius:50%;background:var(--bleu-clair);border:2px dashed #94a3b8;display:flex;align-items:center;justify-content:center;text-align:center;font-size:.85rem;color:var(--gris);padding:12px}
+  @media(max-width:640px){.apropos{grid-template-columns:1fr;justify-items:center;text-align:center}}
+
+  /* Appel final */
+  .final{background:var(--bleu);color:#fff;text-align:center}
+  .final h2{color:#fff}
+  .final p{color:#cbd5e1;margin:0 auto 28px;max-width:520px}
+  .final .btn-primaire{background:var(--rouge)}
+  .final .btn-primaire:hover{background:#be123c}
+
+  /* Pied de page */
+  footer{padding:30px 0;text-align:center;color:var(--gris);font-size:.9rem;border-top:1px solid #e2e8f0}
+
+  .todo{background:#fef9c3;border:1px dashed #ca8a04;padding:2px 8px;border-radius:6px;font-size:.9em;color:#854d0e}
+
+  @media(max-width:640px){
+    nav ul li.cache-mobile{display:none}
+    .hero{padding:50px 0}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="/" class="logo">Frenchois<span>.</span></a>
+    <nav>
+      <ul>
+        <li class="cache-mobile"><a class="lien" href="#metodo">Método</a></li>
+        <li class="cache-mobile"><a class="lien" href="#niveles">Niveles</a></li>
+        <li class="cache-mobile"><a class="lien" href="#sobre-mi">Sobre mí</a></li>
+        <li class="cache-mobile"><a class="lien" href="#contacto">Contacto</a></li>
+        <li><a class="btn btn-primaire" href="/app/">Entrar</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- ACCROCHE -->
+  <section class="hero">
+    <div class="wrap">
+      <span class="bonjour">👋 Bonjour ! Bienvenue</span>
+      <h1>Aprende francés <em>desde el español</em>, paso a paso</h1>
+      <p>Un método pensado para hispanohablantes: ejercicios interactivos, clases individuales, práctica de conversación y escritura, y un trabajo serio de pronunciación.</p>
+      <div class="actions">
+        <a class="btn btn-primaire" href="[À COMPLETER : lien clase de prueba]">Empezar ahora <span class="todo">À COMPLETER</span></a>
+        <a class="btn btn-contour" href="#metodo">Descubrir el método</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MÉTODO -->
+  <section id="metodo">
+    <div class="wrap">
+      <h2>Un método que parte de tu idioma</h2>
+      <p class="intro">Tu español es una ventaja: compartimos mucho vocabulario. Pero también hay trampas. Aquí aprendes francés sabiendo exactamente dónde te vas a equivocar.</p>
+      <div class="grille">
+        <div class="carte">
+          <div class="icone">🎧</div>
+          <h3>Ejercicios interactivos</h3>
+          <p>Escucha, traduce, completa y repite en voz alta. Ejercicios variados que te hacen practicar de verdad, no solo leer.</p>
+        </div>
+        <div class="carte">
+          <div class="icone">👩‍🏫</div>
+          <h3>Clases individuales</h3>
+          <p>Un profesor para ti, que adapta el ritmo y los temas a tus objetivos y corrige tus errores al momento.</p>
+        </div>
+        <div class="carte">
+          <div class="icone">💬</div>
+          <h3>Conversación y escritura</h3>
+          <p>Practica hablar y escribir desde el principio, con situaciones reales: presentarte, pedir, viajar, trabajar.</p>
+        </div>
+        <div class="carte">
+          <div class="icone">🗣️</div>
+          <h3>Pronunciación</h3>
+          <p>La <em>u</em>, la <em>r</em>, las vocales nasales: los sonidos que más cuestan a los hispanohablantes, trabajados uno a uno.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMMENT ÇA MARCHE -->
+  <section class="alt" id="como-funciona">
+    <div class="wrap">
+      <h2>¿Cómo funciona?</h2>
+      <p class="intro">Tres pasos para empezar.</p>
+      <div class="etapes">
+        <div class="etape">
+          <h3>Crea tu cuenta</h3>
+          <p>Accede a la plataforma y empieza por el nivel que te corresponda. <span class="todo">À COMPLETER : détails inscription</span></p>
+        </div>
+        <div class="etape">
+          <h3>Practica a tu ritmo</h3>
+          <p>Lecciones cortas y progresivas, con ejercicios de escucha, traducción y pronunciación.</p>
+        </div>
+        <div class="etape">
+          <h3>Habla con tu profesor</h3>
+          <p>Refuerza lo aprendido en clases individuales de conversación. <span class="todo">À COMPLETER : modalités des cours</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NIVEAUX -->
+  <section id="niveles">
+    <div class="wrap">
+      <h2>Niveles</h2>
+      <p class="intro">Una progresión clara, desde cero hasta la autonomía. <span class="todo">À COMPLETER : confirmer les niveaux disponibles</span></p>
+      <div class="niveaux">
+        <div class="niveau"><strong>A1</strong><span>Principiante</span></div>
+        <div class="niveau"><strong>A2</strong><span>Elemental</span></div>
+        <div class="niveau"><strong>B1</strong><span>Intermedio</span></div>
+        <div class="niveau"><strong>B2</strong><span>Avanzado</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- À PROPOS -->
+  <section class="alt" id="sobre-mi">
+    <div class="wrap">
+      <div class="apropos">
+        <div class="photo">Tu foto aquí<br>[À COMPLETER]</div>
+        <div>
+          <h2>Sobre mí</h2>
+          <p><span class="todo">À COMPLETER : présentation personnelle, parcours, pourquoi enseigner le français aux hispanophones.</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- APPEL FINAL -->
+  <section class="final" id="contacto">
+    <div class="wrap">
+      <h2>¿Listo para empezar ? Allons-y !</h2>
+      <p>Da el primer paso hoy. Contáctame o prueba una lección. <span class="todo">À COMPLETER</span></p>
+      <a class="btn btn-primaire" href="[À COMPLETER : mailto: ou lien agenda]">Contactar</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">© 2026 Frenchois · Todos los derechos reservados</div>
+</footer>
+
+</body>
+</html>
