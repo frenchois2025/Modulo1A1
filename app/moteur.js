@@ -801,3 +801,31 @@ Object.assign(window.FRENCHOIS, {
 });
 
 console.info('[FRENCHOIS] moteur.js v2.0 chargé ✓');
+
+/* Architecture statique : progression locale et rendu de données d'étape. */
+function saveLessonProgress(key, score, total) {
+  try { localStorage.setItem('frenchois_progress_' + key, JSON.stringify({score: score, total: total, updatedAt: new Date().toISOString()})); } catch (e) {}
+}
+function loadLessonProgress(key) {
+  try { return JSON.parse(localStorage.getItem('frenchois_progress_' + key) || 'null'); } catch (e) { return null; }
+}
+function renderLessonData(data, meta) {
+  const zone = document.getElementById('exercise-zone');
+  if (!zone || !data) return;
+  const qcm = Array.isArray(data.qcm) ? data.qcm : [];
+  const fill = Array.isArray(data.fill) ? data.fill : [];
+  const match = Array.isArray(data.match) ? data.match : [];
+  const title = data.title || ('Étape ' + meta.etape);
+  let html = '<header class="lesson-header"><div class="lesson-meta"><div class="lesson-tag">' + meta.niveau.toUpperCase() + ' · ÉTAPE ' + meta.etape + '</div><h1 class="lesson-title">' + title + '</h1><p class="lesson-subtitle">' + (data.intro || '') + '</p></div></header>';
+  if (qcm.length) html += '<section class="ex-card"><h2>Choisis la bonne réponse</h2><div id="qcm-zone"></div><div id="qcm-score" class="score-box"><div id="qcm-score-em" class="score-emoji"></div><div id="qcm-score-n" class="score-num"></div><div id="qcm-score-m" class="score-msg"></div></div></section>';
+  if (fill.length) html += '<section class="ex-card"><h2>Complète les phrases</h2><div id="fill-zone"></div><div class="exercise-actions"><button class="primary-btn" id="fill-check">Vérifier</button><strong id="fill-score" class="score-pill"></strong></div></section>';
+  if (match.length) html += '<section class="ex-card"><h2>Associe les mots</h2><div id="match-zone"></div></section>';
+  zone.innerHTML = html;
+  if (qcm.length && typeof buildQCM === 'function') buildQCM('qcm-zone', qcm, 'qcm-score', '#e63946');
+  if (fill.length && typeof buildFill === 'function') { buildFill('fill-zone', fill); document.getElementById('fill-check').onclick = function(){ const result=checkFill('fill-zone','fill-score'); if(result) saveLessonProgress(meta.niveau+'-'+meta.etape,result.correct,result.total); }; }
+  if (match.length && typeof buildMatch === 'function') buildMatch('match-zone', match);
+}
+window.saveLessonProgress = saveLessonProgress;
+window.loadLessonProgress = loadLessonProgress;
+window.renderLessonData = renderLessonData;
+if (window.FRENCHOIS) Object.assign(window.FRENCHOIS, {saveLessonProgress, loadLessonProgress, renderLessonData});
