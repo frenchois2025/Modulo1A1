@@ -13,3 +13,24 @@
 .social-rating{margin:18px auto 0!important;color:var(--olive-dark)!important;font-size:15px!important;font-weight:700;letter-spacing:.02em}.reviews-grid{display:grid;gap:15px}.review-card{display:flex;flex-direction:column;margin:0;padding:25px;background:var(--paper);border:1px solid var(--line);border-radius:17px;min-width:0}.review-card .quote-mark{flex:0 0 auto}.review-card p{flex:1;margin:17px 0 24px;font:500 17px/1.42 var(--display);letter-spacing:-.015em}.review-card footer{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:11px}.review-author{color:var(--navy);font-weight:700}.review-meta{color:var(--olive-dark);font-weight:700}.lesson-actions{display:flex;align-items:flex-start;flex-wrap:wrap;gap:16px 22px}.whatsapp-button{display:inline-flex;align-items:center;gap:8px;padding:12px 0;border-bottom:1px solid var(--olive);color:var(--olive-dark);font-size:14px;font-weight:700}.whatsapp-button span{color:var(--olive)}.footer-whatsapp{color:var(--olive-dark)}
 @media(min-width:700px){.reviews-grid{grid-template-columns:repeat(3,1fr)}.review-card{padding:27px}.review-card p{font-size:18px}}
 @media(max-width:430px){.review-card p{font-size:16px}.review-card footer{display:block}.review-meta{display:block;margin-top:5px}.lesson-actions{gap:12px 18px}}
+
+/* CRO: hero CTAs, compact proof and teacher presentation */
+.hero-actions{display:grid;grid-template-columns:1fr;gap:12px;max-width:560px;align-items:start}
+.cta-stack{display:flex;flex-direction:column;gap:7px;min-width:0}
+.cta-stack .button{width:100%;min-height:54px}
+.button-navy{background:var(--navy);box-shadow:0 7px 0 rgba(20,40,68,.18)}
+.button-navy:hover{background:var(--navy-soft);box-shadow:0 9px 0 rgba(20,40,68,.18)}
+.cta-microcopy{padding-left:4px;color:var(--muted);font-size:11px;font-weight:600}
+.proof-strip{background:var(--navy);border-color:var(--navy);color:#fff}
+.proof-strip-inner{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;padding:17px 0;font-size:13px}
+.proof-strip-inner strong{color:var(--yellow);letter-spacing:.02em}.proof-strip-inner q{color:rgba(255,255,255,.82);font-style:italic}.proof-strip-inner cite{color:rgba(255,255,255,.6);font-size:12px}.proof-divider{width:4px;height:4px;background:var(--peach);border-radius:50%}
+.nav-class{padding:8px 12px;border:1px solid var(--olive);border-radius:9px;color:var(--olive-dark);font-size:13px}
+.private-lessons{grid-template-columns:1fr;gap:34px;padding-block:86px}
+.teacher-photo-wrap{position:relative;max-width:390px;margin-inline:auto;width:100%;padding:14px;background:var(--peach);border-radius:22px;transform:rotate(-2deg)}
+.teacher-photo{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;object-position:center 25%;border-radius:14px;background:var(--cream-deep)}
+.photo-badge{position:absolute;right:-13px;bottom:25px;padding:10px 13px;background:var(--navy);color:#fff;border-radius:8px;box-shadow:0 8px 18px rgba(20,40,68,.18);font-size:11px;font-weight:700;transform:rotate(4deg)}
+.teacher-format{margin-bottom:12px!important;color:var(--olive-dark)!important;font-size:14px!important;font-weight:700}
+.lesson-price{margin:22px 0!important;color:var(--navy)!important;font-weight:700}.lesson-price span{font-weight:400;color:var(--muted)}
+.lesson-plan{display:grid;gap:12px;margin:25px 0 30px;padding:0;list-style:none}.lesson-plan li{display:flex;gap:13px;align-items:flex-start}.lesson-plan li>span{flex:none;color:var(--olive);font:italic 700 17px var(--display)}.lesson-plan strong,.lesson-plan small{display:block}.lesson-plan strong{font-size:14px}.lesson-plan small{color:var(--muted);font-size:12px;line-height:1.45}.lesson-actions .button{padding-inline:17px}
+@media(min-width:700px){.hero-actions{grid-template-columns:repeat(2,1fr);gap:16px}.private-lessons{grid-template-columns:minmax(260px,390px) 1fr;gap:70px;align-items:start}.teacher-photo-wrap{margin-top:8px}.private-content{max-width:650px}}
+@media(max-width:430px){.proof-strip-inner{justify-content:flex-start;gap:8px 11px;font-size:12px}.proof-divider{display:none}.proof-strip-inner q{flex-basis:100%}.nav-class{justify-content:flex-start;width:max-content}.private-lessons{padding-block:64px}.lesson-price span{display:block;margin-top:4px}.lesson-actions .button{width:100%;text-align:center}}

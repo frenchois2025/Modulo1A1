@@ -10,27 +10,16 @@
   <meta property="og:description" content="Ejercicios interactivos para escuchar, traducir y hablar francés. Tu primera clase con profesor es gratis: 30 minutos, sin compromiso.">
   <meta property="og:url" content="https://frenchois.com/">
   <meta property="og:image" content="https://frenchois.com/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Frenchois — Francés pensado para hispanohablantes">
+  <meta name="twitter:description" content="Aprende francés a tu manera: solo o con profesor.">
+  <meta name="twitter:image" content="https://frenchois.com/og-image.jpg">
   <meta name="theme-color" content="#f5f0e7">
   <link rel="canonical" href="https://frenchois.com/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="landing.css">
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"FAQPage",
-    "description":"Ejercicios interactivos para aprender francés a tu ritmo, con una primera clase con profesor gratis de 30 minutos.",
-    "mainEntity":[
-      {"@type":"Question","name":"¿Frenchois es gratis?","acceptedAnswer":{"@type":"Answer","text":"Sí. Las primeras etapas del recorrido son gratis y puedes empezar sin tarjeta. Más adelante podrás elegir opciones adicionales."}},
-      {"@type":"Question","name":"¿Para qué nivel sirve Frenchois?","acceptedAnswer":{"@type":"Answer","text":"Frenchois empieza en A1 y está diseñado para acompañarte hasta B2. A1 está disponible; A2, B1 y B2 llegarán próximamente."}},
-      {"@type":"Question","name":"¿Necesito saber algo de francés?","acceptedAnswer":{"@type":"Answer","text":"No. Puedes empezar desde cero, con explicaciones y ejemplos pensados para hispanohablantes."}},
-      {"@type":"Question","name":"¿Cómo practico la pronunciación?","acceptedAnswer":{"@type":"Answer","text":"Encontrarás audio y ejercicios de pronunciación con reconocimiento de voz para practicar y ganar confianza."}},
-      {"@type":"Question","name":"¿La primera clase es gratis?","acceptedAnswer":{"@type":"Answer","text":"Sí. La primera clase con profesor es gratis y dura 30 minutos, sin compromiso."}},
-      {"@type":"Question","name":"¿Puedo tomar clases particulares?","acceptedAnswer":{"@type":"Answer","text":"Sí. Puedes probar una primera clase con profesor gratis durante 30 minutos desde la sección de clases."}}
-    ]
-  }
-  </script>
 </head>
 <body>
   <header class="site-header">
@@ -38,8 +27,8 @@
       <a class="brand" href="#inicio" aria-label="Frenchois, inicio"><span class="brand-mark">F</span><span>Frenchois</span></a>
       <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-menu"><span></span><span></span><span></span><span class="sr-only">Abrir menú</span></button>
       <div class="nav-links" id="primary-menu">
-        <a href="#por-que">Por qué Frenchois</a><a href="#niveles">Niveles</a><a href="#faq">Preguntas</a>
-        <a class="nav-login" href="/app/">Entrar</a><a class="button button-small" href="/app/">Empezar gratis</a>
+        <a href="#por-que">Por qué Frenchois</a><a href="#niveles">Niveles</a><a href="#clases">Clases</a><a href="#faq">Preguntas</a>
+        <a class="nav-login" href="/app/">Entrar</a><a class="outline-button nav-class" href="https://cal.com/dylan-xrnvjw/30min" target="_blank" rel="noopener">Clase gratis</a>
       </div>
     </nav>
   </header>
@@ -48,9 +37,12 @@
     <section class="hero wrap section-space" aria-labelledby="hero-title">
       <div class="hero-copy">
         <p class="eyebrow"><span class="eyebrow-dot"></span> Francés claro, desde el español</p>
-        <h1 id="hero-title">Aprende francés <em>a tu manera.</em></h1>
-        <p class="hero-lede">Ejercicios interactivos de escuchar, traducir y hablar. Aprende a tu ritmo o prueba una primera clase con profesor gratis durante 30 minutos.</p>
-        <div class="hero-actions"><a class="button button-large" href="/app/">Empezar gratis <span aria-hidden="true">↗</span></a><a class="outline-button hero-secondary" href="https://cal.com/dylan-xrnvjw/30min" target="_blank" rel="noopener">Clase gratis de 30 min con profesor <span aria-hidden="true">→</span></a><span class="reassurance">Gratis para empezar, sin tarjeta</span></div>
+        <h1 id="hero-title">Aprende francés <em>a tu manera: solo o con profesor.</em></h1>
+        <p class="hero-lede">Practica gratis con la app, a tu ritmo y sin tarjeta, o reserva una primera clase gratis de 30 minutos con un profesor que habla tu idioma.</p>
+        <div class="hero-actions">
+          <div class="cta-stack"><a class="button button-large" href="/app/">Empezar gratis en la app <span aria-hidden="true">→</span></a><span class="cta-microcopy">Nivel A1 disponible · sin tarjeta</span></div>
+          <div class="cta-stack"><a class="button button-large button-navy" href="https://cal.com/dylan-xrnvjw/30min" target="_blank" rel="noopener">Reservar clase gratis de 30 min <span aria-hidden="true">→</span></a><span class="cta-microcopy">Con profesor · sin compromiso</span></div>
+        </div>
         <div class="hero-chips" aria-label="Formas de aprender"><span><b aria-hidden="true">◌</b> Ejercicios interactivos</span><span><b aria-hidden="true">↗</b> A tu ritmo</span><span><b aria-hidden="true">♡</b> Primera clase gratis</span></div>
         <div class="hero-note"><span>✦</span> Explicaciones en español · Ejemplos que sí usarías</div>
       </div>
@@ -60,21 +52,13 @@
           <div class="lesson-top"><span class="mini-label">LECCIÓN 01</span><span class="level-pill">A1</span></div>
           <div class="lesson-icon">é</div><h2>Saludar y presentarte</h2><p>Les mots pour commencer une conversation.</p>
           <div class="progress-row"><span>Tu progreso</span><strong>32%</strong></div><div class="progress"><span></span></div>
-          <a class="text-link" href="/app/">Ver la lección <span>→</span></a>
+          <span class="text-link">Vista previa de la lección <span aria-hidden="true">→</span></span>
         </div>
         <div class="floating-note note-one"><span>♫</span> Escucha</div><div class="floating-note note-two"><span>◉</span> Practica</div>
       </div>
     </section>
 
-    <section class="learning-paths wrap section-space" aria-labelledby="paths-title">
-      <div class="section-heading"><p class="eyebrow">Dos formas de avanzar</p><h2 id="paths-title">Elige cómo quieres <em>aprender.</em></h2><p>Empieza solo, pide ayuda cuando la necesites o combina las dos opciones.</p></div>
-      <div class="paths-grid">
-        <article class="path-card path-card-app"><div class="path-icon" aria-hidden="true">◌</div><p class="path-kicker">Ruta autónoma</p><h3>Aprende por tu cuenta</h3><p>Usa la app, practica con ejercicios interactivos y avanza a tu ritmo. Empieza gratis, sin tarjeta.</p><a class="button button-small" href="/app/">Empezar gratis <span aria-hidden="true">↗</span></a></article>
-        <article class="path-card path-card-teacher"><div class="path-icon" aria-hidden="true">♡</div><p class="path-kicker">Acompañamiento personal</p><h3>Aprende conmigo</h3><p>Prueba una primera clase con profesor gratis durante 30 minutos para conversar, resolver dudas y ver si encaja contigo.</p><a class="outline-button" href="https://cal.com/dylan-xrnvjw/30min" target="_blank" rel="noopener">Reservar mi clase gratis de 30 min <span aria-hidden="true">→</span></a></article>
-      </div>
-    </section>
-
-    <section class="trust-strip" aria-label="Características de Frenchois"><div class="wrap trust-items"><span>Hecho para hispanohablantes</span><i></i><span>Aprende a tu ritmo</span><i></i><span>Sin presión, con progreso</span></div></section>
+    <section class="trust-strip proof-strip" aria-label="Prueba social"><div class="wrap proof-strip-inner"><strong>5,0 ★ · +14 reseñas reales</strong><span class="proof-divider" aria-hidden="true"></span><q>Con él pasé de principiante a nivel intermedio</q><cite>— Vinicio</cite></div></section>
 
     <section class="wrap section-space" id="por-que" aria-labelledby="why-title">
       <div class="section-heading"><p class="eyebrow">El método Frenchois</p><h2 id="why-title">Menos memorizar.<br><em>Más entender.</em></h2><p>Todo lo que necesitas para avanzar con confianza, en un solo lugar.</p></div>
@@ -98,7 +82,10 @@
       <article class="level-card"><div class="level-top"><span class="level-badge">B2</span><span class="soon-label">Próximamente</span></div><h3>Confianza plena</h3><p>Afina tus matices y disfruta de un francés cada vez más rico.</p><span class="level-lock">En preparación</span></article>
     </div></div></section>
 
-    <section class="private-lessons wrap" id="clases" aria-labelledby="lessons-title"><div class="private-content"><p class="eyebrow">¿Buscas un empujón extra?</p><h2 id="lessons-title">Tu primera clase es <em>gratis.</em></h2><p>Prueba una clase con profesor de 30 minutos, sin compromiso. Practica conversación, resuelve tus dudas y descubre el acompañamiento que necesitas.</p><div class="lesson-actions"><a class="outline-button" href="https://cal.com/dylan-xrnvjw/30min" target="_blank" rel="noopener">Reservar mi clase gratis de 30 min <span>→</span></a><a class="whatsapp-button" href="https://wa.me/message/NP24JO3DNAZXJ1" target="_blank" rel="noopener">Escríbeme por WhatsApp <span aria-hidden="true">↗</span></a></div></div><div class="private-doodle" aria-hidden="true">à bientôt<br><span>♡</span></div></section>
+    <section class="private-lessons wrap" id="clases" aria-labelledby="lessons-title">
+      <div class="teacher-photo-wrap"><img class="teacher-photo" src="profesor.jpg" alt="Dylan, profesor de francés"><span class="photo-badge">Primera clase gratis</span></div>
+      <div class="private-content"><p class="eyebrow">Clases particulares</p><h2 id="lessons-title">Aprende con <em>Dylan.</em></h2><p class="teacher-format">Por videollamada · en español y francés</p><p>En 30 minutos nos enfocamos en lo que necesitas para avanzar, con un espacio claro y sin presión.</p><p class="lesson-price">20 USD por clase individual <span>(después de tu primera clase gratis, sin obligación)</span></p><ul class="lesson-plan"><li><span>01</span><div><strong>Objetivos</strong><small>Qué quieres conseguir y cómo te gustaría aprender.</small></div></li><li><span>02</span><div><strong>Mini-diagnóstico de nivel</strong><small>Una conversación breve para saber desde dónde partimos.</small></div></li><li><span>03</span><div><strong>Plan personalizado</strong><small>Un siguiente paso concreto para seguir practicando.</small></div></li></ul><div class="lesson-actions"><a class="button" href="https://cal.com/dylan-xrnvjw/30min" target="_blank" rel="noopener">Reservar clase gratis de 30 min <span>→</span></a><a class="whatsapp-button" href="https://wa.me/message/NP24JO3DNAZXJ1" target="_blank" rel="noopener">Escríbeme por WhatsApp <span aria-hidden="true">↗</span></a></div></div>
+    </section>
 
     <section class="social-proof wrap section-space" aria-labelledby="proof-title"><div class="section-heading centered"><p class="eyebrow">Reseñas reales de alumnos</p><h2 id="proof-title">Aprender francés,<br><em>con confianza.</em></h2><p class="social-rating">5,0 ★ · +14 reseñas de alumnos</p></div>
       <div class="reviews-grid">
@@ -121,6 +108,7 @@
     toggle.addEventListener('click', () => { const open = toggle.getAttribute('aria-expanded') === 'true'; toggle.setAttribute('aria-expanded', String(!open)); menu.classList.toggle('is-open', !open); });
     menu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => { toggle.setAttribute('aria-expanded','false'); menu.classList.remove('is-open'); }));
   </script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"8607d2a720d14b038279025b2b5a82e5","spa":2}' crossorigin="anonymous"></script>
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"8607d2a720d14b038279025b2b5a82e5","spa":2}' crossorigin="anonymous"></script>
 </body>
 </html>
