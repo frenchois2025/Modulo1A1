@@ -34,3 +34,6 @@
 .lesson-plan{display:grid;gap:12px;margin:25px 0 30px;padding:0;list-style:none}.lesson-plan li{display:flex;gap:13px;align-items:flex-start}.lesson-plan li>span{flex:none;color:var(--olive);font:italic 700 17px var(--display)}.lesson-plan strong,.lesson-plan small{display:block}.lesson-plan strong{font-size:14px}.lesson-plan small{color:var(--muted);font-size:12px;line-height:1.45}.lesson-actions .button{padding-inline:17px}
 @media(min-width:700px){.hero-actions{grid-template-columns:repeat(2,1fr);gap:16px}.private-lessons{grid-template-columns:minmax(260px,390px) 1fr;gap:70px;align-items:start}.teacher-photo-wrap{margin-top:8px}.private-content{max-width:650px}}
 @media(max-width:430px){.proof-strip-inner{justify-content:flex-start;gap:8px 11px;font-size:12px}.proof-divider{display:none}.proof-strip-inner q{flex-basis:100%}.nav-class{justify-content:flex-start;width:max-content}.private-lessons{padding-block:64px}.lesson-price span{display:block;margin-top:4px}.lesson-actions .button{width:100%;text-align:center}}
+/* Estructura de la landing: clases de agrupación sin reglas visuales propias. */
+.hero-copy,.app-preview,.social-proof{}
+
