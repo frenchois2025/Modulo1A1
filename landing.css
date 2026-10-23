@@ -37,3 +37,11 @@
 /* Estructura de la landing: clases de agrupación sin reglas visuales propias. */
 .hero-copy,.app-preview,.social-proof{}
 
+
+
+/* Ajustes de navegación y CTA único en el hero. */
+.brand{white-space:nowrap}
+.brand-mark{flex:0 0 auto}
+.hero-actions{display:block;max-width:360px}
+.hero-actions .button{width:100%;text-align:center}
+@media(max-width:430px){.nav{min-height:64px}.nav-links{top:64px}.brand{font-size:19px}.brand-mark{width:29px;height:29px;font-size:17px}.hero-actions{max-width:none}}
