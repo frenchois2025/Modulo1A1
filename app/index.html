@@ -1,10 +1,18 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>FRENCHOIS — Parcours de français</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#142844">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap">
+<title>FRENCHOIS — Francés para hispanohablantes</title>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="auth.js"></script>
 <style>
@@ -210,15 +218,23 @@ footer{text-align:center;padding:32px 20px;font-size:12px;color:var(--muted);bor
 }
 </style>
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="app.css">
 </head>
 <body>
+
+<header class="app-header">
+  <a class="app-logo" href="/" aria-label="Frenchois: volver al sitio principal">
+    <img src="logo.png" alt="Frenchois" width="164" height="48">
+  </a>
+  <a class="back-link" href="/" aria-label="Volver al sitio web">← <span>Volver al sitio</span></a>
+</header>
 
 <!-- HERO -->
 <div class="hero">
   <div class="hero-left" style="padding-bottom:36px">
     <span class="hero-tag">Curso de francés</span>
     <div class="hero-brand">FRENCHOIS</div>
-    <p class="hero-sub">El puente entre el <em>español</em> y el <em>francés</em> —<br>por un hablante nativo.</p>
+    <p class="hero-sub">Aprende francés paso a paso, con una ruta creada para hispanohablantes.</p>
     <div class="hero-stats">
       <div><span class="stat-n">4</span><span class="stat-l">Niveles</span></div>
       <div><span class="stat-n">20+</span><span class="stat-l">Módulos</span></div>
@@ -226,23 +242,23 @@ footer{text-align:center;padding:32px 20px;font-size:12px;color:var(--muted);bor
     </div>
   </div>
   <div class="nav-col">
-    <div class="level-tab active" id="tab-a1" onclick="setLevel('a1')">
-      <span>A1 — Débutant</span><span class="level-badge">5 módulos</span>
-    </div>
-    <div class="level-tab" id="tab-a2" onclick="setLevel('a2')">
-      <span>A2 — Élémentaire</span><span class="level-badge">5 módulos</span>
-    </div>
-    <div class="level-tab" id="tab-b1" onclick="setLevel('b1')">
-      <span>B1 — Intermédiaire</span><span class="level-badge">1 módulo</span>
-    </div>
-    <div class="level-tab" id="tab-b2" onclick="setLevel('b2')">
-      <span>B2 — Avancé</span><span class="level-badge">0 módulo</span>
-    </div>
+    <button type="button" class="level-tab active" id="tab-a1" onclick="setLevel('a1')" aria-label="Nivel A1, principiante">
+      <span>A1 · Principiante</span><span class="level-badge">5 módulos</span>
+    </button>
+    <button type="button" class="level-tab" id="tab-a2" onclick="setLevel('a2')" aria-label="Nivel A2, elemental">
+      <span>A2 · Elemental</span><span class="level-badge">5 módulos</span>
+    </button>
+    <button type="button" class="level-tab" id="tab-b1" onclick="setLevel('b1')" aria-label="Nivel B1, intermedio">
+      <span>B1 · Intermedio</span><span class="level-badge">1 módulo</span>
+    </button>
+    <button type="button" class="level-tab" id="tab-b2" onclick="setLevel('b2')" aria-label="Nivel B2, avanzado">
+      <span>B2 · Avanzado</span><span class="level-badge">0 módulo</span>
+    </button>
   </div>
-  <div class="all-btn" id="allBtn" onclick="toggleAll()">
+  <button type="button" class="all-btn" id="allBtn" onclick="toggleAll()" aria-label="Abrir o cerrar el menú de herramientas">
     <div class="burger"><span></span><span></span><span></span></div>
-    All
-  </div>
+    Menú
+  </button>
 </div>
 
 <!-- PANNEAU ALL -->
@@ -255,182 +271,183 @@ footer{text-align:center;padding:32px 20px;font-size:12px;color:var(--muted);bor
       <a class="panel-card" href="vocabulaire-expert.html">
         <div class="panel-icon" style="background:var(--b1l)">📖</div>
         <div>
-          <div class="panel-name">Vocabulaire</div>
-          <div class="panel-sub">700+ mots · A1→B2 · ES/FR/Dictée · audio</div>
+          <div class="panel-name">Vocabulario</div>
+          <div class="panel-sub">Más de 700 palabras · A1→B2 · ES/FR · audio</div>
         </div>
       </a>
       <a class="panel-card" href="comprehension.html">
         <div class="panel-icon" style="background:#f0fdf4">🤖</div>
-        <div><div class="panel-name">Compréhension IA</div><div class="panel-sub">Textes générés A1 · A2 · B1</div></div>
+        <div><div class="panel-name">Comprensión con IA</div><div class="panel-sub">Textos generados para A1, A2 y B1</div></div>
       </a>
       <a class="panel-card" href="prononciation.html">
         <div class="panel-icon" style="background:var(--b1l)">🎙️</div>
-        <div><div class="panel-name">Prononciation</div><div class="panel-sub">9 sections · enregistrement</div></div>
+        <div><div class="panel-name">Pronunciación</div><div class="panel-sub">9 secciones · grabación</div></div>
       </a>
     </div>
   </div>
   <div class="panel-section">
     <div class="panel-label">
-      <span class="panel-dot" style="background:#b86a00"></span>Culture & gastronomie
+      <span class="panel-dot" style="background:#b86a00"></span>Cultura y gastronomía
     </div>
     <div class="panel-grid">
       <div class="panel-card-culture">
         <div class="panel-icon" style="background:#fff3dc">🥐</div>
-        <div><div class="panel-name">Gastronomie française</div><div class="panel-sub">Recettes, vocabulaire culinaire</div></div>
-        <span class="soon-pill">Prochainement</span>
+        <div><div class="panel-name">Gastronomía francesa</div><div class="panel-sub">Recetas y vocabulario culinario</div></div>
+        <span class="soon-pill">Próximamente</span>
       </div>
       <div class="panel-card-culture">
         <div class="panel-icon" style="background:#fff3dc">🗼</div>
-        <div><div class="panel-name">Culture & traditions</div><div class="panel-sub">Fêtes, cinéma, expressions</div></div>
-        <span class="soon-pill">Prochainement</span>
+        <div><div class="panel-name">Cultura y tradiciones</div><div class="panel-sub">Fiestas, cine y expresiones</div></div>
+        <span class="soon-pill">Próximamente</span>
       </div>
     </div>
   </div>
 </div>
 
 <!-- CONTENU PRINCIPAL -->
-<div class="content">
+<main class="content" id="contenido">
+  <p class="route-hint"><span class="route-step">Tu ruta en 3 clics</span> Elige un nivel <span aria-hidden="true">→</span> abre <strong>Ejercicios</strong> <span aria-hidden="true">→</span> entra en un módulo.</p>
   <!-- SECTION A1 -->
   <div id="sec-a1">
-    <div class="section-label"><span class="dot" style="background:var(--a1c)"></span>Nivel A1 — Débutant</div>
+    <div class="section-label"><span class="dot" style="background:var(--a1c)"></span>Nivel A1 · Principiante</div>
     <div class="level-tabs-inner" id="tabs-a1">
-      <div class="inner-tab active" data-tab="cours-a1">📺 Cours</div>
-      <div class="inner-tab" data-tab="exos-a1">📚 Exercices</div>
+      <button type="button" class="inner-tab active" data-tab="cours-a1">📺 Clases</button>
+      <button type="button" class="inner-tab" data-tab="exos-a1">📚 Ejercicios</button>
     </div>
     <div id="cours-a1" class="inner-content active">
       <div id="video-list-a1" class="video-list"></div>
       <div style="text-align: center; margin-top: 20px;">
-        <a href="cours.html?level=A1" class="add-video-link">➕ Ajouter / gérer les vidéos A1</a>
+        <a href="cours.html?level=A1" class="add-video-link">➕ Añadir o gestionar los videos A1</a>
       </div>
     </div>
     <div id="exos-a1" class="inner-content">
       <div class="modules">
-        <a class="module-card featured" href="lesson.html?niveau=a1&etape=1" style="background:var(--navy);border-color:var(--navy)">
+        <a class="module-card featured" href="a1-module1.html" style="background:var(--navy);border-color:var(--navy)">
           <div class="card-header"><span class="card-num">Módulo 01</span><span class="lvl" style="background:rgba(255,255,255,.15);color:rgba(255,255,255,.8)">A1</span></div>
           <div class="card-title">Fundamentos del francés</div>
-          <div class="topics"><span class="topic">Se présenter</span><span class="topic">Pronoms</span><span class="topic">Couleurs</span><span class="topic">Prononciation</span></div>
-          <div class="card-footer"><span class="card-meta">5 leçons · 25+ ex. · 🎙️</span><div class="arrow">→</div></div>
+          <div class="topics"><span class="topic">Se présenter</span><span class="topic">Pronoms</span><span class="topic">Couleurs</span><span class="topic">Pronunciación</span></div>
+          <div class="card-footer"><span class="card-meta">5 lecciones · 25+ ej. · 🎙️</span><div class="arrow">→</div></div>
         </a>
-        <a class="module-card" href="lesson.html?niveau=a1&etape=2">
+        <a class="module-card" href="a1-module2.html">
           <div class="card-header"><span class="card-num">Módulo 02</span><span class="lvl la1">A1</span></div>
           <div class="card-title">Grammaire & vie quotidienne</div>
           <div class="topics"><span class="topic">Être & avoir</span><span class="topic">Négation</span><span class="topic">Groupes verbaux</span><span class="topic">Routine</span></div>
-          <div class="card-footer"><span class="card-meta">5 leçons · 25+ ex. · 🎙️</span><div class="arrow">→</div></div>
+          <div class="card-footer"><span class="card-meta">5 lecciones · 25+ ej. · 🎙️</span><div class="arrow">→</div></div>
         </a>
-        <a class="module-card" href="lesson.html?niveau=a1&etape=3">
+        <a class="module-card" href="a1-module3.html">
           <div class="card-header"><span class="card-num">Módulo 03</span><span class="lvl la1">A1</span></div>
           <div class="card-title">Famille, goûts & futur proche</div>
           <div class="topics"><span class="topic">La famille</span><span class="topic">Adjectifs</span><span class="topic">Loisirs</span><span class="topic">Futur proche</span></div>
-          <div class="card-footer"><span class="card-meta">4 leçons · 20+ ex. · 🎙️</span><div class="arrow">→</div></div>
+          <div class="card-footer"><span class="card-meta">4 lecciones · 20+ ej. · 🎙️</span><div class="arrow">→</div></div>
         </a>
-        <a class="module-card" href="lesson.html?niveau=a1&etape=4">
+        <a class="module-card" href="a1-module4.html">
           <div class="card-header"><span class="card-num">Módulo 04</span><span class="lvl la1">A1</span></div>
           <div class="card-title">Espacios & orientación</div>
           <div class="topics"><span class="topic">Fecha & hora</span><span class="topic">La ciudad</span><span class="topic">Preposiciones</span><span class="topic">Transporte</span></div>
-          <div class="card-footer"><span class="card-meta">5 leçons · 25+ ex. · 🎙️</span><div class="arrow">→</div></div>
+          <div class="card-footer"><span class="card-meta">5 lecciones · 25+ ej. · 🎙️</span><div class="arrow">→</div></div>
         </a>
-        <a class="module-card" href="lesson.html?niveau=a1&etape=5">
+        <a class="module-card" href="a1-module5.html">
           <div class="card-header"><span class="card-num">Módulo 05</span><span class="lvl la1">A1</span></div>
           <div class="card-title">Clima & alimentación</div>
           <div class="topics"><span class="topic">La météo</span><span class="topic">Les vêtements</span><span class="topic">Les repas</span><span class="topic">Restaurant</span></div>
-          <div class="card-footer"><span class="card-meta">4 leçons · 20+ ex. · 🎙️</span><div class="arrow">→</div></div>
+          <div class="card-footer"><span class="card-meta">4 lecciones · 20+ ej. · 🎙️</span><div class="arrow">→</div></div>
         </a>
-        <div class="soon"><div class="soon-lbl">⏳ Módulo 06 — Prochainement</div><div class="soon-title">Entraînement à l'évaluation finale A1</div></div>
+        <div class="soon"><div class="soon-lbl">⏳ Módulo 06 — Próximamente</div><div class="soon-title">Preparación para la evaluación final A1</div></div>
       </div>
     </div>
   </div>
 
   <!-- SECTION A2 -->
   <div id="sec-a2" style="display:none">
-    <div class="section-label"><span class="dot" style="background:var(--a2c)"></span>Nivel A2 — Élémentaire</div>
+    <div class="section-label"><span class="dot" style="background:var(--a2c)"></span>Nivel A2 · Elemental</div>
     <div class="level-tabs-inner" id="tabs-a2">
-      <div class="inner-tab active" data-tab="cours-a2">📺 Cours</div>
-      <div class="inner-tab" data-tab="exos-a2">📚 Exercices</div>
+      <button type="button" class="inner-tab active" data-tab="cours-a2">📺 Clases</button>
+      <button type="button" class="inner-tab" data-tab="exos-a2">📚 Ejercicios</button>
     </div>
     <div id="cours-a2" class="inner-content active">
       <div id="video-list-a2" class="video-list"></div>
       <div style="text-align: center; margin-top: 20px;">
-        <a href="cours.html?level=A2" class="add-video-link">➕ Ajouter / gérer les vidéos A2</a>
+        <a href="cours.html?level=A2" class="add-video-link">➕ Añadir o gestionar los videos A2</a>
       </div>
     </div>
     <div id="exos-a2" class="inner-content">
       <div class="modules">
-        <a class="module-card featured" href="lesson.html?niveau=a2&etape=1" style="background:#1a3a6b;border-color:#1a3a6b">
+        <a class="module-card featured" href="a2-module1.html" style="background:#1a3a6b;border-color:#1a3a6b">
           <div class="card-header"><span class="card-num">Módulo 01</span><span class="lvl" style="background:rgba(255,255,255,.15);color:rgba(255,255,255,.8)">A2</span></div>
           <div class="card-title">Hablar más en detalle sobre su persona</div>
           <div class="topics"><span class="topic">Passé composé</span><span class="topic">Négation amplifiée</span><span class="topic">Pronoms possessifs</span></div>
-          <div class="card-footer"><span class="card-meta">5 leçons · 🎙️</span><div class="arrow">→</div></div>
+          <div class="card-footer"><span class="card-meta">5 lecciones · 🎙️</span><div class="arrow">→</div></div>
         </a>
-        <a class="module-card" href="lesson.html?niveau=a2&etape=2">
+        <a class="module-card" href="a2-module2.html">
           <div class="card-header"><span class="card-num">Módulo 02</span><span class="lvl la2">A2</span></div>
           <div class="card-title">Pasado & recuerdos</div>
           <div class="topics"><span class="topic">Passé composé</span><span class="topic">Imparfait</span><span class="topic">Pronominaux</span><span class="topic">COD · COI</span></div>
-          <div class="card-footer"><span class="card-meta">6 leçons · 🎙️</span><div class="arrow">→</div></div>
+          <div class="card-footer"><span class="card-meta">6 lecciones · 🎙️</span><div class="arrow">→</div></div>
         </a>
-        <a class="module-card" href="lesson.html?niveau=a2&etape=3">
+        <a class="module-card" href="a2-module3.html">
           <div class="card-header"><span class="card-num">Módulo 03</span><span class="lvl la2">A2</span></div>
           <div class="card-title">Opiniones, gustos & comparación</div>
           <div class="topics"><span class="topic">Je pense que…</span><span class="topic">Comparatif</span><span class="topic">Superlatif</span></div>
-          <div class="card-footer"><span class="card-meta">3 leçons · 🎙️</span><div class="arrow">→</div></div>
+          <div class="card-footer"><span class="card-meta">3 lecciones · 🎙️</span><div class="arrow">→</div></div>
         </a>
-        <a class="module-card" href="lesson.html?niveau=a2&etape=4">
+        <a class="module-card" href="a2-module4.html">
           <div class="card-header"><span class="card-num">Módulo 04</span><span class="lvl la2">A2</span></div>
           <div class="card-title">Preparar un proyecto o desplazamiento</div>
-          <div class="topics"><span class="topic">Futur simple</span><span class="topic">Futur proche</span><span class="topic">Vocabulaire voyage</span></div>
-          <div class="card-footer"><span class="card-meta">2 leçons · 🎙️</span><div class="arrow">→</div></div>
+          <div class="topics"><span class="topic">Futur simple</span><span class="topic">Futur proche</span><span class="topic">Vocabulario voyage</span></div>
+          <div class="card-footer"><span class="card-meta">2 lecciones · 🎙️</span><div class="arrow">→</div></div>
         </a>
-        <a class="module-card" href="lesson.html?niveau=a2&etape=5">
+        <a class="module-card" href="a2-module5.html">
           <div class="card-header"><span class="card-num">Módulo 05</span><span class="lvl la2">A2</span></div>
           <div class="card-title">Salud, cuerpo & consejos</div>
           <div class="topics"><span class="topic">Corps & douleurs</span><span class="topic">Chez le médecin</span><span class="topic">Impératif</span><span class="topic">Pharmacie</span></div>
-          <div class="card-footer"><span class="card-meta">4 leçons · 🎙️</span><div class="arrow">→</div></div>
+          <div class="card-footer"><span class="card-meta">4 lecciones · 🎙️</span><div class="arrow">→</div></div>
         </a>
-        <div class="soon"><div class="soon-lbl">⏳ Módulo 06 — Prochainement</div><div class="soon-title">Escritura & évaluation finale A2</div></div>
+        <div class="soon"><div class="soon-lbl">⏳ Módulo 06 — Próximamente</div><div class="soon-title">Escritura y evaluación final A2</div></div>
       </div>
     </div>
   </div>
 
   <!-- SECTION B1 -->
   <div id="sec-b1" style="display:none">
-    <div class="section-label"><span class="dot" style="background:var(--b1c)"></span>Nivel B1 — Intermédiaire</div>
+    <div class="section-label"><span class="dot" style="background:var(--b1c)"></span>Nivel B1 · Intermedio</div>
     <div class="level-tabs-inner" id="tabs-b1">
-      <div class="inner-tab active" data-tab="cours-b1">📺 Cours</div>
-      <div class="inner-tab" data-tab="exos-b1">📚 Exercices</div>
+      <button type="button" class="inner-tab active" data-tab="cours-b1">📺 Clases</button>
+      <button type="button" class="inner-tab" data-tab="exos-b1">📚 Ejercicios</button>
     </div>
     <div id="cours-b1" class="inner-content active">
       <div id="video-list-b1" class="video-list"></div>
       <div style="text-align: center; margin-top: 20px;">
-        <a href="cours.html?level=B1" class="add-video-link">➕ Ajouter / gérer les vidéos B1</a>
+        <a href="cours.html?level=B1" class="add-video-link">➕ Añadir o gestionar los videos B1</a>
       </div>
     </div>
     <div id="exos-b1" class="inner-content">
       <div class="modules">
-        <a class="module-card featured" href="lesson.html?niveau=b1&etape=1" style="background:#5a0e0e;border-color:#5a0e0e">
+        <a class="module-card featured" href="b1-module1.html" style="background:#5a0e0e;border-color:#5a0e0e">
           <div class="card-header"><span class="card-num">Módulo 01</span><span class="lvl" style="background:rgba(255,255,255,.15);color:rgba(255,255,255,.8)">B1</span></div>
           <div class="card-title">Frases complejas & pronombres relativos</div>
           <div class="topics"><span class="topic">qui · que · où</span><span class="topic">dont</span><span class="topic">lequel</span></div>
-          <div class="card-footer"><span class="card-meta">4 leçons · 16 ex. · 🎙️</span><div class="arrow">→</div></div>
+          <div class="card-footer"><span class="card-meta">4 lecciones · 16 ej. · 🎙️</span><div class="arrow">→</div></div>
         </a>
-        <div class="soon"><div class="soon-lbl">⏳ Módulo 02 — Prochainement</div><div class="soon-title">Narración compleja</div></div>
-        <div class="soon"><div class="soon-lbl">⏳ Módulo 03 — Prochainement</div><div class="soon-title">El condicional presente</div></div>
-        <div class="soon"><div class="soon-lbl">⏳ Módulo 04 — Prochainement</div><div class="soon-title">La hipótesis en el pasado</div></div>
-        <div class="soon"><div class="soon-lbl">⏳ Módulo 05 — Prochainement</div><div class="soon-title">El subjuntivo presente</div></div>
-        <div class="soon"><div class="soon-lbl">⏳ Módulo 06 — Prochainement</div><div class="soon-title">Conectores & argumentación</div></div>
+        <div class="soon"><div class="soon-lbl">⏳ Módulo 02 — Próximamente</div><div class="soon-title">Narración compleja</div></div>
+        <div class="soon"><div class="soon-lbl">⏳ Módulo 03 — Próximamente</div><div class="soon-title">El condicional presente</div></div>
+        <div class="soon"><div class="soon-lbl">⏳ Módulo 04 — Próximamente</div><div class="soon-title">La hipótesis en el pasado</div></div>
+        <div class="soon"><div class="soon-lbl">⏳ Módulo 05 — Próximamente</div><div class="soon-title">El subjuntivo presente</div></div>
+        <div class="soon"><div class="soon-lbl">⏳ Módulo 06 — Próximamente</div><div class="soon-title">Conectores & argumentación</div></div>
       </div>
     </div>
   </div>
 
   <!-- SECTION B2 -->
   <div id="sec-b2" style="display:none">
-    <div class="section-label"><span class="dot" style="background:var(--b2c)"></span>Nivel B2 — Avancé</div>
+    <div class="section-label"><span class="dot" style="background:var(--b2c)"></span>Nivel B2 · Avanzado</div>
     <div class="level-tabs-inner" id="tabs-b2">
-      <div class="inner-tab active" data-tab="cours-b2">📺 Cours</div>
-      <div class="inner-tab" data-tab="exos-b2">📚 Exercices</div>
+      <button type="button" class="inner-tab active" data-tab="cours-b2">📺 Clases</button>
+      <button type="button" class="inner-tab" data-tab="exos-b2">📚 Ejercicios</button>
     </div>
     <div id="cours-b2" class="inner-content active">
       <div id="video-list-b2" class="video-list"></div>
       <div style="text-align: center; margin-top: 20px;">
-        <a href="cours.html?level=B2" class="add-video-link">➕ Ajouter / gérer les vidéos B2</a>
+        <a href="cours.html?level=B2" class="add-video-link">➕ Añadir o gestionar los videos B2</a>
       </div>
     </div>
     <div id="exos-b2" class="inner-content">
@@ -445,14 +462,16 @@ footer{text-align:center;padding:32px 20px;font-size:12px;color:var(--muted);bor
 
   <div class="cta-bar">
     <div>
-      <div class="cta-title">¿Quieres empezar con un profesor?</div>
+      <div class="cta-title">¿Quieres practicar con un profesor?</div>
       <div class="cta-sub">Clases en vivo por WhatsApp o Google Meet</div>
     </div>
-    <button class="cta-btn">Quiero empezar ✓</button>
+    <a class="cta-btn" href="https://wa.me/message/NP24JO3DNAZXJ1" target="_blank" rel="noopener">Consultar clases ✓</a>
   </div>
-</div>
+</main>
 
-<footer>FRENCHOIS · Français pour hispanophones · Todos los derechos reservados</footer>
+<footer>FRENCHOIS · Francés para hispanohablantes · Todos los derechos reservados</footer>
+
+<template aria-hidden="true"><div class="video-card"></div></template>
 
 <script>
 // Gestion des niveaux principaux
@@ -605,6 +624,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Par défaut, le premier onglet est actif.
 });
 </script>
-<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v4bc70e2c01a94c73b74392e4234840661791215815920" integrity="sha512-L0ha0OXavK/8okipN9F8BtP84dg9DUhPERbBXzwI6dgTA55d2+yweo3pn5CSFYs45/r8md2+xvUPtTdvTNRfjA==" data-cf-beacon='{"version":"2024.11.0","token":"8607d2a720d14b038279025b2b5a82e5","spa":2}' crossorigin="anonymous"></script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"8607d2a720d14b038279025b2b5a82e5","spa":2}' crossorigin="anonymous"></script>
 </body>
 </html>
