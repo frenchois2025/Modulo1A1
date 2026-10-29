@@ -189,6 +189,25 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 </div>
 
 <script>
+// auth.js protège la page, mais son client Supabase n'est pas exposé globalement dans le fichier fourni.
+// Réutilise ici la configuration présente dans auth (1).js, sauf si l'application expose déjà un client.
+const pageSupabase = window.frenchoisSupabase || window.supabaseClient ||
+  window.supabase.createClient('https://mvfrirxbhbtenunogdpj.supabase.co', 'sb_publishable_oT738uTwT-dtpbMpWGgFkg_LvODS1a-');
+
+function escapeHtml(value){
+  return String(value == null ? '' : value).replace(/[&<>\"']/g, function(ch){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[ch];
+  });
+}
+
+async function getGenerateSession(){
+  const result=await pageSupabase.auth.getSession();
+  if(result.error) throw new Error('Vérification de session impossible : '+result.error.message);
+  const session=result.data && result.data.session;
+  if(!session || !session.access_token){window.location.href='login.html';return null;}
+  return session;
+}
+
 const AUDIO_CACHE=new Map();
 const EL_VOICES=[{id:'XB0fDUnXU5powFXDhCwa',name:'Charlotte (f&#233;minin)'},{id:'onwK4e9ZLuTAKqWW03F9',name:'Daniel (masculin)'}];
 let EL_KEY=localStorage.getItem('el_api_key')||'';
@@ -299,9 +318,11 @@ async function generateText(){
 
         const prompt='You are a French teacher creating a reading comprehension exercise. Level: '+CL+' ('+lvDesc[CL]+'). Theme: "'+STh+'". Document type: "'+ST+'". Write approximately '+wc[CL]+' words in French. Respond ONLY with valid JSON using this exact structure: {"title":"string","type":"string","text":"complete French text","words":[{"word":"french_word","es":"spanish_translation"}],"qcm":[{"q":"question in Spanish","opts":["A","B","C"],"ans":0}],"vocab":[{"word":"word","es":"translation","sentence":"sentence with ___ placeholder","answer":"word","hint":"Spanish hint"}]} Rules: words=5 items, qcm=4 questions with exactly 3 options each, vocab=3 items. Pure JSON only, no markdown, no explanation.';
   try{
-    const res=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},
+    const session=await getGenerateSession();
+    if(!session)return;
+    const res=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+session.access_token},
       body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1500,messages:[{role:'user',content:prompt}]})});
-    if(!res.ok){const e=await res.json();throw new Error(e.error?.message||res.status);}
+    if(!res.ok){let e={};try{e=await res.json();}catch(_){}throw new Error(e.error||e.message||('HTTP '+res.status));}
     const data=await res.json();
     const raw=data.content.filter(b=>b.type==='text').map(b=>b.text).join('');
     console.log('GEMINI RAW (first 300):', raw.substring(0,300));
@@ -329,7 +350,7 @@ async function generateText(){
 
 function renderReader(){
   const t=CD,col=COL[CL];
-  document.getElementById('rtag').innerHTML='<span style="background:'+col.l+';color:'+col.d+';font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:4px 12px;border-radius:20px">'+CL+' &#183; '+t.type+'</span>';
+  document.getElementById('rtag').innerHTML='<span style="background:'+col.l+';color:'+col.d+';font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:4px 12px;border-radius:20px">'+escapeHtml(CL)+' &#183; '+escapeHtml(t.type)+'</span>'; 
   const pb=document.getElementById('pbar');pb.innerHTML='';
   [1,2,3].forEach(p=>{const d=document.createElement('div');d.className='pdot'+(p<phase?' done':'');if(p===phase)d.style.background=col.c;pb.appendChild(d);});
   const rc=document.getElementById('rcontent');rc.innerHTML='';
@@ -337,7 +358,7 @@ function renderReader(){
 }
 
 function p1(c,t,col){
-  c.innerHTML='<div class="reader-title">'+t.title+'</div>';
+  c.innerHTML='<div class="reader-title">'+escapeHtml(t.title)+'</div>'; 
   const badge=document.createElement('div');badge.className='pbadge';badge.style.cssText='background:'+col.l+';color:'+col.d;badge.textContent='&#128214; Phase 1 &#8212; Lecture';c.appendChild(badge);
   const instr=document.createElement('div');instr.style.cssText='font-size:13px;color:var(--muted);margin-bottom:16px;padding:12px 16px;background:var(--bg);border-radius:10px;line-height:1.6';
   instr.textContent='Lee el texto. Pasa el cursor por las palabras subrayadas para ver su traducci\u00F3n. Usa el bot\u00F3n \uD83D\uDD0A para escuchar.';c.appendChild(instr);
@@ -421,9 +442,11 @@ function p2(c,t,col){
   const card=document.createElement('div');card.className='ex-card';
   t.qcm.forEach((q,qi)=>{
     const id='q'+qi;const d=document.createElement('div');d.className='qitem';
-    d.innerHTML='<div class="qlabel">Pregunta '+(qi+1)+' / '+t.qcm.length+'</div><div class="qtext">'+q.q+'</div>'+
-      '<div class="opts" id="o'+id+'">'+q.opts.map((o,oi)=>'<button class="opt" onclick="ansQ(\''+id+'\','+oi+','+q.ans+','+t.qcm.length+')">'+o+'</button>').join('')+'</div>'+
+    const correct=Number.isInteger(Number(q.ans))?Number(q.ans):0;
+    d.innerHTML='<div class="qlabel">Pregunta '+(qi+1)+' / '+t.qcm.length+'</div><div class="qtext">'+escapeHtml(q.q)+'</div>'+
+      '<div class="opts" id="o'+id+'">'+q.opts.map(o=>'<button class="opt" type="button">'+escapeHtml(o)+'</button>').join('')+'</div>'+
       '<div class="fb" id="f'+id+'"></div>';
+    d.querySelectorAll('.opt').forEach((button,oi)=>button.addEventListener('click',()=>ansQ(id,oi,correct,t.qcm.length)));
     card.appendChild(d);
   });
   const sc=document.createElement('div');sc.className='score-box';sc.id='sc2';sc.style.background=col.l;
@@ -455,15 +478,16 @@ function p3(c,t,col){
   t.vocab.forEach((v,i)=>{
     const item=document.createElement('div');item.className='vitem';
     const sid='vi'+i;
-    const sentHtml=v.sentence.replace('___','<input class="fi" id="'+sid+'" data-answer="'+v.answer.replace(/"/g,'&quot;')+'" placeholder="\u2026" autocomplete="off" autocorrect="off" spellcheck="false" autocapitalize="off">');
+    const sentHtml=escapeHtml(v.sentence).replace('___','<input class="fi" id="'+sid+'" data-answer="'+escapeHtml(v.answer)+'" placeholder="\\u2026" autocomplete="off" autocorrect="off" spellcheck="false" autocapitalize="off">');
     item.innerHTML=
       '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">'+
-      '<button onclick="speak(\''+v.sentence.replace('___',v.answer).replace(/'/g,"\\'")+'\')" style="background:'+col.c+';color:white;border:none;border-radius:8px;padding:7px 16px;font-size:13px;font-weight:800;cursor:pointer">\uD83D\uDD0A \u00C9couter la phrase</button>'+
-      '<span style="font-size:12px;color:var(--muted);font-style:italic">'+v.es+'</span>'+
+      '<button type="button" class="vocab-speak" style="background:'+col.c+';color:white;border:none;border-radius:8px;padding:7px 16px;font-size:13px;font-weight:800;cursor:pointer">\uD83D\uDD0A \u00C9couter la phrase</button>'+
+      '<span style="font-size:12px;color:var(--muted);font-style:italic">'+escapeHtml(v.es)+'</span>'+
       '</div>'+
       '<div class="vsent">'+sentHtml+'</div>'+
-      '<div class="fhint" id="vh'+i+'">'+v.hint+'</div>'+
+      '<div class="fhint" id="vh'+i+'">'+escapeHtml(v.hint)+'</div>'+
       '<div class="vword" id="vw'+i+'" style="display:none;margin-top:6px;color:var(--okd)"></div>';
+    item.querySelector('.vocab-speak').addEventListener('click',()=>speak(v.sentence.replace('___',v.answer)));
     card.appendChild(item);
   });
   const cb=document.createElement('button');cb.className='btn-p';cb.style.cssText='background:'+col.c+';color:white;margin-top:16px';cb.textContent='Verificar';
@@ -491,7 +515,7 @@ function checkV(t,col){
     const correct=v.answer.split('|').some(a=>val===a.toLowerCase().trim());
     inp.className='fi '+(correct?'ok':'nope');inp.disabled=true;
     const hint=document.getElementById('vh'+i);
-    if(!correct){hint.style.cssText='color:var(--errd);font-style:normal;font-size:12px;margin-top:4px';hint.innerHTML='\u2192 <strong>'+v.answer.split('|')[0]+'</strong>';}
+    if(!correct){hint.style.cssText='color:var(--errd);font-style:normal;font-size:12px;margin-top:4px';hint.innerHTML='\u2192 <strong>'+escapeHtml(v.answer.split('|')[0])+'</strong>'; }
     else{ok++;hint.style.cssText='color:var(--okd);font-size:11px;margin-top:4px';hint.textContent='\u2713';}
     const wordDiv=document.getElementById('vw'+i);if(wordDiv){wordDiv.style.display='block';wordDiv.textContent='\u2192 '+v.answer.split('|')[0];}
   });
@@ -567,5 +591,6 @@ document.addEventListener('DOMContentLoaded',()=>{
   buildEL();
 });
 </script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"8607d2a720d14b038279025b2b5a82e5","spa":2}' crossorigin="anonymous"></script>
 </body>
 </html>
