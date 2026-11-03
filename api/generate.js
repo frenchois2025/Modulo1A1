@@ -2,17 +2,8 @@
 // Variables d'environnement requises : GEMINI_API_KEY, SUPABASE_URL, SUPABASE_ANON_KEY.
 // ALLOWED_ORIGIN n'est pas requis : les requêtes navigateur sont limitées à la même origine.
 
-const crypto = require('crypto');
-
 const MAX_PROMPT_LENGTH = 8000;
-const GEMINI_MODELS = ['gemini-3.1-flash-lite', 'gemini-3.8-flash'];
-const CACHE_TTL_MS = 60 * 60 * 1000;
-const CACHE_MAX_ENTRIES = 200;
-const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000;
-const RATE_LIMIT_MAX = 10;
-const GENERATION_CACHE = new Map();
-const IP_GENERATIONS = new Map();
-const RETRY_DELAYS_MS = [800, 1600];
+const GEMINI_MODEL = 'gemini-2.5-flash';
 
 function jsonError(res, status, error, details) {
   const payload = { error };
@@ -30,63 +21,6 @@ function requestOriginIsSame(req) {
   } catch (_) {
     return false;
   }
-}
-
-function getCachedResponse(key, now) {
-  const entry = GENERATION_CACHE.get(key);
-  if (!entry) return null;
-  if (entry.expiresAt <= now) {
-    GENERATION_CACHE.delete(key);
-    return null;
-  }
-  // Refresh insertion order to keep frequently used entries in the cache.
-  GENERATION_CACHE.delete(key);
-  GENERATION_CACHE.set(key, entry);
-  return entry.content;
-}
-
-function setCachedResponse(key, content, now) {
-  for (const [cacheKey, entry] of GENERATION_CACHE) {
-    if (entry.expiresAt <= now) GENERATION_CACHE.delete(cacheKey);
-  }
-  GENERATION_CACHE.delete(key);
-  GENERATION_CACHE.set(key, { content, expiresAt: now + CACHE_TTL_MS });
-  while (GENERATION_CACHE.size > CACHE_MAX_ENTRIES) {
-    GENERATION_CACHE.delete(GENERATION_CACHE.keys().next().value);
-  }
-}
-
-function getClientIp(req) {
-  const forwardedFor = req.headers['x-forwarded-for'];
-  if (typeof forwardedFor === 'string' && forwardedFor.trim()) {
-    return forwardedFor.split(',')[0].trim();
-  }
-  return (req.socket && req.socket.remoteAddress) || 'unknown';
-}
-
-function checkRateLimit(ip, now) {
-  // Expire old entries and cap the map to prevent unbounded memory use.
-  for (const [storedIp, timestamps] of IP_GENERATIONS) {
-    const recent = timestamps.filter((timestamp) => timestamp > now - RATE_LIMIT_WINDOW_MS);
-    if (recent.length) IP_GENERATIONS.set(storedIp, recent);
-    else IP_GENERATIONS.delete(storedIp);
-  }
-  let timestamps = IP_GENERATIONS.get(ip) || [];
-  timestamps = timestamps.filter((timestamp) => timestamp > now - RATE_LIMIT_WINDOW_MS);
-  if (timestamps.length >= RATE_LIMIT_MAX) {
-    IP_GENERATIONS.set(ip, timestamps);
-    return false;
-  }
-  timestamps.push(now);
-  IP_GENERATIONS.set(ip, timestamps);
-  while (IP_GENERATIONS.size > 10000) {
-    IP_GENERATIONS.delete(IP_GENERATIONS.keys().next().value);
-  }
-  return true;
-}
-
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 module.exports = async function handler(req, res) {
@@ -129,8 +63,8 @@ module.exports = async function handler(req, res) {
     authCheck = await fetch(`${supabaseUrl.replace(/\/$/, '')}/auth/v1/user`, {
       headers: { Authorization: `Bearer ${token}`, apikey: supabaseAnonKey }
     });
-  } catch (_) {
-    return jsonError(res, 502, 'Impossible de joindre Supabase pour vérifier le jeton.', { cause: 'supabase_unreachable' });
+  } catch (err) {
+    return jsonError(res, 502, 'Impossible de joindre Supabase pour vérifier le jeton.', { cause: err.message });
   }
   if (authCheck.status === 401 || authCheck.status === 403) {
     return jsonError(res, 401, 'Jeton Supabase invalide ou session expirée. Reconnectez-vous.', {
@@ -165,77 +99,42 @@ module.exports = async function handler(req, res) {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) return jsonError(res, 500, 'Configuration Gemini manquante côté serveur (GEMINI_API_KEY).');
 
-  const now = Date.now();
-  const cacheKey = crypto.createHash('sha256').update(prompt, 'utf8').digest('hex');
-  const cachedContent = getCachedResponse(cacheKey, now);
-  if (cachedContent !== null) {
-    return res.status(200).json({ content: [{ type: 'text', text: cachedContent }] });
-  }
-  const clientIp = getClientIp(req);
-  if (!checkRateLimit(clientIp, now)) {
-    return jsonError(res, 429, 'Limite atteinte : maximum 10 générations par heure pour cette adresse IP. Réessayez plus tard.');
-  }
-
-  let modelIndex = 0;
-  let lastStatus = null;
-  for (let attempt = 0; attempt < 3; attempt += 1) {
-    const model = GEMINI_MODELS[modelIndex];
-    let response;
-    try {
-      response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'x-goog-api-key': apiKey },
-          body: JSON.stringify({
-            contents: [{ parts: [{ text: prompt }] }],
-            generationConfig: {
-              temperature: 0.7,
-              maxOutputTokens: 4096,
-              responseMimeType: 'application/json',
-              thinkingConfig: { thinkingBudget: 0 }
-            }
-          })
-        }
-      );
-    } catch (_) {
-      lastStatus = null;
-      if (attempt < 2) {
-        if (modelIndex === 0 && attempt === 1) modelIndex = 1;
-        await sleep(RETRY_DELAYS_MS[attempt]);
-        continue;
+  // 4) Appel Gemini ; la clé est transmise dans le header et non dans l’URL.
+  try {
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-goog-api-key': apiKey },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: {
+            temperature: 0.7,
+            maxOutputTokens: 1800,
+            responseMimeType: 'application/json',
+            thinkingConfig: { thinkingBudget: 0 }
+          }
+        })
       }
-      return jsonError(res, 502, 'Échec de l’appel à Gemini après plusieurs tentatives.', { cause: 'gemini_unreachable' });
+    );
+
+    let data;
+    try { data = await response.json(); }
+    catch (_) { data = {}; }
+    if (!response.ok) {
+      return jsonError(res, 502, 'Erreur renvoyée par Gemini.', {
+        cause: `gemini_http_${response.status}`
+      });
     }
 
-    if (response.ok) {
-      let data;
-      try { data = await response.json(); }
-      catch (_) { data = {}; }
-      const aiText = data.candidates && data.candidates[0] && data.candidates[0].content &&
-        data.candidates[0].content.parts && data.candidates[0].content.parts[0] &&
-        data.candidates[0].content.parts[0].text;
-      if (typeof aiText === 'string') {
-        setCachedResponse(cacheKey, aiText, Date.now());
-        return res.status(200).json({ content: [{ type: 'text', text: aiText }] });
-      }
-      lastStatus = response.status;
-    } else {
-      lastStatus = response.status;
+    const aiText = data.candidates && data.candidates[0] && data.candidates[0].content &&
+      data.candidates[0].content.parts && data.candidates[0].content.parts[0] &&
+      data.candidates[0].content.parts[0].text;
+    if (typeof aiText !== 'string') {
+      return jsonError(res, 502, 'Gemini n’a renvoyé aucun texte généré.', { cause: 'empty_gemini_response' });
     }
-
-    if (attempt >= 2) break;
-    const retryable = lastStatus === 429 || lastStatus === 500 || lastStatus === 503;
-    if (modelIndex === 0 && !retryable) {
-      // Un modèle indisponible (404) ou toute erreur non réessayable déclenche le secours.
-      modelIndex = 1;
-      continue;
-    }
-    if (retryable && modelIndex === 0 && attempt === 1) modelIndex = 1;
-    await sleep(RETRY_DELAYS_MS[attempt]);
+    return res.status(200).json({ content: [{ type: 'text', text: aiText }] });
+  } catch (err) {
+    return jsonError(res, 502, 'Échec de l’appel à Gemini.', { cause: 'gemini_request_failed' });
   }
-
-  return jsonError(res, 502, 'Gemini n’a pas pu générer de réponse après plusieurs tentatives.', {
-    cause: lastStatus ? `gemini_http_${lastStatus}` : 'empty_gemini_response'
-  });
 };
