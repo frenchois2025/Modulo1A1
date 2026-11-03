@@ -99,9 +99,10 @@ module.exports = async function handler(req, res) {
   if (!apiKey) return jsonError(res, 500, 'Configuration Gemini manquante côté serveur (GEMINI_API_KEY).');
 
   // 4) Appel Gemini ; la clé est transmise dans le header et non dans l’URL.
+  const GEMINI_MODEL = 'gemini-3.8-flash';
   try {
     const response = await fetch(
-      'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent',
+      `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'x-goog-api-key': apiKey },
